@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:weightSum="100" >
+
+    <TextView
+        android:id="@+id/contactPersonName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_weight="45"
+        android:ellipsize="end"
+        android:gravity="left"
+        android:singleLine="true"
+        android:text="Name"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size" />
+
+    <TextView
+        android:id="@+id/contactPersonMobileNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_weight="45"
+        android:ellipsize="end"
+        android:gravity="left"
+        android:singleLine="true"
+        android:text="Mobile Number"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size" />
+
+    <CheckBox
+        android:id="@+id/checkeditem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text=""
+        android:button="@drawable/check_box_style"
+        android:layout_weight="10" />
+
+</LinearLayout>

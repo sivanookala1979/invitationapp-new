@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/newEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/blue_shade"
+            android:gravity="center_vertical|center_horizontal"
+            android:minWidth="150dp"
+            android:text="New Event"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size" />
+
+        <Button
+            android:id="@+id/shareEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/blue_shade"
+            android:gravity="center_vertical|center_horizontal"
+            android:minWidth="150dp"
+            android:text="My Events"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size" />
+
+        <Button
+            android:id="@+id/myInvitations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/blue_shade"
+            android:gravity="center_vertical|center_horizontal"
+            android:minWidth="150dp"
+            android:text="My Invitations"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size" />
+
+        <Button
+            android:id="@+id/postLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/blue_shade"
+            android:gravity="center_vertical|center_horizontal"
+            android:minWidth="150dp"
+            android:text="Post Location"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/left_menu"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/blue_shade"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp" />
+
+</android.support.v4.widget.DrawerLayout>
