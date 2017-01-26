@@ -42,7 +42,7 @@ public class InvitationSyncher extends BaseSyncher {
                 if (jsonResponse != null) {
                     response.setStatus(jsonResponse.getString("status"));
                     if (jsonResponse.has("total_invites")) {
-                        response.setId(jsonResponse.getString("total_invites"));
+                        response.setId(Integer.parseInt(jsonResponse.getString("total_invites")));
                     }
                 }
             } else {

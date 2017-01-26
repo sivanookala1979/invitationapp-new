@@ -50,7 +50,7 @@ public class EventSyncher extends BaseSyncher {
             String extenction = (event.getEventId() == 0) ? "" : "?event_id=" + event.getEventId();
             JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "events/create_event.json" + extenction, "POST", object.toString(), true));
             if (jsonResponse != null) {
-                response.setId(jsonResponse.getInt("id") + "");
+                response.setId(jsonResponse.getInt("id"));
                 response.setStatus(jsonResponse.getString("status"));
             }
         } catch (Exception e) {
@@ -168,7 +168,7 @@ public class EventSyncher extends BaseSyncher {
         try {
             JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "events/delete_event.json?event_id=" + eventId, "GET", false));
             if (jsonResponse.has("id")) {
-                response.setId(jsonResponse.getInt("id") + "");
+                response.setId(jsonResponse.getInt("id"));
                 response.setStatus(jsonResponse.getString("status"));
             } else {
                 response.setStatus(jsonResponse.getString("status"));

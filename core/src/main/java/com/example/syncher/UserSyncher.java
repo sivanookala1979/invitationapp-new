@@ -4,10 +4,12 @@
  */
 package com.example.syncher;
 
-import org.json.JSONObject;
+import android.util.Log;
 
 import com.example.dataobjects.*;
 import com.example.utills.HTTPUtils;
+
+import org.json.JSONObject;
 
 
 /**
@@ -19,15 +21,14 @@ public class UserSyncher extends BaseSyncher {
     public ServerResponse createUser(User user) {
         ServerResponse response = new ServerResponse();
         try {
-            JSONObject object = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "users/create_user.json?user_name=" + user.getUserName().replace(" ", "%20") + "&phone_number=" + user.getPhoneNumber(), "GET", false));
-            if (object != null) {
-                if (object.has("id")) {
-                    response.setId(object.getInt("id") + "");
-                    response.setStatus(object.getString("status"));
-                    response.setToken(object.getString("access_token"));
-                } else {
-                    response.setStatus(object.getString("status"));
-                }
+            String userStatusResponse = HTTPUtils.getDataFromServer(BASE_URL + "users/create_user.json?user_name=" + user.getUserName().replace(" ", "%20") + "&phone_number=" + user.getPhoneNumber(), "GET", false);
+            JSONObject object = new JSONObject(userStatusResponse);
+            if (object.has("id")) {
+                response.setId(object.getInt("id"));
+                response.setStatus(object.getString("status"));
+                response.setToken(object.getString("access_token"));
+            } else {
+                response.setStatus(object.getString("status"));
             }
         } catch (Exception e) {
             handleException(e);
@@ -42,7 +43,7 @@ public class UserSyncher extends BaseSyncher {
             if (object != null) {
                 if (object.has("access_token")) {
                     response.setToken(object.getString("access_token"));
-                    response.setId(object.getInt("id") + "");
+                    response.setId(object.getInt("id"));
                 } else if (object.has("status"))
                     response.setStatus(object.getString("status"));
             }

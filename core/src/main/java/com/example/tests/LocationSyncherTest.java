@@ -17,7 +17,7 @@ import com.example.syncher.LocationSyncher;
  * @author abdul
  * @version 1.0, 21 Dec 2015
  */
-public class LocationSyncherTest extends TestCase {
+public class LocationSyncherTest extends BaseSyncherTest {
 
     //    public void t1estForPostUserLocationHAPPYFlow() throws Exception {
     //        // Setup fixture
@@ -28,13 +28,6 @@ public class LocationSyncherTest extends TestCase {
     //        // Verify outcome
     //        assertEquals("Success", actual);
     //    }
-    private UserLocation getDefaultLocation(double latitude, double longitude, String dateTime) {
-        UserLocation location = new UserLocation();
-        location.setDateTime(dateTime);
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        return location;
-    }
 
     public void testCheckInviteesLocationHAPPYFlow() throws Exception {
         // Setup fixture

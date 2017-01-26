@@ -45,8 +45,8 @@ public class HTTPUtils {
         } else {
             readContent(response, con.getInputStream());
         }
-        System.out.println("Response received for " + urlData + "\n" + response.toString());
-        return response.toString();
+        System.out.println("Response received for " + urlData + "\n*" + response.toString()+"*");
+        return response.toString().trim();
     }
 
     public static void readContent(StringBuffer response, InputStream inputStream) throws IOException {

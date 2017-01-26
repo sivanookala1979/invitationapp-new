@@ -4,114 +4,113 @@
  */
 package com.example.tests;
 
-import junit.framework.TestCase;
 
 import com.example.dataobjects.*;
 import com.example.syncher.BaseSyncher;
+import com.example.syncher.EventSyncher;
+import com.example.syncher.LocationSyncher;
 import com.example.syncher.UserSyncher;
 import com.example.utills.StringUtils;
+
+import junit.framework.TestCase;
 
 
 /**
  * @author CeroneFedora
  * @version 1.0, Dec 18, 2015
  */
-public class UserSyncherTest extends TestCase {
+public class UserSyncherTest extends BaseSyncherTest {
 
-    //    public void testForExistingUserHAPPYFlow() throws Exception {
-    //        // Setup fixture
-    //        User user = getDefaultUser("ramki", "22222");
-    //        ServerResponse response = sut.createUser(user);
-    //        String actual = response.getStatus();
-    //        // Verify outcome
-    //        assertEquals("User already existed", actual);
-    //    }
+    public void testCreateUserHappyflow() throws Exception {
+        // Setup fixture
+        String userName = "adarsh";
+        String phoneNumber = "9949257729";
+        String expected = "Success";
+        User user = getDefaultUser(userName, phoneNumber);
+        ServerResponse response = sut.createUser(user);
+        String actual = response.getStatus();
+        // Verify outcome
+        validateCreateUserResponse(expected, response, actual);
+    }
+
     //
-    //    public void testForNewUserHAPPYFlow() throws Exception {
-    //        if (createNew) {
-    //            // Setup fixture
-    //            User user = getDefaultUser("ramki", "9292004545");
-    //            // Exercise SUT
-    //            ServerResponse response = sut.createUser(user);
-    //            String actual = response.getStatus();
-    //            // Verify outcome
-    //            assertEquals("Success", actual);
-    //        }
-    //    }
-    //
-    //    public void testForCreateUserwithEmptyDataHAPPYFlow() throws Exception {
-    //        if (createNew) {
-    //            // Setup fixture
-    //            User user = getDefaultUser("", "");
-    //            // Exercise SUT
-    //            ServerResponse response = sut.createUser(user);
-    //            String actual = response.getStatus();
-    //            // Verify outcome
-    //            assertEquals("Success", actual);
-    //        }
-    //    }
-    //
+    public void testDuplicateUserHappyflow() throws Exception {
+        // Setup fixture
+        String userName = "adarsh";
+        String phoneNumber = "9949257729";
+        String expected = "User already existed";
+        User user = getDefaultUser(userName, phoneNumber);
+        // Exercise SUT
+        ServerResponse response = sut.createUser(user);
+        String actual = response.getStatus();
+        // Verify outcome
+        validateCreateUserResponse(expected, response, actual);
+
+    }
+
     public void testToGetAccessTokenHAPPYFlow() throws Exception {
         // Setup fixture
         String mobileNumber = "9949257729";
         // Exercise SUT
         ServerResponse response = sut.getAccesToken(mobileNumber);
-        String actual = response.getToken();
+        String token = response.getToken();
         // Verify outcome
-        assertEquals("hi", actual);
-        assertNotNull(actual);
+        assertNotNull(token);
+        assertTrue(response.getId() > 0);
     }
 
-    //    public void testgetDistanceFromEventHAPPYFlow() throws Exception {
-    //        // Setup fixture
-    //        int eventId = 49;
-    //        // Exercise SUT
-    //        ServerResponse response = sut.getDistanceFromEvent(eventId);
-    //        String actual = response.getDistance();
-    //        // Verify outcome
-    //        assertEquals("8932.608654294429", actual);
-    //    }
-    //
-    //    public void testupdateInviteeCheckInStausHAPPYFlow() throws Exception {
-    //        if (createNew) {
-    //            // Setup fixture
-    //            int eventId = 27;
-    //            String status = "CheckIn";
-    //            // Exercise SUT
-    //            ServerResponse response = sut.updateInviteeCheckInStaus(eventId, status);
-    //            String actual = response.getStatus();
-    //            // Verify outcome
-    //            assertEquals("Success", actual);
-    //        }
-    //    }
-    public User getDefaultUser(String name, String phoneNumber) {
-        User user = new User();
-        user.setUserName(name);
-        user.setPhoneNumber(phoneNumber);
-        return user;
-    }
-
-    public void testIsJsonFormat() {
+    public void testgetDistanceFromEventHAPPYFlow() throws Exception {
         // Setup fixture
-        String json = "[\"status\":\"User already existed\"}";
+        Event event = getDefaultEvent("Lunch", "2017-01-26 19:10:25", "2017-01-28 23:10:00", "Have fun", 14.442599, 79.986456, "Nellore", true, false, "Success", "adarsh", true, "No theam", "Weekly");
+        EventSyncher eventSyncher = new EventSyncher();
+        LocationSyncher locationSyncher = new LocationSyncher();
+        UserLocation location = getDefaultLocation(14.912731, 79.988869, "2015-12-30 11:23:23");
         // Exercise SUT
-        boolean actual = StringUtils.isJSONValid(json);
+        locationSyncher.postUserLocation(location);
+        ServerResponse eventResponse = eventSyncher.createEvent(event);
+        ServerResponse response = sut.getDistanceFromEvent(eventResponse.getId());
+        String actual = response.getDistance();
         // Verify outcome
-        assertEquals(false, actual);
+        assertEquals("52.276937609990604", actual);
+    }
+
+
+    public void testupdateInviteeCheckInStausHAPPYFlow() throws Exception {
+        // Setup fixture
+        String status = "CheckIn";
+        EventSyncher eventSyncher = new EventSyncher();
+        Event event = getDefaultEvent("Lunch", "2017-01-26 19:10:25", "2017-01-28 23:10:00", "Have fun", 14.442599, 79.986456, "Nellore", true, false, "Success", "adarsh", true, "No theam", "Weekly");
+        // Exercise SUT
+        ServerResponse eventResponse = eventSyncher.createEvent(event);
+        ServerResponse response = sut.updateInviteeCheckInStaus(eventResponse.getId(), status);
+        String actual = response.getStatus();
+        // Verify outcome
+        assertEquals("Success", actual);
+    }
+
+
+    private void validateCreateUserResponse(String expected, ServerResponse response, String actual) {
+        if (response.getId() != 0) {
+            assertEquals(expected, actual);
+            assertNotNull(response.getToken());
+            assertTrue(!response.getToken().isEmpty());
+        } else {
+            expected = "User already existed";
+            assertEquals(expected, actual);
+        }
     }
 
     //------------------------------------------------------------------------------------------------------------------
     // Setup
     //------------------------------------------------------------------------------------------------------------------
     UserSyncher sut;
-    boolean createNew = false;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         sut = new UserSyncher();
-        BaseSyncher.setAccessToken("9b593f9dd9f7478db4f62803b492d8");//ADARSH
-        //9b593f9dd9f7478db4f62803b492d8 ADARSH
+        BaseSyncher.setAccessToken("9d089f87274db55d250b65");//ADARSH
+        //b1b97ff047047d9308fbb764826 ADARSH
         //963496fd7054654b2984066d8585 Local testing
     }
 

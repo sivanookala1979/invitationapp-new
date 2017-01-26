@@ -29,7 +29,7 @@ public class GroupSyncher extends BaseSyncher {
             String dataFromServer = HTTPUtils.getDataFromServer(BASE_URL + "groups/create_group.json?name=" + group.getGroupName().replace(" ", "%20") + "&contact_numbers=" + group.getContacts().replace(" ", "%20"), "GET", true);
             JSONObject groupres = new JSONObject(dataFromServer);
             if (groupres.has("id")) {
-                response.setId(groupres.getInt("id") + "");
+                response.setId(groupres.getInt("id") );
             }
             response.setStatus(groupres.getString("status"));
         } catch (Exception e) {
@@ -44,7 +44,7 @@ public class GroupSyncher extends BaseSyncher {
             String dataFromServer = HTTPUtils.getDataFromServer(BASE_URL + "groups/create_group_by_invites.json?event_id=" + eventId + "&name=" + groupName.replace(" ", "%20"), "GET", true);
             JSONObject groupres = new JSONObject(dataFromServer);
             if (groupres.has("id")) {
-                response.setId(groupres.getInt("id") + "");
+                response.setId(groupres.getInt("id"));
             }
             response.setStatus(groupres.getString("status"));
         } catch (Exception e) {

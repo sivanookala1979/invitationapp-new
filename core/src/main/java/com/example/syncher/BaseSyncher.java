@@ -10,8 +10,8 @@ import org.json.JSONObject;
 public class BaseSyncher {
 
     public static ExceptionHandler exceptionHandler = new DefaultExceptionHandler();
-    //public static String BASE_URL = "http://192.168.10.3:8989/";
-    public static String BASE_URL = "http://invtapp.cerone-software.com/";//"http://valeeds.cerone-software.com/";
+    //public static String BASE_URL = "http://192.168.10.11:4000/";
+    public static String BASE_URL = "http://invtapp.cerone-software.com/";
     public static String accessToken;
 
     public void handleException(Exception exception) {

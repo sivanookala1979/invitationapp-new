@@ -10,16 +10,16 @@ package com.example.dataobjects;
  */
 public class ServerResponse {
 
-    String id;
+    int id;
     String status;
     String token;
     String distance;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

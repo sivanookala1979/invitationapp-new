@@ -49,9 +49,9 @@ public class GroupSyncherTest extends TestCase {
         int eventId = 38;
         ServerResponse response = sut.createGroupByNameAndEventId(groupName, eventId);
         // Exercise SUT
-        String actual = response.getId();
+        int actual = response.getId();
         // Verify outcome
-        assertNotNull(actual);
+        assertTrue(actual>0);
     }
 
     public Group getGroup(String name, String contacts) {

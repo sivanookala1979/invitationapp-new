@@ -26,9 +26,9 @@ public class EventSyncherTest extends TestCase {
             Event event = getDefaultEvent("Lunch", "2016-02-27 19:10:25", "2016-02-28 23:10:00", "Have fun", 14.902667857153673, 79.99365784227848, "Nellore", true, false, "Success", "adarsh", true, "No theam", "Weekly");
             // Exercise SUT
             ServerResponse response = sut.createEvent(event);
-            String actual = response.getId();
+            int actual = response.getId();
             // Verify outcome
-            assertNotNull(actual);
+            assertTrue(actual>0);
         }
     }
 
@@ -39,9 +39,9 @@ public class EventSyncherTest extends TestCase {
             event.setEventId(39);
             // Exercise SUT
             ServerResponse response = sut.createEvent(event);
-            String actual = response.getId();
+            int actual = response.getId();
             // Verify outcome
-            assertNotNull(actual);
+            assertTrue(actual>0);
         }
     }
 
@@ -96,8 +96,8 @@ public class EventSyncherTest extends TestCase {
     public void testDeleteEventHappyFlow() throws Exception {
         // Setup fixture
         int eventId = 50;
-        String expected = "50";
-        String actual;
+        int expected = 50;
+        int actual;
         ServerResponse deleteEventResponse = sut.deleteEvent(eventId);
         // Exercise SUT
         actual = deleteEventResponse.getId();
