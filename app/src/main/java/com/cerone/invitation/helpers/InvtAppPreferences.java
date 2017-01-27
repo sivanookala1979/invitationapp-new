@@ -187,12 +187,12 @@ public class InvtAppPreferences {
         pref.edit().putString(INVITATION, contactDetails).commit();
     }
 
-    public static void setOwnerId(String accessToken) {
-        pref.edit().putString(OWNER_ID, accessToken).commit();
+    public static void setOwnerId(int ownerId) {
+        pref.edit().putInt(OWNER_ID, ownerId).commit();
     }
 
-    public static String getOwnerId() {
-        return pref.getString(OWNER_ID, "");
+    public static int getOwnerId() {
+        return pref.getInt(OWNER_ID, 0);
     }
 
     public static void setRecentAddressDetails(List<UserLocation> contacts) {

@@ -34,12 +34,13 @@ public class InvitationActivity extends BaseActivity implements OnItemClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen_layout_new);
+        addToolbarView();
         TextView title = (TextView) findViewById(R.id.toolbar_title);
         title.setText("My Invitations");
         listView = (ListView) findViewById(R.id.events_list);
         findViewById(R.id.toolbarEvent).setVisibility(View.INVISIBLE);
         listView.setOnItemClickListener(this);
-        createLeftMenu(this);
+       // createLeftMenu(this);
         getMyEvents();
     }
 
@@ -76,9 +77,9 @@ public class InvitationActivity extends BaseActivity implements OnItemClickListe
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (!(parent.getAdapter() instanceof HomeEventAdapter)) {
-            if (position != 2)
-                onLeftMenuItemClick(parent, view, position, id);
-            else
+            if (position != 2) {
+                //onLeftMenuItemClick(parent, view, position, id);
+            }else
                 ToastHelper.blueToast(getApplicationContext(), "You are in my invitations.");
         } else {
             Event event = events.get(position);

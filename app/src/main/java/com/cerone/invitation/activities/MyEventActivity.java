@@ -36,6 +36,7 @@ public class MyEventActivity extends BaseActivity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_information_layout);
+        addToolbarView();
         participantsLayout = (LinearLayout) findViewById(R.id.participantsLayout);
         editEvent = (Button) findViewById(R.id.editEvent);
         shareEvent = (Button) findViewById(R.id.shareEvent);
@@ -49,7 +50,7 @@ public class MyEventActivity extends BaseActivity implements OnClickListener {
     }
 
     private void loadEventData() {
-        TextView eventName = (TextView) findViewById(R.id.headerTitle);
+        TextView eventName = (TextView) findViewById(R.id.toolbar_title);
         TextView description = (TextView) findViewById(R.id.description);
         TextView eventStartDate = (TextView) findViewById(R.id.eventStartDate);
         TextView eventEndDate = (TextView) findViewById(R.id.eventEndDate);
@@ -122,7 +123,7 @@ public class MyEventActivity extends BaseActivity implements OnClickListener {
             @Override
             public void afterPostExecute() {
                 Toast.makeText(getApplicationContext(), serverResponse.getStatus(), Toast.LENGTH_LONG).show();
-                if (serverResponse.getId() != null) {
+                if (serverResponse.getId()>0) {
                     Intent intent = new Intent(MyEventActivity.this, HomeScreenActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);

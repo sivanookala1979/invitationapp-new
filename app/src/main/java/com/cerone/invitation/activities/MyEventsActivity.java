@@ -42,13 +42,14 @@ public class MyEventsActivity extends BaseActivity implements OnClickListener, O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen_layout_new);
+        addToolbarView();
         listView = (ListView) findViewById(R.id.events_list);
         TextView title = (TextView) findViewById(R.id.toolbar_title);
         title.setText("My Events");
         newEvent = (ImageView) findViewById(R.id.toolbarEvent);
         newEvent.setOnClickListener(this);
         listView.setOnItemClickListener(this);
-        createLeftMenu(this);
+        //createLeftMenu(this);
         getMyEvents();
     }
 
@@ -89,10 +90,10 @@ public class MyEventsActivity extends BaseActivity implements OnClickListener, O
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (!(parent.getAdapter() instanceof HomeEventAdapter)) {
-            if (position != 1)
-                onLeftMenuItemClick(parent, view, position, id);
-            else
-                ToastHelper.blueToast(getApplicationContext(), "You are in MY Events.");
+//            if (position != 1)
+//                onLeftMenuItemClick(parent, view, position, id);
+//            else
+//                ToastHelper.blueToast(getApplicationContext(), "You are in MY Events.");
         } else {
             InvtAppPreferences.setEventDetails(events.get(position));
             Intent intent;

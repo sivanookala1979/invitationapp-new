@@ -68,7 +68,7 @@ public class RegistrationActivity extends BaseActivity implements OnClickListene
 
                             @Override
                             public void afterPostExecute() {
-                                if (serverResponse.getId() != null) {
+                                if (serverResponse.getId() >0) {
                                     setLoginDetails(serverResponse);
                                     Toast.makeText(getApplicationContext(), "Successfully Registered.", Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);

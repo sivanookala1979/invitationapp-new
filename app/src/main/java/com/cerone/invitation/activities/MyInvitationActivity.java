@@ -37,6 +37,7 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_information_layout);
+        addToolbarView();
         invitations = InvtAppPreferences.getInvitation();
         participantsLayout = (LinearLayout) findViewById(R.id.participantsLayout);
         location = (LinearLayout) findViewById(R.id.gpsLocationLayout);
@@ -66,7 +67,7 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
     }
 
     private void loadEventData() {
-        TextView eventName = (TextView) findViewById(R.id.headerTitle);
+        TextView eventName = (TextView) findViewById(R.id.toolbar_title);
         TextView description = (TextView) findViewById(R.id.description);
         TextView eventStartDate = (TextView) findViewById(R.id.eventStartDate);
         TextView eventEndDate = (TextView) findViewById(R.id.eventEndDate);

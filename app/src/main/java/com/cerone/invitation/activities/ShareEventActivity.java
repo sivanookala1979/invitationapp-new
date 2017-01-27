@@ -34,6 +34,8 @@ import com.example.utills.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cerone.invitation.R.id.headerBack;
+
 
 /**
  * @author Adarsh.T
@@ -46,7 +48,6 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
     List<Group> listOfSelectedGroups = new ArrayList<Group>();
     List<String> listOfGroupIds = new ArrayList<String>();
     ListView listView, groupList;
-    ImageButton headerBack;
     ContactAdapter adapter;
     GroupAdapter groupAdapter;
     Button shareEvent, groupsView, appContactsView, smsContactsView;
@@ -61,16 +62,15 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.share_events_layout);
+        addToolbarView();
         isNewEvent = getIntent().getExtras().getBoolean("newEvent");
         listView = (ListView) findViewById(R.id.attendeeslist);
         groupList = (ListView) findViewById(R.id.grouplist);
         shareEvent = (Button) findViewById(R.id.shareEventData);
-        headerBack = (ImageButton) findViewById(R.id.headerBack);
         groupsView = (Button) findViewById(R.id.groups);
         appContactsView = (Button) findViewById(R.id.appContacts);
         smsContactsView = (Button) findViewById(R.id.smsContacts);
         shareEvent.setOnClickListener(this);
-        headerBack.setOnClickListener(this);
         groupsView.setOnClickListener(this);
         appContactsView.setOnClickListener(this);
         smsContactsView.setOnClickListener(this);
@@ -180,7 +180,6 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                 startActivityForResult(smsIntent, 200);
                 break;
             case R.id.cancel :
-            case R.id.headerBack :
                 finish();
                 break;
             case R.id.shareEventData :
@@ -196,7 +195,7 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                             if (isNewEvent) {
                                 EventSyncher eventSyncher = new EventSyncher();
                                 serverResponse = eventSyncher.createEvent(eventDetails);
-                                eventId = Integer.parseInt(serverResponse.getId());
+                                eventId = serverResponse.getId();
                             } else {
                                 eventId = eventDetails.getEventId();
                             }

@@ -24,7 +24,7 @@
                 android:id="@+id/headerBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_arrow_back_white_24dp"
+                android:background="@drawable/ic_back_arrow"
                 android:padding="5dp" />
 
             <TextView

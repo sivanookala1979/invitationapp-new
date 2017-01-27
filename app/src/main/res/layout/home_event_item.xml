@@ -14,9 +14,11 @@
         <ImageView
             android:id="@+id/eventPicture"
             android:layout_width="0dp"
+            android:layout_margin="5dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="25"
+            android:scaleType="fitCenter"
             android:background="@drawable/music" />
 
         <LinearLayout
@@ -32,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
+                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                 android:text="name"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size"
@@ -43,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
+                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                 android:text="Start date:"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_medium" />
@@ -69,6 +73,7 @@
                         android:padding="5dp"
                         android:singleLine="true"
                         android:text="100"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                         android:textColor="@color/white"
                         android:textSize="@dimen/very_small_text_size" />
 
@@ -80,6 +85,7 @@
                         android:gravity="center"
                         android:padding="5dp"
                         android:singleLine="true"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                         android:text="Invitees"
                         android:textColor="@color/orange"
                         android:textSize="@dimen/very_small_text_size" />
@@ -102,6 +108,7 @@
                         android:padding="5dp"
                         android:singleLine="true"
                         android:text="100"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                         android:textColor="@color/white"
                         android:textSize="@dimen/very_small_text_size" />
 
@@ -114,6 +121,7 @@
                         android:padding="5dp"
                         android:singleLine="true"
                         android:text="Accept "
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                         android:textColor="@color/green_light"
                         android:textSize="@dimen/very_small_text_size" />
                 </LinearLayout>
@@ -135,6 +143,7 @@
                         android:padding="5dp"
                         android:singleLine="true"
                         android:text="100"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                         android:textColor="@color/white"
                         android:textSize="@dimen/very_small_text_size" />
 
@@ -146,6 +155,7 @@
                         android:gravity="center"
                         android:padding="5dp"
                         android:singleLine="true"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                         android:text="Checked In "
                         android:textColor="@color/blue_shade"
                         android:textSize="@dimen/very_small_text_size" />

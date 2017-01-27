@@ -63,6 +63,7 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_event_layout);
+        addToolbarView();
         startDateLayout = (LinearLayout) findViewById(R.id.startTimeLayout1);
         eventNameInput = (TextInputLayout) findViewById(R.id.eventNameInput);
         eventDescriptionInput = (TextInputLayout) findViewById(R.id.eventDescriptionInput);
@@ -209,7 +210,6 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
                 }
                 break;
             case R.id.Cancel :
-            case R.id.newEventBack :
                 finish();
                 break;
         }
@@ -227,7 +227,7 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
 
                 @Override
                 public void afterPostExecute() {
-                    if (createEvent.getId() != null & createEvent.getId().length() > 0) {
+                    if ( createEvent.getId() > 0) {
                         Toast.makeText(getApplicationContext(), "Event Created.", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(NewEventActivity.this, HomeScreenActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

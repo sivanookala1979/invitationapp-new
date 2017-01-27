@@ -7,6 +7,8 @@
     <string name="country_code">91</string>
     <string name="mobile_number_hint">Enter mobile number with country code</string>
     <string name="register_button_text">Register</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string-array name="CountryCodes">
         <item>93,AF</item>

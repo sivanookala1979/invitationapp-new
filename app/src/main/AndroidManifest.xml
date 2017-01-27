@@ -22,10 +22,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAr8xCnXF4DmGqHV1JGibUlw57mkNrAPLs" />
+
         <activity
-            android:name="com.cerone.invitation.MainActivity"
+            android:name=".activities.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,9 +63,9 @@
         <activity
             android:name=".activities.MultipleGroupSelectionActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".activities.LoginActivity"
-            android:screenOrientation="portrait"/>
+        <!--<activity-->
+            <!--android:name=".activities.LoginActivity"-->
+            <!--android:screenOrientation="portrait"/>-->
         <activity
             android:name=".activities.GpsLocationActivity"
             android:screenOrientation="portrait"/>

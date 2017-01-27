@@ -71,8 +71,7 @@ public class HomeEventAdapter extends ArrayAdapter<Event> {
         checkInCount.setText(event.getCheckedInCount() + "");
         total.setText(event.getInviteesCount() + "");
         if (displayTag) {
-            String ownerId2 = InvtAppPreferences.getOwnerId();
-            int ownerId = Integer.parseInt(ownerId2.isEmpty() ? "0" : ownerId2);
+            int ownerId = InvtAppPreferences.getOwnerId();
             TextView tag = (TextView) row.findViewById(R.id.role);
             tag.setVisibility(View.VISIBLE);
             if (event.getOwnerId() == ownerId) {

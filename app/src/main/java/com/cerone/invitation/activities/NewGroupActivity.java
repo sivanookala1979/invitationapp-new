@@ -50,6 +50,7 @@ public class NewGroupActivity extends BaseActivity implements OnItemClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.group_layout);
+        addToolbarView();
         groupNameInput = (TextInputLayout) findViewById(R.id.groupNameInput);
         groupName = (EditText) findViewById(R.id.groupName);
         contactsListView = (ListView) findViewById(R.id.contacts);
@@ -59,7 +60,7 @@ public class NewGroupActivity extends BaseActivity implements OnItemClickListene
         createGroup.setOnClickListener(this);
         newPerson = (ImageView) findViewById(R.id.toolbarEvent);
         newPerson.setOnClickListener(this);
-        createLeftMenu(this);
+        //createLeftMenu(this);
         contactAdapter = new ContactAdapter(getApplicationContext(), R.layout.contact_item, users, true);
         contactsListView.setAdapter(contactAdapter);
     }
@@ -67,10 +68,10 @@ public class NewGroupActivity extends BaseActivity implements OnItemClickListene
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int index, long id) {
         if (!(adapterView.getAdapter() instanceof ContactAdapter)) {
-            if (index != 3)
-                onLeftMenuItemClick(adapterView, view, index, id);
-            else
-                ToastHelper.blueToast(getApplicationContext(), "You are in create group.");
+//            if (index != 3)
+//                onLeftMenuItemClick(adapterView, view, index, id);
+//            else
+//                ToastHelper.blueToast(getApplicationContext(), "You are in create group.");
         } else {
             User user = users.get(index);
             switch (view.getId()) {
@@ -111,7 +112,7 @@ public class NewGroupActivity extends BaseActivity implements OnItemClickListene
 
                         @Override
                         public void afterPostExecute() {
-                            if (serverResponse.getId() != null && !serverResponse.getId().isEmpty()) {
+                            if (serverResponse.getId()>0) {
                                 ToastHelper.blueToast(getApplicationContext(), serverResponse.getStatus());
                                 finish();
                             } else {
