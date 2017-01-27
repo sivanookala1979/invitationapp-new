@@ -43,23 +43,19 @@ public class MultipleContactsActivity extends BaseActivity implements OnClickLis
     ListView listView;
     MultipleContactAdapter adapter;
     Button done;
-    ImageButton back;
     EditText search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.multiple_contacts_layout);
+        addToolbarView();
         listView = (ListView) findViewById(R.id.events_list);
         done = (Button) findViewById(R.id.shareEventData);
-        back = (ImageButton) findViewById(R.id.headerBack);
         search = (EditText) findViewById(R.id.search);
-        TextView title = (TextView) findViewById(R.id.headerTitle);
-        title.setText("Contacts");
         done.setText("Done");
         visibleLayout(done);
         done.setOnClickListener(this);
-        back.setOnClickListener(this);
         actualUsers = InvtAppPreferences.getContacts();
         boolean isGroup = getIntent().getExtras().getBoolean("group");
         listView.setOnItemClickListener(this);
