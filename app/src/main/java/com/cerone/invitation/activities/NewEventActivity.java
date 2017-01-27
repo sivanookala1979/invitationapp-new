@@ -1,11 +1,13 @@
 package com.cerone.invitation.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,7 +26,9 @@ import com.cerone.invitation.helpers.InvtAppTimePicker;
 import com.cerone.invitation.helpers.InvtTextWatcher;
 import com.cerone.invitation.helpers.MobileHelper;
 import com.cerone.invitation.helpers.ToastHelper;
-import com.example.dataobjects.*;
+import com.example.dataobjects.Event;
+import com.example.dataobjects.ServerResponse;
+import com.example.dataobjects.UserLocation;
 import com.example.syncher.EventSyncher;
 import com.example.utills.InvitationAppConstants;
 import com.example.utills.StringUtils;
@@ -158,6 +162,13 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
+        eventName.setFocusable(false);
+        description.setFocusable(false);
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         switch (v.getId()) {
             case R.id.startTimeLogo :
             case R.id.startTime :
@@ -310,7 +321,7 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
         UserLocation kavali = new UserLocation();
         kavali.setLatitude(14.913181);
         kavali.setLongitude(79.992980);
-        kavali.setAddress("Santhi Nager, kavali");
+        kavali.setAddress("Santhi Nagar, kavali");
         list.add(kavali);
         UserLocation nellore = new UserLocation();
         nellore.setLatitude(14.442599);
