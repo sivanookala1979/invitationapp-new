@@ -100,9 +100,7 @@ public class LocationSyncher extends BaseSyncher {
             object.put("time", StringUtils.StringToDate(userLocation.getDateTime()));
             JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "events/post_location.json", "POST", object.toString(), true));
             if (jsonResponse != null) {
-                {
-                    response.setStatus(jsonResponse.getString("status"));
-                }
+                response.setStatus(jsonResponse.getString("status"));
             }
         } catch (Exception e) {
             handleException(e);

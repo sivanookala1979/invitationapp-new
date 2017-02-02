@@ -24,7 +24,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest extends BaseGetBikeActivityTest {
+public class MainActivityTest extends BaseActivityTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);

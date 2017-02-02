@@ -46,7 +46,7 @@ import static com.cerone.invitation.R.id.map;
 
 
 
-public class LocationActivity extends FragmentActivity implements OnClickListener,OnMapReadyCallback {
+public class LocationActivity extends BaseActivity implements OnClickListener,OnMapReadyCallback {
 
     GoogleMap googleMap;
     Button doneButton;
@@ -65,6 +65,7 @@ public class LocationActivity extends FragmentActivity implements OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.google_map_layout);
+        addToolbarView();
         doneButton = (Button) findViewById(R.id.done);
         addressText = (TextView) findViewById(R.id.addressDetails);
         locationFilter = (InstantAutoComplete) findViewById(R.id.locationSearch);

@@ -162,8 +162,6 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        eventName.setFocusable(false);
-        description.setFocusable(false);
         View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);

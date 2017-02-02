@@ -1,11 +1,14 @@
 package com.cerone.invitation.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -20,26 +23,27 @@ import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.*;
 import com.example.syncher.UserSyncher;
 
+import static com.cerone.invitation.R.id.headerBack;
+
 
 public class SignInActivity extends BaseActivity implements OnClickListener {
 
     EditText mobileNumber;
     Button signIn_button;
     String mobileNumberinString = "";
-    ImageButton headerBack;
     TextInputLayout inputLayoutEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin);
+        addToolbarView();
         inputLayoutEmail = (TextInputLayout) findViewById(R.id.mobileNumberlayout);
         mobileNumber = (EditText) findViewById(R.id.editMobileNumber);
         signIn_button = (Button) findViewById(R.id.signIn);
         signIn_button.setOnClickListener(this);
-        headerBack = (ImageButton) findViewById(R.id.headerBack);
-        headerBack.setOnClickListener(this);
         mobileNumber.addTextChangedListener(new InvtTextWatcher(mobileNumber, inputLayoutEmail, "Mobile number should not be empty."));
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
     @Override
@@ -77,9 +81,6 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
                         }.execute();
                     }
                 }
-                break;
-            case R.id.headerBack :
-                finish();
                 break;
         }
     }

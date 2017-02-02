@@ -28,7 +28,7 @@ import static org.hamcrest.Matchers.not;
  * Created by sivanookala on 13/12/16.
  */
 
-public class BaseGetBikeActivityTest {
+public class BaseActivityTest {
 
     protected Activity currentActivity;
 

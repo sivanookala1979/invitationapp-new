@@ -87,7 +87,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                     if (myEventsList.size() > 0) {
                         if (!InvtAppPreferences.isServiceRefresh()) {
                             InvtAppPreferences.setServiceRefresh(true);
-                            //activateService();
+                            activateService();
                         }
                     } else {
                         ToastHelper.blueToast(getApplicationContext(), "No events found.");

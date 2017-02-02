@@ -83,21 +83,25 @@ public class InvitationSyncher extends BaseSyncher {
         return listOfInvitaioons;
     }
 
-    public String getInvitationStatus(int eventId, boolean accepted) {
+    public Eventstatistics getInvitationStatus(int eventId, boolean accepted) {
+        Eventstatistics eventstatistics = new Eventstatistics();
         try {
             String dataFromServer = HTTPUtils.getDataFromServer(BASE_URL + "events/accept_or_reject_invitation.json?event_id=" + eventId + "&accepted=" + accepted, "GET", true);
             if (StringUtils.isJSONValid(dataFromServer)) {
                 JSONObject response = new JSONObject(dataFromServer);
                 if (response != null) {
-                    return response.getString("status");
+                    eventstatistics.setValid(true);
+                    eventstatistics.setMessage(response.getString("status"));
+                    eventstatistics.setAcceptCount(response.getInt("accepted_count"));
+                    eventstatistics.setTotalInviteesCount(response.getInt("invitees_count"));
+                    eventstatistics.setRejectCount(response.getInt("rejected_count"));
+                    eventstatistics.setCheckedInCount(response.getInt("check_in_count"));
                 }
-            } else {
-                return "Invalid response";
             }
         } catch (Exception e) {
             handleException(e);
         }
-        return null;
+        return eventstatistics;
     }
 
     public List<Invitee> getInvitees(int eventId, String key) {

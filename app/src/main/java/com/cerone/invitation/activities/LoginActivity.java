@@ -55,13 +55,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        //  menu.findItem(R.id.action_settings).setVisible(false);
-        return true;
-    }
-
-    @Override
     public void onBackPressed() {
         doExit();
     }

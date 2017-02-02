@@ -22,12 +22,9 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-        app:itemTextColor="@color/black"
-        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/blue_shade"
+        app:itemIconTint="@color/blue_shade"
         app:menu="@menu/activity_navigation_drawer_drawer"
         android:actionBarItemBackground="@color/white"
         />
-
-
-
 </android.support.v4.widget.DrawerLayout>

@@ -4,6 +4,8 @@
  */
 package com.example.syncher;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -143,6 +145,10 @@ public class EventSyncher extends BaseSyncher {
                         if (!jsonObject.isNull("hide")) {
                             event.setHide(jsonObject.getBoolean("hide"));
                         }
+                        if(jsonObject.has("is_accepted")) {
+                            event.setAccepted(jsonObject.getBoolean("is_accepted"));
+                        }
+                        event.setLatitude(jsonObject.getDouble("latitude"));
                         event.setLatitude(jsonObject.getDouble("latitude"));
                         event.setLongitude(jsonObject.getDouble("longitude"));
                         event.setName(jsonObject.getString("event_name"));

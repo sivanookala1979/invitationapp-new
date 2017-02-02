@@ -6,6 +6,7 @@ package com.cerone.invitation.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -20,6 +21,8 @@ import com.example.dataobjects.*;
 import com.example.syncher.InvitationSyncher;
 import com.example.utills.StringUtils;
 
+import static com.cerone.invitation.R.drawable.event;
+
 
 /**
  * @author peekay
@@ -31,7 +34,7 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
     LinearLayout participantsLayout, location, invitationSelection;
     Button accept, maybe, reject, invitees, cancel;
     Invitation invitations = new Invitation();
-    TextView acceptCount, rejectCount;
+    TextView acceptCount, rejectCount, totalCount,checkedInCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,6 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
         invitations = InvtAppPreferences.getInvitation();
         participantsLayout = (LinearLayout) findViewById(R.id.participantsLayout);
         location = (LinearLayout) findViewById(R.id.gpsLocationLayout);
-        location.setVisibility(View.VISIBLE);
         participantsLayout.setVisibility(View.GONE);
         invitationSelection = (LinearLayout) findViewById(R.id.invitationSelection);
         invitationSelection.setVisibility(View.VISIBLE);
@@ -63,6 +65,8 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
         maybe.setOnClickListener(this);
         reject.setOnClickListener(this);
         eventDetails = InvtAppPreferences.getEventDetails();
+        Log.d("Accept","Accept status "+eventDetails.isAccepted());
+
         loadEventData();
     }
 
@@ -77,8 +81,8 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
         TextView participantsInfo = (TextView) findViewById(R.id.participantsInfo);
         acceptCount = (TextView) findViewById(R.id.acceptCount);
         rejectCount = (TextView) findViewById(R.id.rejectCount);
-        TextView totalCount = (TextView) findViewById(R.id.totalCount);
-        TextView checkedInCount = (TextView) findViewById(R.id.checkedinCount);
+        totalCount = (TextView) findViewById(R.id.totalCount);
+        checkedInCount = (TextView) findViewById(R.id.checkedinCount);
         acceptCount.setText("" + eventDetails.getAcceptedCount());
         rejectCount.setText("" + eventDetails.getRejectedCount());
         totalCount.setText("" + eventDetails.getInviteesCount());
@@ -91,6 +95,11 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
         eventEndTime.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 2));
         eventLocation.setText(eventDetails.getAddress());
         participantsInfo.setText("invitees ");
+        if(eventDetails.isAccepted()){
+            invitationSelection.setVisibility(View.GONE);
+        }else {
+            invitationSelection.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -131,7 +140,7 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
         final String response = "";
         new InvtAppAsyncTask(this) {
 
-            String response;
+            Eventstatistics response;
 
             @Override
             public void process() {
@@ -142,16 +151,17 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
             @Override
             public void afterPostExecute() {
                 findViewById(R.id.invitationSelection).setVisibility(View.VISIBLE);
-                if (response != null && !response.equals("Invalid response")) {
+                if (response.isValid()) {
                     if (status) {
                         activateService();
-                        acceptCount.setText((eventDetails.getAcceptedCount() + 1) + "");
-                    } else {
-                        rejectCount.setText((eventDetails.getRejectedCount() + 1) + "");
                     }
+                    rejectCount.setText(response.getRejectCount() + "");
+                    acceptCount.setText(response.getAcceptCount() + "");
+                    totalCount.setText(response.getAcceptCount() + "");
+                    checkedInCount.setText("" + response.getCheckedInCount());
                     invitationSelection.setVisibility(View.GONE);
                 }
-                ToastHelper.blueToast(getApplicationContext(), response);
+                ToastHelper.blueToast(getApplicationContext(), response.getMessage());
             }
         }.execute();
     }

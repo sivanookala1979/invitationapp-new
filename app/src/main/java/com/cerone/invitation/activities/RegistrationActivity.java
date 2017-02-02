@@ -6,6 +6,7 @@ import android.support.design.widget.TextInputLayout;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -24,23 +25,23 @@ public class RegistrationActivity extends BaseActivity implements OnClickListene
 
     EditText userName, userMobileNumber;
     Button register;
-    ImageButton headerBack;
     TextInputLayout mobileNumberInput, userNameInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_layout);
+        addToolbarView();
         userName = (EditText) findViewById(R.id.editUserName);
         mobileNumberInput = (TextInputLayout) findViewById(R.id.mobileNumberInput);
         userNameInput = (TextInputLayout) findViewById(R.id.userNameInput);
         userMobileNumber = (EditText) findViewById(R.id.editMobileNumber);
-        headerBack = (ImageButton) findViewById(R.id.headerBack);
-        headerBack.setOnClickListener(this);
         register = (Button) findViewById(R.id.register);
         register.setOnClickListener(this);
         userMobileNumber.addTextChangedListener(new InvtTextWatcher(userMobileNumber, mobileNumberInput, "Mobile number should not be empty."));
         userName.addTextChangedListener(new InvtTextWatcher(userName, userNameInput, "User name should not be empty."));
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
     }
 
     @Override
@@ -81,9 +82,6 @@ public class RegistrationActivity extends BaseActivity implements OnClickListene
                     }
                 } else
                     ToastHelper.redToast(getApplicationContext(), "Please enter valid data. ");
-                break;
-            case R.id.headerBack :
-                finish();
                 break;
         }
     }
