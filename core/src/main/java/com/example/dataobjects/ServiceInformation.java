@@ -4,6 +4,8 @@
  */
 package com.example.dataobjects;
 
+import android.util.Log;
+
 /**
  * @author adarsh
  * @version 1.0, Dec 31, 2015
@@ -81,5 +83,17 @@ public class ServiceInformation {
 
     public void setEventInfo(Event eventInfo) {
         this.eventInfo = eventInfo;
+    }
+    public void printServiceInformation(){
+        Log.d("ServiceInformation","is event "+event);
+        Log.d("ServiceInformation","Service start time "+serviceStartTime);
+        Log.d("ServiceInformation","Service end time "+servieEndTime);
+        Log.d("ServiceInformation","Event start time "+eventStartTime);
+        Log.d("ServiceInformation","Event end time "+enventEndTime);
+        Log.d("ServiceInformation","check In Notification Service Start Time "+checkInNotificationServiceStartTime);
+        Log.d("ServiceInformation","showNotification "+showNotification);
+        if(eventInfo!= null) {
+            Log.d("ServiceInformation", "Event info  " + getEventInfo().getName() + " " + getEventInfo().getEventId());
+        }
     }
 }

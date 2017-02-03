@@ -33,7 +33,7 @@ import java.util.List;
  * @author peekay
  * @version 1.0, 03-Feb-2016
  */
-public class InvitieesTabActivity extends AppCompatActivity implements View.OnClickListener {
+public class InvitieesTabActivity extends BaseActivity {
 
     ActionBar actionBar;
     ViewPager viewPager;
@@ -45,13 +45,7 @@ public class InvitieesTabActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.status_layout);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        TextView titleText = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        ImageButton backButton = (ImageButton) toolbar.findViewById(R.id.toolbar_back_image);
-        backButton.setOnClickListener(this);
-        toolbar.findViewById(R.id.action_layout).setOnClickListener(this);
+        addToolbarView();
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Pending"));
         tabLayout.addTab(tabLayout.newTab().setText("Checked In"));
@@ -82,15 +76,4 @@ public class InvitieesTabActivity extends AppCompatActivity implements View.OnCl
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.action_layout :
-            case R.id.toolbar_back_image :
-                this.finish();
-                break;
-            default :
-                break;
-        }
-    }
 }

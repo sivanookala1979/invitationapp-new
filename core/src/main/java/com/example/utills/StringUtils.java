@@ -157,12 +157,14 @@ public class StringUtils {
 
     public static String getNewDate(String oldDate, int minutes) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println("Old dateTime "+oldDate);
         String newDate = oldDate;
         Date stringToDate = StringToDate(oldDate);
         Calendar cal = Calendar.getInstance();
         cal.setTime(stringToDate);
         cal.add(Calendar.MINUTE, minutes);
         newDate = sdf.format(cal.getTime());
+        System.out.println("New dateTime "+newDate);
         return newDate;
     }
 

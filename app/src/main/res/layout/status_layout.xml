@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:app1="http://schemas.android.com/apk/res/com.example.onedel_android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -8,29 +8,19 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue_shade" >
-
-        <LinearLayout
-            android:id="@+id/action_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="15dp" >
-
-            <ImageButton
-                android:id="@+id/toolbar_back_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_back_arrow" />
-        </LinearLayout>
+        android:layout_alignParentTop="true"
+        android:background="@color/blue_shade"
+        android:gravity="center"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <TextView
             android:id="@+id/toolbar_title"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="INVITEES"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size" />
+            android:text="Invites"
+            android:textColor="@android:color/white" />
     </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.TabLayout

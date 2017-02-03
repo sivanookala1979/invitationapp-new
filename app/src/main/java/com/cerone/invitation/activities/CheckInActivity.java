@@ -20,6 +20,7 @@ import com.cerone.invitation.R;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.ToastHelper;
+import com.cerone.invitation.service.MyService;
 import com.cerone.invitation.service.NotificationService;
 import com.example.dataobjects.*;
 import com.example.syncher.BaseSyncher;
@@ -59,7 +60,7 @@ public class CheckInActivity extends BaseActivity implements OnClickListener {
         notGoing.setOnClickListener(this);
         updateData();
         Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        mediaPlayer = MediaPlayer.create(this, R.drawable.invitation);
+        mediaPlayer = MediaPlayer.create(this, R.raw.invitation);
         mediaPlayer.start();
         v.vibrate(10000);
     }

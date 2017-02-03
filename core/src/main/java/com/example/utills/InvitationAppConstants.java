@@ -20,5 +20,5 @@ public class InvitationAppConstants {
     public static final String SUCCESS = "Success";
     public static final int IMAG_LOAD = 1000;
     public static final int IMAGE_CAPTURE = 1100;
-    public static final int TIME_DIFFERENCE = -(60 * 11) + 30;
+    public static final int TIME_DIFFERENCE = -(60 * 6) + 30;
 }

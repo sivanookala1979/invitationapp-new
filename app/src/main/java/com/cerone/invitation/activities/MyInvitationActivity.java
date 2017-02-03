@@ -45,6 +45,7 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
         participantsLayout = (LinearLayout) findViewById(R.id.participantsLayout);
         location = (LinearLayout) findViewById(R.id.gpsLocationLayout);
         participantsLayout.setVisibility(View.GONE);
+        location.setVisibility(View.VISIBLE);
         invitationSelection = (LinearLayout) findViewById(R.id.invitationSelection);
         invitationSelection.setVisibility(View.VISIBLE);
         findViewById(R.id.invitationShare).setVisibility(View.VISIBLE);

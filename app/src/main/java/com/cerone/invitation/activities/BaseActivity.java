@@ -25,6 +25,7 @@ import com.cerone.invitation.R;
 import com.cerone.invitation.adapter.ImageDialogAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
+import com.cerone.invitation.service.MyService;
 import com.example.syncher.BaseSyncher;
 import com.example.syncher.EventSyncher;
 import com.example.syncher.InvitationSyncher;
@@ -140,6 +141,7 @@ public class BaseActivity extends AppCompatActivity {
                     information.setEnventEndTime(event.getEndDateTime());
                     information.setEvent(true);
                     information.setEventInfo(event);
+                    information.printServiceInformation();
                     InvtAppPreferences.setServiceDetails(information);
                     startService();
                 } else {
