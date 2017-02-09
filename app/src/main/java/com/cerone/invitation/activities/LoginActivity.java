@@ -1,5 +1,8 @@
 package com.cerone.invitation.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,7 +12,12 @@ import android.widget.Button;
 
 import com.cerone.invitation.R;
 import com.cerone.invitation.helpers.InvtAppPreferences;
+import com.cerone.invitation.service.MyService;
+import com.cerone.invitation.service.TestService;
 import com.example.syncher.BaseSyncher;
+import com.example.utills.StringUtils;
+
+import java.util.Calendar;
 
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
@@ -35,6 +43,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         registerButton = (Button) findViewById(R.id.registerButton);
         loginButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
+    }
+    private void testService(String dateInfo,int tag) {
+        Intent myIntent = new Intent(this, TestService.class);
+        myIntent.setAction(dateInfo);
+        myIntent.putExtra("flag", tag);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, tag, myIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(StringUtils.StringToDate(dateInfo));
+        alarmManager.cancel(pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 60000 * 2, pendingIntent);
     }
 
     @Override

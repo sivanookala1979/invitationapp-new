@@ -127,19 +127,19 @@ public class InvtAppPreferences {
         return location;
     }
 
-    public static void setServiceDetails(ServiceInformation serviceInformation) {
+    public static void setServiceDetails(List<ServiceInformation> serviceInformation) {
         String serviceInformationString = new Gson().toJson(serviceInformation);
         pref.edit().putString(SERVICE_INFORMATION, serviceInformationString).commit();
     }
 
-    public static ServiceInformation getServiceDetails() {
-        java.lang.reflect.Type type = new TypeToken<ServiceInformation>() {
+    public static List<ServiceInformation> getServiceDetails() {
+        java.lang.reflect.Type type = new TypeToken<List<ServiceInformation>>() {
         }.getType();
-        ServiceInformation serviceInformation = new Gson().fromJson(pref.getString(SERVICE_INFORMATION, ""), type);
-        if (serviceInformation == null) {
-            serviceInformation = new ServiceInformation();
+        List<ServiceInformation> serviceInformationList = new Gson().fromJson(pref.getString(SERVICE_INFORMATION, ""), type);
+        if (serviceInformationList == null) {
+            serviceInformationList = new ArrayList<ServiceInformation>();
         }
-        return serviceInformation;
+        return serviceInformationList;
     }
 
     public static List<User> getContacts() {

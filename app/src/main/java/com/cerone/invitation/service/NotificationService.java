@@ -35,8 +35,9 @@ public class NotificationService extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
         Log.d("Data_notification", "Notification service");
+        final int flag = intent.getExtras().getInt("flag");
         InvtAppPreferences.setPref(context);
-        ServiceInformation serviceDetails = InvtAppPreferences.getServiceDetails();
+        ServiceInformation serviceDetails = InvtAppPreferences.getServiceDetails().get(flag);
         eventInfo = serviceDetails.getEventInfo();
         if (!StringUtils.isGivenDateGreaterThanOrEqualToCurrentDate(serviceDetails.getEventStartTime())) {
             new AsyncTask<String, Void, String>() {
@@ -55,30 +56,29 @@ public class NotificationService extends BroadcastReceiver {
                     if (distanceFromEvent != null && distanceFromEvent.getDistance() != null) {
                         String distance = distanceFromEvent.getDistance();
                         double distanceInfo = Double.parseDouble(distance);
-                        if (distanceInfo < 1) {
+                        if (distanceInfo < 2) {
                             if (eventInfo.isManualCheckIn()) {
                                 Intent newIntent = new Intent(context, CheckInActivity.class);
+                                newIntent.putExtra("flag",flag);
                                 newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(newIntent);
                             } else {
-                                CancelAlarm(context);
+                                CancelAlarm(context,flag);
                             }
-                            CancelAlarm(context);
+                            CancelAlarm(context,flag);
+                            MyService myService = new MyService();
+                            myService.CancelAlarm(context,flag);
                         }
-                        //                        Intent newIntent = new Intent(context, CheckInActivity.class);
-                        //                        newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        //                        context.startActivity(newIntent);
-                        //                        CancelAlarm(context);
                     }
                 }
             }.execute();
         }
     }
 
-    public void CancelAlarm(Context context) {
+    public void CancelAlarm(Context context,int flag) {
         Intent intent = new Intent(context, NotificationService.class);
-        intent.setAction(InvtAppPreferences.getServiceDetails().getCheckInNotificationServiceStartTime());
-        PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        intent.setAction(InvtAppPreferences.getServiceDetails().get(flag).getCheckInNotificationServiceStartTime());
+        PendingIntent sender = PendingIntent.getBroadcast(context, flag, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(sender);
         Log.d("Data_notification", "Notification service closed");

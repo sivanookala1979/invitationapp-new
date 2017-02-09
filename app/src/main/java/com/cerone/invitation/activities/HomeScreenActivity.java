@@ -1,5 +1,8 @@
 package com.cerone.invitation.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,10 +28,14 @@ import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.MobileHelper;
 import com.cerone.invitation.helpers.ToastHelper;
+import com.cerone.invitation.service.MyService;
+import com.cerone.invitation.service.NotificationService;
 import com.example.dataobjects.*;
 import com.example.syncher.EventSyncher;
+import com.example.utills.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -46,7 +53,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         myEvents = (ListView) findViewById(R.id.events_list);
         ImageView imageView = (ImageView) findViewById(R.id.toolbarEvent);
         imageView.setOnClickListener(this);
-        InvtAppPreferences.setServiceDetails(new ServiceInformation());
+        closePreviousServices();
         Log.d("Token", InvtAppPreferences.getAccessToken());
         ownerId = InvtAppPreferences.getOwnerId();
         Log.d("Owner id", ownerId + "");
@@ -55,6 +62,18 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         loadEvents();
 
     }
+
+    private void closePreviousServices() {
+        List<ServiceInformation> serviceDetailsList = InvtAppPreferences.getServiceDetails();
+        for(int i= 0;i<serviceDetailsList.size();i++){
+            MyService service = new MyService();
+            service.CancelAlarm(getApplicationContext(),i);
+            NotificationService notificationService = new NotificationService();
+            notificationService.CancelAlarm(getApplicationContext(),i);
+        }
+        InvtAppPreferences.setServiceDetails(new ArrayList<ServiceInformation>());
+    }
+
 
     private void createLeftMenu() {
         addToolbarView();

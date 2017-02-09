@@ -29,7 +29,7 @@ public class EventSyncher extends BaseSyncher {
         try {
             JSONObject object = new JSONObject();
             object.put("event_name", event.getName());
-            object.put("start_date", StringUtils.StringToDate(event.getStartDateTime()));
+                object.put("start_date", StringUtils.StringToDate(event.getStartDateTime()));
             if (event.getEndDateTime() != null) {
                 object.put("end_date", StringUtils.StringToDate(event.getEndDateTime()));
             }

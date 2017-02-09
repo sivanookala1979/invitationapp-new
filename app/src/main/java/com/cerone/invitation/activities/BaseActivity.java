@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -26,15 +27,25 @@ import com.cerone.invitation.adapter.ImageDialogAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.service.MyService;
+import com.example.dataobjects.DrawerItem;
+import com.example.dataobjects.Event;
+import com.example.dataobjects.Invitation;
+import com.example.dataobjects.ServerResponse;
+import com.example.dataobjects.ServiceInformation;
 import com.example.syncher.BaseSyncher;
 import com.example.syncher.EventSyncher;
 import com.example.syncher.InvitationSyncher;
 import com.example.utills.InvitationAppConstants;
 import com.example.utills.StringUtils;
-import com.example.dataobjects.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import static com.cerone.invitation.R.drawable.event;
+import static com.example.utills.StringUtils.StringToDate;
+import static com.google.android.gms.analytics.internal.zzy.c;
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -131,18 +142,22 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 if (events.size() > 0) {
-                    Event event = events.get(0);
-                    Log.d("Data Event", "Name " + event.getName() + "Event start date " + event.getStartDateTime() + " end date " + event.getEndDateTime());
-                    ServiceInformation information = new ServiceInformation();
-                    information.setCheckInNotificationServiceStartTime(StringUtils.getNewDate(event.getStartDateTime(), -30));
-                    information.setServiceStartTime(StringUtils.getNewDate(event.getStartDateTime(), -60));
-                    information.setServieEndTime(StringUtils.getNewDate(event.getStartDateTime(), 30));
-                    information.setEventStartTime(event.getStartDateTime());
-                    information.setEnventEndTime(event.getEndDateTime());
-                    information.setEvent(true);
-                    information.setEventInfo(event);
-                    information.printServiceInformation();
-                    InvtAppPreferences.setServiceDetails(information);
+                    List<ServiceInformation> servicesList = new ArrayList<ServiceInformation>();
+                    for(Event event:events) {
+                        //Event event = events.get(0);
+                        Log.d("Data Event", "Name " + event.getName() + "Event start date " + event.getStartDateTime() + " end date " + event.getEndDateTime());
+                        ServiceInformation information = new ServiceInformation();
+                        information.setCheckInNotificationServiceStartTime(StringUtils.getNewDate(event.getStartDateTime(), -10));
+                        information.setServiceStartTime(StringUtils.getNewDate(event.getStartDateTime(), -30));
+                        information.setServieEndTime(StringUtils.getNewDate(event.getStartDateTime(), 15));
+                        information.setEventStartTime(event.getStartDateTime());
+                        information.setEnventEndTime(event.getEndDateTime());
+                        information.setEvent(true);
+                        information.setEventInfo(event);
+                        information.printServiceInformation();
+                        servicesList.add(information);
+                    }
+                    InvtAppPreferences.setServiceDetails(servicesList);
                     startService();
                 } else {
                     Log.d("Data", "No future events found");
@@ -152,15 +167,32 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void startService() {
-        ServiceInformation serviceDetails = InvtAppPreferences.getServiceDetails();
-        if (serviceDetails.isEvent()) {
-            Log.d("Data", "Service started at " + StringUtils.getCurrentDate());
-            Intent myIntent = new Intent(this, MyService.class);
-            myIntent.setAction(serviceDetails.getServiceStartTime());
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, myIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            alarmManager.cancel(pendingIntent);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000 * 2, pendingIntent);
+        List<ServiceInformation> serviceDetailsList = InvtAppPreferences.getServiceDetails();
+        int tag = 0;
+        for(ServiceInformation serviceDetails:serviceDetailsList) {
+            if (serviceDetails.isEvent()) {
+                Log.d("Data", "Service started at " + StringUtils.getCurrentDate());
+                Intent myIntent = new Intent(this, MyService.class);
+                myIntent.setAction(serviceDetails.getServiceStartTime());
+                myIntent.putExtra("flag", tag);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, tag, myIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(StringUtils.StringToDate(serviceDetails.getServiceStartTime()));
+                alarmManager.cancel(pendingIntent);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 60000 * 2, pendingIntent);
+//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+//                    Log.d("Data", "Service started at " + StringUtils.getCurrentDate());
+//                    alarmManager.cancel(pendingIntent);
+//                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 60000 * 2, pendingIntent);
+//                } else {
+//                    Log.d("Data", "Service else started at " + serviceDetails.getServiceStartTime());
+//                    AlarmManager.AlarmClockInfo alarmClockInfo = new AlarmManager.AlarmClockInfo(cal.getTimeInMillis(), pendingIntent);
+//                    alarmManager.setAlarmClock(alarmClockInfo, pendingIntent);
+//                   // alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 60000 * 2, pendingIntent);
+//                }
+            }
+            tag++;
         }
     }
 

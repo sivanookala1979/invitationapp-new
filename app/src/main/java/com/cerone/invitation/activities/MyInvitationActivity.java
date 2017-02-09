@@ -95,7 +95,7 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
         eventStartTime.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 2));
         eventEndTime.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 2));
         eventLocation.setText(eventDetails.getAddress());
-        participantsInfo.setText("invitees ");
+        participantsInfo.setText("Invitees ");
         if(eventDetails.isAccepted()){
             invitationSelection.setVisibility(View.GONE);
         }else {

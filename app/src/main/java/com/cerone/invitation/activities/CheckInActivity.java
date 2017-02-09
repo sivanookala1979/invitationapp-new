@@ -28,6 +28,9 @@ import com.example.syncher.UserSyncher;
 import com.example.utills.InvitationAppConstants;
 import com.example.utills.StringUtils;
 
+import java.util.Calendar;
+import java.util.List;
+
 
 /**
  * @author Adarsh.T
@@ -40,11 +43,13 @@ public class CheckInActivity extends BaseActivity implements OnClickListener {
     Event eventInfo;
     MediaPlayer mediaPlayer;
     Vibrator v;
+    int eventFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.check_in_layout);
+        eventFlag = getIntent().getExtras().getInt("flag");
         InvtAppPreferences.setPref(getApplicationContext());
         BaseSyncher.setAccessToken(InvtAppPreferences.getAccessToken());
         eventName = (TextView) findViewById(R.id.eventName);
@@ -66,7 +71,7 @@ public class CheckInActivity extends BaseActivity implements OnClickListener {
     }
 
     private void updateData() {
-        Event eventInfo = InvtAppPreferences.getServiceDetails().getEventInfo();
+        Event eventInfo = InvtAppPreferences.getServiceDetails().get(eventFlag).getEventInfo();
         eventName.setText("Event Name : " + eventInfo.getName());
         eventDate.setText("Start Date : " + eventInfo.getStartDateTime());
         eventdescription.setText("Description : " + eventInfo.getDescription());
@@ -90,15 +95,22 @@ public class CheckInActivity extends BaseActivity implements OnClickListener {
     }
 
     private void snoozeTheNotification() {
-        ServiceInformation serviceDetails = InvtAppPreferences.getServiceDetails();
+        ServiceInformation serviceDetails = InvtAppPreferences.getServiceDetails().get(eventFlag);
         serviceDetails.setCheckInNotificationServiceStartTime(StringUtils.getNewDate(serviceDetails.getCheckInNotificationServiceStartTime(), 10));
         Intent myIntent = new Intent(getApplicationContext(), NotificationService.class);
+        myIntent.putExtra("flag", eventFlag);
         myIntent.setAction(serviceDetails.getCheckInNotificationServiceStartTime());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, myIntent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), eventFlag, myIntent, 0);
         AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
-        InvtAppPreferences.setServiceDetails(serviceDetails);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (60000 * 3), pendingIntent);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(StringUtils.StringToDate(serviceDetails.getCheckInNotificationServiceStartTime()));
+        //SAVE UPDATED TIME
+        List<ServiceInformation> serviceDetailsList = InvtAppPreferences.getServiceDetails();
+        serviceDetailsList.get(eventFlag).setCheckInNotificationServiceStartTime(serviceDetails.getCheckInNotificationServiceStartTime());
+        InvtAppPreferences.setServiceDetails(serviceDetailsList);
+        //alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (60000 * 3), pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 60000, pendingIntent);
         mediaPlayer.stop();
         finish();
     }
@@ -107,10 +119,10 @@ public class CheckInActivity extends BaseActivity implements OnClickListener {
         new InvtAppAsyncTask(CheckInActivity.this) {
 
             ServerResponse updateInviteeCheckInStaus;
-
+            Event eventInfo;
             @Override
             public void process() {
-                Event eventInfo = InvtAppPreferences.getServiceDetails().getEventInfo();
+                Event eventInfo = InvtAppPreferences.getServiceDetails().get(eventFlag).getEventInfo();
                 UserSyncher userSyncher = new UserSyncher();
                 updateInviteeCheckInStaus = userSyncher.updateInviteeCheckInStaus(eventInfo.getEventId(), status);
             }
@@ -119,7 +131,9 @@ public class CheckInActivity extends BaseActivity implements OnClickListener {
             public void afterPostExecute() {
                 ToastHelper.blueToast(getApplicationContext(), updateInviteeCheckInStaus.getStatus());
                 MyService service = new MyService();
-                service.CancelAlarm(getApplicationContext());
+                service.CancelAlarm(getApplicationContext(),eventFlag);
+                NotificationService notificationService = new NotificationService();
+                notificationService.CancelAlarm(getApplicationContext(),eventFlag);
                 mediaPlayer.stop();
                 Log.d("Data", "Main Service closed");
                 finish();
