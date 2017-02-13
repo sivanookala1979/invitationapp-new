@@ -14,6 +14,24 @@ public class ServerResponse {
     String status;
     String token;
     String distance;
+    int totalInvites;
+    boolean profileGiven;
+
+    public boolean isProfileGiven() {
+        return profileGiven;
+    }
+
+    public void setProfileGiven(boolean profileGiven) {
+        this.profileGiven = profileGiven;
+    }
+
+    public int getTotalInvites() {
+        return totalInvites;
+    }
+
+    public void setTotalInvites(int totalInvites) {
+        this.totalInvites = totalInvites;
+    }
 
     public int getId() {
         return id;

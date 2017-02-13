@@ -1,8 +1,5 @@
 package com.cerone.invitation.activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,9 +17,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.UserProfile;
 import com.cerone.invitation.adapter.HomeEventAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
@@ -30,12 +27,11 @@ import com.cerone.invitation.helpers.MobileHelper;
 import com.cerone.invitation.helpers.ToastHelper;
 import com.cerone.invitation.service.MyService;
 import com.cerone.invitation.service.NotificationService;
-import com.example.dataobjects.*;
+import com.example.dataobjects.Event;
+import com.example.dataobjects.ServiceInformation;
 import com.example.syncher.EventSyncher;
-import com.example.utills.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 
@@ -166,6 +162,9 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             case R.id.home :
                 intent = new Intent(this, HomeScreenActivity.class);
                 break;
+            case R.id.profile :
+                intent = new Intent(this, UserProfile.class);
+                break;
             case R.id.myEvents :
                 intent = new Intent(this, MyEventsActivity.class);
                 break;
@@ -181,7 +180,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             case R.id.logout :
                 InvtAppPreferences.setLoggedIn(false);
                 InvtAppPreferences.reset();
-                Intent logoutIntent = new Intent(HomeScreenActivity.this, LoginActivity.class);
+                Intent logoutIntent = new Intent(HomeScreenActivity.this, SignInActivity.class);
                 logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(logoutIntent);
                 break;

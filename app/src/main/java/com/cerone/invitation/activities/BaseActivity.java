@@ -7,26 +7,37 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.adapter.CurrencyCountryNameAdapter;
 import com.cerone.invitation.adapter.ImageDialogAdapter;
+import com.cerone.invitation.helpers.FontTypes;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.service.MyService;
+import com.example.dataobjects.CurrencyTypes;
 import com.example.dataobjects.DrawerItem;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Invitation;
@@ -38,14 +49,9 @@ import com.example.syncher.InvitationSyncher;
 import com.example.utills.InvitationAppConstants;
 import com.example.utills.StringUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import static com.cerone.invitation.R.drawable.event;
-import static com.example.utills.StringUtils.StringToDate;
-import static com.google.android.gms.analytics.internal.zzy.c;
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -62,11 +68,21 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+    public void setFontType(int... viewId) {
+        FontTypes fontType = new FontTypes(getApplicationContext());
+        for (int element : viewId) {
+            TextView textview = (TextView) findViewById(element);
+            fontType.setTypeface(textview);
+        }
+    }
+
     public void addToolbarView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
         setSupportActionBar(toolbar);
+        setFontType(R.id.toolbar_title);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +134,21 @@ public class BaseActivity extends AppCompatActivity {
         //                }
         return CountryZipCode;
     }
+
+    int getCountryIndex(String country, List<CurrencyTypes> currencyTypes) {
+        int result = 0;
+
+        for (int i = 0; i < currencyTypes.size(); i++) {
+
+            if (country.equalsIgnoreCase(currencyTypes.get(i).getSysCountryCode())) {
+                result = i;
+                break;
+            }
+
+        }
+        return result;
+    }
+
 
     public void activateService() {
         Log.d("Data", "Service started at " + InvtAppPreferences.getAccessToken() + " " + InvtAppPreferences.isLoggedIn());
@@ -237,4 +268,85 @@ public class BaseActivity extends AppCompatActivity {
         });
         dialog.show();
     }
+
+    void getCountrycodeDialog(final Button countryCodeButton,
+                              final EditText mobileNumber, Context context) {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.country_code_filter_layout);
+        FontTypes fontTypes = new FontTypes(getApplicationContext());
+
+        ListView listView = (ListView) dialog.findViewById(R.id.dialogListView);
+        EditText searchText = (EditText) dialog
+                .findViewById(R.id.search_edittext);
+        fontTypes.setTypeface(dialog.findViewById(R.id.heading_text),
+                searchText);
+        final CurrencyCountryNameAdapter dialogAdapter = new CurrencyCountryNameAdapter(
+                context, R.layout.gallery_layout, InvtAppPreferences.getCurrencyCountryCodeDetails());
+        listView.setAdapter(dialogAdapter);
+        searchText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                dialogAdapter.getFilter().filter(s.toString());
+                dialogAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View view,
+                                    int position, long id) {
+                CurrencyTypes item = dialogAdapter.getItem(position);
+                countryCodeButton.setText(item.getCountryCode());
+                InputFilter[] FilterArray = new InputFilter[1];
+                FilterArray[0] = new InputFilter.LengthFilter(Integer
+                        .parseInt(item.getMobileNumberCount()));
+                mobileNumber.setFilters(FilterArray);
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
+    }
+
+    public boolean validateInputDetails(TextView... view) {
+        boolean status = true;
+        for (TextView textView : view) {
+            if (textView == null || textView.getText().toString().isEmpty()) {
+                status = false;
+                textView.setFocusable(true);
+                break;
+            }
+        }
+        return status;
+    }
+
+    public void setSnackBarValidation(String validation) {
+
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.main_layout), validation, Snackbar.LENGTH_LONG);
+        //Changing action button text color
+        View sbView = snackbar.getView();
+        sbView.setBackgroundColor(Color.BLACK);
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.YELLOW);
+        textView.setGravity(Gravity.CENTER_HORIZONTAL);
+        FontTypes fontTypes = new FontTypes(getApplicationContext());
+        fontTypes.setTypeface(sbView.findViewById(android.support.design.R.id.snackbar_text));
+        snackbar.show();
+    }
+
+    //
+
 }

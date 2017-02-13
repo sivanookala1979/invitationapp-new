@@ -8,12 +8,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.dataobjects.CurrencyTypes;
+import com.example.dataobjects.Event;
+import com.example.dataobjects.Group;
+import com.example.dataobjects.Invitation;
+import com.example.dataobjects.MyMarker;
+import com.example.dataobjects.ServiceInformation;
+import com.example.dataobjects.User;
+import com.example.dataobjects.UserLocation;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.example.dataobjects.*;
 
 
 /**
@@ -36,6 +43,14 @@ public class InvtAppPreferences {
     private static final String INVITATION = "invitation";
     private static final String SELECTED_GROUPS = "groups";
     private static final String REFRESH_SERVICE = "refreshService";
+    private static final String CURRENCY_COUNTRY_CODE_DETAILS = "currencyCountryCodeDetails";
+    private static final String PROFILE_DETAILS = "profileDetails";
+    private static final String UPLOAD_PICTURE_QUALITY = "uploadpicturequality";
+    private static final String ACCOUNT_SETTINGS_IMAGE = "accountImage";
+    private static final String IS_PROFILE_GIVEN = "profilegiven";
+
+
+
 
     public static SharedPreferences getPref() {
         return pref;
@@ -209,4 +224,56 @@ public class InvtAppPreferences {
         }
         return locations;
     }
+
+    public static void setCurrencyCountryCodeDetails(List<CurrencyTypes> addressDetails) {
+        String addressData = new Gson().toJson(addressDetails);
+        pref.edit().putString(CURRENCY_COUNTRY_CODE_DETAILS, addressData).commit();
+    }
+
+    public static List<CurrencyTypes> getCurrencyCountryCodeDetails() {
+        java.lang.reflect.Type type = new TypeToken<List<CurrencyTypes>>() {
+        }.getType();
+        List<CurrencyTypes> addressDetails = new Gson().fromJson(
+                pref.getString(CURRENCY_COUNTRY_CODE_DETAILS, ""), type);
+        if (addressDetails == null) {
+            addressDetails = new ArrayList<CurrencyTypes>();
+        }
+        return addressDetails;
+    }
+
+    public static User getProfileDetails() {
+        java.lang.reflect.Type type = new TypeToken<User>() {
+        }.getType();
+        return new Gson().fromJson(pref.getString(PROFILE_DETAILS, ""), type);
+    }
+
+    public static void setProfileDetails(User profileDetails) {
+        String profileDetail = new Gson().toJson(profileDetails);
+        pref.edit().putString(PROFILE_DETAILS, profileDetail).commit();
+    }
+
+    public static void setUploadPictureQuality(int serviceType) {
+        pref.edit().putInt(UPLOAD_PICTURE_QUALITY, serviceType).commit();
+    }
+
+    public static int getUploadPictureQuality() {
+        return pref.getInt(UPLOAD_PICTURE_QUALITY, 100);
+    }
+
+    public static void setAccountImage(String accountImage) {
+        pref.edit().putString(ACCOUNT_SETTINGS_IMAGE, accountImage).commit();
+    }
+
+    public static String getAccountImage() {
+        return pref.getString(ACCOUNT_SETTINGS_IMAGE, "");
+    }
+
+    public static void setProfileGiven(boolean loggedIn) {
+        pref.edit().putBoolean(IS_PROFILE_GIVEN, loggedIn).commit();
+    }
+
+    public static boolean isProfileGiven() {
+        return pref.getBoolean(IS_PROFILE_GIVEN, false);
+    }
+
 }

@@ -4,15 +4,19 @@
  */
 package com.example.syncher;
 
+import com.example.dataobjects.Eventstatistics;
+import com.example.dataobjects.Invitation;
+import com.example.dataobjects.Invitee;
+import com.example.dataobjects.ServerResponse;
+import com.example.dataobjects.User;
+import com.example.utills.HTTPUtils;
+import com.example.utills.StringUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.dataobjects.*;
-import com.example.utills.HTTPUtils;
-import com.example.utills.StringUtils;
 
 
 /**
@@ -21,14 +25,17 @@ import com.example.utills.StringUtils;
  */
 public class InvitationSyncher extends BaseSyncher {
 
-    public ServerResponse createInvitation(int eventId, List<String> mobileNumbers, List<String> groupIds) {
+    public ServerResponse createNewInvitation(int eventId, List<User> contactList, List<String> groupIds) {
         ServerResponse response = new ServerResponse();
         try {
             JSONArray array = new JSONArray();
             JSONArray groupArray = new JSONArray();
             JSONObject object = new JSONObject();
-            for (String number : mobileNumbers) {
-                array.put(number);
+            for (User user : contactList) {
+                JSONObject contactObject = new JSONObject();
+                contactObject.put("mobile_number", user.getPhoneNumber());
+                contactObject.put("event_admin", user.isAdmin());
+                array.put(contactObject);
             }
             for (String groupId : groupIds) {
                 groupArray.put(groupId);
@@ -36,13 +43,13 @@ public class InvitationSyncher extends BaseSyncher {
             object.put("event_id", eventId);
             object.put("participant_mobile_numbers", array);
             object.put("group_ids", groupArray);
-            String dataFromServer = HTTPUtils.getDataFromServer(BASE_URL + "events/create_invitations.json", "POST", object.toString(), true);
+            String dataFromServer = HTTPUtils.getDataFromServer(BASE_URL + "events/create_new_invitations.json?event_id="+eventId, "POST", object.toString(), true);
             if (StringUtils.isJSONValid(dataFromServer)) {
                 JSONObject jsonResponse = new JSONObject(dataFromServer);
                 if (jsonResponse != null) {
                     response.setStatus(jsonResponse.getString("status"));
                     if (jsonResponse.has("total_invites")) {
-                        response.setId(Integer.parseInt(jsonResponse.getString("total_invites")));
+                        response.setTotalInvites(jsonResponse.getInt("total_invites"));
                     }
                 }
             } else {

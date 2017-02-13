@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -58,12 +59,15 @@ public class ContactAdapter extends ArrayAdapter<User> {
         View row = inflater.inflate(R.layout.contact_item, parent, false);
         LinearLayout parentLayout = (LinearLayout) row.findViewById(R.id.parentLayout);
         User user = getItem(position);
+        CheckBox isAdmin = (CheckBox) row.findViewById(R.id.shareEvent_check);
         Button removeContact = (Button) row.findViewById(R.id.removeContact);
         TextView name = (TextView) row.findViewById(R.id.contactPersonName);
         TextView mobileNumber = (TextView) row.findViewById(R.id.contactPersonMobileNumber);
         name.setText(user.getUserName());
         mobileNumber.setText(user.getPhoneNumber());
         removeContact.setOnClickListener(createOnClickListener(position, parent));
+        isAdmin.setChecked(user.isAdmin());
+        isAdmin.setOnClickListener(createOnClickListener(position, parent));
         if (!isnewGroup) {
             parentLayout.setBackgroundColor(user.isPhoneContact() ? grey : green);
             mobileNumber.setTextColor(white);

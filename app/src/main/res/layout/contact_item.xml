@@ -2,17 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/parentLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="50dp"
     android:orientation="horizontal"
     android:padding="10dp"
-    android:weightSum="100" >
+    android:weightSum="10" >
+
+    <CheckBox
+        android:id="@+id/shareEvent_check"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/contactPersonName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
-        android:layout_weight="40"
+        android:layout_weight="4"
         android:ellipsize="end"
         android:gravity="left"
         android:singleLine="true"
@@ -25,7 +31,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
-        android:layout_weight="45"
+        android:layout_weight="4"
         android:ellipsize="end"
         android:gravity="left"
         android:singleLine="true"
@@ -37,8 +43,7 @@
         android:id="@+id/removeContact"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:layout_weight="15"
+        android:layout_weight="1"
         android:background="@color/blue_shade"
         android:gravity="center_vertical|center_horizontal"
         android:text=" X "

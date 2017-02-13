@@ -5,6 +5,8 @@ dependencies {
     compile files('libs/android.jar')
     compile 'junit:junit:4.12'
     compile 'org.json:json:20160810'
+    compile files('libs/sqlite-jdbc-3.7.2.jar')
+
 }
 
 sourceCompatibility = "1.7"

@@ -5,11 +5,9 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import com.cerone.invitation.MainActivity;
 import com.cerone.invitation.R;
 import com.cerone.invitation.activities.RegistrationActivity;
 import com.cerone.invitation.helpers.InvtAppPreferences;
-import com.example.syncher.BaseSyncher;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,7 +43,7 @@ public class RegistrationActivityTest extends BaseActivityTest {
         onView(withId(R.id.loginButton)).perform(click());
         onView(withId(R.id.editMobileNumber))
                 .perform(typeText("9949257729"), closeSoftKeyboard());
-        onView(withId(R.id.signIn)).perform(click());
+        onView(withId(R.id.signIn_button)).perform(click());
         SystemClock.sleep(10000);
     }
 }

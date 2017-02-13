@@ -4,13 +4,15 @@
  */
 package com.example.tests;
 
+import com.example.dataobjects.ServerResponse;
+import com.example.dataobjects.User;
+import com.example.syncher.BaseSyncher;
+import com.example.syncher.InvitationSyncher;
+
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.example.dataobjects.*;
-import com.example.syncher.BaseSyncher;
-import com.example.syncher.InvitationSyncher;
 
 
 /**
@@ -19,27 +21,48 @@ import com.example.syncher.InvitationSyncher;
  */
 public class InvitationSyncherTest extends TestCase {
 
-    public void testInvitationTestHAPPYFlow() throws Exception {
+//    public void testInvitationTestHAPPYFlow() throws Exception {
+//        if (createNew) {
+//            // Setup fixture
+//            int eventId = 61;
+//            List<String> mobileNumbers = getDefaultNumbers();
+//            List<String> groupIds = new ArrayList<String>();
+//            groupIds.add("1");
+//            groupIds.add("2");
+//            // Exercise SUT
+//            ServerResponse response = sut.createInvitation(eventId, mobileNumbers, groupIds);
+//            String actual = response.getStatus();
+//            // Verify outcome
+//            assertNotNull(actual);
+//        }
+//    }
+
+    public void testNewInvitationTestHAPPYFlow() throws Exception {
         if (createNew) {
             // Setup fixture
-            int eventId = 61;
-            List<String> mobileNumbers = getDefaultNumbers();
+            int eventId = 28;
+            List<User> mobileNumbers = getDefaultNumbers();
             List<String> groupIds = new ArrayList<String>();
-            groupIds.add("1");
-            groupIds.add("2");
             // Exercise SUT
-            ServerResponse response = sut.createInvitation(eventId, mobileNumbers, groupIds);
+            ServerResponse response = sut.createNewInvitation(eventId, mobileNumbers, groupIds);
             String actual = response.getStatus();
             // Verify outcome
             assertNotNull(actual);
+            assertEquals("Success", response.getStatus());
+            assertEquals(12, response.getTotalInvites());
         }
     }
 
-    //
-    private List<String> getDefaultNumbers() {
-        List<String> mobileNUmbers = new ArrayList<String>();
-        mobileNUmbers.add("917569887778");
-        //mobileNUmbers.add("918686514735");
+    private List<User> getDefaultNumbers() {
+        List<User> mobileNUmbers = new ArrayList<User>();
+        User status1 = new User();
+        status1.setPhoneNumber("9000451544");
+        status1.setAdmin(true);
+        mobileNUmbers.add(status1);
+        User status2 = new User();
+        status2.setPhoneNumber("9848223344");
+        status2.setAdmin(false);
+        mobileNUmbers.add(status2);
         return mobileNUmbers;
     }
 
@@ -82,7 +105,7 @@ public class InvitationSyncherTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         sut = new InvitationSyncher();
-        BaseSyncher.setAccessToken("9049d4b65472891215997844d");
+        BaseSyncher.setAccessToken("db5d5012964d3bf01f79905379");
         //9049d4b65472891215997844d Adarsh 
         //b39b545dd564d649528233f2044f Adarsh testing
     }

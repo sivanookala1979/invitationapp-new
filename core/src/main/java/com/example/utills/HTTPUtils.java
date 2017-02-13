@@ -1,10 +1,22 @@
 package com.example.utills;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Path;
+import android.graphics.Rect;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.util.Base64;
+
 import com.example.syncher.BaseSyncher;
-
 import org.json.JSONObject;
-
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -101,5 +113,100 @@ public class HTTPUtils {
             e.printStackTrace();
         }
         return jsonObject;
+    }
+
+    public static String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
+        System.out.println(" JPEG Bitmap size : " + temp.length() + " JPEG Byte array length :" + b.length);
+        return temp;
+    }
+
+    public static Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
+                    encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
+    public static Bitmap getBitmapFromCameraData(Intent data, Context context) {
+        Uri selectedImage = data.getData();
+        String[] filePathColumn = {MediaStore.MediaColumns.DATA};
+        Cursor cursor = context.getContentResolver().query(selectedImage,
+                filePathColumn, null, null, null);
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String picturePath = cursor.getString(columnIndex);
+        cursor.close();
+        BitmapFactory.Options option = new BitmapFactory.Options();
+        option.inJustDecodeBounds = true;
+        int sample = 32;
+        BitmapFactory.decodeFile(picturePath, option);
+        if (option.outHeight > 960 || option.outWidth > 200) {
+            if (option.outHeight > option.outWidth) {
+                sample = option.outHeight / 200;
+            } else {
+                sample = option.outWidth / 200;
+            }
+        }
+        option.inSampleSize = sample;
+        option.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(picturePath, option);
+    }
+
+    public static Bitmap getRoundedCornerBitmap(Bitmap scaleBitmapImage,
+                                                int width) {
+        // TODO Auto-generated method stub
+        int targetWidth = width;
+        int targetHeight = width;
+        Bitmap targetBitmap = Bitmap.createBitmap(targetWidth, targetHeight,
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(targetBitmap);
+        Path path = new Path();
+        path.addCircle(((float) targetWidth - 1) / 2,
+                ((float) targetHeight - 1) / 2,
+                (Math.min(((float) targetWidth), ((float) targetHeight)) / 2),
+                Path.Direction.CCW);
+        canvas.clipPath(path);
+        Bitmap sourceBitmap = scaleBitmapImage;
+        canvas.drawBitmap(sourceBitmap, new Rect(0, 0, sourceBitmap.getWidth(),
+                sourceBitmap.getHeight()), new Rect(0, 0, targetWidth,
+                targetHeight), null);
+        return targetBitmap;
+    }
+
+    public static Bitmap getImageBitmapFromUrl(URL url)
+    {
+        Bitmap bm = null;
+        try {
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            if(conn.getResponseCode() != 200)
+            {
+                return bm;
+            }
+            conn.connect();
+            InputStream is = conn.getInputStream();
+
+            BufferedInputStream bis = new BufferedInputStream(is);
+            try
+            {
+                bm = BitmapFactory.decodeStream(bis);
+            }
+            catch(OutOfMemoryError ex)
+            {
+                bm = null;
+            }
+            bis.close();
+            is.close();
+        } catch (Exception e) {}
+
+        return bm;
     }
 }

@@ -6,13 +6,13 @@ package com.cerone.invitation.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,7 +25,11 @@ import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.MobileHelper;
 import com.cerone.invitation.helpers.ToastHelper;
-import com.example.dataobjects.*;
+import com.example.dataobjects.Event;
+import com.example.dataobjects.Group;
+import com.example.dataobjects.ServerResponse;
+import com.example.dataobjects.ShareContact;
+import com.example.dataobjects.User;
 import com.example.syncher.EventSyncher;
 import com.example.syncher.GroupSyncher;
 import com.example.syncher.InvitationSyncher;
@@ -33,8 +37,6 @@ import com.example.utills.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.cerone.invitation.R.id.headerBack;
 
 
 /**
@@ -44,7 +46,7 @@ import static com.cerone.invitation.R.id.headerBack;
 public class ShareEventActivity extends BaseActivity implements OnClickListener, OnItemClickListener {
 
     List<User> allSelectedlist = new ArrayList<User>();
-    List<String> listOfParticipantsPhoneNumbers = new ArrayList<String>();
+    List<User> listOfParticipantsPhoneNumbers = new ArrayList<User>();
     List<Group> listOfSelectedGroups = new ArrayList<Group>();
     List<String> listOfGroupIds = new ArrayList<String>();
     ListView listView, groupList;
@@ -201,22 +203,27 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                             }
                             System.out.println("Event id " + eventId);
                             if (eventId > 0) {
+                                getLatestContacts();
+                                //Log.d("admin", listOfParticipantsPhoneNumbers.get(0).isAdmin()+"");
                                 InvitationSyncher invitationSyncher = new InvitationSyncher();
-                                serverResponse = invitationSyncher.createInvitation(eventId, listOfParticipantsPhoneNumbers, listOfGroupIds);
+                                serverResponse = invitationSyncher.createNewInvitation(eventId, listOfParticipantsPhoneNumbers, listOfGroupIds);
                             }
                         }
 
                         @Override
                         public void afterPostExecute() {
-                            String serverStatus = serverResponse.getStatus();
-                            Toast.makeText(getApplicationContext(), serverStatus, Toast.LENGTH_LONG).show();
-                            if (eventId > 0 && serverStatus.equals("Success")) {
-                                if (isNewEvent) {
-                                    Intent intent = new Intent(ShareEventActivity.this, HomeScreenActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
-                                } else {
-                                    finish();
+                            if (serverResponse!=null) {
+                                String serverStatus = serverResponse.getStatus();
+                                Toast.makeText(getApplicationContext(), serverStatus, Toast.LENGTH_LONG).show();
+                                if (eventId > 0 && serverStatus.equals("Success")) {
+                                    if (isNewEvent) {
+                                        Intent intent = new Intent(ShareEventActivity.this, HomeScreenActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    } else {
+                                        finish();
+                                    }
+
                                 }
                             }
                         }
@@ -232,7 +239,7 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
         // ToastHelper.yellowToast(getApplicationContext(), "you are done requestCode" + requestCode + " resultCode " + resultCode);
         if (resultCode == 1 && (requestCode == 100 || requestCode == 200)) {
-            updateContacts(requestCode);
+            updateContacts();
             adapter = new ContactAdapter(getApplicationContext(), R.layout.contact_item, allSelectedlist, false);
             setContactsListSize();
             listView.setAdapter(adapter);
@@ -280,21 +287,26 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
         }
     }
 
-    private void updateContacts(int requestCode) {
+    private void updateContacts() {
         List<User> usersList = InvtAppPreferences.getContacts();
         for (User user : usersList) {
             if (!listOfParticipantsPhoneNumbers.contains(user.getPhoneNumber())) {
-                listOfParticipantsPhoneNumbers.add(user.getPhoneNumber());
+                listOfParticipantsPhoneNumbers.add(user);
                 allSelectedlist.add(user);
             }
         }
     }
 
+    private void getLatestContacts(){
+        listOfParticipantsPhoneNumbers = new ArrayList<User>();
+            listOfParticipantsPhoneNumbers.addAll(allSelectedlist);
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        User user = allSelectedlist.get(position);
         switch (view.getId()) {
             case R.id.removeContact :
-                User user = allSelectedlist.get(position);
                 ToastHelper.blueToast(getApplicationContext(), "Contact Removed");
                 listOfParticipantsPhoneNumbers.remove(user.getPhoneNumber());
                 allSelectedlist.remove(user);
@@ -309,8 +321,12 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                 groupAdapter.setUsers(listOfSelectedGroups);
                 setGroupListSize();
                 break;
-            default :
+            case R.id.shareEvent_check :
+                Log.d("is admin", position+" "+!user.isAdmin()+"");
+                user.setAdmin(!user.isAdmin());
+                adapter.setUsers(allSelectedlist);
                 break;
         }
+
     }
 }

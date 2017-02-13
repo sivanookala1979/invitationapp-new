@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,38 +24,137 @@
             android:layout_gravity="center"
             android:text="Sign In"
             android:textColor="@android:color/white" />
+
     </android.support.v7.widget.Toolbar>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/mobileNumberlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:hintTextAppearance="@style/TextLabel">
-
-        <EditText
-            android:id="@+id/editMobileNumber"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start"
-            android:hint="@string/mobile_number_hint"
-            android:inputType="number"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
 
-    </android.support.design.widget.TextInputLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:gravity="left|center"
+                android:minHeight="40dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
 
-    <Button
-        android:id="@+id/signIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:layout_marginTop="60dp"
-        android:background="@color/blue_shade"
-        android:gravity="center_vertical|center_horizontal"
-        android:minWidth="150dp"
-        android:padding="10dp"
-        android:text="Sign In"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size" />
+                <Button
+                    android:id="@+id/country_code"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="2"
+                    android:text="+91"
+                    android:textSize="@dimen/text_size"
+                    android:textAllCaps="false"
+                    style="@style/Widget.AppCompat.Button.Borderless" />
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/black" />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/mobileNumberlayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+                    app:hintTextAppearance="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/editMobileNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="@string/mobile_number_hint"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/otpNumberlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:hintTextAppearance="@style/TextLabel"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/editOtpNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:hint="@string/otp_number_hint"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/signIn_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/blue_shade"
+                    android:text="OTP"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sendAgain_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/txt_sendAgain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Didn't get the code ?"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/send_again"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:text="  Send again"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
 
 </LinearLayout>

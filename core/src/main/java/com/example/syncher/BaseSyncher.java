@@ -52,5 +52,8 @@ public class BaseSyncher {
 
     public static void testSetup() {
 
+    }public boolean isNotNull(JSONObject jsonObject, String field) {
+        return !jsonObject.isNull(field);
     }
+
 }

@@ -7,6 +7,12 @@
             android:icon="@drawable/home"
             android:title="Home" />
     </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/profile"
+            android:icon="@drawable/profile_icon"
+            android:title="Profile" />
+    </group>
     <group
         android:id="@+id/namMyEvents"
         android:checkableBehavior="single">
