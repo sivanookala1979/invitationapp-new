@@ -37,7 +37,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
                 android:gravity="left|center"
@@ -45,16 +45,17 @@
                 android:orientation="horizontal"
                 android:weightSum="10">
 
-                <Button
-                    android:id="@+id/country_code"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="2"
-                    android:text="+91"
-                    android:textSize="@dimen/text_size"
-                    android:textAllCaps="false"
-                    style="@style/Widget.AppCompat.Button.Borderless" />
+                    <Button
+                        android:id="@+id/country_code"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="2.5"
+                        android:text="+91"
+                        android:gravity="center|end"
+                        android:textSize="@dimen/text_size"
+                        android:textAllCaps="false"
+                        style="@style/Widget.AppCompat.Button.Borderless" />
 
                 <TextView
                     android:layout_width="1dp"

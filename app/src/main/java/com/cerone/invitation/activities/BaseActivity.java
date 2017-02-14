@@ -54,7 +54,7 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final int GOOGLE_MAPS_REQUEST = 1;
     InvtAppAsyncTask invtAppAsyncTask;
@@ -347,6 +347,9 @@ public class BaseActivity extends AppCompatActivity {
         snackbar.show();
     }
 
-    //
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.dataobjects.ChatInfo;
 import com.example.dataobjects.CurrencyTypes;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Group;
@@ -48,9 +49,7 @@ public class InvtAppPreferences {
     private static final String UPLOAD_PICTURE_QUALITY = "uploadpicturequality";
     private static final String ACCOUNT_SETTINGS_IMAGE = "accountImage";
     private static final String IS_PROFILE_GIVEN = "profilegiven";
-
-
-
+    private static final String CHAT_INFO = "chatinfo";
 
     public static SharedPreferences getPref() {
         return pref;
@@ -274,6 +273,17 @@ public class InvtAppPreferences {
 
     public static boolean isProfileGiven() {
         return pref.getBoolean(IS_PROFILE_GIVEN, false);
+    }
+
+    public static void setChatInfo(ChatInfo chatInfo) {
+        String chatInfoDetails = new Gson().toJson(chatInfo);
+        pref.edit().putString(CHAT_INFO, chatInfoDetails).commit();
+    }
+
+    public static ChatInfo getChatInfo() {
+        java.lang.reflect.Type type = new TypeToken<ChatInfo>() {
+        }.getType();
+        return new Gson().fromJson(pref.getString(CHAT_INFO, ""), type);
     }
 
 }

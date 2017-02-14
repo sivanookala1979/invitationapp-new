@@ -4,24 +4,27 @@
  */
 package com.cerone.invitation.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.ToastHelper;
-import com.example.dataobjects.*;
+import com.example.dataobjects.Event;
+import com.example.dataobjects.Eventstatistics;
+import com.example.dataobjects.Invitation;
 import com.example.syncher.InvitationSyncher;
 import com.example.utills.StringUtils;
-
-import static com.cerone.invitation.R.drawable.event;
 
 
 /**
@@ -35,6 +38,11 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
     Button accept, maybe, reject, invitees, cancel;
     Invitation invitations = new Invitation();
     TextView acceptCount, rejectCount, totalCount,checkedInCount;
+    String locationPermission = "";
+
+    public static final String LOCATION = "LOCATION";
+    public static final String DISTANCE = "DISTANCE";
+    public static final String NOTHING = "NOTHING";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +73,7 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
         accept.setOnClickListener(this);
         maybe.setOnClickListener(this);
         reject.setOnClickListener(this);
+
         eventDetails = InvtAppPreferences.getEventDetails();
         Log.d("Accept","Accept status "+eventDetails.isAccepted());
 
@@ -113,7 +122,7 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
                 startActivity(intent);
                 break;
             case R.id.acceptInvitation :
-                acceptOrRejectInvitation(true, eventDetails);
+                showLocationPermissionDialog();
                 break;
             case R.id.gpsLocationIcon :
             case R.id.gpsLocationLayout :
@@ -124,7 +133,7 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
                 invitationSelection.setVisibility(View.GONE);
                 break;
             case R.id.rejected :
-                acceptOrRejectInvitation(false, eventDetails);
+                acceptOrRejectInvitation(false, eventDetails, locationPermission);
                 break;
             case R.id.inviteesInfo :
                 intent = new Intent(getApplicationContext(), InvitieesTabActivity.class);
@@ -137,7 +146,7 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
         }
     }
 
-    public void acceptOrRejectInvitation(final boolean status, final Event event) {
+    public void acceptOrRejectInvitation(final boolean status, final Event event, final String locationPermission) {
         final String response = "";
         new InvtAppAsyncTask(this) {
 
@@ -146,7 +155,7 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
             @Override
             public void process() {
                 InvitationSyncher invitationSyncher = new InvitationSyncher();
-                response = invitationSyncher.getInvitationStatus(event.getEventId(), status);
+                response = invitationSyncher.getInvitationStatus(event.getEventId(), status, locationPermission);
             }
 
             @Override
@@ -165,5 +174,51 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
                 ToastHelper.blueToast(getApplicationContext(), response.getMessage());
             }
         }.execute();
+    }
+
+    public void showLocationPermissionDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.logout_dialog);
+        Button accept = (Button) dialog.findViewById(R.id.btn_submit);
+        Button cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+        cancel.setVisibility(View.GONE);
+        RadioGroup radioGroup = (RadioGroup) dialog.findViewById(R.id.invt_RadioGroup);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                switch (checkedId){
+                    case R.id.radio_location:
+                        locationPermission = LOCATION;
+                        Log.d("lacation", locationPermission);
+                        break;
+                    case R.id.radio_distance:
+                        locationPermission = DISTANCE;
+                        Log.d("lacation", locationPermission);
+                        break;
+                    case R.id.radio_nothing:
+                        locationPermission = NOTHING;
+                        Log.d("lacation", locationPermission);
+                        break;
+                }
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                acceptOrRejectInvitation(true, eventDetails, locationPermission);
+                dialog.cancel();
+            }
+        });
+        dialog.show();
+
     }
 }

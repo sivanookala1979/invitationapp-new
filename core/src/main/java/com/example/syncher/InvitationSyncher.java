@@ -90,10 +90,10 @@ public class InvitationSyncher extends BaseSyncher {
         return listOfInvitaioons;
     }
 
-    public Eventstatistics getInvitationStatus(int eventId, boolean accepted) {
+    public Eventstatistics getInvitationStatus(int eventId, boolean accepted, String permission) {
         Eventstatistics eventstatistics = new Eventstatistics();
         try {
-            String dataFromServer = HTTPUtils.getDataFromServer(BASE_URL + "events/accept_or_reject_invitation.json?event_id=" + eventId + "&accepted=" + accepted, "GET", true);
+            String dataFromServer = HTTPUtils.getDataFromServer(BASE_URL + "events/accept_or_reject_invitation.json?event_id=" + eventId + "&accepted=" + accepted+((accepted)?"&permission=" +permission:""), "GET", true);
             if (StringUtils.isJSONValid(dataFromServer)) {
                 JSONObject response = new JSONObject(dataFromServer);
                 if (response != null) {

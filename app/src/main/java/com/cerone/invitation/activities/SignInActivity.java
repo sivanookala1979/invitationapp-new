@@ -43,6 +43,7 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin);
+        setFontType(R.id.toolbar_title, R.id.editMobileNumber, R.id.country_code, R.id.editOtpNumber, R.id.signIn_button, R.id.txt_sendAgain, R.id.send_again);
         InvtAppPreferences.setPref(getApplicationContext());
         alreadyLoggedIn = InvtAppPreferences.isLoggedIn();
         InvtAppPreferences.setServiceRefresh(false);

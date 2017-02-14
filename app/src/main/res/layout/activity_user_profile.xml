@@ -294,7 +294,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/gradient_button"
         android:padding="10dp"
-        android:text="Continue"
+        android:text="Update"
         android:layout_alignParentBottom="true"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size"

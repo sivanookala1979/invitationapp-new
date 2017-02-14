@@ -160,7 +160,7 @@ public class UserSyncher extends BaseSyncher {
             userObject.put("phone_number", user.getPhoneNumber());
             userObject.put("status", user.getStatus());
             userObject.put("image", user.getImage());
-            String object = HTTPUtils.getDataFromServer(BASE_URL + "/update_user_details", "POST", userObject.toString(), true);
+            String object = HTTPUtils.getDataFromServer(BASE_URL + "/users/update_user_details", "POST", userObject.toString(), true);
             JSONObject jsonObject = new JSONObject(object);
             if (jsonObject.has("user_name"))
                 userDetails.setUserName(jsonObject.getString("user_name"));
