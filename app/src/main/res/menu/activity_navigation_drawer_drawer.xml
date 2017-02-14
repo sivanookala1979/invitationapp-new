@@ -30,6 +30,14 @@
             android:title="My Invitations" />
     </group>
     <group
+        android:id="@+id/nav_myChat"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/myChat"
+            android:icon="@drawable/chat"
+            android:title="Chat" />
+    </group>
+    <group
         android:id="@+id/nav_serviceAvailibilityGroup"
         android:checkableBehavior="single">
         <item

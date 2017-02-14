@@ -4,13 +4,13 @@
  */
 package com.example.tests;
 
-import junit.framework.TestCase;
-
-import java.util.List;
-
-import com.example.dataobjects.*;
+import com.example.dataobjects.MyMarker;
+import com.example.dataobjects.ServerResponse;
+import com.example.dataobjects.UserLocation;
 import com.example.syncher.BaseSyncher;
 import com.example.syncher.LocationSyncher;
+
+import java.util.List;
 
 
 /**
@@ -19,19 +19,19 @@ import com.example.syncher.LocationSyncher;
  */
 public class LocationSyncherTest extends BaseSyncherTest {
 
-    //    public void t1estForPostUserLocationHAPPYFlow() throws Exception {
-    //        // Setup fixture
-    //        UserLocation location = getDefaultLocation(14.912731, 79.988869, "2015-12-30 11:23:23");
-    //        // Exercise SUT
-    //        ServerResponse response = sut.postUserLocation(location);
-    //        String actual = response.getStatus();
-    //        // Verify outcome
-    //        assertEquals("Success", actual);
-    //    }
+        public void testForPostUserLocationHAPPYFlow() throws Exception {
+            // Setup fixture
+            UserLocation location = getDefaultLocation(14.912731, 79.988869, "2015-12-30 11:23:23");
+            // Exercise SUT
+            ServerResponse response = sut.postUserLocation(location);
+            String actual = response.getStatus();
+            // Verify outcome
+            assertEquals("Success", actual);
+        }
 
     public void testCheckInviteesLocationHAPPYFlow() throws Exception {
         // Setup fixture
-        int eventId = 8;
+        int eventId = 50;
         // Exercise SUT
         List<MyMarker> locations = sut.checkInviteesLocation(eventId);
         // Verify outcome
@@ -48,7 +48,7 @@ public class LocationSyncherTest extends BaseSyncherTest {
     protected void setUp() throws Exception {
         super.setUp();
         sut = new LocationSyncher();
-        BaseSyncher.setAccessToken("9b593f9dd9f7478db4f62803b492d8");
+        BaseSyncher.setAccessToken("cf80d2e44bd34aa78eb7dc4d17f7ea33");
     }
 
     @Override

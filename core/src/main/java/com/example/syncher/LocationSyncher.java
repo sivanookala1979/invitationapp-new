@@ -1,5 +1,11 @@
 package com.example.syncher;
 
+import com.example.dataobjects.MyMarker;
+import com.example.dataobjects.ServerResponse;
+import com.example.dataobjects.UserLocation;
+import com.example.utills.HTTPUtils;
+import com.example.utills.StringUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,10 +14,6 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.dataobjects.*;
-import com.example.utills.HTTPUtils;
-import com.example.utills.StringUtils;
 
 
 public class LocationSyncher extends BaseSyncher {
@@ -111,7 +113,7 @@ public class LocationSyncher extends BaseSyncher {
     public List<MyMarker> checkInviteesLocation(int eventId) {
         List<MyMarker> listOflocations = new ArrayList<MyMarker>();
         try {
-            JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "events/get_participants_locations.json?event_id=" + eventId, "GET", false));
+            JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "events/invitees_locations.json?event_id=" + eventId, "GET", true));
             JSONArray jsonArray = jsonResponse.getJSONArray("locations_of_invitees");
             if (jsonArray != null) {
                 {

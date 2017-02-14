@@ -94,6 +94,9 @@
         <activity
             android:name=".activities.MyInvitationActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AllChatsActivity"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".service.MyService"

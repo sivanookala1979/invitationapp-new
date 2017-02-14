@@ -25,6 +25,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class HTTPUtils {
@@ -208,5 +210,16 @@ public class HTTPUtils {
         } catch (Exception e) {}
 
         return bm;
+    }
+
+    public static String convertDateToString(Date indate) {
+        String dateString = null;
+        SimpleDateFormat sdfr = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        try {
+            dateString = sdfr.format(indate);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return dateString;
     }
 }
