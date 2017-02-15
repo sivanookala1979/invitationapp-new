@@ -39,8 +39,7 @@ public class CurrencyTypesSyncher extends BaseSyncher {
             cacheDataSource.setUpdataSource();
             if (cacheDataSource.isNeedToLoadFromServer(CURRENCY_TYPE_KEY, NUMBER_OF_DAYS)) {
                 String currencyTypes = HTTPUtils.getDataFromServer("http://invtapp.cerone-software.com/currencies.json", "GET", true);
-                JSONObject responseJSON = new JSONObject(currencyTypes);
-                JSONArray jsonArray = responseJSON.getJSONArray("currencies");
+                JSONArray jsonArray = new JSONArray(currencyTypes);
                 for (int index = 0; index < jsonArray.length(); index++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(index);
                     CurrencyTypes currencies = new CurrencyTypes();

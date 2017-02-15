@@ -13,8 +13,17 @@ public class Invitee {
     String inviteeName;
     String mobileNumber;
     boolean isAccepted;
+    int inviteeId;
     String status = "Not found";
     String distance = "Not found";
+
+    public int getInviteeId() {
+        return inviteeId;
+    }
+
+    public void setInviteeId(int inviteeId) {
+        this.inviteeId = inviteeId;
+    }
 
     public String getInviteeName() {
         return inviteeName;

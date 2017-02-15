@@ -132,6 +132,8 @@ public class InvitationSyncher extends BaseSyncher {
                             invitee.setDistance("" + jsonObject.getDouble("distance"));
                         if (jsonObject.has("update_at"))
                             invitee.setStatus(jsonObject.getString("update_at"));
+                        if (jsonObject.has("user_id"))
+                            invitee.setInviteeId(jsonObject.getInt("user_id"));
                         invitee.setMobileNumber(jsonObject.getString("mobile"));
                         invitee.setInviteeName(jsonObject.getString("name"));
                         invitee.setMobileNumber(jsonObject.getString("mobile"));

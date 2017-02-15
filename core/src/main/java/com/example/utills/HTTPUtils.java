@@ -34,6 +34,11 @@ public class HTTPUtils {
     public static String getDataFromServer(String urlData, String requestedMethod, boolean accessToken) throws MalformedURLException, IOException, ProtocolException {
         return getDataFromServer(urlData, requestedMethod, null, accessToken);
     }
+    public static String getDataFromServer(String urlData, String requestedMethod)
+            throws MalformedURLException, IOException, ProtocolException {
+
+        return getDataFromServer(urlData, requestedMethod, null,true);
+    }
 
     public static String getDataFromServer(String urlData, String requestedMethod, String content, boolean accessToken) throws MalformedURLException, IOException, ProtocolException {
         URL url = new URL(urlData);
@@ -62,6 +67,7 @@ public class HTTPUtils {
         System.out.println("Response received for " + urlData + "\n*" + response.toString()+"*");
         return response.toString().trim();
     }
+
 
     public static void readContent(StringBuffer response, InputStream inputStream) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));

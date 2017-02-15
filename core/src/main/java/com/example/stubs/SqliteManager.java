@@ -5,7 +5,7 @@
 package com.example.stubs;
 
 
-import com.example.exception.AdzshopException;
+import com.example.exception.InvtAppException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -31,7 +31,7 @@ public class SqliteManager {
             return connection;
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            throw new AdzshopException("Failed to create the db");
+            throw new InvtAppException("Failed to create the db");
         }
 	}
 

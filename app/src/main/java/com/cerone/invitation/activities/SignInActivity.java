@@ -65,6 +65,7 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
         mobileNumber.addTextChangedListener(new InvtTextWatcher(mobileNumber, inputLayoutEmail, "Mobile number should not be empty."));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         loadCountryCodeDetails();
+        checkUserPermissions();
     }
 
     public void loadCountryCodeDetails() {
@@ -151,43 +152,44 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
                     }
                 }
 
-                    break;
-                    case R.id.country_code:
-                        getCountrycodeDialog(countryCode, mobileNumber, SignInActivity.this);
-                        mobileNumber.requestFocus();
-                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                        break;
+                break;
+            case R.id.country_code:
+                getCountrycodeDialog(countryCode, mobileNumber, SignInActivity.this);
+                mobileNumber.requestFocus();
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                break;
 
-                }
         }
+    }
 
-     void setSendOtp(final String mobileNumber) {
-            new InvtAppAsyncTask(SignInActivity.this) {
-                @Override
-                public void process() {
+    void setSendOtp(final String mobileNumber) {
+        new InvtAppAsyncTask(SignInActivity.this) {
+            @Override
+            public void process() {
 
-                    UserSyncher syncher = new UserSyncher();
-                    otpResult = syncher.getOtp(mobileNumber);
-                    Log.d("OTP Result", otpResult);
+                UserSyncher syncher = new UserSyncher();
+                otpResult = syncher.getOtp(mobileNumber);
+                Log.d("OTP Result", otpResult);
+            }
+
+            @Override
+            public void afterPostExecute() {
+
+                if (otpResult.equals("Success")) {
+                    Toast.makeText(getApplicationContext(), "Please enter otp", Toast.LENGTH_LONG).show();
+                    otpNumberlayout.setVisibility(View.VISIBLE);
+                    otpNumber.requestFocus();
+                    signInButton.setText("Login");
+                } else {
+                    ToastHelper.yellowToast(SignInActivity.this, otpResult);
                 }
+            }
+        }.execute();
+    }
 
-                @Override
-                public void afterPostExecute() {
-
-                    if (otpResult.equals("Success")) {
-                        Toast.makeText(getApplicationContext(), "Please enter otp", Toast.LENGTH_LONG).show();
-                        otpNumberlayout.setVisibility(View.VISIBLE);
-                        otpNumber.requestFocus();
-                        signInButton.setText("Login");
-                    }else {
-                        ToastHelper.yellowToast(SignInActivity.this, otpResult);
-                    }
-                }
-            }.execute();
-        }
     @Override
     public void onBackPressed() {
         doExit();
     }
 
-    }
+}

@@ -1,16 +1,21 @@
 package com.example.syncher;
 
 
+import com.example.exception.InvtAppException;
 import com.example.helper.DefaultExceptionHandler;
 import com.example.helper.ExceptionHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class BaseSyncher {
 
     public static ExceptionHandler exceptionHandler = new DefaultExceptionHandler();
-    //public static String BASE_URL = "http://192.168.10.11:4000/";
+    //public static String BASE_URL = "http://192.168.10.11:8000/";
     public static String BASE_URL = "http://invtapp.cerone-software.com/";
     public static String accessToken;
 

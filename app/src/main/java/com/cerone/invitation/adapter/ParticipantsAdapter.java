@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
@@ -55,6 +57,10 @@ public class ParticipantsAdapter extends ArrayAdapter<Invitee> {
         TextView participantMobileNumber = (TextView) row.findViewById(R.id.participant_number);
         TextView participantStatus = (TextView) row.findViewById(R.id.status);
         TextView distance = (TextView) row.findViewById(R.id.distance);
+        ImageButton chat = (ImageButton)row.findViewById(R.id.chat);
+        ImageButton call = (ImageButton)row.findViewById(R.id.call);
+        chat.setOnClickListener(createOnClickListener(position,parent));
+        call.setOnClickListener(createOnClickListener(position,parent));
         participantName.setText(" " + invitee.getInviteeName());
         participantMobileNumber.setText(" " + invitee.getMobileNumber());
         participantStatus.setText("Last seen " + invitee.getStatus() + " ago.");
@@ -64,5 +70,14 @@ public class ParticipantsAdapter extends ArrayAdapter<Invitee> {
             participantStatus.setVisibility(View.GONE);
         }
         return row;
+    }
+    public View.OnClickListener createOnClickListener(final int position, final ViewGroup parent) {
+        return new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ((ListView) parent).performItemClick(v, position, 0);
+            }
+        };
     }
 }

@@ -20,7 +20,9 @@ import android.widget.ListView;
 
 import com.cerone.invitation.R;
 import com.cerone.invitation.UserProfile;
+import com.cerone.invitation.activities.chat.AllChatsActivity;
 import com.cerone.invitation.adapter.HomeEventAdapter;
+import com.cerone.invitation.fcm.RegistrationIntentService;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.MobileHelper;
@@ -56,7 +58,9 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         myEvents.setOnItemClickListener(this);
         createLeftMenu();
         loadEvents();
-
+        Intent intent = new Intent(this, RegistrationIntentService.class);
+        startService(intent);
+        checkUserPermissions();
     }
 
     private void closePreviousServices() {

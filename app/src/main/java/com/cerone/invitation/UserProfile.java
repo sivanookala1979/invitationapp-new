@@ -70,7 +70,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         getAllAccountInfoDetails();
-
+        checkUserPermissions();
     }
 
     void getAllAccountInfoDetails() {

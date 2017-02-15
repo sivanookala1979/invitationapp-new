@@ -114,24 +114,24 @@ public class LocationSyncher extends BaseSyncher {
         List<MyMarker> listOflocations = new ArrayList<MyMarker>();
         try {
             JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "events/invitees_locations.json?event_id=" + eventId, "GET", true));
-            JSONArray jsonArray = jsonResponse.getJSONArray("locations_of_invitees");
+            JSONArray jsonArray = jsonResponse.getJSONArray("location_information");
             if (jsonArray != null) {
                 {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         MyMarker location = new MyMarker();
-                        location.setDateTime(jsonObject.getString("time"));
+                        location.setDateTime(StringUtils.getFormatedDateFromServerFormatedDate(jsonObject.getString("time")));
                         if (!jsonObject.isNull("latitude")) {
-                            location.setLatitude(jsonObject.getDouble("latitude"));
+                            location.setLatitude(StringUtils.getDoubleFormString(jsonObject.getString("latitude")));
                         }
                         if (!jsonObject.isNull("longitude")) {
-                            location.setLongitude(jsonObject.getDouble("longitude"));
+                            location.setLongitude(StringUtils.getDoubleFormString(jsonObject.getString("longitude")));
                         }
                         if (!jsonObject.isNull("user_name")) {
                             location.setInviteeName(jsonObject.getString("user_name"));
                         }
-                        if (!jsonObject.isNull("user_mobile_number")) {
-                            location.setContactNumber(jsonObject.getString("user_mobile_number"));
+                        if (!jsonObject.isNull("mobile_number")) {
+                            location.setContactNumber(jsonObject.getString("mobile_number"));
                         }
                         listOflocations.add(location);
                     }

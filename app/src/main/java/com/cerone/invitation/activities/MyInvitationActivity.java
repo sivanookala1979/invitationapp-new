@@ -61,7 +61,7 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
         findViewById(R.id.shareEvent).setVisibility(View.GONE);
         invitees = (Button) findViewById(R.id.inviteesInfo);
         cancel = (Button) findViewById(R.id.deleteEvent);
-        cancel.setText("CANCEL");
+        cancel.setText("Cancel");
         invitees.setVisibility(View.VISIBLE);
         accept = (Button) findViewById(R.id.acceptInvitation);
         maybe = (Button) findViewById(R.id.mayBe);

@@ -80,8 +80,10 @@ public class AllChatDetailsAdapter extends ArrayAdapter<ChatRoom> {
         TextView appxText = (TextView) row.findViewById(R.id.time_text);
         if (chatRommList.get(position).getLatestMsgDateTime() != null) {
             String dateTime = chatRommList.get(position).getLatestMsgDateTime();
-            String[] dateSplit = dateTime.split(" ");
-            appxText.setText(dateSplit[3] + "");
+            //String[] dateSplit = dateTime.split(" ");
+            //appxText.setText(dateSplit[3] + "");
+            appxText.setText(dateTime + "");
+
             try {
                 getMonthDayAgo(dateTime, appxText);
             } catch (java.text.ParseException e) {
@@ -124,26 +126,26 @@ public class AllChatDetailsAdapter extends ArrayAdapter<ChatRoom> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) < 30) {
-            if (TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) == 0) {
-                textView.setText(ftime);
-            } else if (TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) == 1) {
-                textView.setText("Yesterday");
-            } else {
-                // textView.setText(daysAgo + "daysago");
-                String daysAgo = TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) + "days ago";
-                textView.setText(daysAgo);
-            }
-        } else {
-            long d1 = 0l;
-            long d2 = 0l;
-            d1 = past.getTime();
-            d2 = now.getTime();
-            long l = Math.abs((d1 - d2) / (1000 * 60 * 60 * 24));
-            String MonthsAgo = l / 30l + "months ago";
-            textView.setText(MonthsAgo);
-
-        }
+//        if (TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) < 30) {
+//            if (TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) == 0) {
+//                textView.setText(ftime);
+//            } else if (TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) == 1) {
+//                textView.setText("Yesterday");
+//            } else {
+//                // textView.setText(daysAgo + "daysago");
+//                String daysAgo = TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) + "days ago";
+//                textView.setText(daysAgo);
+//            }
+//        } else {
+//            long d1 = 0l;
+//            long d2 = 0l;
+//            d1 = past.getTime();
+//            d2 = now.getTime();
+//            long l = Math.abs((d1 - d2) / (1000 * 60 * 60 * 24));
+//            String MonthsAgo = l / 30l + "months ago";
+//            textView.setText(MonthsAgo);
+//
+//        }
 
     }
 

@@ -2,14 +2,17 @@ package com.cerone.invitation.activities;
 
 import android.content.Intent;
 
+import com.cerone.invitation.activities.chat.BaseChatActivity;
+import com.cerone.invitation.service.MyGcmListenerService;
 import com.example.dataobjects.ChatMessage;
+import com.example.syncher.SupportChatSyncher;
 
 import java.util.List;
 
 public class SupportChatActivity extends BaseChatActivity {
 
     private static final int SUPPORT_USER_ID = -999;
-    static boolean isActive;
+    public static boolean isActive;
 
     @Override
     protected List<ChatMessage> getChatMessages() {
@@ -24,7 +27,7 @@ public class SupportChatActivity extends BaseChatActivity {
 
     @Override
     protected void sendMessage(final String chatMessage) {
-        //new SupportChatSyncher().sendMessage(chatMessage);
+        new SupportChatSyncher().sendMessage(chatMessage);
     }
 
     @Override

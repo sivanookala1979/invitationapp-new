@@ -87,6 +87,7 @@ public class LocationActivity extends BaseActivity implements OnClickListener,On
 
         }
         locationFilterSetUp();
+        checkUserPermissions();
     }
 
     public UserLocation getHistoryAddres(String filterData) {

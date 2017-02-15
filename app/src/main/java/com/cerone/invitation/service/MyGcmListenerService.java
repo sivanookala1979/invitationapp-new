@@ -1,4 +1,4 @@
-package com.cerone.invitation.activities;
+package com.cerone.invitation.service;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,6 +12,11 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.activities.GeneratePictureNotification;
+import com.cerone.invitation.activities.NotificationActivity;
+import com.cerone.invitation.activities.NotificationsHelper;
+import com.cerone.invitation.activities.SupportChatActivity;
+import com.cerone.invitation.activities.chat.IntraChatActivity;
 import com.google.android.gms.gcm.GcmListenerService;
 
 import java.util.ArrayList;
@@ -19,8 +24,8 @@ import java.util.List;
 
 public class MyGcmListenerService extends GcmListenerService {
     static int notificationCount = 0;
-    static int notificationChatCount = 0;
-    static int supportNotificationCount = 0;
+    public static int notificationChatCount = 0;
+    public static int supportNotificationCount = 0;
     private static final String TAG = "MyGcmListenerService";
     final static String GROUP_KEY = "group_key_notification";
     final static String GROUP_CHAT_KEY = "group_chat_key_notification";
@@ -33,8 +38,8 @@ public class MyGcmListenerService extends GcmListenerService {
     private int notificationChatId = 200;
     private int supportNotificationId = 300;
     static List<String> messageList = new ArrayList<String>();
-    static List<String> chatList = new ArrayList<String>();
-    static List<String> supportChatList = new ArrayList<String>();
+    public static List<String> chatList = new ArrayList<String>();
+    public static List<String> supportChatList = new ArrayList<String>();
     /**
      * Called when message is received.
      *

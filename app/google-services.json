@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "749889407503",
+    "firebase_url": "https://invitation-f00fd.firebaseio.com",
+    "project_id": "invitation-f00fd",
+    "storage_bucket": "invitation-f00fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749889407503:android:6a144cfee00316c6",
+        "android_client_info": {
+          "package_name": "com.cerone.invitation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "749889407503-u3o111raeohb7bgcr5k42a448lcf9063.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cerone.invitation",
+            "certificate_hash": "5D1F2CAABAC6CD84801813CC4C909A950A204AF9"
+          }
+        },
+        {
+          "client_id": "749889407503-gcnqq9b7bjm4cnt90fa9qn7pe9u505j9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrDY3Wl2pPHGIaPMsTqQXjJ8b_UtiY3nI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "749889407503-gcnqq9b7bjm4cnt90fa9qn7pe9u505j9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 package com.cerone.invitation.activities;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,12 +8,15 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -63,6 +67,32 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     List<DrawerItem> dataList;
+    String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_SMS, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+    public void checkUserPermissions() {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            List<String> permissionsList = new ArrayList<String>();
+            for (String permission : PERMISSIONS) {
+                if (!hasPermissions(this, permission)) {
+                    permissionsList.add(permission);
+                }
+            }
+            if (permissionsList.size() > 0) {
+                ActivityCompat.requestPermissions(this, (String[]) permissionsList.toArray(new String[permissionsList.size()]), 99);
+            }
+        }
+    }
+
+    public static boolean hasPermissions(Context context, String permission) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permission != null) {
+            if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                Log.d("Permission", "" + permission + " false");
+                return false;
+            }
+        }
+        Log.d("Permission", "status true");
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +120,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-    public void closeActivity(){
+
+    public void closeActivity() {
         finish();
     }
 
@@ -174,7 +205,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             protected void onPostExecute(String result) {
                 if (events.size() > 0) {
                     List<ServiceInformation> servicesList = new ArrayList<ServiceInformation>();
-                    for(Event event:events) {
+                    for (Event event : events) {
                         //Event event = events.get(0);
                         Log.d("Data Event", "Name " + event.getName() + "Event start date " + event.getStartDateTime() + " end date " + event.getEndDateTime());
                         ServiceInformation information = new ServiceInformation();
@@ -193,14 +224,16 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     Log.d("Data", "No future events found");
                 }
-            };
+            }
+
+            ;
         }.execute();
     }
 
     private void startService() {
         List<ServiceInformation> serviceDetailsList = InvtAppPreferences.getServiceDetails();
         int tag = 0;
-        for(ServiceInformation serviceDetails:serviceDetailsList) {
+        for (ServiceInformation serviceDetails : serviceDetailsList) {
             if (serviceDetails.isEvent()) {
                 Log.d("Data", "Service started at " + StringUtils.getCurrentDate());
                 Intent myIntent = new Intent(this, MyService.class);

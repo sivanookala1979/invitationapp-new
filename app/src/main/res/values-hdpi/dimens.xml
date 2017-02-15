@@ -1,0 +1,37 @@
+<resources>
+ <string name="density_bucket">hdpi</string>
+ 
+    <dimen name="text_size_very_large">22sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_intermediate">16sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_too_small">12sp</dimen>
+     <dimen name="text_size_very_small">10sp</dimen>
+    <dimen name="banner_hight">275dp</dimen>
+    <dimen name="action_bar_icon_height">27dp</dimen>
+    <dimen name="action_bar_icon_width">29dp</dimen>
+    <dimen name="action_bar_height">50dp</dimen>
+    <dimen name="back_arrow_height">15dp</dimen>
+    <dimen name="back_arrow_width">15dp</dimen>
+    <dimen name="adarsh">2sp</dimen>
+    <dimen name="action_bar_divider_height">5dp</dimen>
+	<dimen name="pagerStripHeight">220dp</dimen>
+	<dimen name="brandPagerStripHeight">100dp</dimen>
+    <dimen name="bottomImageheight">40dp</dimen>
+    <dimen name="bottomImagewidth">40dp</dimen>
+    <dimen name="productImage">60dp</dimen>
+    <dimen name="addRemoveButtonSize">30dp</dimen>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+   <dimen name="layout_left_margin">10dp</dimen>
+   <dimen name="layout_right__margin">10dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="header_height">250dp</dimen>
+    <dimen name="min_header_height">250dp</dimen>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+
+
+</resources>

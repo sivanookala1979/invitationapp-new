@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.example.dataobjects.*;
+import com.example.exception.InvtAppException;
+
+import static com.example.syncher.BaseSyncher.exceptionHandler;
 
 
 public class StringUtils {
@@ -157,14 +161,14 @@ public class StringUtils {
 
     public static String getNewDate(String oldDate, int minutes) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println("Old dateTime "+oldDate);
+        System.out.println("Old dateTime " + oldDate);
         String newDate = oldDate;
         Date stringToDate = StringToDate(oldDate);
         Calendar cal = Calendar.getInstance();
         cal.setTime(stringToDate);
         cal.add(Calendar.MINUTE, minutes);
         newDate = sdf.format(cal.getTime());
-        System.out.println("New dateTime "+newDate);
+        System.out.println("New dateTime " + newDate);
         return newDate;
     }
 
@@ -224,22 +228,22 @@ public class StringUtils {
         try {
             dateTime = simpleDateFormat.parse(string);
             switch (index) {
-                case 1 :
+                case 1:
                     info = eventDateFormat.format(dateTime);
                     break;
-                case 2 :
+                case 2:
                     info = eventTimeFormat.format(dateTime);
                     break;
-                case 3 :
+                case 3:
                     info = newEventDateFormat.format(dateTime);
                     break;
-                case 4 :
+                case 4:
                     info = newEventTimeFormat.format(dateTime);
                     break;
-                case 5 :
+                case 5:
                     info = eventInfoFormat.format(dateTime);
                     break;
-                default :
+                default:
                     break;
             }
         } catch (ParseException ex) {
@@ -279,5 +283,30 @@ public class StringUtils {
             ex.printStackTrace();
         }
         return status;
+    }
+
+    public static Date chatStringToDate(String date) {
+        Date dateTime = null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            dateTime = simpleDateFormat.parse(date);
+        } catch (Exception ex) {
+            System.out.println("Exception " + ex);
+        }
+        return dateTime;
+    }
+
+    public static String enc(String input) {
+        try {
+            return URLEncoder.encode(input, "utf-8");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            exceptionHandler.handleException(ex);
+        }
+        throw new InvtAppException("Failed to encode string " + input);
+    }
+
+    public static double getDoubleFormString(String input) {
+        return ((input == null) || input.trim().isEmpty()) ? 0.0 : Double.valueOf(input.trim());
     }
 }

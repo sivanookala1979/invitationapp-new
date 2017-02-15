@@ -1,16 +1,20 @@
 package com.cerone.invitation.fragement;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.activities.chat.IntraChatActivity;
 import com.cerone.invitation.adapter.ParticipantsAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
@@ -22,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TabNotGoing extends Fragment {
+public class TabNotGoing extends BaseFragment {
 
     ProgressDialog progressDialog;
     List<Invitee> participantsList = new ArrayList<Invitee>();
@@ -32,8 +36,10 @@ public class TabNotGoing extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.events_layout, container, false);
-        view.findViewById(R.id.action_header).setVisibility(View.GONE);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.GONE);
         listView = (ListView) view.findViewById(R.id.events_list);
+        listView.setOnItemClickListener(this);
         getParticipants();
         Log.d("Tab", "TabNotGoing");
         return view;
@@ -57,5 +63,21 @@ public class TabNotGoing extends Fragment {
                 }
             }
         }.execute();
+    }
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Invitee invitee = participantsList.get(i);
+        switch (view.getId()) {
+            case R.id.chat:
+                Intent intent = new Intent(getContext(), IntraChatActivity.class);
+                intent.putExtra("UserId", invitee.getInviteeId());
+                intent.putExtra("UserImage", "");
+                intent.putExtra("UserName", invitee.getInviteeName());
+                startActivity(intent);
+                break;
+            case R.id.call:
+                callToUser(invitee.getMobileNumber());
+                break;
+        }
     }
 }

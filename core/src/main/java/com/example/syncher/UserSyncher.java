@@ -4,6 +4,7 @@
  */
 package com.example.syncher;
 
+import com.example.dataobjects.SaveResult;
 import com.example.dataobjects.ServerResponse;
 import com.example.dataobjects.User;
 import com.example.utills.HTTPUtils;
@@ -184,6 +185,23 @@ public class UserSyncher extends BaseSyncher {
             e.printStackTrace();
         }
         return userDetails;
+    }
+    public void updateGcmCode(String gcmCode){
+        SaveResult result = new SaveResult();
+        try {
+            String response = HTTPUtils.getDataFromServer(BASE_URL + "users/store_gcm_code.json?gcm_code=" + gcmCode, "GET");
+//            JSONObject responseJSON = new JSONObject(response);
+//            if (responseJSON.has("user_id")) {
+//                result.setSuccess(true);
+//                result.setUserId(responseJSON.getInt("user_id"));
+//            } else if (responseJSON.has("error_message")) {
+//                result.setSuccess(false);
+//                result.setErrorMessage(responseJSON.getString("error_message"));
+//            }
+        } catch (Exception Ex) {
+            handleException(Ex);
+        }
+        //return result;
     }
 
 

@@ -156,6 +156,8 @@ public class ShowInviteePositions extends BaseActivity implements OnClickListene
             ImageView markerIcon = (ImageView) v.findViewById(R.id.marker_icon);
             TextView markerLabel = (TextView) v.findViewById(R.id.name);
             TextView markernumber = (TextView) v.findViewById(R.id.number);
+            TextView time = (TextView) v.findViewById(R.id.time);
+            Log.d("Location","Marker info"+myMarker.getDateTime());
             markerIcon.setImageResource(R.drawable.new_logo);
             markerLabel.setText(myMarker.getInviteeName());
             markernumber.setText(myMarker.getContactNumber());

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -11,42 +13,24 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical" >
 
-        <LinearLayout
-            android:id="@+id/action_header"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:background="@color/blue_shade"
-            android:gravity="center_vertical"
-            android:minHeight="50dp"
-            android:orientation="horizontal"
-            android:padding="5dp" >
+            android:gravity="center"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/toolbar_title"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="100" >
-
-                <ImageButton
-                    android:id="@+id/headerBack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_back_arrow"
-                    android:padding="5dp" />
-
-                <TextView
-                    android:id="@+id/headerTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center"
-                    android:text="Events"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/header_text_size" />
-            </LinearLayout>
-        </LinearLayout>
+                android:layout_gravity="center"
+                android:text="Events"
+                android:textColor="@android:color/white" />
+        </android.support.v7.widget.Toolbar>
 
         <ListView
             android:id="@+id/events_list"

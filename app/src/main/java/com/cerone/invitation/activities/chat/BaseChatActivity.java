@@ -1,4 +1,4 @@
-package com.cerone.invitation.activities;
+package com.cerone.invitation.activities.chat;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.activities.BaseActivity;
 import com.cerone.invitation.adapter.ChatArrayAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.example.dataobjects.ChatMessage;
@@ -51,7 +52,6 @@ public abstract class BaseChatActivity extends BaseActivity implements View.OnCl
                     if (isRelevantMessage(intent)) {
                         handlePushNotification(intent.getStringExtra("message"), getOtherUserID());
                     }
-
                 }
             }
         };

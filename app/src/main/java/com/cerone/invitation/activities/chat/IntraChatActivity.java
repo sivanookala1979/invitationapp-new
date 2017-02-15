@@ -1,10 +1,12 @@
-package com.cerone.invitation.activities;
+package com.cerone.invitation.activities.chat;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.cerone.invitation.service.MyGcmListenerService;
 import com.example.dataobjects.ChatMessage;
+import com.example.syncher.IntraChatSyncher;
 
 import java.util.List;
 
@@ -12,7 +14,7 @@ public class IntraChatActivity extends BaseChatActivity {
 	Integer user_id;
 	Integer chatRoomId;
 	String userName;
-	static boolean isActive;
+	public static boolean isActive;
 	
 	@Override
 	protected void initializeChat() {
@@ -30,13 +32,12 @@ public class IntraChatActivity extends BaseChatActivity {
 
 	@Override
 	protected void sendMessage(String chatMessage) {
-		//new IntraChatSyncher().sendMessage(user_id, chatMessage);
+		new IntraChatSyncher().sendMessage(user_id, chatMessage);
 	}
 
 	@Override
 	protected List<ChatMessage> getChatMessages() {
-		//return new IntraChatSyncher().getIntraChat(user_id);
-		return null;
+		return new IntraChatSyncher().getIntraChat(user_id);
 	}
 
 	@Override

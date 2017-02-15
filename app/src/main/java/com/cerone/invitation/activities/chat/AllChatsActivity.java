@@ -1,4 +1,4 @@
-package com.cerone.invitation.activities;
+package com.cerone.invitation.activities.chat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,22 +11,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.activities.BaseActivity;
+import com.cerone.invitation.activities.SupportChatActivity;
 import com.cerone.invitation.adapter.AllChatDetailsAdapter;
 import com.cerone.invitation.helpers.FontTypes;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.example.dataobjects.ChatInfo;
 import com.example.dataobjects.ChatRoom;
+import com.example.syncher.IntraChatSyncher;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class AllChatsActivity extends BaseActivity implements OnItemClickListener,View.OnClickListener {
+public class AllChatsActivity extends BaseActivity implements OnItemClickListener, View.OnClickListener {
     ListView allChatsListView;
     AllChatDetailsAdapter chatsAdapter;
     List<ChatRoom> chatRooms = new ArrayList<ChatRoom>();
-    FontTypes fontTypes;
     LinearLayout customer_suport;
     TextView customer_suport_text;
 
@@ -36,20 +38,17 @@ public class AllChatsActivity extends BaseActivity implements OnItemClickListene
         setContentView(R.layout.activity_all_chats);
         addToolbarView();
 
-        fontTypes = new FontTypes(getApplicationContext());
         allChatsListView = (ListView) findViewById(R.id.all_chat_rooms);
         allChatsListView.setOnItemClickListener(this);
         chatsAdapter = new AllChatDetailsAdapter(getApplicationContext(), R.layout.all_chat_details_row, chatRooms);
         allChatsListView.setAdapter(chatsAdapter);
 
-         customer_suport= (LinearLayout) findViewById(R.id.customer_suport);
-         customer_suport_text= (TextView) findViewById(R.id.customer_suport_text);
+        customer_suport = (LinearLayout) findViewById(R.id.customer_suport);
+        customer_suport_text = (TextView) findViewById(R.id.customer_suport_text);
         customer_suport.setOnClickListener(this);
         customer_suport_text.setOnClickListener(this);
-
         chatsAdapter.clear();
         loadAllChats();
-
         setFontType(R.id.customer_suport_text);
     }
 
@@ -59,12 +58,12 @@ public class AllChatsActivity extends BaseActivity implements OnItemClickListene
 
             @Override
             public void process() {
-//                IntraChatSyncher intraChatSyncher = new IntraChatSyncher();
-//                chatRooms = new ArrayList<ChatRoom>();
-//                chatRooms = intraChatSyncher.getChats();
-//                for (ChatRoom chatRoom : chatRooms) {
-//                    chatRoomNames.add(chatRoom.getOtherUserName() + " - " + chatRoom.getOtherUserId());
-//                }
+                IntraChatSyncher intraChatSyncher = new IntraChatSyncher();
+                chatRooms = new ArrayList<ChatRoom>();
+                chatRooms = intraChatSyncher.getChats();
+                for (ChatRoom chatRoom : chatRooms) {
+                    chatRoomNames.add(chatRoom.getOtherUserName() + " - " + chatRoom.getOtherUserId());
+                }
             }
 
             @Override
@@ -84,7 +83,7 @@ public class AllChatsActivity extends BaseActivity implements OnItemClickListene
             intent.putExtra("UserName", chatRooms.get(position).getOtherUserName());
             intent.putExtra("UserImage", chatRooms.get(position).getImage());
             intent.putExtra("UserId", chatRooms.get(position).getOtherUserId());
-            ChatInfo chatInfo=new ChatInfo();
+            ChatInfo chatInfo = new ChatInfo();
             chatInfo.setImageUrl(chatRooms.get(position).getImage());
             chatInfo.setName(chatRooms.get(position).getOtherUserName());
             InvtAppPreferences.setChatInfo(chatInfo);
@@ -116,13 +115,13 @@ public class AllChatsActivity extends BaseActivity implements OnItemClickListene
             case R.id.customer_suport:
             case R.id.customer_suport_text:
                 Intent intent = new Intent(getApplicationContext(), SupportChatActivity.class);
-                 intent.putExtra("UserImage", "");
-                 intent.putExtra("UserName", "");
-                ChatInfo chatInfo=new ChatInfo();
+                intent.putExtra("UserImage", "");
+                intent.putExtra("UserName", "");
+                ChatInfo chatInfo = new ChatInfo();
                 chatInfo.setImageUrl("");
                 InvtAppPreferences.setChatInfo(chatInfo);
                 startActivity(intent);
-            break;
+                break;
 
         }
     }
