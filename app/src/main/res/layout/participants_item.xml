@@ -34,7 +34,7 @@
             android:paddingRight="5dp">
 
             <ImageButton
-                android:id="@+id/chat"
+                android:id="@+id/call"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="20dp"
@@ -42,7 +42,7 @@
                 android:scaleType="fitXY" />
 
             <ImageButton
-                android:id="@+id/call"
+                android:id="@+id/chat"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:background="@drawable/chat"

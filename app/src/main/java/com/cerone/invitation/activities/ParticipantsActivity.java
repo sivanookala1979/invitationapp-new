@@ -4,14 +4,19 @@
  */
 package com.cerone.invitation.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cerone.invitation.R;
 import com.cerone.invitation.activities.chat.IntraChatActivity;
@@ -82,20 +87,32 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Invitee invitee = participantsList.get(i);
-        ToastHelper.blueToast(getApplicationContext(),"Need to redirect into chat."+invitee.getInviteeId());
-        Intent intent = new Intent(ParticipantsActivity.this, IntraChatActivity.class);
-        intent.putExtra("UserId", invitee.getInviteeId());
-        intent.putExtra("UserImage", "");
-        intent.putExtra("UserName", invitee.getInviteeName());
-        startActivity(intent);
-//        switch (view.getId()) {
-//            case R.id.call :
-//                ToastHelper.blueToast(getApplicationContext(),"Need make call to invitee.");
-//                break;
-//            case R.id.chat :
-//
-//
-//                break;
-//        }
+
+        switch (view.getId()) {
+            case R.id.call :
+                //ToastHelper.blueToast(getApplicationContext(),"Need make call to invitee.");
+                callToUser(invitee.getMobileNumber());
+                break;
+            case R.id.chat :
+               // ToastHelper.blueToast(getApplicationContext(),"Need to redirect into chat."+invitee.getInviteeId());
+                Intent intent = new Intent(ParticipantsActivity.this, IntraChatActivity.class);
+                intent.putExtra("UserId", invitee.getInviteeId());
+                intent.putExtra("UserImage", "");
+                intent.putExtra("UserName", invitee.getInviteeName());
+                startActivity(intent);
+                break;
+        }
+    }
+    public void callToUser(String mobileNumber) {
+        try {
+            Intent my_callIntent = new Intent(Intent.ACTION_CALL);
+            my_callIntent.setData(Uri.parse("tel:" + mobileNumber));
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            startActivity(my_callIntent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getApplicationContext(), "Error in your phone call"+e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 }

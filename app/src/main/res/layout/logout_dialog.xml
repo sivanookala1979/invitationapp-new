@@ -47,7 +47,7 @@
                 android:id="@+id/radio_nothing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dont share my location"
+                android:text="Don't share my location"
                 android:textSize="@dimen/text_medium"/>
 
         </RadioGroup>

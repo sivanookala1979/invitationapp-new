@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.google.android.gms.analytics.internal.zzy.n;
+
 /**
  * Created by suzuki on 11-05-2016.
  */
@@ -72,7 +74,9 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         if (chatMessageObj.getFromID() == otherUserID) {
             row = inflater.inflate(R.layout.chat_view_left_side, parent, false);
             userName = (TextView) row.findViewById(R.id.chat_user_name);
-            userName.setText(chatInfo.getName());
+            if(chatInfo!= null && chatInfo.getName()!= null && !chatInfo.getName().trim().isEmpty()) {
+                userName.setText(chatInfo.getName());
+            }
         } else {
             row = inflater.inflate(R.layout.chat_view_right_side, parent, false);
             me = (TextView) row.findViewById(R.id.me);
