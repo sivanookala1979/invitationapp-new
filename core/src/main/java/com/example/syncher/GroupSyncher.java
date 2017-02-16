@@ -4,14 +4,18 @@
  */
 package com.example.syncher;
 
+import com.example.dataobjects.Group;
+import com.example.dataobjects.Invitee;
+import com.example.dataobjects.ServerResponse;
+import com.example.dataobjects.ShareContact;
+import com.example.utills.HTTPUtils;
+import com.example.utills.StringUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.dataobjects.*;
-import com.example.utills.HTTPUtils;
 
 
 /**
@@ -77,6 +81,29 @@ public class GroupSyncher extends BaseSyncher {
         return groups;
     }
 
+    public List<Group> getGroupItems() {
+        List<Group> groups = new ArrayList<Group>();
+        try {
+            String dataFromServer = HTTPUtils.getDataFromServer(BASE_URL + "groups/get_my_groups.json", "GET", true);
+            JSONObject groupInfo = new JSONObject(dataFromServer);
+            if (groupInfo.has("groups")) {
+                JSONArray groupsArray = groupInfo.getJSONArray("groups");
+                for (int i = 0; i < groupsArray.length(); i++) {
+                    Group myGroup = new Group();
+                    JSONObject group = groupsArray.getJSONObject(i);
+                    myGroup.setGroupId(group.getInt("group_id"));
+                    myGroup.setGroupName(group.getString("group_name"));
+                    myGroup.setOwnerName(group.getString("create_person_name"));
+                    myGroup.setOwnerId(group.getInt("create_person_id"));
+                    groups.add(myGroup);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return groups;
+    }
+
     public ShareContact getDifferentiateContacts(String contacts) {
         ShareContact contact = new ShareContact();
         List<String> invtAppContacts = new ArrayList<String>();
@@ -103,4 +130,31 @@ public class GroupSyncher extends BaseSyncher {
         contact.setSmsContacts(smsContacts);
         return contact;
     }
+
+    public List<Invitee> getGroupMembers(int groupId) {
+        List<Invitee> listOfInvitees = new ArrayList<Invitee>();
+        try {
+            String dataFromServer = HTTPUtils.getDataFromServer(BASE_URL + "groups/get_group_members.json?group_id=" + groupId, "GET", true);
+            if (StringUtils.isJSONValid(dataFromServer)) {
+                JSONObject jsonResponse = new JSONObject(dataFromServer);
+                JSONArray jsonArray = jsonResponse.getJSONArray("group_members");
+                if (jsonArray != null) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        Invitee invitee = new Invitee();
+                        if (jsonObject.has("user_name"))
+                            invitee.setInviteeName("" + jsonObject.getString("user_name"));
+                        if (jsonObject.has("user_mobile_number"))
+                            invitee.setMobileNumber("" + jsonObject.getString("user_mobile_number"));
+                        listOfInvitees.add(invitee);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return listOfInvitees;
+    }
+
+
 }

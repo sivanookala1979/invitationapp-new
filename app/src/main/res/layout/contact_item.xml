@@ -11,7 +11,9 @@
         android:id="@+id/shareEvent_check"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:button="@drawable/check_box_style"
+        />
 
     <TextView
         android:id="@+id/contactPersonName"

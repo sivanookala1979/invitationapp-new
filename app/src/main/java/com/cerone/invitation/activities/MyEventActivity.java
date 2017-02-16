@@ -89,6 +89,8 @@ public class MyEventActivity extends BaseActivity implements OnClickListener {
             case R.id.participants:
             case R.id.participantsLayout:
                 intent = new Intent(getApplicationContext(), ParticipantsActivity.class);
+                intent.putExtra("orderId", 0);
+                intent.putExtra("title", "Invitees");
                 startActivity(intent);
                 break;
             case R.id.editEvent:

@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/home"
+        android:checkableBehavior="single">
         <item
-            android:id="@+id/home"
+            android:id="@+id/nav_home"
             android:icon="@drawable/home"
             android:title="Home" />
     </group>
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/profile"
+        android:checkableBehavior="single">
         <item
-            android:id="@+id/profile"
+            android:id="@+id/nav_profile"
             android:icon="@drawable/profile_icon"
             android:title="Profile" />
     </group>
     <group
-        android:id="@+id/namMyEvents"
+        android:id="@+id/myEvents"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/myEvents"
+            android:id="@+id/nav_myEvents"
             android:icon="@drawable/event"
             android:title="My Events" />
     </group>
     <group
-        android:id="@+id/nav_myInvitations"
+        android:id="@+id/myInvitations"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/myInvitations"
+            android:id="@+id/nav_myInvitations"
             android:icon="@drawable/invitation"
             android:title="My Invitations" />
     </group>
     <group
-        android:id="@+id/nav_myChat"
+        android:id="@+id/myChat"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/myChat"
+            android:id="@+id/nav_myChat"
             android:icon="@drawable/chat"
             android:title="Chat" />
     </group>
@@ -41,24 +45,34 @@
         android:id="@+id/nav_serviceAvailibilityGroup"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_add_group"
+            android:id="@+id/nav_addGroup"
             android:icon="@drawable/add_group"
             android:title="Create Group" />
     </group>
+
     <group
-        android:id="@+id/nav_settings"
+        android:id="@+id/myGroup"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/settings"
+            android:id="@+id/nav_myGroup"
+            android:icon="@drawable/add_group"
+            android:title="My Group" />
+    </group>
+
+    <group
+        android:id="@+id/settings"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_settings"
             android:icon="@drawable/settings"
             android:title="Settings" />
     </group>
 
     <group
-        android:id="@+id/nav_logout"
+        android:id="@+id/logout"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/logout"
+            android:id="@+id/nav_logout"
             android:icon="@drawable/log_out"
             android:title="Log Out" />
     </group>

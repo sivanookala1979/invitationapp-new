@@ -325,6 +325,9 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                 Log.d("is admin", position+" "+!user.isAdmin()+"");
                 user.setAdmin(!user.isAdmin());
                 adapter.setUsers(allSelectedlist);
+                if(user.isAdmin()){
+                    Toast.makeText(getApplicationContext(), user.getUserName()+" made as admin", Toast.LENGTH_LONG).show();
+                }
                 break;
         }
 

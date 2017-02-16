@@ -17,12 +17,15 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.cerone.invitation.MyGroupsActivity;
 import com.cerone.invitation.R;
 import com.cerone.invitation.UserProfile;
 import com.cerone.invitation.activities.chat.AllChatsActivity;
 import com.cerone.invitation.adapter.HomeEventAdapter;
 import com.cerone.invitation.fcm.RegistrationIntentService;
+import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.MobileHelper;
@@ -31,7 +34,10 @@ import com.cerone.invitation.service.MyService;
 import com.cerone.invitation.service.NotificationService;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.ServiceInformation;
+import com.example.dataobjects.User;
 import com.example.syncher.EventSyncher;
+import com.example.syncher.UserSyncher;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +49,9 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     HomeEventAdapter adapter;
     List<Event> myEventsList = new ArrayList<Event>();
     int ownerId = 0;
+    User profile;
+    TextView userName;
+    ImageView userImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +70,13 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         Intent intent = new Intent(this, RegistrationIntentService.class);
         startService(intent);
         checkUserPermissions();
+        updateProfileImageAndName();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView = navigationView.getHeaderView(0);
+        userImage = (ImageView) hView.findViewById(R.id.nav_userImage);
+        userName = (TextView) hView.findViewById(R.id.txt_nav_userName);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void closePreviousServices() {
@@ -87,6 +103,38 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+    }
+
+    public void updateProfileImageAndName() {
+        profile = InvtAppPreferences.getProfileDetails();
+        new InvtAppAsyncTask(this) {
+
+            @Override
+            public void process() {
+                if(profile == null) {
+                    UserSyncher syncher = new UserSyncher();
+                    profile = syncher.getUserdetails();
+                    InvtAppPreferences.setProfileDetails(profile);
+                }
+            }
+
+            @Override
+            public void afterPostExecute() {
+                if (profile != null) {
+                    Log.d("Image", "" + profile.getImage());
+                    if (profile.getImage() != null && !profile.getImage().isEmpty() && profile.getUserName() != null) {
+                        Picasso.with(getApplicationContext()).load(profile.getImage()).transform(new CircleTransform()).into(userImage);
+                        userImage.setOnClickListener(null);
+                        userName.setText(profile.getUserName());
+                    } else if (profile.getImage().isEmpty() && profile.getUserName() != null) {
+                        userName.setText(profile.getUserName());
+                    } else if (profile.getUserName() == null && profile.getImage() != null && !profile.getImage().isEmpty()) {
+                        Picasso.with(getApplicationContext()).load(profile.getImage()).transform(new CircleTransform()).into(userImage);
+                    }
+                }
+            }
+
+        }.execute();
     }
 
     private void loadEvents() {
@@ -118,7 +166,6 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
 
     @Override
     public void onClick(View v) {
-        Intent intent;
         switch (v.getId()) {
             case R.id.toolbarEvent:
                 InvtAppPreferences.setEventDetails(null);
@@ -163,28 +210,31 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         Intent intent = null;
         int id = item.getItemId();
         switch (id) {
-            case R.id.home :
+            case R.id.nav_home :
                 intent = new Intent(this, HomeScreenActivity.class);
                 break;
-            case R.id.profile :
+            case R.id.nav_profile :
                 intent = new Intent(this, UserProfile.class);
                 break;
-            case R.id.myEvents :
+            case R.id.nav_myEvents :
                 intent = new Intent(this, MyEventsActivity.class);
                 break;
-            case R.id.myInvitations  :
+            case R.id.nav_myInvitations  :
                 intent = new Intent(this, InvitationActivity.class);
                 break;
-            case R.id.myChat  :
+            case R.id.nav_myChat  :
                 intent = new Intent(this, AllChatsActivity.class);
                 break;
-            case R.id.nav_add_group :
+            case R.id.nav_addGroup :
                 intent = new Intent(this, NewGroupActivity.class);
                 break;
-            case R.id.settings :
+            case R.id.nav_myGroup :
+                intent = new Intent(this, MyGroupsActivity.class);
+                break;
+            case R.id.nav_settings :
                 ToastHelper.blueToast(getApplicationContext(), "Need to implement settings.");
                 break;
-            case R.id.logout :
+            case R.id.nav_logout :
                 InvtAppPreferences.setLoggedIn(false);
                 InvtAppPreferences.reset();
                 Intent logoutIntent = new Intent(HomeScreenActivity.this, SignInActivity.class);

@@ -13,7 +13,6 @@ import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,14 +22,13 @@ import com.cerone.invitation.activities.chat.IntraChatActivity;
 import com.cerone.invitation.adapter.ParticipantsAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
-import com.cerone.invitation.helpers.ToastHelper;
-import com.example.dataobjects.*;
+import com.example.dataobjects.Event;
+import com.example.dataobjects.Invitee;
+import com.example.syncher.GroupSyncher;
 import com.example.syncher.InvitationSyncher;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.security.AccessController.getContext;
 
 
 /**
@@ -42,16 +40,20 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
     ListView listView;
     ParticipantsAdapter adapter;
     List<Invitee> participantsList = new ArrayList<Invitee>();
+    int groupId;
+    String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events_layout);
         addToolbarView();
+        title = getIntent().getExtras().getString("title");
         TextView title = (TextView) findViewById(R.id.toolbar_title);
-        title.setText("Invitees");
+        title.setText(this.title+"");
         listView = (ListView) findViewById(R.id.events_list);
         listView.setOnItemClickListener(this);
+        groupId = getIntent().getExtras().getInt("groupId");
         getParticipants();
     }
 
@@ -60,9 +62,14 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
 
             @Override
             public void process() {
-                Event eventDetails = InvtAppPreferences.getEventDetails();
-                InvitationSyncher invitationSyncher = new InvitationSyncher();
-                participantsList = invitationSyncher.getInvitees(eventDetails.getEventId(), "");
+                if(groupId > 0){
+                    GroupSyncher groupSyncher = new GroupSyncher();
+                    participantsList = groupSyncher.getGroupMembers(groupId);
+                }else {
+                    Event eventDetails = InvtAppPreferences.getEventDetails();
+                    InvitationSyncher invitationSyncher = new InvitationSyncher();
+                    participantsList = invitationSyncher.getInvitees(eventDetails.getEventId(), "");
+                }
             }
 
             @Override

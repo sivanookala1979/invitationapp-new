@@ -11,10 +11,19 @@ package com.example.dataobjects;
 public class Group {
 
     String groupName;
+    String ownerName;
     String contacts;
     int groupId;
     int ownerId;
     boolean selected;
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
 
     public int getGroupId() {
         return groupId;
