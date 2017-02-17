@@ -69,11 +69,12 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="@color/blue_shade"
+            android:background="@drawable/gradient_button"
             android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
             android:text="Cancel"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_medium" />
+            android:textSize="@dimen/text_medium"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btn_submit"
@@ -81,11 +82,12 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="@color/blue_shade"
+            android:background="@drawable/gradient_button"
             android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
             android:text="Submit"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_medium" />
+            android:textSize="@dimen/text_medium"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 </LinearLayout>

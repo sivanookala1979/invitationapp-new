@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cerone.invitation.activities.BaseActivity;
 import com.cerone.invitation.adapter.ImageDialogAdapter;
@@ -91,6 +92,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
                     status.setText(userDetails.getStatus());
                     user.setUserName(userDetails.getUserName());
                     user.setPhoneNumber(userDetails.getPhoneNumber());
+                    if(userDetails.getStatus()==null) userDetails.setStatus("");
                     user.setStatus(userDetails.getStatus());
                     user.setImage(userDetails.getImage());
                     InvtAppPreferences.setProfileDetails(user);
@@ -139,7 +141,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
                             if (userDetails != null) {
                                     InvtAppPreferences.setProfileDetails(userDetails);
                                     InvtAppPreferences.setProfileGiven(true);
-                                    setSnackBarValidation("Profile Successfully updated.");
+                                    Toast.makeText(getApplicationContext(), "Profile Successfully updated", Toast.LENGTH_LONG).show();
                                     finish();
                                 } else {
                                     setSnackBarValidation(userDetails.getErrorMessage());

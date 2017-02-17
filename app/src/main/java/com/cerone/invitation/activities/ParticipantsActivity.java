@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +52,8 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
         title = getIntent().getExtras().getString("title");
         TextView title = (TextView) findViewById(R.id.toolbar_title);
         title.setText(this.title+"");
+        ImageView image = (ImageView) findViewById(R.id.toolbarEvent);
+        image.setVisibility(View.INVISIBLE);
         listView = (ListView) findViewById(R.id.events_list);
         listView.setOnItemClickListener(this);
         groupId = getIntent().getExtras().getInt("groupId");

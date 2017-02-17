@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class AllChatDetailsAdapter extends ArrayAdapter<ChatRoom> {
     Context context;
@@ -80,10 +79,7 @@ public class AllChatDetailsAdapter extends ArrayAdapter<ChatRoom> {
         TextView appxText = (TextView) row.findViewById(R.id.time_text);
         if (chatRommList.get(position).getLatestMsgDateTime() != null) {
             String dateTime = chatRommList.get(position).getLatestMsgDateTime();
-            //String[] dateSplit = dateTime.split(" ");
-            //appxText.setText(dateSplit[3] + "");
             appxText.setText(dateTime + "");
-
             try {
                 getMonthDayAgo(dateTime, appxText);
             } catch (java.text.ParseException e) {

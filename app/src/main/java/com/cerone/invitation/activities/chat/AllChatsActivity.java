@@ -14,7 +14,6 @@ import com.cerone.invitation.R;
 import com.cerone.invitation.activities.BaseActivity;
 import com.cerone.invitation.activities.SupportChatActivity;
 import com.cerone.invitation.adapter.AllChatDetailsAdapter;
-import com.cerone.invitation.helpers.FontTypes;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.example.dataobjects.ChatInfo;

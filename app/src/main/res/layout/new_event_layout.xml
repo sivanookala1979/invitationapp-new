@@ -70,6 +70,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/txt_eventImage"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="20"
@@ -190,6 +191,7 @@
                 android:weightSum="100">
 
                 <TextView
+                    android:id="@+id/txt_startDatetime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -262,6 +264,7 @@
                 android:weightSum="100">
 
                 <TextView
+                    android:id="@+id/txt_endDateTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -351,13 +354,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="20"
-                    android:background="@color/blue_shade"
+                    android:background="@drawable/gradient_button"
                     android:minWidth="150dp"
                     android:padding="10dp"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:text="Location"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size" />
+                    android:textSize="@dimen/text_size"
+                    android:textAllCaps="false"/>
             </LinearLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -392,13 +396,14 @@
                     android:layout_margin="5dp"
                     android:layout_marginTop="20dp"
                     android:layout_weight="30"
-                    android:background="@color/blue_shade"
+                    android:background="@drawable/gradient_button"
                     android:minWidth="150dp"
                     android:padding="5dp"
                     android:text="Save"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size" />
+                    android:textSize="@dimen/text_size"
+                    android:textAllCaps="false"/>
 
                 <Button
                     android:id="@+id/shareEvent"
@@ -408,13 +413,14 @@
                     android:layout_margin="5dp"
                     android:layout_marginTop="20dp"
                     android:layout_weight="30"
-                    android:background="@color/blue_shade"
+                    android:background="@drawable/gradient_button"
                     android:minWidth="150dp"
                     android:padding="5dp"
                     android:text="Share"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size" />
+                    android:textSize="@dimen/text_size"
+                    android:textAllCaps="false"/>
 
                 <Button
                     android:id="@+id/Cancel"
@@ -424,13 +430,14 @@
                     android:layout_margin="5dp"
                     android:layout_marginTop="20dp"
                     android:layout_weight="30"
-                    android:background="@color/blue_shade"
+                    android:background="@drawable/gradient_button"
                     android:minWidth="150dp"
                     android:padding="5dp"
                     android:text="Cancel"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size" />
+                    android:textSize="@dimen/text_size"
+                    android:textAllCaps="false"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -68,6 +68,8 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_event_layout);
         addToolbarView();
+        setFontType(R.id.txt_eventImage, R.id.eventName, R.id.description, R.id.manualCheckIn, R.id.recurring, R.id.eventAddress, R.id.extraAddress, R.id.startDate,
+                R.id.startTime, R.id.endDate, R.id.endTime, R.id.txt_startDatetime, R.id.txt_endDateTime, R.id.getLocation, R.id.createEvent, R.id.shareEvent, R.id.Cancel);
         startDateLayout = (LinearLayout) findViewById(R.id.startTimeLayout1);
         eventNameInput = (TextInputLayout) findViewById(R.id.eventNameInput);
         eventDescriptionInput = (TextInputLayout) findViewById(R.id.eventDescriptionInput);

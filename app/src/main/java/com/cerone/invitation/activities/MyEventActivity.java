@@ -37,6 +37,8 @@ public class MyEventActivity extends BaseActivity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_information_layout);
         addToolbarView();
+        setFontType(R.id.description, R.id.txt_start, R.id.txt_end, R.id.eventStartDate, R.id.eventStartTime, R.id.eventEndDate, R.id.eventEndTime,
+                R.id.eventLocation, R.id.participantsInfo, R.id.editEvent, R.id.shareEvent, R.id.deleteEvent, R.id.acceptInvitation, R.id.mayBe, R.id.rejected);
         participantsLayout = (LinearLayout) findViewById(R.id.participantsLayout);
         editEvent = (Button) findViewById(R.id.editEvent);
         shareEvent = (Button) findViewById(R.id.shareEvent);

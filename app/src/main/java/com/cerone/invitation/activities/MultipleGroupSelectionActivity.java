@@ -9,16 +9,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
 import com.cerone.invitation.adapter.GroupAdapter;
 import com.cerone.invitation.helpers.InvtAppPreferences;
-import com.example.dataobjects.*;
-
-
+import com.example.dataobjects.Group;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,21 +31,19 @@ public class MultipleGroupSelectionActivity extends BaseActivity implements OnCl
     ListView listView;
     GroupAdapter adapter;
     Button done;
-    ImageButton back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events_layout);
+        addToolbarView();
         listView = (ListView) findViewById(R.id.events_list);
         done = (Button) findViewById(R.id.shareEventData);
-        back = (ImageButton) findViewById(R.id.headerBack);
-        TextView title = (TextView) findViewById(R.id.headerTitle);
+        TextView title = (TextView) findViewById(R.id.toolbar_title);
         title.setText("Groups");
         done.setText("Done");
         visibleLayout(done);
         done.setOnClickListener(this);
-        back.setOnClickListener(this);
         groups = InvtAppPreferences.getGroups();
         adapter = new GroupAdapter(getApplicationContext(), R.layout.multiple_contact_item, groups, true);
         listView.setAdapter(adapter);
@@ -57,9 +52,6 @@ public class MultipleGroupSelectionActivity extends BaseActivity implements OnCl
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.headerBack :
-                finish();
-                break;
             case R.id.shareEventData :
                 Intent intent = new Intent();
                 setResult(1, intent);

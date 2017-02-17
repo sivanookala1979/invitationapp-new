@@ -91,7 +91,7 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                 GroupSyncher groupSyncher = new GroupSyncher();
                 shareContacts = groupSyncher.getDifferentiateContacts(StringUtils.getContactsListFromUsers(allPhoneContacts));
                 splitContacts();
-                myGroups = groupSyncher.getGroups();
+                myGroups = groupSyncher.getGroupItems();
             }
 
             @Override

@@ -49,6 +49,8 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_information_layout);
         addToolbarView();
+        setFontType(R.id.description,R.id.eventStartDate,R.id.eventStartTime,R.id.eventEndDate,R.id.eventEndTime,R.id.eventLocation,R.id.participantsInfo,
+                R.id.editEvent,R.id.shareEvent,R.id.inviteesInfo,R.id.txt_start,R.id.txt_end, R.id.deleteEvent, R.id.acceptInvitation, R.id.mayBe, R.id.rejected);
         invitations = InvtAppPreferences.getInvitation();
         participantsLayout = (LinearLayout) findViewById(R.id.participantsLayout);
         location = (LinearLayout) findViewById(R.id.gpsLocationLayout);
@@ -180,6 +182,7 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.logout_dialog);
+        setFontType(R.id.title_accept, R.id.btn_submit, R.id.btn_cancel, R.id.btn_submit, R.id.radio_location, R.id.radio_distance, R.id.radio_nothing);
         Button accept = (Button) dialog.findViewById(R.id.btn_submit);
         Button cancel = (Button) dialog.findViewById(R.id.btn_cancel);
         cancel.setVisibility(View.GONE);

@@ -9,6 +9,7 @@
             android:icon="@drawable/home"
             android:title="Home" />
     </group>
+
     <group
         android:id="@+id/profile"
         android:checkableBehavior="single">
@@ -17,6 +18,7 @@
             android:icon="@drawable/profile_icon"
             android:title="Profile" />
     </group>
+
     <group
         android:id="@+id/myEvents"
         android:checkableBehavior="single">
@@ -25,6 +27,7 @@
             android:icon="@drawable/event"
             android:title="My Events" />
     </group>
+
     <group
         android:id="@+id/myInvitations"
         android:checkableBehavior="single">
@@ -33,6 +36,7 @@
             android:icon="@drawable/invitation"
             android:title="My Invitations" />
     </group>
+
     <group
         android:id="@+id/myChat"
         android:checkableBehavior="single">
@@ -40,14 +44,6 @@
             android:id="@+id/nav_myChat"
             android:icon="@drawable/chat"
             android:title="Chat" />
-    </group>
-    <group
-        android:id="@+id/nav_serviceAvailibilityGroup"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_addGroup"
-            android:icon="@drawable/add_group"
-            android:title="Create Group" />
     </group>
 
     <group
@@ -76,4 +72,5 @@
             android:icon="@drawable/log_out"
             android:title="Log Out" />
     </group>
+
 </menu>

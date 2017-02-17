@@ -106,16 +106,13 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     }
 
     public void updateProfileImageAndName() {
-        profile = InvtAppPreferences.getProfileDetails();
         new InvtAppAsyncTask(this) {
 
             @Override
             public void process() {
-                if(profile == null) {
+
                     UserSyncher syncher = new UserSyncher();
                     profile = syncher.getUserdetails();
-                    InvtAppPreferences.setProfileDetails(profile);
-                }
             }
 
             @Override
@@ -224,9 +221,6 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                 break;
             case R.id.nav_myChat  :
                 intent = new Intent(this, AllChatsActivity.class);
-                break;
-            case R.id.nav_addGroup :
-                intent = new Intent(this, NewGroupActivity.class);
                 break;
             case R.id.nav_myGroup :
                 intent = new Intent(this, MyGroupsActivity.class);

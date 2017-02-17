@@ -7,7 +7,6 @@ package com.cerone.invitation.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,13 +17,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.cerone.invitation.MyGroupsActivity;
 import com.cerone.invitation.R;
 import com.cerone.invitation.adapter.ContactAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.InvtTextWatcher;
 import com.cerone.invitation.helpers.ToastHelper;
-import com.example.dataobjects.*;
+import com.example.dataobjects.Group;
+import com.example.dataobjects.ServerResponse;
+import com.example.dataobjects.User;
 import com.example.syncher.GroupSyncher;
 import com.example.utills.StringUtils;
 
@@ -113,12 +115,13 @@ public class NewGroupActivity extends BaseActivity implements OnItemClickListene
 
                         @Override
                         public void afterPostExecute() {
-                            if (serverResponse.getId()>0) {
+                            if (serverResponse!=null&&serverResponse.getId()>0) {
                                 ToastHelper.blueToast(getApplicationContext(), serverResponse.getStatus());
-                                finish();
                             } else {
                                 ToastHelper.redToast(getApplicationContext(), serverResponse.getStatus());
                             }
+                            startActivity(new Intent(getApplicationContext(), MyGroupsActivity.class));
+                            finish();
                         }
                     }.execute();
                 } else {
@@ -148,5 +151,17 @@ public class NewGroupActivity extends BaseActivity implements OnItemClickListene
                 contactAdapter.setUsers(users);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), MyGroupsActivity.class));
+        super.onBackPressed();
+    }
+
+    @Override
+    public void closeActivity() {
+        startActivity(new Intent(getApplicationContext(), MyGroupsActivity.class));
+        super.closeActivity();
     }
 }
