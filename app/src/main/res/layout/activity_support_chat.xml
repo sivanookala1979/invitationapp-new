@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -33,7 +33,6 @@
         android:layout_weight="1"
         android:background="@color/white"
         android:divider="@color/grey_light"
-        android:dividerHeight="1dp"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"></ListView>
 
@@ -51,20 +50,20 @@
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
             android:layout_margin="10dp"
-            android:visibility="gone"
-            android:src="@drawable/chat_add_icon" />
+            android:src="@drawable/chat_add_icon"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/chat_message_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
             android:layout_toEndOf="@+id/chat_add"
             android:layout_toLeftOf="@+id/send_chat_message"
             android:layout_toRightOf="@+id/chat_add"
             android:layout_toStartOf="@+id/send_chat_message"
-            android:layout_marginLeft="5dp"
+            android:background="@null"
             android:hint="please type your question here"
             android:padding="10dp"
             android:textColor="@color/white"
@@ -75,10 +74,10 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
             android:layout_centerVertical="true"
-            android:tint="@color/white"
-            android:src="@drawable/send_chat_icon" />
+            android:layout_margin="10dp"
+            android:src="@drawable/send_chat_icon"
+            android:tint="@color/white" />
     </RelativeLayout>
 
 </LinearLayout>

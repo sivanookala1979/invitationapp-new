@@ -186,10 +186,11 @@ public class UserSyncher extends BaseSyncher {
         }
         return userDetails;
     }
-    public void updateGcmCode(String gcmCode){
-        SaveResult result = new SaveResult();
-        try {
-            String response = HTTPUtils.getDataFromServer(BASE_URL + "users/store_gcm_code.json?gcm_code=" + gcmCode, "GET");
+    public void updateGcmCode(String gcmCode) {
+        if (BaseSyncher.getAccessToken() != null && !BaseSyncher.getAccessToken().isEmpty()) {
+            SaveResult result = new SaveResult();
+            try {
+                String response = HTTPUtils.getDataFromServer(BASE_URL + "users/store_gcm_code.json?gcm_code=" + gcmCode, "GET");
 //            JSONObject responseJSON = new JSONObject(response);
 //            if (responseJSON.has("user_id")) {
 //                result.setSuccess(true);
@@ -198,10 +199,11 @@ public class UserSyncher extends BaseSyncher {
 //                result.setSuccess(false);
 //                result.setErrorMessage(responseJSON.getString("error_message"));
 //            }
-        } catch (Exception Ex) {
-            handleException(Ex);
+            } catch (Exception Ex) {
+                handleException(Ex);
+            }
+            //return result;
         }
-        //return result;
     }
 
 

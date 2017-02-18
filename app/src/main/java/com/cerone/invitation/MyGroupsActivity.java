@@ -34,6 +34,7 @@ public class MyGroupsActivity extends BaseActivity implements AdapterView.OnItem
         TextView title = (TextView) findViewById(R.id.toolbar_title);
         title.setText("My Groups");
         ImageView addGroup = (ImageView) findViewById(R.id.toolbarEvent);
+        addGroup.setVisibility(View.VISIBLE);
         listView = (ListView) findViewById(R.id.events_list);
         listView.setOnItemClickListener(this);
         addGroup.setOnClickListener(this);

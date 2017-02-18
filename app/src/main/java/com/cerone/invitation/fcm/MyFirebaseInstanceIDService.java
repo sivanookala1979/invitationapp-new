@@ -25,7 +25,6 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     }
     private void sendRegistrationToServer(String token) {
         Log.d("Send token", "Token " + token);
-
         Log.d("Send token", "callingUpdateJsun ");
         UserSyncher syncher = new UserSyncher();
         syncher.updateGcmCode(token);

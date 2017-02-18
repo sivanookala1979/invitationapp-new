@@ -37,6 +37,7 @@ import com.example.dataobjects.ServiceInformation;
 import com.example.dataobjects.User;
 import com.example.syncher.EventSyncher;
 import com.example.syncher.UserSyncher;
+import com.google.android.gms.iid.InstanceID;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -81,11 +82,11 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
 
     private void closePreviousServices() {
         List<ServiceInformation> serviceDetailsList = InvtAppPreferences.getServiceDetails();
-        for(int i= 0;i<serviceDetailsList.size();i++){
+        for (int i = 0; i < serviceDetailsList.size(); i++) {
             MyService service = new MyService();
-            service.CancelAlarm(getApplicationContext(),i);
+            service.CancelAlarm(getApplicationContext(), i);
             NotificationService notificationService = new NotificationService();
-            notificationService.CancelAlarm(getApplicationContext(),i);
+            notificationService.CancelAlarm(getApplicationContext(), i);
         }
         InvtAppPreferences.setServiceDetails(new ArrayList<ServiceInformation>());
     }
@@ -111,8 +112,8 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             @Override
             public void process() {
 
-                    UserSyncher syncher = new UserSyncher();
-                    profile = syncher.getUserdetails();
+                UserSyncher syncher = new UserSyncher();
+                profile = syncher.getUserdetails();
             }
 
             @Override
@@ -190,6 +191,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     public void onBackPressed() {
         doExit();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -207,28 +209,33 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         Intent intent = null;
         int id = item.getItemId();
         switch (id) {
-            case R.id.nav_home :
+            case R.id.nav_home:
                 intent = new Intent(this, HomeScreenActivity.class);
                 break;
-            case R.id.nav_profile :
+            case R.id.nav_profile:
                 intent = new Intent(this, UserProfile.class);
                 break;
-            case R.id.nav_myEvents :
+            case R.id.nav_myEvents:
                 intent = new Intent(this, MyEventsActivity.class);
                 break;
-            case R.id.nav_myInvitations  :
+            case R.id.nav_myInvitations:
                 intent = new Intent(this, InvitationActivity.class);
                 break;
-            case R.id.nav_myChat  :
+            case R.id.nav_myChat:
                 intent = new Intent(this, AllChatsActivity.class);
                 break;
-            case R.id.nav_myGroup :
+            case R.id.nav_myGroup:
                 intent = new Intent(this, MyGroupsActivity.class);
                 break;
-            case R.id.nav_settings :
+            case R.id.nav_settings:
                 ToastHelper.blueToast(getApplicationContext(), "Need to implement settings.");
                 break;
-            case R.id.nav_logout :
+            case R.id.nav_logout:
+                try {
+                    InstanceID.getInstance(getApplicationContext()).deleteInstanceID();
+                } catch (Exception ex) {
+                    Log.e("InstanceID", ex.getMessage(), ex);
+                }
                 InvtAppPreferences.setLoggedIn(false);
                 InvtAppPreferences.reset();
                 Intent logoutIntent = new Intent(HomeScreenActivity.this, SignInActivity.class);

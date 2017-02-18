@@ -24,6 +24,7 @@ import com.example.dataobjects.ServerResponse;
 import com.example.syncher.BaseSyncher;
 import com.example.syncher.CurrencyTypesSyncher;
 import com.example.syncher.UserSyncher;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
     TextInputLayout inputLayoutEmail, otpNumberlayout;
     List<CurrencyTypes> currencyTypes;
     String otpResult;
+    UserSyncher userSyncher = new UserSyncher();
     ServerResponse serverResponse;
     boolean alreadyLoggedIn;
 
@@ -128,14 +130,16 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
                             new InvtAppAsyncTask(SignInActivity.this) {
                                 @Override
                                 public void process() {
-                                    UserSyncher syncher = new UserSyncher();
-                                    serverResponse = syncher.getSignInWithMobileAndOtp(countryCode.getText().toString() + mobileNum, otpNumber.getText().toString());
+                                    serverResponse = userSyncher.getSignInWithMobileAndOtp(countryCode.getText().toString() + mobileNum, otpNumber.getText().toString());
                                 }
 
                                 @Override
                                 public void afterPostExecute() {
                                     if (serverResponse != null) {
                                         if (serverResponse.getToken() != null) {
+                                            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+                                            Log.i("TAG", "FCM Registration Token: " + refreshedToken);
+                                            userSyncher.updateGcmCode(refreshedToken);
                                             Toast.makeText(getApplicationContext(), "Successfully logged in.", Toast.LENGTH_LONG).show();
                                             setLoginDetails(serverResponse);
                                             Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
@@ -166,9 +170,7 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
         new InvtAppAsyncTask(SignInActivity.this) {
             @Override
             public void process() {
-
-                UserSyncher syncher = new UserSyncher();
-                otpResult = syncher.getOtp(mobileNumber);
+                otpResult = userSyncher.getOtp(mobileNumber);
                 Log.d("OTP Result", otpResult);
             }
 
