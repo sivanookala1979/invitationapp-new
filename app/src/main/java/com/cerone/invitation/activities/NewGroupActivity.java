@@ -54,6 +54,7 @@ public class NewGroupActivity extends BaseActivity implements OnItemClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.group_layout);
         addToolbarView();
+        setFontType(R.id.createGroup);
         groupNameInput = (TextInputLayout) findViewById(R.id.groupNameInput);
         groupName = (EditText) findViewById(R.id.groupName);
         contactsListView = (ListView) findViewById(R.id.contacts);

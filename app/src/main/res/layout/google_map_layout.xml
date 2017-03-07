@@ -65,11 +65,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_weight="20"
-                android:background="@color/blue_shade"
+                android:background="@drawable/gradient_button"
                 android:padding="5dp"
                 android:text="Done"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size" />
+                android:textSize="@dimen/text_size"
+                android:textAllCaps="false" />
         </LinearLayout>
     </LinearLayout>
 

@@ -41,6 +41,11 @@ public class InvitationActivity extends BaseActivity implements OnItemClickListe
         findViewById(R.id.toolbarEvent).setVisibility(View.INVISIBLE);
         listView.setOnItemClickListener(this);
        // createLeftMenu(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getMyEvents();
     }
 

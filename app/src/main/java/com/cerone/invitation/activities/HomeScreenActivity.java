@@ -67,17 +67,22 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         Log.d("Owner id", ownerId + "");
         myEvents.setOnItemClickListener(this);
         createLeftMenu();
-        loadEvents();
         Intent intent = new Intent(this, RegistrationIntentService.class);
         startService(intent);
         checkUserPermissions();
-        updateProfileImageAndName();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View hView = navigationView.getHeaderView(0);
         userImage = (ImageView) hView.findViewById(R.id.nav_userImage);
         userName = (TextView) hView.findViewById(R.id.txt_nav_userName);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadEvents();
+        updateProfileImageAndName();
     }
 
     private void closePreviousServices() {
@@ -119,12 +124,12 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             @Override
             public void afterPostExecute() {
                 if (profile != null) {
-                    Log.d("Image", "" + profile.getImage());
+                    //Log.d("Image", "" + profile.getImage());
                     if (profile.getImage() != null && !profile.getImage().isEmpty() && profile.getUserName() != null) {
                         Picasso.with(getApplicationContext()).load(profile.getImage()).transform(new CircleTransform()).into(userImage);
                         userImage.setOnClickListener(null);
                         userName.setText(profile.getUserName());
-                    } else if (profile.getImage().isEmpty() && profile.getUserName() != null) {
+                    } else if (profile.getUserName() != null && profile.getImage().isEmpty()) {
                         userName.setText(profile.getUserName());
                     } else if (profile.getUserName() == null && profile.getImage() != null && !profile.getImage().isEmpty()) {
                         Picasso.with(getApplicationContext()).load(profile.getImage()).transform(new CircleTransform()).into(userImage);

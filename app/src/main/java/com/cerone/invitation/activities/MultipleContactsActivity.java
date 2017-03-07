@@ -15,16 +15,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.cerone.invitation.R;
 import com.cerone.invitation.adapter.MultipleContactAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.MobileHelper;
-import com.example.dataobjects.*;
+import com.example.dataobjects.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +48,7 @@ public class MultipleContactsActivity extends BaseActivity implements OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.multiple_contacts_layout);
         addToolbarView();
+        setFontType(R.id.shareEventData);
         listView = (ListView) findViewById(R.id.events_list);
         done = (Button) findViewById(R.id.shareEventData);
         search = (EditText) findViewById(R.id.search);

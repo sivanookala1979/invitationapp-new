@@ -37,6 +37,7 @@ public class MultipleGroupSelectionActivity extends BaseActivity implements OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events_layout);
         addToolbarView();
+        setFontType(R.id.shareEventData);
         listView = (ListView) findViewById(R.id.events_list);
         done = (Button) findViewById(R.id.shareEventData);
         TextView title = (TextView) findViewById(R.id.toolbar_title);

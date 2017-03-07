@@ -224,16 +224,4 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
         dialog.show();
 
     }
-
-    @Override
-    public void closeActivity() {
-        startActivity(new Intent(getApplicationContext(), InvitationActivity.class));
-        super.closeActivity();
-    }
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), InvitationActivity.class));
-        super.onBackPressed();
-    }
 }
