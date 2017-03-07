@@ -2,10 +2,12 @@ package com.cerone.invitation.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -45,7 +47,7 @@ import java.util.List;
 
 
 public class HomeScreenActivity extends BaseActivity implements OnClickListener, OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
-
+    SwipeRefreshLayout mSwipeRefreshLayout;
     ListView myEvents;
     HomeEventAdapter adapter;
     List<Event> myEventsList = new ArrayList<Event>();
@@ -58,9 +60,25 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_menu_activity);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
         myEvents = (ListView) findViewById(R.id.events_list);
-        ImageView imageView = (ImageView) findViewById(R.id.toolbarEvent);
+        final ImageView imageView = (ImageView) findViewById(R.id.toolbarEvent);
         imageView.setOnClickListener(this);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshContent();
+            }
+            private void refreshContent(){
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadEvents();
+                            mSwipeRefreshLayout.setRefreshing(false);
+                        }
+                    },1000);
+                }
+        });
         closePreviousServices();
         Log.d("Token", InvtAppPreferences.getAccessToken());
         ownerId = InvtAppPreferences.getOwnerId();
