@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -48,22 +49,24 @@ import java.util.List;
 
 public class HomeScreenActivity extends BaseActivity implements OnClickListener, OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
     SwipeRefreshLayout mSwipeRefreshLayout;
+    FloatingActionButton fabAdd;
     ListView myEvents;
     HomeEventAdapter adapter;
     List<Event> myEventsList = new ArrayList<Event>();
     int ownerId = 0;
     User profile;
     TextView userName;
-    ImageView userImage;
+    ImageView userImage, newEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_menu_activity);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
+        fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
         myEvents = (ListView) findViewById(R.id.events_list);
-        final ImageView imageView = (ImageView) findViewById(R.id.toolbarEvent);
-        imageView.setOnClickListener(this);
+        newEvent = (ImageView) findViewById(R.id.toolbarEvent);
+        newEvent.setVisibility(View.GONE);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -83,7 +86,6 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         Log.d("Token", InvtAppPreferences.getAccessToken());
         ownerId = InvtAppPreferences.getOwnerId();
         Log.d("Owner id", ownerId + "");
-        myEvents.setOnItemClickListener(this);
         createLeftMenu();
         Intent intent = new Intent(this, RegistrationIntentService.class);
         startService(intent);
@@ -94,12 +96,14 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         userImage = (ImageView) hView.findViewById(R.id.nav_userImage);
         userName = (TextView) hView.findViewById(R.id.txt_nav_userName);
         navigationView.setNavigationItemSelectedListener(this);
+        myEvents.setOnItemClickListener(this);
+        fabAdd.setOnClickListener(this);
+        loadEvents();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadEvents();
         updateProfileImageAndName();
     }
 
@@ -188,7 +192,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.toolbarEvent:
+            case R.id.fab_add:
                 InvtAppPreferences.setEventDetails(null);
                 startActivity(new Intent(this, NewEventActivity.class));
                 break;

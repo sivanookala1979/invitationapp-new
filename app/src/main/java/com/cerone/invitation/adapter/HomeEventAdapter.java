@@ -13,9 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.InvtAppPreferences;
-import com.example.dataobjects.*;
+import com.example.dataobjects.Event;
 import com.example.utills.StringUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +66,8 @@ public class HomeEventAdapter extends ArrayAdapter<Event> {
         TextView acceptCount = (TextView) row.findViewById(R.id.eventAcceptCount);
         TextView checkInCount = (TextView) row.findViewById(R.id.checkedinCount);
         TextView total = (TextView) row.findViewById(R.id.totalInvitees);
-        imageView.setBackgroundResource(imageResources[position % 3]);
+        Picasso.with(context).load(imageResources[position % 3]).transform(new CircleTransform()).into(imageView);
+        //imageView.setBackgroundResource(imageResources[position % 3]);
         eventName.setText(event.getName());
         eventDate.setText(StringUtils.formatDateAndTime(event.getStartDateTime(), 5));
         acceptCount.setText(event.getAcceptedCount() + "");
@@ -83,3 +86,5 @@ public class HomeEventAdapter extends ArrayAdapter<Event> {
         return row;
     }
 }
+
+

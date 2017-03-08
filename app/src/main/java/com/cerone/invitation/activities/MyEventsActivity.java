@@ -47,7 +47,7 @@ public class MyEventsActivity extends BaseActivity implements OnClickListener, O
         TextView title = (TextView) findViewById(R.id.toolbar_title);
         title.setText("My Events");
         newEvent = (ImageView) findViewById(R.id.toolbarEvent);
-        newEvent.setOnClickListener(this);
+        newEvent.setVisibility(View.GONE);
         listView.setOnItemClickListener(this);
         //createLeftMenu(this);
         getMyEvents();
