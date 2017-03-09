@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.cerone.invitation.MyGroupsActivity;
@@ -56,7 +57,8 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     int ownerId = 0;
     User profile;
     TextView userName;
-    ImageView userImage, newEvent;
+    ImageView userImage;
+    RadioButton on,off;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +67,33 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
         fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
         myEvents = (ListView) findViewById(R.id.events_list);
-        newEvent = (ImageView) findViewById(R.id.toolbarEvent);
-        newEvent.setVisibility(View.GONE);
+        on = (RadioButton) findViewById(R.id.radio_on);
+        on.setSelected(true);
+        off = (RadioButton) findViewById(R.id.radio_off);
+        on.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    if (on.isSelected()) {
+                        on.setSelected(false);
+                        off.setSelected(true);
+                    } else {
+                        on.setSelected(true);
+                        off.setSelected(true);
+                    }
+            }
+        });
+        off.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(off.isSelected()){
+                    off.setSelected(false);
+                    on.setSelected(true);
+                }else{
+                    off.setSelected(true);
+                    on.setSelected(true);
+                }
+            }
+        });
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -146,7 +173,6 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             @Override
             public void afterPostExecute() {
                 if (profile != null) {
-                    //Log.d("Image", "" + profile.getImage());
                     if (profile.getImage() != null && !profile.getImage().isEmpty() && profile.getUserName() != null) {
                         Picasso.with(getApplicationContext()).load(profile.getImage()).transform(new CircleTransform()).into(userImage);
                         userImage.setOnClickListener(null);

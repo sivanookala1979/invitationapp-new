@@ -61,13 +61,11 @@ public class HomeEventAdapter extends ArrayAdapter<Event> {
         Event event = getItem(position);
         TextView eventName = (TextView) row.findViewById(R.id.eventName);
         TextView eventDate = (TextView) row.findViewById(R.id.startDate);
-        TextView eventdescription = (TextView) row.findViewById(R.id.eventDescription);
         ImageView imageView = (ImageView) row.findViewById(R.id.eventPicture);
         TextView acceptCount = (TextView) row.findViewById(R.id.eventAcceptCount);
         TextView checkInCount = (TextView) row.findViewById(R.id.checkedinCount);
         TextView total = (TextView) row.findViewById(R.id.totalInvitees);
         Picasso.with(context).load(imageResources[position % 3]).transform(new CircleTransform()).into(imageView);
-        //imageView.setBackgroundResource(imageResources[position % 3]);
         eventName.setText(event.getName());
         eventDate.setText(StringUtils.formatDateAndTime(event.getStartDateTime(), 5));
         acceptCount.setText(event.getAcceptedCount() + "");

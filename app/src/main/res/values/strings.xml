@@ -6,6 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="country_code">91</string>
     <string name="mobile_number_hint">Enter mobile number</string>
+    <string name="name_hint">Enter your name</string>
     <string name="otp_number_hint">Enter otp</string>
     <string name="register_button_text">Register</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

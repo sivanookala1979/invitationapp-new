@@ -51,7 +51,6 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
     TextView eventAddress;
     String eventPictureInfo = "";
     ServerResponse createEvent;
-    ImageView eventThemePicture;
     CheckBox manualCheckIn, recurring;
     Spinner recurringInfo;
     String recurringData[] = {
@@ -68,17 +67,15 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_event_layout);
         addToolbarView();
-        setFontType(R.id.txt_eventImage, R.id.eventName, R.id.description, R.id.manualCheckIn, R.id.recurring, R.id.eventAddress, R.id.extraAddress, R.id.startDate,
+        setFontType(R.id.txt_eventPicture, R.id.eventName, R.id.description, R.id.manualCheckIn, R.id.recurring, R.id.eventAddress, R.id.extraAddress, R.id.startDate,
                 R.id.startTime, R.id.endDate, R.id.endTime, R.id.txt_startDatetime, R.id.txt_endDateTime, R.id.getLocation, R.id.createEvent, R.id.shareEvent, R.id.Cancel);
         startDateLayout = (LinearLayout) findViewById(R.id.startTimeLayout1);
         eventNameInput = (TextInputLayout) findViewById(R.id.eventNameInput);
         eventDescriptionInput = (TextInputLayout) findViewById(R.id.eventDescriptionInput);
         extraAddressInput = (TextInputLayout) findViewById(R.id.extraAddressInput);
         eventThemeInput = (TextInputLayout) findViewById(R.id.eventThemeInput);
-        eventThemePicture = (ImageView) findViewById(R.id.eventTheamPicture);
         cameraIcon = (ImageView) findViewById(R.id.cameraIcon);
         cameraIcon.setOnClickListener(this);
-        eventThemePicture.setOnClickListener(this);
         startTime = (EditText) findViewById(R.id.startTime);
         startDate = (EditText) findViewById(R.id.startDate);
         endDate = (EditText) findViewById(R.id.endDate);
@@ -195,7 +192,6 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
                 startActivityForResult(locationIntent, GOOGLE_MAPS_REQUEST);
                 break;
             case R.id.cameraIcon :
-            case R.id.eventTheamPicture :
                 pictureDialog();
                 break;
             case R.id.createEvent :
@@ -265,6 +261,7 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
         event.setTheme(theme.getText().toString());
         event.setRecurringType(recurringInfo.getSelectedItem().toString());
         event.setExtraAddress(extraAddress.getText().toString());
+        event.setImageData(eventPictureInfo);
     }
 
     private boolean isEventDataValid() {
@@ -299,10 +296,8 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
                 bitmap = MobileHelper.getBitmapFromCameraData(data, NewEventActivity.this);
             }
             if (bitmap != null) {
-                cameraIcon.setVisibility(View.GONE);
+                cameraIcon.setImageBitmap(getRoundedCornerBitmap(bitmap));
                 eventPictureInfo = MobileHelper.BitMapToString(bitmap);
-                eventThemePicture.setImageBitmap(bitmap);
-                event.setImageData(eventPictureInfo);
             }
         }
     }

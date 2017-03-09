@@ -5,14 +5,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.graphics.ColorUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -186,36 +181,6 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    public static Bitmap getRoundedCornerBitmap(Bitmap source) {
-        int size = Math.min(source.getWidth(), source.getHeight());
-
-        int x = (source.getWidth() - size) / 2;
-        int y = (source.getHeight() - size) / 2;
-        int borderColor = ColorUtils.setAlphaComponent(Color.WHITE, 0xFF);
-        int borderRadius = 0;
-
-        Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
-        Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
-
-        Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint();
-        BitmapShader shader = new BitmapShader(squaredBitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
-        paint.setShader(shader);
-        paint.setAntiAlias(true);
-
-        float r = size / 2f;
-        canvas.drawCircle(r, r, r, paint);
-
-        Paint paintBg = new Paint();
-        paintBg.setColor(borderColor);
-        paintBg.setAntiAlias(true);
-
-        canvas.drawCircle(r, r, r, paintBg);
-        canvas.drawCircle(r, r, r - borderRadius, paint);
-        squaredBitmap.recycle();
-
-        return bitmap;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

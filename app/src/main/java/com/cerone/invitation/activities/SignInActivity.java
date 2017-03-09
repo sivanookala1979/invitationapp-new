@@ -28,13 +28,15 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.List;
 
+import static com.cerone.invitation.R.id.namelayout;
+
 
 public class SignInActivity extends BaseActivity implements OnClickListener {
 
-    EditText mobileNumber, otpNumber;
+    EditText name, mobileNumber, otpNumber;
     Button signInButton, countryCode;
     String mobileNum = "";
-    TextInputLayout inputLayoutEmail, otpNumberlayout;
+    TextInputLayout inputLayoutEmail, otpNumberlayout, inputLayoutName;
     List<CurrencyTypes> currencyTypes;
     String otpResult;
     UserSyncher userSyncher = new UserSyncher();
@@ -45,7 +47,7 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin);
-        setFontType(R.id.toolbar_title, R.id.editMobileNumber, R.id.country_code, R.id.editOtpNumber, R.id.signIn_button, R.id.txt_sendAgain, R.id.send_again);
+        setFontType(R.id.toolbar_title, R.id.editName, R.id.editMobileNumber, R.id.country_code, R.id.editOtpNumber, R.id.signIn_button, R.id.txt_sendAgain, R.id.send_again);
         InvtAppPreferences.setPref(getApplicationContext());
         alreadyLoggedIn = InvtAppPreferences.isLoggedIn();
         InvtAppPreferences.setServiceRefresh(false);
@@ -56,14 +58,17 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
             startActivity(intent);
             finish();
         }
+        inputLayoutName = (TextInputLayout) findViewById(namelayout);
         inputLayoutEmail = (TextInputLayout) findViewById(R.id.mobileNumberlayout);
         otpNumberlayout = (TextInputLayout) findViewById(R.id.otpNumberlayout);
+        name = (EditText) findViewById(R.id.editName);
         mobileNumber = (EditText) findViewById(R.id.editMobileNumber);
         otpNumber = (EditText) findViewById(R.id.editOtpNumber);
         signInButton = (Button) findViewById(R.id.signIn_button);
         countryCode = (Button) findViewById(R.id.country_code);
         signInButton.setOnClickListener(this);
         countryCode.setOnClickListener(this);
+        name.addTextChangedListener(new InvtTextWatcher(name, inputLayoutName, "Name should not be empty."));
         mobileNumber.addTextChangedListener(new InvtTextWatcher(mobileNumber, inputLayoutEmail, "Mobile number should not be empty."));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         loadCountryCodeDetails();
@@ -125,12 +130,11 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
                     if (signInButton.getText().toString().equalsIgnoreCase("OTP")) {
                         setSendOtp(countryCode.getText().toString() + mobileNum);
                     } else if (signInButton.getText().toString().equalsIgnoreCase("LOGIN")) {
-                        String otpNum = otpNumber.getText().toString();
-                        if (mobileNum != null && !mobileNum.isEmpty() && otpNum != null && !otpNum.isEmpty()) {
+                        if (mobileNum != null && !mobileNum.isEmpty() && !otpNumber.getText().toString().isEmpty() && !name.getText().toString().isEmpty()) {
                             new InvtAppAsyncTask(SignInActivity.this) {
                                 @Override
                                 public void process() {
-                                    serverResponse = userSyncher.getSignInWithMobileAndOtp(countryCode.getText().toString() + mobileNum, otpNumber.getText().toString());
+                                    serverResponse = userSyncher.getSignInWithMobileAndOtp(countryCode.getText().toString()+mobileNum, otpNumber.getText().toString(), name.getText().toString());
                                 }
 
                                 @Override

@@ -101,10 +101,10 @@ public class UserSyncher extends BaseSyncher {
         return status;
     }
 
-    public ServerResponse getSignInWithMobileAndOtp(String mobileNumber, String otp) {
+    public ServerResponse getSignInWithMobileAndOtp(String mobileNumber, String otp, String name) {
         ServerResponse response = new ServerResponse();
         try {
-            String object = HTTPUtils.getDataFromServer(BASE_URL + "/users/register_with_mobile.json?mobile_number="+mobileNumber+"&otp="+otp, "GET", true);
+            String object = HTTPUtils.getDataFromServer(BASE_URL + "/users/register_with_mobile.json?mobile_number="+mobileNumber+"&otp="+otp+"&user_name="+name, "GET", true);
             JSONObject jsonObject = new JSONObject(object);
             if (jsonObject.has("user_id"))
                 response.setId(jsonObject.getInt("user_id"));

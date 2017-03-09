@@ -6,11 +6,11 @@ package com.cerone.invitation.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,7 +20,7 @@ import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.MobileHelper;
 import com.cerone.invitation.helpers.ToastHelper;
-import com.example.dataobjects.*;
+import com.example.dataobjects.Event;
 import com.example.syncher.EventSyncher;
 
 import java.util.ArrayList;
@@ -33,9 +33,9 @@ import java.util.List;
  */
 public class MyEventsActivity extends BaseActivity implements OnClickListener, OnItemClickListener {
 
+    FloatingActionButton fabAdd;
     List<Event> events = new ArrayList<Event>();
     ListView listView;
-    ImageView newEvent;
     HomeEventAdapter adapter;
 
     @Override
@@ -44,12 +44,12 @@ public class MyEventsActivity extends BaseActivity implements OnClickListener, O
         setContentView(R.layout.home_screen_layout_new);
         addToolbarView();
         listView = (ListView) findViewById(R.id.events_list);
+        fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
         TextView title = (TextView) findViewById(R.id.toolbar_title);
         title.setText("My Events");
-        newEvent = (ImageView) findViewById(R.id.toolbarEvent);
-        newEvent.setVisibility(View.GONE);
+        findViewById(R.id.toggle_layout).setVisibility(View.INVISIBLE);
         listView.setOnItemClickListener(this);
-        //createLeftMenu(this);
+        fabAdd.setOnClickListener(this);
         getMyEvents();
     }
 
@@ -78,7 +78,7 @@ public class MyEventsActivity extends BaseActivity implements OnClickListener, O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.toolbarEvent :
+            case R.id.fab_add :
                 InvtAppPreferences.setEventDetails(null);
                 startActivity(new Intent(this, NewEventActivity.class));
                 break;

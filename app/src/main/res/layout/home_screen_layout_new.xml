@@ -28,16 +28,7 @@
                 android:text="Events"
                 android:textColor="@android:color/white" />
 
-            <ImageView
-                android:id="@+id/toolbarEvent"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="right"
-                android:layout_margin="5dp"
-                android:layout_weight="10"
-                android:padding="5dp"
-                android:scaleType="center"
-                android:src="@drawable/new_event" />
+
         </android.support.v7.widget.Toolbar>
 
         <LinearLayout
@@ -78,14 +69,49 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_add"
-            app:fabSize="mini"
+            app:fabSize="auto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/fab_margin"
-            app:backgroundTint="@color/fuchsia"
+            app:backgroundTint="@color/sky_blue"
             android:src="@android:drawable/ic_input_add" />
+
+        <LinearLayout
+            android:id="@+id/toggle_layout"
+            android:layout_width="100dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/shareEventData"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="5dp">
+
+                <RadioButton
+                    android:id="@+id/radio_on"
+                    android:background="@drawable/toggle_widget_background"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="ON"
+                    android:textColor="@color/white"
+                    android:clickable="true"/>
+
+                <RadioButton
+                    android:id="@+id/radio_off"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggle_widget_background"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="OFF"
+                    android:textColor="@color/white"
+                    android:clickable="true"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

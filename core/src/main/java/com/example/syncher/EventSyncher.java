@@ -6,16 +6,17 @@ package com.example.syncher;
 
 import android.util.Log;
 
+import com.example.dataobjects.Event;
+import com.example.dataobjects.ServerResponse;
+import com.example.utills.HTTPUtils;
+import com.example.utills.InvitationAppConstants;
+import com.example.utills.StringUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.dataobjects.*;
-import com.example.utills.HTTPUtils;
-import com.example.utills.InvitationAppConstants;
-import com.example.utills.StringUtils;
 
 
 /**
@@ -49,6 +50,8 @@ public class EventSyncher extends BaseSyncher {
             object.put("remainder", event.isRemainder());
             object.put("status", event.getStatus());
             object.put("owner_name", event.getOwnerName());
+            object.put("image", event.getImageData());
+            Log.d("image", event.getImageData());
             String extenction = (event.getEventId() == 0) ? "" : "?event_id=" + event.getEventId();
             JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "events/create_event.json" + extenction, "POST", object.toString(), true));
             if (jsonResponse != null) {

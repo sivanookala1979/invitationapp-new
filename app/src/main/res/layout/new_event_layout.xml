@@ -40,48 +40,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp">
 
-                <ImageView
-                    android:id="@+id/eventTheamPicture"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/background"
-                    android:scaleType="center" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:weightSum="100">
+                    android:background="@drawable/background"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="80"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/cameraIcon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:adjustViewBounds="true"
-                            android:background="@drawable/camera"
-                            android:scaleType="center" />
-                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/cameraIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/camera"
+                        android:scaleType="fitXY" />
 
                     <TextView
-                        android:id="@+id/txt_eventImage"
+                        android:id="@+id/txt_eventPicture"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="20"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
                         android:background="@color/whitetransparent"
                         android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                         android:gravity="center"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:text="Event Picture"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_medium" />
                 </LinearLayout>
+
             </FrameLayout>
 
             <LinearLayout
@@ -115,8 +102,8 @@
                     android:id="@+id/eventName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Enter Event Name"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:hint="Enter Event Name"
                     android:singleLine="true"
                     android:textSize="@dimen/text_size" />
             </android.support.design.widget.TextInputLayout>
@@ -131,8 +118,8 @@
                     android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Description"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:hint="Enter Description"
                     android:maxLines="2"
                     android:padding="5dp"
                     android:textSize="@dimen/text_size" />
@@ -164,16 +151,16 @@
                     android:id="@+id/manualCheckIn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:padding="5dp"
                     android:text="Manual check in" />
 
                 <CheckBox
                     android:id="@+id/recurring"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:padding="5dp"
                     android:text="Recurring" />
             </LinearLayout>
 
@@ -196,9 +183,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="30"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:text="Start Date Time"
                     android:textColor="@color/black"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:textSize="@dimen/text_size" />
 
                 <LinearLayout
@@ -243,8 +230,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="37"
                         android:editable="false"
-                        android:hint="Time"
                         android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:hint="Time"
                         android:textSize="@dimen/text_size" />
 
                     <ImageButton
@@ -269,8 +256,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="30"
-                    android:text="End Date Time"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:text="End Date Time"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size" />
 
@@ -289,8 +276,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="40"
                         android:editable="false"
-                        android:hint="Date"
                         android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:hint="Date"
                         android:textSize="16sp" />
 
                     <Button
@@ -316,8 +303,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="37"
                         android:editable="false"
-                        android:hint="Time"
                         android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:hint="Time"
                         android:textSize="@dimen/text_size" />
 
                     <ImageButton
@@ -342,9 +329,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="80"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:gravity="center_vertical"
                     android:hint="Pick Location"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:textSize="@dimen/text_size" />
 
                 <Button
@@ -355,13 +342,13 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="20"
                     android:background="@drawable/gradient_button"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:minWidth="150dp"
                     android:padding="10dp"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:text="Location"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size"
-                    android:textAllCaps="false"/>
+                    android:textSize="@dimen/text_size" />
             </LinearLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -374,10 +361,10 @@
                     android:id="@+id/extraAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:hint="Extra address ex:flat number"
                     android:maxLines="2"
                     android:padding="5dp"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:textSize="@dimen/text_size" />
             </android.support.design.widget.TextInputLayout>
 
@@ -397,13 +384,13 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="30"
                     android:background="@drawable/gradient_button"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:minWidth="150dp"
                     android:padding="5dp"
                     android:text="Save"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size"
-                    android:textAllCaps="false"/>
+                    android:textSize="@dimen/text_size" />
 
                 <Button
                     android:id="@+id/shareEvent"
@@ -414,13 +401,13 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="30"
                     android:background="@drawable/gradient_button"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:minWidth="150dp"
                     android:padding="5dp"
                     android:text="Share"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size"
-                    android:textAllCaps="false"/>
+                    android:textSize="@dimen/text_size" />
 
                 <Button
                     android:id="@+id/Cancel"
@@ -431,13 +418,13 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="30"
                     android:background="@drawable/gradient_button"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:minWidth="150dp"
                     android:padding="5dp"
                     android:text="Cancel"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size"
-                    android:textAllCaps="false"/>
+                    android:textSize="@dimen/text_size" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

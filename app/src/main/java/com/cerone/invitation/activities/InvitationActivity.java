@@ -38,7 +38,8 @@ public class InvitationActivity extends BaseActivity implements OnItemClickListe
         TextView title = (TextView) findViewById(R.id.toolbar_title);
         title.setText("My Invitations");
         listView = (ListView) findViewById(R.id.events_list);
-        findViewById(R.id.toolbarEvent).setVisibility(View.INVISIBLE);
+        findViewById(R.id.fab_add).setVisibility(View.INVISIBLE);
+        findViewById(R.id.toggle_layout).setVisibility(View.INVISIBLE);
         listView.setOnItemClickListener(this);
        // createLeftMenu(this);
     }
