@@ -37,6 +37,17 @@ import com.example.dataobjects.*;
  */
 public class MobileHelper {
 
+    public static boolean isOnline(Context context) {
+        ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
+            //ToastHelper.redToast(context, "Please check your Internet connection!");
+            return false;
+        }
+        return true;
+    }
+
     public static ArrayList<User> getAllPhoneContacts(Context context) {
         Log.d("Contacts", "Try to Getting all Contacts");
         ArrayList<User> allContacts = new ArrayList<User>();

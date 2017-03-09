@@ -6,10 +6,15 @@ package com.cerone.invitation.helpers;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.WindowManager;
 
+import com.cerone.invitation.R;
 import com.cerone.invitation.exception.InvtAppJSONException;
+import com.example.utills.HTTPUtils;
 
 
 /**
@@ -18,31 +23,29 @@ import com.cerone.invitation.exception.InvtAppJSONException;
  */
 public abstract class InvtAppAsyncTask extends AsyncTask<String, Void, String> {
 
-    Activity baseActivity;
+    Context context;
     boolean showProgress = true;
     String progressMessage = "Loading....";
     public static String FAILURE = "Failure";
     public static String SUCCESS = "Success";
     ProgressDialog progressDialog;
 
-    public InvtAppAsyncTask(Activity baseActivity) {
+    public InvtAppAsyncTask(Context context) {
         super();
-        this.baseActivity = baseActivity;
-        // baseActivity.executingTask(this);
+        this.context = context;
     }
 
     @Override
     protected String doInBackground(String... urls) {
         String result = FAILURE;
-        try {
-            process();
-            result = SUCCESS;
-        } catch (InvtAppJSONException jsonException) {
-            Log.e("Application", jsonException.getCustomMessage(), jsonException);
-            ToastHelper.redToast(baseActivity, "Application Data Exchange Failed.");
-        } catch (Exception exception) {
-            Log.e("Application", exception.getMessage(), exception);
-            ToastHelper.redToast(baseActivity, "oops something went wrong.");
+        if(MobileHelper.isOnline(context)) {
+            try {
+                process();
+                result = SUCCESS;
+            } catch (Exception exception) {
+                Log.e("Application", exception.getMessage(), exception);
+                ToastHelper.redToast(context, "Internal error occured.");
+            }
         }
         return result;
     }
@@ -53,13 +56,22 @@ public abstract class InvtAppAsyncTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
+        /*if (progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }*/
         try {
-            if (progressDialog != null && progressDialog.isShowing()) {
-                progressDialog.dismiss();
-                progressDialog = null;
+            if ((this.progressDialog != null) && this.progressDialog.isShowing()) {
+                this.progressDialog.dismiss();
             }
-        } catch (Exception exception) {
-            InvtAppLog.e("FAILED to close the dailog :", exception.getMessage());
+        } catch (final IllegalArgumentException e) {
+            // Handle or log or ignore
+            e.printStackTrace();
+        } catch (final Exception e) {
+            // Handle or log or ignore
+            e.printStackTrace();
+        } finally {
+            this.progressDialog = null;
         }
         ToastHelper.processPendingToast();
         afterPostExecute();
@@ -67,13 +79,16 @@ public abstract class InvtAppAsyncTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPreExecute() {
-        InvtAppLog.d("VNAsyncTask", "onPreExecuteStart");
-        if (showProgress) {
-            progressDialog = ProgressDialog.show(baseActivity, "", progressMessage);
-            progressDialog.setIndeterminate(false);
-            progressDialog.setCancelable(false);
+        Log.d("PresswaaleAsyncTask", "onPreExecuteStart");
+        if(progressDialog !=null)
+        {
+            progressDialog = null;
         }
-        InvtAppLog.d("VNAsyncTask", "onPreExecuteEnd");
+        if (showProgress) {
+            progressDialog = createProgressDialog(context);
+            progressDialog.show();
+        }
+        Log.d("PresswaaleAsyncTask", "onPreExecuteEnd");
         ToastHelper.delayToasting();
     }
 
@@ -81,8 +96,9 @@ public abstract class InvtAppAsyncTask extends AsyncTask<String, Void, String> {
         return showProgress;
     }
 
-    public void setShowProgress(boolean showProgress) {
+    public InvtAppAsyncTask setShowProgress(boolean showProgress) {
         this.showProgress = showProgress;
+        return this;
     }
 
     public String getProgressMessage() {
@@ -91,5 +107,18 @@ public abstract class InvtAppAsyncTask extends AsyncTask<String, Void, String> {
 
     public void setProgressMessage(String progressMessage) {
         this.progressMessage = progressMessage;
+    }
+    public static ProgressDialog createProgressDialog(Context mContext) {
+        ProgressDialog dialog = new ProgressDialog(mContext);
+        try {
+            dialog.show();
+        } catch (WindowManager.BadTokenException e) {
+
+        }
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.progressdialoglayout);
+        return dialog;
     }
 }
