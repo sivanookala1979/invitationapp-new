@@ -87,33 +87,6 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         chatText = (TextView) row.findViewById(R.id.msgr);
         dateTime = (TextView) row.findViewById(R.id.date_time);
         chatText.setText(chatMessageObj.getMessage());
-
-
-      /*  if (chatInfo.getImageUrl() != null && !chatInfo.getImageUrl().isEmpty()) {
-
-            Picasso.with(context).load(chatInfo.getImageUrl()).into(new Target() {
-
-                @Override
-                public void onPrepareLoad(Drawable arg0) {
-                    // TODO Auto-generated method stub
-
-                }
-
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom arg1) {
-                    Bitmap roundedCornerBitmap = HttpUtils.getRoundedCornerBitmap(bitmap, 96);
-                    BitmapDrawable bitmapDrawable = new BitmapDrawable(bitmap);
-                    userImage.setImageBitmap(roundedCornerBitmap);
-                }
-
-                @Override
-                public void onBitmapFailed(Drawable arg0) {
-                    // TODO Auto-generated method stub
-
-                }
-            });
-        }*/
-        // String dateTimeText = chatMessageObj.getDate()!=null ? HttpUtils.getFormatedDate(chatMessageObj.getDate()) + " "+ HTTPUtils.getFormatedTime(chatMessageObj.getDate()) :"";
         dateTime.setText(HTTPUtils.convertDateToString(chatMessageObj.getDate()));
         fontTypes.setTypeface(chatText, dateTime,userName,me);
         return row;

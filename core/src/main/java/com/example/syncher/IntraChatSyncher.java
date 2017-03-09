@@ -24,6 +24,9 @@ public class IntraChatSyncher extends BaseSyncher {
     public SaveResult sendMessage(int user_id, String message) {
         return new JSONHTTPUtils().simpleGet("chat_rooms/post_inter_chat_message.json?other_id=" + user_id + "&message=" + enc(message));
     }
+    public SaveResult sendMessageToGroup(int groupOrEventId, String message) {
+        return new JSONHTTPUtils().simpleGet("chat_rooms/post_inter_chat_message.json?other_id=" + groupOrEventId + "&message=" + enc(message)+"&is_group=true");
+    }
 
     public List<ChatMessage> getIntraChat(int user_id) {
         return new JSONHTTPUtils<ChatMessage>().list("chat_rooms/get_inter_chat_messages.json?other_id=" + user_id, new FromJSONConvertor<ChatMessage>() {
@@ -32,7 +35,26 @@ public class IntraChatSyncher extends BaseSyncher {
                 ChatMessage message = new ChatMessage();
                 message.setMessage(jsonObject.getString("message"));
                 message.setFromID(jsonObject.getInt("from_id"));
-                message.setId(jsonObject.getInt("id"));
+                if(jsonObject.has("id")) {
+                    message.setId(jsonObject.getInt("id"));
+                }
+                Date updatedAt = StringUtils.chatStringToDate(StringUtils.getFormatedDateFromServerFormatedDate(jsonObject.getString("updated_at")));
+                message.setDate(updatedAt);
+                return message;
+            }
+        });
+    }
+    public List<ChatMessage> getGroupChat(int user_id) {
+        return new JSONHTTPUtils<ChatMessage>().list("chat_rooms/get_inter_chat_messages.json?other_id=" + user_id+"&is_group=true", new FromJSONConvertor<ChatMessage>() {
+
+            public ChatMessage fromJSON(JSONObject jsonObject) throws JSONException {
+                ChatMessage message = new ChatMessage();
+                message.setMessage(jsonObject.getString("message"));
+                message.setFromID(jsonObject.getInt("from_id"));
+                if(jsonObject.has("id")) {
+                    message.setId(jsonObject.getInt("id"));
+                }
+                message.setUserName(jsonObject.getString("user_name"));
                 Date updatedAt = StringUtils.chatStringToDate(StringUtils.getFormatedDateFromServerFormatedDate(jsonObject.getString("updated_at")));
                 message.setDate(updatedAt);
                 return message;

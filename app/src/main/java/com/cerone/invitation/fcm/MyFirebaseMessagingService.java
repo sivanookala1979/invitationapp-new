@@ -61,11 +61,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 JSONObject data = new JSONObject(remoteMessage.getData());
                 if(data!= null) {
                     String message = data.getString("message");
+                    Log.d("notification response", data.toString());
                     if (data.has("support_message")) {
                         Intent pushNotification = new Intent(QuickstartPreferences.CHAT_MESSAGE_RECEIVED);
                         pushNotification.putExtra("support_message", data.getString("support_message"));
                         pushNotification.putExtra("from_user_id", data.getString("from_user_id"));
                         pushNotification.putExtra("message", data.getString("message"));
+                        pushNotification.putExtra("is_group", data.getString("is_group"));
+                        pushNotification.putExtra("event_id", data.getString("event_id"));
+                        pushNotification.putExtra("user_name", data.getString("user_name"));
                         LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
                     }
 

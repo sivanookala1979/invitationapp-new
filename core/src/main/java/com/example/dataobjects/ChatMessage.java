@@ -16,6 +16,16 @@ public class ChatMessage {
     String message;
     Date date;
     int id;
+    String userName;
+
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public int getFromID() {
         return fromID;
