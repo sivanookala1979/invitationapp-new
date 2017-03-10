@@ -50,9 +50,12 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:textColor="@color/black"
-            app:tabGravity="fill"
-            app:tabIndicatorHeight="0dp" />
+            android:background="@color/Indigo"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            app:tabTextColor="@color/black"
+            app:tabIndicatorHeight="0dp"
+            app:tabBackground="@drawable/tab_selected" />
     </LinearLayout>
 
 

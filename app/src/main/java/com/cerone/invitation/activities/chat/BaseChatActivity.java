@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,11 +17,14 @@ import com.cerone.invitation.R;
 import com.cerone.invitation.activities.BaseActivity;
 import com.cerone.invitation.adapter.ChatArrayAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
+import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.example.dataobjects.ChatMessage;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.google.android.gms.analytics.internal.zzy.l;
 
 /**
  * Created by suzuki on 11-05-2016.
@@ -61,7 +65,7 @@ public abstract class BaseChatActivity extends BaseActivity implements View.OnCl
         chatMessagesView = (ListView) findViewById(R.id.chat_messages);
         chatMessageTextView = (TextView) findViewById(R.id.chat_message_text);
         setFontType(R.id.chat_message_text);
-        chatMessagesAdapter = new ChatArrayAdapter(getApplicationContext(), R.layout.chat_view_right_side, getOtherUserID());
+        chatMessagesAdapter = new ChatArrayAdapter(getApplicationContext(), R.layout.chat_view_right_side, InvtAppPreferences.getOwnerId());
         chatMessagesView.setAdapter(chatMessagesAdapter);
         chatMessagesAdapter.clear();
         ImageView sendChatMessageButton = (ImageView) findViewById(R.id.send_chat_message);
@@ -110,7 +114,7 @@ public abstract class BaseChatActivity extends BaseActivity implements View.OnCl
                 if (chatMessage != null && chatMessage.length() > 0) {
                     chatMessageTextView.setText("");
                     // TODO - Should pass the current user ID instead of -1
-                    handlePushNotification(chatMessage, -1);
+                    handlePushNotification(chatMessage, InvtAppPreferences.getOwnerId());
                     new InvtAppAsyncTask(BaseChatActivity.this) {
 
                         @Override

@@ -255,9 +255,9 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             InvtAppPreferences.setEventDetails(event);
             Intent intent;
             if (event.getOwnerId() == ownerId) {
-                intent = new Intent(getApplicationContext(), MyEventActivity.class);
+                intent = new Intent(getApplicationContext(), EventDetailsActivity.class);
             } else {
-                intent = new Intent(getApplicationContext(), MyInvitationActivity.class);
+                intent = new Intent(getApplicationContext(), EventDetailsActivity.class);
             }
             startActivity(intent);
         }

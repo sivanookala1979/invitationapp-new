@@ -38,6 +38,8 @@ public class IntraChatSyncher extends BaseSyncher {
                 if(jsonObject.has("id")) {
                     message.setId(jsonObject.getInt("id"));
                 }
+                message.setUserName(jsonObject.getString("user_name"));
+
                 Date updatedAt = StringUtils.chatStringToDate(StringUtils.getFormatedDateFromServerFormatedDate(jsonObject.getString("updated_at")));
                 message.setDate(updatedAt);
                 return message;

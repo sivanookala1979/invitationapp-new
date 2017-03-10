@@ -1,6 +1,7 @@
 package com.cerone.invitation.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.google.android.gms.analytics.internal.zzy.n;
-
 /**
  * Created by suzuki on 11-05-2016.
  */
@@ -28,7 +27,7 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
     private TextView chatText, dateTime, userName,me;
    // private ImageView userImage;
     private List<ChatMessage> chatMessageList = new ArrayList<ChatMessage>();
-    int otherUserID;
+    int ownerId;
     FontTypes fontTypes;
 
     @Override
@@ -51,10 +50,10 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
 
     Context context;
 
-    public ChatArrayAdapter(Context context, int textViewResourceId, int otherUserID) {
+    public ChatArrayAdapter(Context context, int textViewResourceId, int ownerId) {
         super(context, textViewResourceId);
         this.context = context;
-        this.otherUserID = otherUserID;
+        this.ownerId = ownerId;
         fontTypes = new FontTypes(context);
     }
 
@@ -71,11 +70,14 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         View row = convertView;
         LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ChatInfo chatInfo = InvtAppPreferences.getChatInfo();
-        if (chatMessageObj.getFromID() == otherUserID) {
+        Log.d("ChatArrayAdapter",chatMessageObj.getFromID()+" vs "+ ownerId);
+        if (chatMessageObj.getFromID() != ownerId) {
             row = inflater.inflate(R.layout.chat_view_left_side, parent, false);
             userName = (TextView) row.findViewById(R.id.chat_user_name);
             if(chatInfo!= null && chatInfo.getName()!= null && !chatInfo.getName().trim().isEmpty()) {
                 userName.setText(chatInfo.getName());
+            }else{
+                userName.setText(chatMessageObj.getUserName());
             }
         } else {
             row = inflater.inflate(R.layout.chat_view_right_side, parent, false);

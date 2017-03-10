@@ -16,6 +16,7 @@ import com.cerone.invitation.activities.HomeScreenActivity;
 import com.cerone.invitation.activities.NotificationsHelper;
 import com.cerone.invitation.activities.SupportChatActivity;
 import com.cerone.invitation.activities.chat.IntraChatActivity;
+import com.cerone.invitation.fragement.ChatFragment;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -59,7 +60,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             try {
                 JSONObject data = new JSONObject(remoteMessage.getData());
-                if(data!= null) {
+                if (data != null) {
                     String message = data.getString("message");
                     Log.d("notification response", data.toString());
                     if (data.has("support_message")) {
@@ -79,9 +80,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     }
                     String title = data.getString("title");
                     if (title.equalsIgnoreCase("Chat")) {
-                        if (!IntraChatActivity.isActive) {
+                        Log.d("notification response", "Statu one " + IntraChatActivity.isActive + " chat fragment " + ChatFragment.isActive);
+                        if (!IntraChatActivity.isActive && !ChatFragment.isActive) {
                             if (fromuserId > 0)
                                 sendChatNotification(message, fromuserId);
+                        } else {
+                            Intent pushNotification = new Intent(QuickstartPreferences.CHAT_MESSAGE_RECEIVED);
+                            pushNotification.putExtra("from_user_id", data.getString("from_user_id"));
+                            pushNotification.putExtra("message", data.getString("message"));
+                            pushNotification.putExtra("is_group", data.getString("is_group"));
+                            pushNotification.putExtra("event_id", data.getString("event_id"));
+                            if (data.has("user_name"))
+                                pushNotification.putExtra("user_name", data.getString("user_name"));
+                            if (data.has("from_user_name"))
+                                pushNotification.putExtra("from_user_name", data.getString("from_user_name"));
+                            LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
                         }
                     }
                 }

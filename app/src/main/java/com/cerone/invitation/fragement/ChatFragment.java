@@ -3,7 +3,10 @@ package com.cerone.invitation.fragement;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 
 import com.cerone.invitation.R;
 import com.cerone.invitation.activities.chat.BaseChatActivity;
+import com.cerone.invitation.activities.chat.IntraChatActivity;
 import com.cerone.invitation.adapter.AllChatDetailsAdapter;
 import com.cerone.invitation.adapter.ChatArrayAdapter;
 import com.cerone.invitation.helpers.ActivityCommunicator;
@@ -58,7 +62,12 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener{
 
                 if (intent.getAction().equals(CHAT_MESSAGE_RECEIVED)) {
                     if (isRelevantMessage(intent)) {
-                        handlePushNotification(intent.getStringExtra("message"), event.getEventId(),intent.getStringExtra("user_name"));
+                        handlePushNotification(intent.getStringExtra("message"), Integer.parseInt(intent.getStringExtra("from_user_id")),intent.getStringExtra("user_name"));
+//                        pushNotification.putExtra("is_group", data.getString("is_group"));
+//                        pushNotification.putExtra("event_id", data.getString("event_id"));
+//                        pushNotification.putExtra("user_name", data.getString("user_name"));
+                    }else {
+                        Log.d("ChatFragment", "Not relavent message");
                     }
                 }
             }
@@ -93,7 +102,7 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener{
 
     }
     protected boolean isRelevantMessage(Intent intent) {
-        return intent.hasExtra("from_user_id") && Integer.parseInt(intent.getStringExtra("from_user_id")) == InvtAppPreferences.getEventDetails().getOwnerId();
+        return intent.hasExtra("event_id") && Integer.parseInt(intent.getStringExtra("event_id")) == InvtAppPreferences.getEventDetails().getEventId();
     }
     protected void handlePushNotification(String message, int fromID,String userName) {
         ChatMessage chatMessage = new ChatMessage();
@@ -153,11 +162,17 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener{
         isActive = true;
         MyGcmListenerService.chatList.clear();
         MyGcmListenerService.notificationChatCount = 0;
+        Log.d("ChatFragment", "onResume "+ isActive+" current id "+InvtAppPreferences.getOwnerId());
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(CHAT_MESSAGE_RECEIVED));
     }
 
     @Override
     public void onPause() {
         super.onPause();
         isActive = false;
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mRegistrationBroadcastReceiver);
+        Log.d("ChatFragment", "onPause "+ isActive+" current id "+InvtAppPreferences.getOwnerId());
+
     }
 }
