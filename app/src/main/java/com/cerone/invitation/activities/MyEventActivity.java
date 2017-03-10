@@ -16,7 +16,8 @@ import android.widget.Toast;
 import com.cerone.invitation.R;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
-import com.example.dataobjects.*;
+import com.example.dataobjects.Event;
+import com.example.dataobjects.ServerResponse;
 import com.example.syncher.EventSyncher;
 import com.example.utills.StringUtils;
 

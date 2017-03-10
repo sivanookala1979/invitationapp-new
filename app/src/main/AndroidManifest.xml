@@ -148,7 +148,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".MyGroupsActivity"></activity>
+        <activity android:name=".MyGroupsActivity" />
+        <activity android:name=".ProfileInfo"></activity>
     </application>
 
 </manifest>

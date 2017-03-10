@@ -65,7 +65,11 @@ public class HomeEventAdapter extends ArrayAdapter<Event> {
         TextView acceptCount = (TextView) row.findViewById(R.id.eventAcceptCount);
         TextView checkInCount = (TextView) row.findViewById(R.id.checkedinCount);
         TextView total = (TextView) row.findViewById(R.id.totalInvitees);
-        Picasso.with(context).load(imageResources[position % 3]).transform(new CircleTransform()).into(imageView);
+        if(event.getImageUrl()!=null&&!event.getImageUrl().isEmpty()) {
+            Picasso.with(context).load(event.getImageUrl()).transform(new CircleTransform()).into(imageView);
+        }else{
+            Picasso.with(context).load(imageResources[position % 3]).transform(new CircleTransform()).into(imageView);
+        }
         eventName.setText(event.getName());
         eventDate.setText(StringUtils.formatDateAndTime(event.getStartDateTime(), 5));
         acceptCount.setText(event.getAcceptedCount() + "");

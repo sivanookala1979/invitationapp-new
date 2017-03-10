@@ -16,7 +16,24 @@ public class Invitee {
     int inviteeId;
     String status = "Not found";
     String distance = "Not found";
+    String email;
+    String image;
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
     public int getInviteeId() {
         return inviteeId;
     }

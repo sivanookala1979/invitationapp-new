@@ -137,6 +137,10 @@ public class UserSyncher extends BaseSyncher {
                 user.setStatus(jsonObject.getString("status"));
             if (jsonObject.has("image_url"))
                 user.setImage(jsonObject.getString("image_url"));
+            if (jsonObject.has("email"))
+                user.setEmailId(jsonObject.getString("email"));
+            if (jsonObject.has("gender"))
+                user.setGender(jsonObject.getString("gender"));
             if (jsonObject.has("is_profile_given"))
                 user.setProfileGiven(jsonObject.getBoolean("is_profile_given"));
             if (jsonObject.has("is_app_login"))
@@ -161,6 +165,8 @@ public class UserSyncher extends BaseSyncher {
             userObject.put("phone_number", user.getPhoneNumber());
             userObject.put("status", user.getStatus());
             userObject.put("image", user.getImage());
+            userObject.put("email", user.getEmailId());
+            userObject.put("gender", user.getGender());
             String object = HTTPUtils.getDataFromServer(BASE_URL + "/users/update_user_details", "POST", userObject.toString(), true);
             JSONObject jsonObject = new JSONObject(object);
             if (jsonObject.has("user_name"))
@@ -171,6 +177,10 @@ public class UserSyncher extends BaseSyncher {
                 userDetails.setStatus(jsonObject.getString("status"));
             if (jsonObject.has("image_url"))
                 userDetails.setImage(jsonObject.getString("image_url"));
+            if (jsonObject.has("email"))
+                userDetails.setEmailId(jsonObject.getString("email"));
+            if (jsonObject.has("gender"))
+                userDetails.setGender(jsonObject.getString("gender"));
             if (jsonObject.has("is_profile_given"))
                 userDetails.setProfileGiven(jsonObject.getBoolean("is_profile_given"));
             if (jsonObject.has("is_app_login"))

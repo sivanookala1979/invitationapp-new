@@ -151,6 +151,9 @@ public class EventSyncher extends BaseSyncher {
                         if(jsonObject.has("is_accepted")) {
                             event.setAccepted(jsonObject.getBoolean("is_accepted"));
                         }
+                        if(!jsonObject.isNull("image_url")&&jsonObject.has("image_url")) {
+                            event.setImageUrl(jsonObject.getString("image_url"));
+                        }
                         event.setLatitude(jsonObject.getDouble("latitude"));
                         event.setLatitude(jsonObject.getDouble("latitude"));
                         event.setLongitude(jsonObject.getDouble("longitude"));

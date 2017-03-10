@@ -69,6 +69,7 @@ public class ParticipantsAdapter extends ArrayAdapter<Invitee> {
             distance.setVisibility(View.GONE);
             participantStatus.setVisibility(View.GONE);
         }
+        row.setOnClickListener(createOnClickListener(position,parent));
         return row;
     }
     public View.OnClickListener createOnClickListener(final int position, final ViewGroup parent) {

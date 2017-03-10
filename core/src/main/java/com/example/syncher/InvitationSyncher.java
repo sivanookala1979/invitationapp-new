@@ -137,6 +137,8 @@ public class InvitationSyncher extends BaseSyncher {
                         invitee.setMobileNumber(jsonObject.getString("mobile"));
                         invitee.setInviteeName(jsonObject.getString("name"));
                         invitee.setMobileNumber(jsonObject.getString("mobile"));
+                        invitee.setEmail(jsonObject.getString("email"));
+                        invitee.setImage(jsonObject.getString("img_url"));
                         listOfInvitees.add(invitee);
                     }
                 }

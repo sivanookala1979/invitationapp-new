@@ -37,12 +37,14 @@ import java.util.List;
 
 public class UserProfile extends BaseActivity implements View.OnClickListener {
     TextView editImage;
-    EditText name, phone, status;
+    EditText name, phone, status, email;
     ImageView profileImage;
     Button updateProfile;
     RadioButton radioButtonMale, radioButtonFemale;
     User userDetails;
     String customerImageBitmapToString;
+    String emailInput;
+    String emailPattern;
     private static final int GALLERY_REQUET_CODE = 11111;
     private static final int CAMERA_REQUEST_CODE = 100;
 
@@ -52,11 +54,13 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         addToolbarView();
-        setFontType(R.id.txt_name, R.id.txt_phone, R.id.txt_status, R.id.txt_gender, R.id.profile_name, R.id.profile_phone, R.id.profile_status, R.id.register, R.id.edit_image);
+        setFontType(R.id.txt_name, R.id.txt_phone, R.id.txt_status, R.id.txt_email, R.id.txt_gender, R.id.profile_name, R.id.profile_phone, R.id.profile_status,
+                R.id.profile_email, R.id.register, R.id.edit_image);
         editImage = (TextView) findViewById(R.id.edit_image);
         name = (EditText) findViewById(R.id.profile_name);
         phone = (EditText) findViewById(R.id.profile_phone);
         status = (EditText) findViewById(R.id.profile_status);
+        email = (EditText) findViewById(R.id.profile_email);
         profileImage = (ImageView) findViewById(R.id.capture_image);
         radioButtonMale = (RadioButton) findViewById(R.id.radioMale);
         radioButtonFemale = (RadioButton) findViewById(R.id.radioFemale);
@@ -85,11 +89,13 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
                     name.setText(userDetails.getUserName());
                     phone.setText(userDetails.getPhoneNumber());
                     status.setText(userDetails.getStatus());
+                    email.setText(userDetails.getEmailId());
                     user.setUserName(userDetails.getUserName());
                     user.setPhoneNumber(userDetails.getPhoneNumber());
                     if(userDetails.getStatus()==null) userDetails.setStatus("");
                     user.setStatus(userDetails.getStatus());
                     user.setImage(userDetails.getImage());
+                    user.setEmailId(userDetails.getEmailId());
                     InvtAppPreferences.setProfileDetails(user);
                     if (userDetails.getImage() != null && !userDetails.getImage().isEmpty()) {
                         Picasso.with(getApplicationContext()).load(userDetails.getImage()).transform(new CircleTransform()).into(profileImage);
@@ -116,34 +122,56 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.register:
-                if(validateInputDetails(name,phone,status)) {
-                    new InvtAppAsyncTask(UserProfile.this) {
+                emailInput = email.getText().toString().trim();
+                emailPattern = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{2,256}" + "\\@" + "[a-zA-Z0-9][a-zA-Z0-9\\-]{2,64}" + "(" + "\\." + "[a-zA-Z0-9][a-zA-Z0-9\\-]{2,25}" + ")+";
+                if (validateInputDetails(name)) {
+                    if (validateInputDetails(phone)) {
+                        if (validateInputDetails(status)) {
+                        if (validateInputDetails(email) && emailInput.matches(emailPattern)) {
+                            new InvtAppAsyncTask(UserProfile.this) {
 
-                        @Override
-                        public void process() {
-                            User user = new User();
-                            user.setUserName(name.getText().toString());
-                            user.setPhoneNumber(phone.getText().toString());
-                            user.setStatus(status.getText().toString());
-                            if (customerImageBitmapToString != null && customerImageBitmapToString.length() > 0)
-                                user.setImage(InvtAppPreferences.getAccountImage());
-                            UserSyncher syncher = new UserSyncher();
-                            userDetails = syncher.updateUserDetails(user);
-                        }
-
-                        @Override
-                        public void afterPostExecute() {
-                            if (userDetails != null) {
-                                    InvtAppPreferences.setProfileDetails(userDetails);
-                                    InvtAppPreferences.setProfileGiven(true);
-                                    Toast.makeText(getApplicationContext(), "Profile Successfully updated", Toast.LENGTH_LONG).show();
-                                    finish();
-                                } else {
-                                    setSnackBarValidation(userDetails.getErrorMessage());
+                                @Override
+                                public void process() {
+                                    User user = new User();
+                                    user.setUserName(name.getText().toString());
+                                    user.setPhoneNumber(phone.getText().toString());
+                                    user.setStatus(status.getText().toString());
+                                    user.setEmailId(email.getText().toString());
+                                    if (radioButtonMale.isChecked()) {
+                                        user.setGender(radioButtonMale.getText().toString());
+                                    } else {
+                                        user.setGender(radioButtonFemale.getText().toString());
+                                    }
+                                    if (customerImageBitmapToString != null && customerImageBitmapToString.length() > 0)
+                                        user.setImage(InvtAppPreferences.getAccountImage());
+                                    UserSyncher syncher = new UserSyncher();
+                                    userDetails = syncher.updateUserDetails(user);
                                 }
+
+                                @Override
+                                public void afterPostExecute() {
+                                    if (userDetails != null) {
+                                        InvtAppPreferences.setProfileDetails(userDetails);
+                                        InvtAppPreferences.setProfileGiven(true);
+                                        Toast.makeText(getApplicationContext(), "Profile Successfully updated", Toast.LENGTH_LONG).show();
+                                        finish();
+                                    } else {
+                                        setSnackBarValidation(userDetails.getErrorMessage());
+                                    }
+                                }
+                            }.execute();
+                        }else{
+                            setSnackBarValidation("Please enter valid email.");
+                            }
+                        } else {
+                            setSnackBarValidation("Please enter valid status.");
+                            }
+                        } else {
+                            setSnackBarValidation("Please enter valid phone.");
+                            }
+                        } else {
+                            setSnackBarValidation("Please enter valid name.");
                         }
-                    }.execute();
-                }
                 break;
             case R.id.edit_image:
                 final Dialog dialog = new Dialog(UserProfile.this);
@@ -210,7 +238,6 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
                         customerImageBitmapToString = HTTPUtils.BitMapToString(bitmap);
                         InvtAppPreferences.setAccountImage(customerImageBitmapToString);
                         Log.d("CustomerImage", customerImageBitmapToString);
-                        //postImage();
 
                     }
                     if (requestCode == GALLERY_REQUET_CODE && resultCode == Activity.RESULT_OK) {
@@ -219,7 +246,6 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
                         profileImage.setImageBitmap(getRoundedCornerBitmap(bitmap));
                         customerImageBitmapToString = HTTPUtils.BitMapToString(bitmap);
                         InvtAppPreferences.setAccountImage(customerImageBitmapToString);
-                        // postImage();
                         Log.d("CustomerImage", customerImageBitmapToString);
                     } else if (resultCode == Activity.RESULT_CANCELED) {
                         //TODO

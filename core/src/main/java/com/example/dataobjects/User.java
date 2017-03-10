@@ -13,6 +13,15 @@ public class User {
     String image;
     String errorMessage;
     String gender;
+    String emailId;
+
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
 
     public boolean isAppLogin() {
         return appLogin;

@@ -53,7 +53,9 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     FloatingActionButton fabAdd;
     ListView myEvents;
     HomeEventAdapter adapter;
-    List<Event> myEventsList = new ArrayList<Event>();
+    List<Event> allEventsList;
+    List<Event> myEventsList;
+    List<Event> myInvitationsList;
     int ownerId = 0;
     User profile;
     TextView userName;
@@ -80,6 +82,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                         on.setSelected(true);
                         off.setSelected(true);
                     }
+                loadEvents();
             }
         });
         off.setOnClickListener(new OnClickListener() {
@@ -92,6 +95,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                     off.setSelected(true);
                     on.setSelected(true);
                 }
+                loadEvents();
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -195,19 +199,38 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                 @Override
                 public void process() {
                     EventSyncher eventSyncher = new EventSyncher();
-                    myEventsList = eventSyncher.getAllEvents();
+                    allEventsList = new ArrayList<Event>();
+                    allEventsList = eventSyncher.getAllEvents();
                 }
 
                 @Override
                 public void afterPostExecute() {
-                    adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, myEventsList, true);
-                    myEvents.setAdapter(adapter);
-                    if (myEventsList.size() > 0) {
-                        if (!InvtAppPreferences.isServiceRefresh()) {
-                            InvtAppPreferences.setServiceRefresh(true);
-                            activateService();
+                    myEventsList = new ArrayList<Event>();
+                    myInvitationsList = new ArrayList<Event>();
+
+                    if (allEventsList.size()>0) {
+                        for (Event event:allEventsList) {
+                          if(event.getOwnerId()==ownerId){
+                              myEventsList.add(event);
+                          } else{
+                              myInvitationsList.add(event);
+                          }
                         }
-                    } else {
+                        if(myEventsList.size()>0&&on.isSelected()&&!off.isSelected()){
+                            adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, myEventsList, true);
+                            myEvents.setAdapter(adapter);
+                        }else if(myInvitationsList.size()>0&&off.isSelected()&&!on.isSelected()){
+                            adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, myInvitationsList, true);
+                            myEvents.setAdapter(adapter);
+                        }else {
+                            adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, allEventsList, true);
+                            myEvents.setAdapter(adapter);
+                        }
+                            if (!InvtAppPreferences.isServiceRefresh()) {
+                                InvtAppPreferences.setServiceRefresh(true);
+                                activateService();
+                            }
+                    }else {
                         ToastHelper.blueToast(getApplicationContext(), "No events found.");
                     }
                 }
@@ -228,7 +251,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (ownerId > 0) {
-            Event event = myEventsList.get(position);
+            Event event = allEventsList.get(position);
             InvtAppPreferences.setEventDetails(event);
             Intent intent;
             if (event.getOwnerId() == ownerId) {

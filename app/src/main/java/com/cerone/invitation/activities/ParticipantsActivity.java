@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cerone.invitation.ProfileInfo;
 import com.cerone.invitation.R;
 import com.cerone.invitation.activities.chat.IntraChatActivity;
 import com.cerone.invitation.adapter.ParticipantsAdapter;
@@ -96,21 +97,28 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Intent intent;
         Invitee invitee = participantsList.get(i);
-
         switch (view.getId()) {
             case R.id.call :
-                //ToastHelper.blueToast(getApplicationContext(),"Need make call to invitee.");
                 callToUser(invitee.getMobileNumber());
                 break;
             case R.id.chat :
-               // ToastHelper.blueToast(getApplicationContext(),"Need to redirect into chat."+invitee.getInviteeId());
-                Intent intent = new Intent(ParticipantsActivity.this, IntraChatActivity.class);
+                intent = new Intent(ParticipantsActivity.this, IntraChatActivity.class);
                 intent.putExtra("UserId", invitee.getInviteeId());
                 intent.putExtra("UserImage", "");
                 intent.putExtra("UserName", invitee.getInviteeName());
                 startActivity(intent);
                 break;
+            default:
+                intent = new Intent(ParticipantsActivity.this, ProfileInfo.class);
+                intent.putExtra("UserName", invitee.getInviteeName());
+                intent.putExtra("UserMobile", invitee.getMobileNumber());
+                intent.putExtra("UserImage", invitee.getImage());
+                intent.putExtra("UserEmail", invitee.getEmail());
+                startActivity(intent);
+                break;
+
         }
     }
     public void callToUser(String mobileNumber) {
