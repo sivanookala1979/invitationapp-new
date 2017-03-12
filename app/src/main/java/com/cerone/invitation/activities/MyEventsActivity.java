@@ -96,8 +96,7 @@ public class MyEventsActivity extends BaseActivity implements OnClickListener, O
 //                ToastHelper.blueToast(getApplicationContext(), "You are in MY Events.");
         } else {
             InvtAppPreferences.setEventDetails(events.get(position));
-            Intent intent;
-            intent = new Intent(getApplicationContext(), MyEventActivity.class);
+            Intent intent = new Intent(getApplicationContext(), EventDetailsActivity.class);
             startActivity(intent);
         }
     }

@@ -15,15 +15,16 @@ import java.util.List;
  */
 public class PagerAdapter extends FragmentPagerAdapter {
 
-
-    public PagerAdapter(FragmentManager fm) {
+    int tabsCount= 2;
+    public PagerAdapter(FragmentManager fm,int tabsCount) {
         super(fm);
+        this.tabsCount =tabsCount;
     }
 
 
     @Override
     public int getCount() {
-        return 2;
+        return tabsCount;
     }
 
     @Override

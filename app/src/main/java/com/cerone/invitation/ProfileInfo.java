@@ -3,10 +3,13 @@ package com.cerone.invitation;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cerone.invitation.activities.BaseActivity;
+import com.cerone.invitation.helpers.CircleTransform;
+import com.squareup.picasso.Picasso;
 
 public class ProfileInfo extends BaseActivity {
 
@@ -36,7 +39,11 @@ public class ProfileInfo extends BaseActivity {
         profileName.setText(name);
         profileMobileNum.setText("Contact Number: "+mobileNumber);
         profileEmail.setText("Email ID: "+email);
-        profileImage.setBackground(Drawable.createFromPath(image));
+        if(image!= null & image.length()>0) {
+            Picasso.with(getApplicationContext()).load(image).into(profileImage);
+        }
+        Log.d("profileImage",image);
+        //profileImage.setBackground(Drawable.createFromPath(image));
 
     }
 }

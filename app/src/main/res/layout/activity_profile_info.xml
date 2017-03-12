@@ -8,9 +8,9 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="250dp"
+        android:id="@+id/app_bar_layout"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
-
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapse_toolbar"
             android:layout_width="match_parent"
@@ -45,8 +45,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,9 +59,9 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="7"
+                    android:gravity="center_vertical"
                     android:text="Profile Name"
                     android:textColor="@color/black"
-                    android:gravity="center_vertical"
                     android:textSize="@dimen/header_text_size" />
 
                 <Button
@@ -78,19 +78,19 @@
                 android:id="@+id/profileInfo_contactNumber"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:gravity="center_vertical"
                 android:text="Contact Number"
                 android:textColor="@color/black"
-                android:gravity="center_vertical"
-                android:textSize="@dimen/text_medium"/>
+                android:textSize="@dimen/text_medium" />
 
             <TextView
                 android:id="@+id/profileInfo_emailId"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:gravity="center_vertical"
                 android:text="Email ID"
                 android:textColor="@color/black"
-                android:gravity="center_vertical"
-                android:textSize="@dimen/text_medium"/>
+                android:textSize="@dimen/text_medium" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

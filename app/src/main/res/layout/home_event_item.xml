@@ -12,9 +12,7 @@
         android:id="@+id/cv_events"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:layout_marginLeft="@dimen/activity_horizontal_medium_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_medium_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_medium_margin"
+        android:layout_margin="@dimen/activity_horizontal_medium_margin"
         android:background="@drawable/rectangle_shaped"
         app:cardCornerRadius="5dp"
         app:cardElevation="6dp">
