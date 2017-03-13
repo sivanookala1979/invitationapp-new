@@ -60,7 +60,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     User profile;
     TextView userName;
     ImageView userImage;
-    RadioButton on,off;
+    RadioButton on, off;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,23 +75,23 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         on.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if (on.isSelected()) {
-                        on.setSelected(false);
-                        off.setSelected(true);
-                    } else {
-                        on.setSelected(true);
-                        off.setSelected(true);
-                    }
+                if (on.isSelected()) {
+                    on.setSelected(false);
+                    off.setSelected(true);
+                } else {
+                    on.setSelected(true);
+                    off.setSelected(true);
+                }
                 loadEvents();
             }
         });
         off.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(off.isSelected()){
+                if (off.isSelected()) {
                     off.setSelected(false);
                     on.setSelected(true);
-                }else{
+                } else {
                     off.setSelected(true);
                     on.setSelected(true);
                 }
@@ -103,15 +103,16 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             public void onRefresh() {
                 refreshContent();
             }
-            private void refreshContent(){
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadEvents();
-                            mSwipeRefreshLayout.setRefreshing(false);
-                        }
-                    },1000);
-                }
+
+            private void refreshContent() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadEvents();
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 1000);
+            }
         });
         closePreviousServices();
         Log.d("Token", InvtAppPreferences.getAccessToken());
@@ -208,29 +209,29 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                     myEventsList = new ArrayList<Event>();
                     myInvitationsList = new ArrayList<Event>();
 
-                    if (allEventsList.size()>0) {
-                        for (Event event:allEventsList) {
-                          if(event.getOwnerId()==ownerId){
-                              myEventsList.add(event);
-                          } else{
-                              myInvitationsList.add(event);
-                          }
+                    if (allEventsList.size() > 0) {
+                        for (Event event : allEventsList) {
+                            if (event.getOwnerId() == ownerId) {
+                                myEventsList.add(event);
+                            } else {
+                                myInvitationsList.add(event);
+                            }
                         }
-                        if(myEventsList.size()>0&&on.isSelected()&&!off.isSelected()){
+                        if (myEventsList.size() > 0 && on.isSelected()) {
                             adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, myEventsList, true);
                             myEvents.setAdapter(adapter);
-                        }else if(myInvitationsList.size()>0&&off.isSelected()&&!on.isSelected()){
+                        } else if (myInvitationsList.size() > 0 && off.isSelected()) {
                             adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, myInvitationsList, true);
                             myEvents.setAdapter(adapter);
-                        }else {
+                        } else {
                             adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, allEventsList, true);
                             myEvents.setAdapter(adapter);
                         }
-                            if (!InvtAppPreferences.isServiceRefresh()) {
-                                InvtAppPreferences.setServiceRefresh(true);
-                                activateService();
-                            }
-                    }else {
+                        if (!InvtAppPreferences.isServiceRefresh()) {
+                            InvtAppPreferences.setServiceRefresh(true);
+                            activateService();
+                        }
+                    } else {
                         ToastHelper.blueToast(getApplicationContext(), "No events found.");
                     }
                 }
@@ -250,17 +251,18 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (ownerId > 0) {
-            Event event = allEventsList.get(position);
-            InvtAppPreferences.setEventDetails(event);
-            Intent intent;
-            if (event.getOwnerId() == ownerId) {
-                intent = new Intent(getApplicationContext(), EventDetailsActivity.class);
-            } else {
-                intent = new Intent(getApplicationContext(), EventDetailsActivity.class);
-            }
-            startActivity(intent);
+        Intent intent;
+        Event event;
+        if (on.isSelected()) {
+            event = myEventsList.get(position);
+        } else if (off.isSelected()) {
+            event = myInvitationsList.get(position);
+        } else {
+            event = allEventsList.get(position);
         }
+        InvtAppPreferences.setEventDetails(event);
+        intent = new Intent(getApplicationContext(), EventDetailsActivity.class);
+        startActivity(intent);
     }
 
     @Override

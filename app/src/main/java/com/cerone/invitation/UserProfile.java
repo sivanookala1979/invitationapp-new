@@ -5,8 +5,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
@@ -18,12 +21,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cerone.invitation.activities.BaseActivity;
 import com.cerone.invitation.adapter.ImageDialogAdapter;
-import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.ToastHelper;
@@ -36,10 +37,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserProfile extends BaseActivity implements View.OnClickListener {
-    TextView editImage;
     EditText name, phone, status, email;
     ImageView profileImage;
     Button updateProfile;
+    FloatingActionButton fabEdit;
     RadioButton radioButtonMale, radioButtonFemale;
     User userDetails;
     String customerImageBitmapToString;
@@ -54,9 +55,13 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         addToolbarView();
+        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
+        collapsingToolbar.setTitle("Profile");
+        final Typeface tf = Typeface.createFromAsset(this.getAssets(), "fonts/AvenirNextLTPro-Regular.otf");
+        collapsingToolbar.setCollapsedTitleTypeface(tf);
+        collapsingToolbar.setExpandedTitleTypeface(tf);
         setFontType(R.id.txt_name, R.id.txt_phone, R.id.txt_status, R.id.txt_email, R.id.txt_gender, R.id.profile_name, R.id.profile_phone, R.id.profile_status,
-                R.id.profile_email, R.id.register, R.id.edit_image);
-        editImage = (TextView) findViewById(R.id.edit_image);
+                R.id.profile_email, R.id.register);
         name = (EditText) findViewById(R.id.profile_name);
         phone = (EditText) findViewById(R.id.profile_phone);
         status = (EditText) findViewById(R.id.profile_status);
@@ -65,8 +70,9 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
         radioButtonMale = (RadioButton) findViewById(R.id.radioMale);
         radioButtonFemale = (RadioButton) findViewById(R.id.radioFemale);
         updateProfile = (Button) findViewById(R.id.register);
-        editImage.setOnClickListener(this);
+        fabEdit = (FloatingActionButton) findViewById(R.id.fab_edit);
         updateProfile.setOnClickListener(this);
+        fabEdit.setOnClickListener(this);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         getAllAccountInfoDetails();
@@ -98,7 +104,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
                     user.setEmailId(userDetails.getEmailId());
                     InvtAppPreferences.setProfileDetails(user);
                     if (userDetails.getImage() != null && !userDetails.getImage().isEmpty()) {
-                        Picasso.with(getApplicationContext()).load(userDetails.getImage()).transform(new CircleTransform()).into(profileImage);
+                        Picasso.with(getApplicationContext()).load(userDetails.getImage()).into(profileImage);
                         profileImage.setOnClickListener(null);
                     }
                     if (userDetails.getGender() != null && !userDetails.getGender().isEmpty()) {
@@ -173,7 +179,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
                             setSnackBarValidation("Please enter valid name.");
                         }
                 break;
-            case R.id.edit_image:
+            case R.id.fab_edit:
                 final Dialog dialog = new Dialog(UserProfile.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.login_image_dialog);
@@ -232,9 +238,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
 
                     if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
                         bitmap = (Bitmap) data.getExtras().get("data");
-
-                        Bitmap roundedCornerBitmap = HTTPUtils.getRoundedCornerBitmap(bitmap, 96);
-                        profileImage.setImageBitmap(getRoundedCornerBitmap(bitmap));
+                        profileImage.setImageBitmap(bitmap);
                         customerImageBitmapToString = HTTPUtils.BitMapToString(bitmap);
                         InvtAppPreferences.setAccountImage(customerImageBitmapToString);
                         Log.d("CustomerImage", customerImageBitmapToString);
@@ -242,8 +246,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
                     }
                     if (requestCode == GALLERY_REQUET_CODE && resultCode == Activity.RESULT_OK) {
                         bitmap = HTTPUtils.getBitmapFromCameraData(data, UserProfile.this);
-                        Bitmap roundedCornerBitmap = HTTPUtils.getRoundedCornerBitmap(bitmap, 96);
-                        profileImage.setImageBitmap(getRoundedCornerBitmap(bitmap));
+                        profileImage.setImageBitmap(bitmap);
                         customerImageBitmapToString = HTTPUtils.BitMapToString(bitmap);
                         InvtAppPreferences.setAccountImage(customerImageBitmapToString);
                         Log.d("CustomerImage", customerImageBitmapToString);

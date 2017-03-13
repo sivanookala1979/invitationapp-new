@@ -149,7 +149,8 @@
         </service>
 
         <activity android:name=".MyGroupsActivity" />
-        <activity android:name=".ProfileInfo"></activity>
+        <activity android:name=".ProfileInfo" />
+        <activity android:name=".activities.PublicHomeActivity"></activity>
     </application>
 
 </manifest>
