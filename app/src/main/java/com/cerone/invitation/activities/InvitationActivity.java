@@ -2,6 +2,8 @@ package com.cerone.invitation.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -29,18 +31,36 @@ public class InvitationActivity extends BaseActivity implements OnItemClickListe
     List<Invitation> myInvitations = new ArrayList<Invitation>();
     ListView listView;
     HomeEventAdapter adapter;
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen_layout_new);
         addToolbarView();
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
         TextView title = (TextView) findViewById(R.id.toolbar_title);
         title.setText("My Invitations");
         listView = (ListView) findViewById(R.id.events_list);
         findViewById(R.id.fab_add).setVisibility(View.INVISIBLE);
         findViewById(R.id.toggle_layout).setVisibility(View.INVISIBLE);
         listView.setOnItemClickListener(this);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshContent();
+            }
+
+            private void refreshContent() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getMyEvents();
+                    }
+                }, 1000);
+            }
+        });
        // createLeftMenu(this);
     }
 
@@ -75,6 +95,7 @@ public class InvitationActivity extends BaseActivity implements OnItemClickListe
                     } else {
                         ToastHelper.blueToast(getApplicationContext(), "No invitations found.");
                     }
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
             }.execute();
         }
@@ -89,9 +110,10 @@ public class InvitationActivity extends BaseActivity implements OnItemClickListe
                 ToastHelper.blueToast(getApplicationContext(), "You are in my invitations.");
         } else {
             Event event = events.get(position);
+            event.setInvitation(true);
             InvtAppPreferences.setEventDetails(event);
             InvtAppPreferences.setInvitation(myInvitations.get(position));
-            Intent intent = new Intent(getApplicationContext(), MyInvitationActivity.class);
+            Intent intent = new Intent(getApplicationContext(), EventDetailsActivity.class);
             startActivity(intent);
         }
     }

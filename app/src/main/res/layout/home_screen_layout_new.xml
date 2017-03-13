@@ -79,11 +79,11 @@
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/fab_margin"
             app:backgroundTint="@color/sky_blue"
-            android:src="@android:drawable/ic_input_add" />
+            android:src="@drawable/ic_input_add" />
 
         <LinearLayout
             android:id="@+id/toggle_layout"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="25dp"
             android:layout_below="@+id/shareEventData"
             android:layout_alignParentEnd="true"
@@ -98,7 +98,9 @@
                     android:layout_weight="1"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="ON"
+                    android:text="Events"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:textSize="@dimen/text_size_very_small"
                     android:textColor="@color/white"
                     android:clickable="true"/>
 
@@ -110,7 +112,9 @@
                     android:background="@drawable/toggle_widget_background"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="OFF"
+                    android:text="Invitations"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:textSize="@dimen/text_size_very_small"
                     android:textColor="@color/white"
                     android:clickable="true"/>
 

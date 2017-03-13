@@ -75,10 +75,8 @@ public class MyInvitationActivity extends BaseActivity implements OnClickListene
         accept.setOnClickListener(this);
         maybe.setOnClickListener(this);
         reject.setOnClickListener(this);
-
         eventDetails = InvtAppPreferences.getEventDetails();
         Log.d("Accept","Accept status "+eventDetails.isAccepted());
-
         loadEventData();
     }
 

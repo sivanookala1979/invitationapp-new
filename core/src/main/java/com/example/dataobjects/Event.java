@@ -36,6 +36,16 @@ public class Event {
     String imageUrl;
     String imageData;
     boolean accepted;
+    boolean isInvitation;
+
+    public boolean isInvitation() {
+        return isInvitation;
+    }
+
+    public void setInvitation(boolean invitation) {
+        isInvitation = invitation;
+    }
+
     public boolean isAccepted() {
         return accepted;
     }

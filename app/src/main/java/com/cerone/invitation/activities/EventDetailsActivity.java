@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.cerone.invitation.R;
 import com.cerone.invitation.adapter.PagerAdapter;
+import com.cerone.invitation.helpers.ActivityCommunicator;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.example.dataobjects.Event;
 
@@ -23,11 +24,13 @@ import java.util.List;
  * Created by adarsht on 09/03/17.
  */
 
-public class EventDetailsActivity extends BaseActivity {
+public class EventDetailsActivity extends BaseActivity implements ActivityCommunicator {
+
     ViewPager viewPager;
     TabLayout mPagerSlidingTabStrip;
     List<LinearLayout> tabViews = new ArrayList<LinearLayout>();
     Event eventDetails;
+    PagerAdapter mPagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,24 +41,7 @@ public class EventDetailsActivity extends BaseActivity {
         eventName.setText(eventDetails.getName());
         mPagerSlidingTabStrip = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.pager);
-        PagerAdapter mPagerAdapter = new PagerAdapter(getSupportFragmentManager(),getTabsCount());
-        viewPager.setAdapter(mPagerAdapter);
-        mPagerSlidingTabStrip.setupWithViewPager(viewPager);
-        for (int i = 0; i < mPagerSlidingTabStrip.getTabCount(); i++) {
-            LinearLayout tabLayout = (LinearLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.tab_layout, null);
-            TextView title = (TextView) tabLayout.findViewById(R.id.tabTitle);
-            ImageView image = (ImageView) tabLayout.findViewById(R.id.tabIcon);
-            if(i==0) {
-                image.setImageResource(R.drawable.event);
-                title.setTextColor(Color.WHITE);
-                title.setText("Event");
-            }else{
-                title.setText("Chat");
-            }
-            tabViews.add(tabLayout);
-            mPagerSlidingTabStrip.getTabAt(i).setTag(i);
-            mPagerSlidingTabStrip.getTabAt(i).setCustomView(tabLayout);
-        }
+        createTabViews();
 
         final Resources res = getApplicationContext().getResources();
         mPagerSlidingTabStrip.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -89,6 +75,27 @@ public class EventDetailsActivity extends BaseActivity {
         });
     }
 
+    private void createTabViews() {
+        mPagerAdapter = new PagerAdapter(getSupportFragmentManager(),getTabsCount());
+        viewPager.setAdapter(mPagerAdapter);
+        mPagerSlidingTabStrip.setupWithViewPager(viewPager);
+        for (int i = 0; i < mPagerSlidingTabStrip.getTabCount(); i++) {
+            LinearLayout tabLayout = (LinearLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.tab_layout, null);
+            TextView title = (TextView) tabLayout.findViewById(R.id.tabTitle);
+            ImageView image = (ImageView) tabLayout.findViewById(R.id.tabIcon);
+            if(i==0) {
+                image.setImageResource(R.drawable.event);
+                title.setTextColor(Color.WHITE);
+                title.setText("Event");
+            }else{
+                title.setText("Chat");
+            }
+            tabViews.add(tabLayout);
+            mPagerSlidingTabStrip.getTabAt(i).setTag(i);
+            mPagerSlidingTabStrip.getTabAt(i).setCustomView(tabLayout);
+        }
+    }
+
     private int getTabsCount() {
         int count = 2;
         if(eventDetails.getOwnerId()!=InvtAppPreferences.getOwnerId()){
@@ -97,5 +104,11 @@ public class EventDetailsActivity extends BaseActivity {
             }
         }
         return count;
+    }
+
+    @Override
+    public void enableChatView(boolean enableChat) {
+        eventDetails.setAccepted(true);
+        createTabViews();
     }
 }

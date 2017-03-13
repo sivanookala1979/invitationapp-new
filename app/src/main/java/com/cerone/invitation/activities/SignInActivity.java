@@ -135,15 +135,18 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
                                 @Override
                                 public void process() {
                                     serverResponse = userSyncher.getSignInWithMobileAndOtp(countryCode.getText().toString()+mobileNum, otpNumber.getText().toString(), name.getText().toString());
+                                    if(serverResponse!=null && serverResponse.getToken()!=null){
+                                        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+                                        Log.i("TAG", "FCM Registration Token: " + refreshedToken);
+                                        BaseSyncher.setAccessToken(serverResponse.getToken());
+                                        userSyncher.updateGcmCode(refreshedToken);
+                                    }
                                 }
 
                                 @Override
                                 public void afterPostExecute() {
                                     if (serverResponse != null) {
                                         if (serverResponse.getToken() != null) {
-                                            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-                                            Log.i("TAG", "FCM Registration Token: " + refreshedToken);
-                                            userSyncher.updateGcmCode(refreshedToken);
                                             Toast.makeText(getApplicationContext(), "Successfully logged in.", Toast.LENGTH_LONG).show();
                                             setLoginDetails(serverResponse);
                                             Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
