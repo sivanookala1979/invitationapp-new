@@ -306,31 +306,33 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        User user = allSelectedlist.get(position);
-        switch (view.getId()) {
-            case R.id.removeContact :
-                ToastHelper.blueToast(getApplicationContext(), "Contact Removed");
-                listOfParticipantsPhoneNumbers.remove(user.getPhoneNumber());
-                allSelectedlist.remove(user);
-                adapter.setUsers(allSelectedlist);
-                setContactsListSize();
-                break;
-            case R.id.removeGroup :
-                Group group = listOfSelectedGroups.get(position);
-                ToastHelper.blueToast(getApplicationContext(), "Contact Removed");
-                listOfSelectedGroups.remove(group);
-                listOfGroupIds.remove(position);
-                groupAdapter.setUsers(listOfSelectedGroups);
-                setGroupListSize();
-                break;
-            case R.id.shareEvent_check :
-                Log.d("is admin", position+" "+!user.isAdmin()+"");
-                user.setAdmin(!user.isAdmin());
-                adapter.setUsers(allSelectedlist);
-                if(user.isAdmin()){
-                    Toast.makeText(getApplicationContext(), user.getUserName()+" made as admin", Toast.LENGTH_LONG).show();
-                }
-                break;
+        if(allSelectedlist.size()>0) {
+            User user = allSelectedlist.get(position);
+            switch (view.getId()) {
+                case R.id.removeContact:
+                    ToastHelper.blueToast(getApplicationContext(), "Contact Removed");
+                    listOfParticipantsPhoneNumbers.remove(user.getPhoneNumber());
+                    allSelectedlist.remove(user);
+                    adapter.setUsers(allSelectedlist);
+                    setContactsListSize();
+                    break;
+                case R.id.removeGroup:
+                    Group group = listOfSelectedGroups.get(position);
+                    ToastHelper.blueToast(getApplicationContext(), "Contact Removed");
+                    listOfSelectedGroups.remove(group);
+                    listOfGroupIds.remove(position);
+                    groupAdapter.setUsers(listOfSelectedGroups);
+                    setGroupListSize();
+                    break;
+                case R.id.shareEvent_check:
+                    Log.d("is admin", position + " " + !user.isAdmin() + "");
+                    user.setAdmin(!user.isAdmin());
+                    adapter.setUsers(allSelectedlist);
+                    if (user.isAdmin()) {
+                        Toast.makeText(getApplicationContext(), user.getUserName() + " made as admin", Toast.LENGTH_LONG).show();
+                    }
+                    break;
+            }
         }
 
     }

@@ -216,13 +216,15 @@ public class LocationActivity extends BaseActivity implements OnClickListener,On
                 String completeAddress = "";
                 try {
                     addresses = geocoder1.getFromLocation(point.latitude, point.longitude, 1);
-                    String address = addresses.get(0).getAddressLine(0);
-                    String city = addresses.get(0).getLocality();
-                    String state = addresses.get(0).getAdminArea();
-                    String country = addresses.get(0).getCountryName();
-                    String postalCode = addresses.get(0).getPostalCode();
-                    completeAddress = StringUtils.getValidString(address) + StringUtils.getValidString(city) + StringUtils.getValidString(state) + StringUtils.getValidString(country) + StringUtils.getValidString(postalCode);
-                    Toast.makeText(getBaseContext(), "Address " + completeAddress, Toast.LENGTH_SHORT).show();
+                    if(addresses.size()>0) {
+                        String address = addresses.get(0).getAddressLine(0);
+                        String city = addresses.get(0).getLocality();
+                        String state = addresses.get(0).getAdminArea();
+                        String country = addresses.get(0).getCountryName();
+                        String postalCode = addresses.get(0).getPostalCode();
+                        completeAddress = StringUtils.getValidString(address) + StringUtils.getValidString(city) + StringUtils.getValidString(state) + StringUtils.getValidString(country) + StringUtils.getValidString(postalCode);
+                        Toast.makeText(getBaseContext(), "Address " + completeAddress, Toast.LENGTH_SHORT).show();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

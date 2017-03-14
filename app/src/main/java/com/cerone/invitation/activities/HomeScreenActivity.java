@@ -314,7 +314,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                 intent = new Intent(this, MyGroupsActivity.class);
                 break;
             case R.id.nav_settings:
-                ToastHelper.blueToast(getApplicationContext(), "Need to implement settings.");
+                intent = new Intent(this, PublicHomeActivity.class);
                 break;
             case R.id.nav_logout:
                 try {

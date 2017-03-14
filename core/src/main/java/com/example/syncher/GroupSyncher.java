@@ -146,6 +146,10 @@ public class GroupSyncher extends BaseSyncher {
                             invitee.setInviteeName("" + jsonObject.getString("user_name"));
                         if (jsonObject.has("user_mobile_number"))
                             invitee.setMobileNumber("" + jsonObject.getString("user_mobile_number"));
+                        if (jsonObject.has("email"))
+                            invitee.setEmail("" + jsonObject.getString("email"));
+                        if (jsonObject.has("img_url"))
+                            invitee.setImage("" + jsonObject.getString("img_url"));
                         listOfInvitees.add(invitee);
                     }
                 }

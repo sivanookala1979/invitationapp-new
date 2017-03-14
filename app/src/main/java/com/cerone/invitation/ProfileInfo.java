@@ -36,7 +36,7 @@ public class ProfileInfo extends BaseActivity {
 
         profileMobileNum.setText("Contact Number: "+getIntent().getExtras().getString("UserMobile"));
         profileEmail.setText("Email ID: "+getIntent().getExtras().getString("UserEmail"));
-        if(image!= null & image.length()>0) {
+        if(image!= null && image.length()>0) {
             Picasso.with(getApplicationContext()).load(image).into(profileImage);
         }
 

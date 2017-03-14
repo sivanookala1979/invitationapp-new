@@ -150,7 +150,8 @@
 
         <activity android:name=".MyGroupsActivity" />
         <activity android:name=".ProfileInfo" />
-        <activity android:name=".activities.PublicHomeActivity"></activity>
+        <activity android:name=".activities.PublicHomeActivity" />
+        <activity android:name=".activities.PublicPersonalizeActivity"></activity>
     </application>
 
 </manifest>
