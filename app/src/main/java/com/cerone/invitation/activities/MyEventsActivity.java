@@ -65,7 +65,7 @@ public class MyEventsActivity extends BaseActivity implements OnClickListener, O
 
                 @Override
                 public void afterPostExecute() {
-                    adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, events, false);
+                    adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, events, true);
                     listView.setAdapter(adapter);
                     if (events.size() == 0) {
                         ToastHelper.blueToast(getApplicationContext(), "No events found.");

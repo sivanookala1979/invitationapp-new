@@ -132,12 +132,12 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         myEvents.setOnItemClickListener(this);
         fabAdd.setOnClickListener(this);
         loadEvents();
-        updateProfileImageAndName();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        updateProfileImageAndName();
         if(InvtAppPreferences.isScreenRefresh()) {
             loadEvents();
             InvtAppPreferences.setScreenRefreshStatus(false);
@@ -222,13 +222,13 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                                 myInvitationsList.add(event);
                             }
                         }
-                        if (myEventsList.size() > 0 && on.isSelected()) {
+                        if (on.isSelected() && !off.isSelected()) {
                             adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, myEventsList, true);
                             myEvents.setAdapter(adapter);
-                        } else if (myInvitationsList.size() > 0 && off.isSelected()) {
+                        } if (off.isSelected() && !on.isSelected()) {
                             adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, myInvitationsList, true);
                             myEvents.setAdapter(adapter);
-                        } else {
+                        } if(on.isSelected() && off.isSelected()){
                             adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, allEventsList, true);
                             myEvents.setAdapter(adapter);
                         }
@@ -257,12 +257,12 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent;
-        Event event;
-        if (on.isSelected()) {
+        Event event = null;
+        if (on.isSelected() && !off.isSelected()) {
             event = myEventsList.get(position);
-        } else if (off.isSelected()) {
+        } if (off.isSelected() && !on.isSelected()) {
             event = myInvitationsList.get(position);
-        } else {
+        } if(on.isSelected() && off.isSelected()){
             event = allEventsList.get(position);
         }
         if(event.getOwnerId()!=InvtAppPreferences.getOwnerId()){
