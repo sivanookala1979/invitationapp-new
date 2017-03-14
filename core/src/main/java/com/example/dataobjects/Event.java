@@ -37,6 +37,16 @@ public class Event {
     String imageData;
     boolean accepted;
     boolean isInvitation;
+    boolean expired;
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean accepted) {
+        this.expired = expired;
+    }
+
 
     public boolean isInvitation() {
         return isInvitation;

@@ -66,6 +66,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_menu_activity);
+        InvtAppPreferences.setScreenRefreshStatus(false);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
         fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
         myEvents = (ListView) findViewById(R.id.events_list);
@@ -131,12 +132,16 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         myEvents.setOnItemClickListener(this);
         fabAdd.setOnClickListener(this);
         loadEvents();
+        updateProfileImageAndName();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        updateProfileImageAndName();
+        if(InvtAppPreferences.isScreenRefresh()) {
+            loadEvents();
+            InvtAppPreferences.setScreenRefreshStatus(false);
+        }
     }
 
     private void closePreviousServices() {

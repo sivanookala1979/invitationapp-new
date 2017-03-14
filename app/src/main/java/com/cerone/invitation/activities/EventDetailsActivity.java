@@ -36,6 +36,7 @@ public class EventDetailsActivity extends BaseActivity implements ActivityCommun
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_details_layout);
         addToolbarView();
+        InvtAppPreferences.setScreenRefreshStatus(false);
         TextView eventName = (TextView) findViewById(R.id.toolbar_title);
         eventDetails = InvtAppPreferences.getEventDetails();
         eventName.setText(eventDetails.getName());
@@ -108,6 +109,7 @@ public class EventDetailsActivity extends BaseActivity implements ActivityCommun
 
     @Override
     public void enableChatView(boolean enableChat) {
+        InvtAppPreferences.setScreenRefreshStatus(true);
         eventDetails.setAccepted(true);
         createTabViews();
     }

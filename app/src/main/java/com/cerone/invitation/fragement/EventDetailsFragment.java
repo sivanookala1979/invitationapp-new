@@ -122,7 +122,9 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
             accept.setOnClickListener(this);
             maybe.setOnClickListener(this);
             reject.setOnClickListener(this);
-
+        }
+        if(eventDetails.isExpired()){
+            view.findViewById(R.id.expiredMessage).setVisibility(View.VISIBLE);
         }
     }
 

@@ -39,6 +39,7 @@ public class InvitationActivity extends BaseActivity implements OnItemClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen_layout_new);
         addToolbarView();
+        InvtAppPreferences.setScreenRefreshStatus(false);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
         TextView title = (TextView) findViewById(R.id.toolbar_title);
         title.setText("My Invitations");
@@ -61,13 +62,16 @@ public class InvitationActivity extends BaseActivity implements OnItemClickListe
                 }, 1000);
             }
         });
-       // createLeftMenu(this);
+        getMyEvents();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getMyEvents();
+        if(InvtAppPreferences.isScreenRefresh()){
+            getMyEvents();
+            InvtAppPreferences.setScreenRefreshStatus(false);
+        }
     }
 
     public void getMyEvents() {

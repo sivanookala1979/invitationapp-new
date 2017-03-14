@@ -90,6 +90,17 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/expiredMessage"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:gravity="center"
+                    android:text="Event expired "
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/text_size_intermediate" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="5dp"
@@ -578,6 +589,7 @@
                                 android:textSize="@dimen/text_medium" />
                         </LinearLayout>
                     </LinearLayout>
+
 
                     <LinearLayout
                         android:id="@+id/shareEventData"
