@@ -4,9 +4,9 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
 
-         <item name="colorPrimary">@color/blue_shade</item>
-        <item name="colorPrimaryDark">@color/Indigo</item>
-        <item name="colorAccent">@color/Indigo</item>
+         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 

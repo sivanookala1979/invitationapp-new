@@ -1,6 +1,7 @@
 package com.example.syncher;
 
 import com.example.dataobjects.City;
+import com.example.dataobjects.EventItem;
 import com.example.utills.HTTPUtils;
 
 import org.json.JSONArray;
@@ -46,6 +47,31 @@ public class PublicHomeSyncher extends BaseSyncher {
             handleException(e);
         }
         return listOfCities;
+    }
+
+    public List<EventItem> getEventItems() {
+        List<EventItem> listOfEventItems = new ArrayList<EventItem>();
+        try {
+            String jsonResponse = HTTPUtils.getDataFromServer(BASE_URL + "services/get_services", "GET", true);
+            if(jsonResponse!=null) {
+                JSONArray eventItems = new JSONArray(jsonResponse);
+                for (int i=0; i<eventItems.length(); i++) {
+                    JSONObject eventItem = eventItems.getJSONObject(i);
+                    EventItem event = new EventItem();
+                    if (eventItem.has("id"))
+                        event.setId(eventItem.getInt("id"));
+                    if (eventItem.has("name"))
+                        event.setName(eventItem.getString("name"));
+                    if (eventItem.has("image_path"))
+                        event.setImagePath(eventItem.getString("image_path"));
+                    listOfEventItems.add(event);
+                }
+            }
+
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return listOfEventItems;
     }
 
 }

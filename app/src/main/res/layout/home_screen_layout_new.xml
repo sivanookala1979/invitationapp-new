@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:background="@color/blue_shade"
+            android:background="@color/red_light"
             android:gravity="center"
             app:theme="@style/ThemeOverlay.AppCompat.Dark">
 
@@ -78,7 +78,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/fab_margin"
-            app:backgroundTint="@color/sky_blue"
+            app:backgroundTint="@color/darkorange"
             android:src="@drawable/ic_input_add" />
 
         <LinearLayout

@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/blue_shade"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         app:theme="@style/ThemeOverlay.AppCompat.Dark">
 

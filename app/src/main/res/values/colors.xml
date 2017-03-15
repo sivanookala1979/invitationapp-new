@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#f44336</color>
+    <color name="colorPrimaryDark">#d32f2f</color>
+    <color name="colorAccent">#F49F1E</color>
+
     <color name="white">#FFFFFF</color>
     <color name="whitetransparent">#80FFFFFF</color>
     <color name="yellow">#ffeb3b</color>
     <color name="yellow_dark">#ffc107</color>
     <color name="yellow_light">#ffeb3b</color>
     <color name="fuchsia">#FF00FF</color>
-    <color name="red">#f44336</color>
-    <color name="red_light">#f24438</color>
+    <color name="red">#d32f2f</color>
+    <color name="red_light">#f44336</color>
     <color name="silver">#C0C0C0</color>
     <color name="gray">#9e9e9e</color>
     <color name="grey_light">#e0e0e0</color>
@@ -27,6 +31,7 @@
     <color name="navy">#0000FF</color>
     <color name="navys">#000080</color>
     <color name="black">#000000</color>
+    <color name="black_shade">#202020</color>
     <color name="lightblue">#3d5afe</color>
     <color name="cream">#e7e7e2 </color>
     <color name="lavender">#635b90 </color>

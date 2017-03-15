@@ -43,7 +43,7 @@ public class RegistrationActivityTest extends BaseActivityTest {
         onView(withId(R.id.loginButton)).perform(click());
         onView(withId(R.id.editMobileNumber))
                 .perform(typeText("9949257729"), closeSoftKeyboard());
-        onView(withId(R.id.signIn_button)).perform(click());
+        onView(withId(R.id.button_generateOtp)).perform(click());
         SystemClock.sleep(10000);
     }
 }

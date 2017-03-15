@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/eventItem_image"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:src="@drawable/google"
+        android:tint="@color/darkgray"
+        android:layout_gravity="center">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/eventItem_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Event Item"
+        android:gravity="center"
+        android:textColor="@color/darkgray"
+        android:textSize="@dimen/text_medium">
+
+    </TextView>
+
+</LinearLayout>

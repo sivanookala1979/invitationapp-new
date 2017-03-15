@@ -49,6 +49,7 @@ public class ChooseCityAdapter extends ArrayAdapter<City>{
         ImageView cityImage = (ImageView) row.findViewById(R.id.city_image);
         cityName.setText(city.getName());
         Picasso.with(context).load(city.getImage_path()).into(cityImage);
+        row.setOnClickListener(createOnClickListener(position,parent));
         return row;
     }
 
