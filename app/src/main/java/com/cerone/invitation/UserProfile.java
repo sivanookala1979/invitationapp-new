@@ -129,6 +129,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.register:
                 emailInput = email.getText().toString().trim();
+                emailInput = emailInput.replaceAll(" ","");
                 emailPattern = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{2,256}" + "\\@" + "[a-zA-Z0-9][a-zA-Z0-9\\-]{2,64}" + "(" + "\\." + "[a-zA-Z0-9][a-zA-Z0-9\\-]{2,25}" + ")+";
                 if (validateInputDetails(name)) {
                     if (validateInputDetails(phone)) {

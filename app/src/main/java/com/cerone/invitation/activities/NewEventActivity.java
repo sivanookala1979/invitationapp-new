@@ -3,6 +3,7 @@ package com.cerone.invitation.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppDatePicker;
 import com.cerone.invitation.helpers.InvtAppPreferences;
@@ -32,7 +34,10 @@ import com.example.dataobjects.UserLocation;
 import com.example.syncher.EventSyncher;
 import com.example.utills.InvitationAppConstants;
 import com.example.utills.StringUtils;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -120,6 +125,10 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
             endDate.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 3));
             event.setEventId(eventDetails.getEventId());
             event.setLatitude(eventDetails.getLatitude());
+            if(eventDetails.getImageUrl()!=null && !eventDetails.getImageUrl().isEmpty()) {
+                Picasso.with(getApplicationContext()).load(eventDetails.getImageUrl()).transform(new CircleTransform()).into(cameraIcon);
+                loadBitmap(eventDetails.getImageUrl());
+            }
             event.setLongitude(eventDetails.getLongitude());
             event.setAddress(eventDetails.getAddress());
             extraAddress.setText(eventDetails.getExtraAddress() + "");
@@ -132,7 +141,34 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
         setlisteners(recurring, startDateLayout, startTime, startDate, endDate, endTime);
         createAndSetOnclickListeners(R.id.createEvent, R.id.shareEvent, R.id.Cancel, R.id.getLocation, R.id.startDateLogo, R.id.endDateLogo, R.id.startTimeLogo, R.id.endTimeLogo);
     }
+    private Target loadtarget;
 
+    public void loadBitmap(String url) {
+
+        if (loadtarget == null) loadtarget = new Target() {
+
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                handleLoadedBitmap(bitmap);
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+
+        Picasso.with(this).load(url).into(loadtarget);
+    }
+
+    public void handleLoadedBitmap(Bitmap bitmap) {
+        eventPictureInfo = MobileHelper.BitMapToString(bitmap);
+    }
     private void loadMostRecentAddress() {
         new InvtAppAsyncTask(NewEventActivity.this) {
 
@@ -313,21 +349,21 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
 
     public List<UserLocation> getDefaultAddress() {
         List<UserLocation> list = new ArrayList<UserLocation>();
-        UserLocation kavali = new UserLocation();
-        kavali.setLatitude(14.913181);
-        kavali.setLongitude(79.992980);
-        kavali.setAddress("Santhi Nagar, kavali");
-        list.add(kavali);
-        UserLocation nellore = new UserLocation();
-        nellore.setLatitude(14.442599);
-        nellore.setLongitude(79.986456);
-        nellore.setAddress("Nellore, nellore");
-        list.add(nellore);
-        UserLocation hyd = new UserLocation();
-        hyd.setLatitude(14.913181);
-        hyd.setLongitude(79.992980);
-        hyd.setAddress("Hyd, Hyderabad");
-        list.add(hyd);
+//        UserLocation kavali = new UserLocation();
+//        kavali.setLatitude(14.913181);
+//        kavali.setLongitude(79.992980);
+//        kavali.setAddress("Santhi Nagar, kavali");
+//        list.add(kavali);
+//        UserLocation nellore = new UserLocation();
+//        nellore.setLatitude(14.442599);
+//        nellore.setLongitude(79.986456);
+//        nellore.setAddress("Nellore, nellore");
+//        list.add(nellore);
+//        UserLocation hyd = new UserLocation();
+//        hyd.setLatitude(14.913181);
+//        hyd.setLongitude(79.992980);
+//        hyd.setAddress("Hyd, Hyderabad");
+//        list.add(hyd);
         return list;
     }
 }
