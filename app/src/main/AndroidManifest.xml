@@ -42,9 +42,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.SignInActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activities.HomeScreenActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -151,7 +148,8 @@
         <activity android:name=".MyGroupsActivity" />
         <activity android:name=".ProfileInfo" />
         <activity android:name=".activities.PublicHomeActivity" />
-        <activity android:name=".activities.PublicPersonalizeActivity" />
+        <activity android:name=".activities.PublicPersonalizeActivity"></activity>
+        <activity android:name=".activities.FoldingEventsActivity"></activity>
         <activity android:name=".activities.PersonalizeActivity"></activity>
     </application>
 

@@ -316,6 +316,11 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             case R.id.nav_settings:
                 intent = new Intent(this, PublicHomeActivity.class);
                 break;
+            case R.id.folding_activity:
+                intent = new Intent(this, FoldingEventsActivity.class);
+                finish();
+                break;
+
             case R.id.nav_logout:
                 try {
                     InstanceID.getInstance(getApplicationContext()).deleteInstanceID();
