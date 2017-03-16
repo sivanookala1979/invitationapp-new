@@ -18,6 +18,15 @@ public class Invitee {
     String distance = "Not found";
     String email;
     String image;
+    boolean admin;
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
 
     public String getEmail() {
         return email;

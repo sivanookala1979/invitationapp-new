@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_personalize"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/my_theme"
         android:gravity="center"
         app:theme="@style/ThemeOverlay.AppCompat.Dark">
 
@@ -26,12 +26,12 @@
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="9"
-                android:layout_marginRight="20dp"
                 android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:layout_weight="9"
                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                android:text="Event Name"
                 android:gravity="center"
+                android:text="Event Name"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
@@ -43,24 +43,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
-        android:text="Choose your favorite topics for a personalized experience"
-        android:textColor="@color/black_shade"
-        android:textSize="@dimen/text_size"
+        android:background="@color/grey_light"
         android:gravity="center"
         android:padding="10dp"
-        android:background="@color/grey_light"/>
+        android:text="Choose your favorite topics for a personalized experience"
+        android:textColor="@color/black_shade"
+        android:textSize="@dimen/text_size" />
 
     <GridView
         android:id="@+id/gridView_events"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/txt_personalize"
-        android:numColumns="3"
         android:columnWidth="110dp"
-        android:horizontalSpacing="10dp"
-        android:verticalSpacing="10dp"
         android:gravity="center"
-        android:stretchMode="none" >
-    </GridView>
+        android:horizontalSpacing="10dp"
+        android:numColumns="3"
+        android:stretchMode="none"
+        android:verticalSpacing="10dp"></GridView>
 
 </RelativeLayout>

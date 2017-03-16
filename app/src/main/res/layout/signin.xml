@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background">
+    android:background="@drawable/my_theme_vertical_colours"
+    android:gravity="center">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -11,151 +12,166 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/signin_layer_list"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/events" />
-
-        <EditText
-            android:id="@+id/edit_name"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/edit_text_border"
-            android:hint="Your Name"
-            android:padding="10dp"
-            android:textSize="@dimen/text_size_intermediate"
-            android:singleLine="true">
-        </EditText>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:background="@drawable/edit_text_border"
-            android:minHeight="45dp"
-            android:orientation="horizontal"
-            android:weightSum="10">
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/signin_layer_list"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/button_countryCode"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="2.5"
-                android:gravity="center|end"
-                android:text="+91"
-                android:textAllCaps="false"
-                android:textSize="@dimen/text_size" />
-
-            <TextView
-                android:layout_width="1dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="5dp"
-                android:background="@color/black" />
-
-            <EditText
-                android:id="@+id/edit_mobileNumber"
-                android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:layout_weight="7.5"
-                android:background="@android:color/transparent"
-                android:hint="Mobile Number"
-                android:padding="10dp"
-                android:textSize="@dimen/text_size_intermediate"
-                android:inputType="phone"
-                android:singleLine="true">
-            </EditText>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/button_generateOtp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/gradient_button"
-            android:text="Generate OTP"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_medium" />
-
-        <LinearLayout
-            android:id="@+id/layout_otp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-            <TextView
-                android:id="@+id/txt_otp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
                 android:gravity="center"
-                android:paddingBottom="5dp"
-                android:text="OTP has been sent to your mobile number for verification."
-                android:textColor="@color/black_shade"
-                android:textSize="@dimen/small_text_size" />
+                android:background="@drawable/white_circle">
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/logo" />
+
+            </LinearLayout>
+
 
             <EditText
-                android:id="@+id/edit_otpNumber"
+                android:id="@+id/edit_name"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:layout_marginTop="25dp"
                 android:background="@drawable/edit_text_border"
-                android:hint="Enter OTP"
+                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                android:hint="Your Name"
                 android:padding="10dp"
-                android:textSize="@dimen/text_size_intermediate"
-                android:inputType="number"
-                android:singleLine="true">
-            </EditText>
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_intermediate"></EditText>
 
-            <TextView
-                android:id="@+id/txt_sendAgain"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Regenrate OTP"
-                android:textColor="@color/blue_shade"
-                android:textSize="@dimen/text_medium" />
+                android:layout_margin="15dp"
+                android:background="@drawable/edit_text_border"
+                android:minHeight="45dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <Button
+                    android:id="@+id/button_countryCode"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="2.5"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:gravity="center|end"
+                    android:text="+91"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/text_size" />
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/black" />
+
+                <EditText
+                    android:id="@+id/edit_mobileNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="7.5"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:hint="Mobile Number"
+                    android:inputType="phone"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="@dimen/text_size_intermediate"></EditText>
+
+            </LinearLayout>
 
             <Button
-                android:id="@+id/button_verify"
+                android:id="@+id/button_generateOtp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/gradient_button"
-                android:text="Verify"
+                android:background="@drawable/happening_button"
+                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                android:text="Generate OTP"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_medium" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout_otp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/txt_otp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:text="OTP has been sent to your mobile number for verification."
+                    android:textColor="@color/black_shade"
+                    android:textSize="@dimen/small_text_size" />
+
+                <EditText
+                    android:id="@+id/edit_otpNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/edit_text_border"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:hint="Enter OTP"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="@dimen/text_size_intermediate"></EditText>
+
+                <TextView
+                    android:id="@+id/txt_sendAgain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Regenrate OTP"
+                    android:textColor="@color/happening_orange"
+                    android:textSize="@dimen/text_medium" />
+
+                <Button
+                    android:id="@+id/button_verify"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/happening_button"
+                    android:text="Verify"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_medium" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </ScrollView>
 

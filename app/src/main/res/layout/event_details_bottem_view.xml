@@ -26,17 +26,19 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/eventNameFooter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#f23d3d"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:gravity="center"
-                    android:minHeight="35dp"
+                    android:minHeight="45dp"
                     android:text="Jhon's Birthday party"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_intermediate" />
+                    android:textSize="@dimen/text_size_medium" />
 
                 <ImageView
+                    android:id="@+id/eventImageFooter"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:scaleType="fitXY"
@@ -54,6 +56,7 @@
                     android:layout_weight="2">
 
                     <ImageView
+                        android:id="@+id/eventOwnerImage"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_centerHorizontal="true"
@@ -69,6 +72,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/ownerName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -88,8 +92,10 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/chatLayout"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:orientation="horizontal"
                     android:layout_weight="1.5"></LinearLayout>
             </LinearLayout>
 
@@ -123,6 +129,7 @@
                         android:textSize="@dimen/text_size_small" />
 
                     <TextView
+                        android:id="@+id/eventDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Sat, 15/03/2017"
@@ -146,6 +153,7 @@
                         android:textSize="@dimen/text_size_small" />
 
                     <TextView
+                        android:id="@+id/eventTimings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
@@ -155,6 +163,56 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_light" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="45dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/event_location"
+                        android:tint="@color/happening_orange"/>
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/eventAddressFooter"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:text="Address details"
+                    android:ellipsize="end"
+                    android:lines="2"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"/>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:rotation="-90"
+                        android:tint="@color/grey_light"
+                        android:src="@drawable/near_me" />
+                </RelativeLayout>
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -177,6 +235,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/totalInvitees"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
@@ -204,6 +263,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/totalAccepted"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
@@ -231,6 +291,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/totalRejected"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
@@ -290,6 +351,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="10">
 
                 <android.support.v7.widget.RecyclerView

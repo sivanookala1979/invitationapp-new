@@ -31,7 +31,7 @@
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/shareEventData"
         android:layout_below="@+id/toolbar"
         android:orientation="vertical">
@@ -39,7 +39,7 @@
         <ListView
             android:id="@+id/events_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:divider="@android:color/transparent"

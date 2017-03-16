@@ -9,12 +9,11 @@
         android:id="@+id/cv_events"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rectangle_shaped"
-        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rectangle_shaped"
         app:cardCornerRadius="5dp"
-        app:cardElevation="3dp"
-        >
+        app:cardElevation="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,6 +30,7 @@
                 android:weightSum="10">
 
                 <TextView
+                    android:id="@+id/colorIndicator"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
@@ -43,6 +43,7 @@
                     android:background="@android:color/white">
 
                     <ImageView
+                        android:id="@+id/eventIconHeader"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_centerHorizontal="true"
@@ -66,6 +67,7 @@
                 android:padding="10dp">
 
                 <TextView
+                    android:id="@+id/eventNameHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -75,6 +77,7 @@
                     android:textSize="@dimen/text_size_small" />
 
                 <TextView
+                    android:id="@+id/eventAddressHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -83,6 +86,7 @@
                     android:textSize="@dimen/text_size_too_small" />
 
                 <TextView
+                    android:id="@+id/eventTimingsHeading"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"

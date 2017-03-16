@@ -7,6 +7,7 @@ package com.example.syncher;
 import android.util.Log;
 
 import com.example.dataobjects.Event;
+import com.example.dataobjects.Invitee;
 import com.example.dataobjects.ServerResponse;
 import com.example.utills.HTTPUtils;
 import com.example.utills.InvitationAppConstants;
@@ -77,13 +78,26 @@ public class EventSyncher extends BaseSyncher {
         }
         return listOfEvents;
     }
-
     public List<Event> getAllEvents() {
         List<Event> listOfEvents = new ArrayList<Event>();
         try {
             JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "events/get_all_events.json", "GET", true));
             if (jsonResponse.has("events")) {
                 JSONArray jsonArray = jsonResponse.getJSONArray("events");
+                listOfEvents = geteventsByJsonArray(jsonArray);
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return listOfEvents;
+    }
+
+    public List<Event> getAllEventsNew() {
+        List<Event> listOfEvents = new ArrayList<Event>();
+        try {
+            JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "events/get_all_events_information.json", "GET", true));
+            if (jsonResponse.has("event_information")) {
+                JSONArray jsonArray = jsonResponse.getJSONArray("event_information");
                 listOfEvents = geteventsByJsonArray(jsonArray);
             }
         } catch (Exception e) {
@@ -156,6 +170,42 @@ public class EventSyncher extends BaseSyncher {
                         }
                         if(jsonObject.has("is_expire")){
                             event.setExpired(jsonObject.getBoolean("is_expire"));
+                        }
+                        if(jsonObject.has("is_my_event")) {
+                            event.setInvitation(!jsonObject.getBoolean("is_my_event"));
+                        }
+                        if(jsonObject.has("owner_information")){
+                            JSONObject ownerJson = jsonObject.getJSONObject("owner_information");
+                            Invitee ownerInfo = new Invitee();
+                            ownerInfo.setInviteeId(ownerJson.getInt("id"));
+                            ownerInfo.setInviteeName(ownerJson.getString("user_name"));
+                            ownerInfo.setMobileNumber(ownerJson.getString("phone_number"));
+                            if(ownerJson.has("email")) {
+                                ownerInfo.setEmail(ownerJson.getString("email"));
+                            }
+                            if(ownerJson.has("owner_img")) {
+                                ownerInfo.setImage(ownerJson.getString("owner_img"));
+                            }
+                            event.setOwnerInfo(ownerInfo);
+                        }
+                        if(jsonObject.has("invitation_information")){
+                            JSONArray inviteesList = jsonObject.getJSONArray("invitation_information");
+                            for (int j = 0; j < inviteesList.length(); j++) {
+                                JSONObject inviteeJson = inviteesList.getJSONObject(j);
+                                Invitee invitee = new Invitee();
+                                invitee.setInviteeId(inviteeJson.getInt("user_id"));
+                                invitee.setInviteeName(inviteeJson.getString("name"));
+                                invitee.setMobileNumber(inviteeJson.getString("mobile"));
+                                invitee.setAdmin(inviteeJson.getBoolean("is_admin"));
+                                //invitee.setAccepted(inviteeJson.getBoolean("is_accepted"));
+                                if(inviteeJson.has("email")) {
+                                    invitee.setEmail(inviteeJson.getString("email"));
+                                }
+                                if(inviteeJson.has("img_url")) {
+                                    invitee.setImage(inviteeJson.getString("img_url"));
+                                }
+                                event.getInviteesList().add(invitee);
+                            }
                         }
                         event.setLatitude(jsonObject.getDouble("latitude"));
                         event.setLatitude(jsonObject.getDouble("latitude"));

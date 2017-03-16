@@ -4,6 +4,9 @@
  */
 package com.example.dataobjects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Adarsh.T
  * @version 1.0, Dec 18, 2015
@@ -38,6 +41,24 @@ public class Event {
     boolean accepted;
     boolean isInvitation;
     boolean expired;
+    Invitee ownerInfo;
+    List<Invitee> inviteesList= new ArrayList<Invitee>();
+
+    public Invitee getOwnerInfo() {
+        return ownerInfo;
+    }
+
+    public void setOwnerInfo(Invitee ownerInfo) {
+        this.ownerInfo = ownerInfo;
+    }
+
+    public List<Invitee> getInviteesList() {
+        return inviteesList;
+    }
+
+    public void setInviteesList(List<Invitee> inviteesList) {
+        this.inviteesList = inviteesList;
+    }
 
     public boolean isExpired() {
         return expired;

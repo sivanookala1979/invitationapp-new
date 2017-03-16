@@ -8,10 +8,19 @@ import android.widget.Toast;
 
 import com.cerone.invitation.R;
 import com.cerone.invitation.adapter.FoldingCellListAdapter;
+import com.cerone.invitation.adapter.HomeEventAdapter;
+import com.cerone.invitation.helpers.InvtAppAsyncTask;
+import com.cerone.invitation.helpers.InvtAppPreferences;
+import com.cerone.invitation.helpers.MobileHelper;
+import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.Event;
+import com.example.syncher.EventSyncher;
 import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.cerone.invitation.R.id.myEvents;
 
 /**
  * Created by adarsht on 15/03/17.
@@ -19,23 +28,19 @@ import java.util.ArrayList;
 
 public class FoldingEventsActivity extends BaseActivity {
     ListView theListView;
+    List<Event> allEventsList= new ArrayList<Event>();
+    EventSyncher eventSyncher = new EventSyncher();
+    FoldingCellListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.folding_activity_layout);
         addToolbarView();
         theListView = (ListView) findViewById(R.id.events_list);
-        final ArrayList<Event> items = new ArrayList<Event>();
-        items.add(new Event());
-        items.add(new Event());
-        items.add(new Event());
-        items.add(new Event());
-        items.add(new Event());
-        items.add(new Event());
-        items.add(new Event());
 
         // create custom adapter that holds elements and their state (we need hold a id's of unfolded elements for reusable elements)
-        final FoldingCellListAdapter adapter = new FoldingCellListAdapter(this, items);
+        adapter = new FoldingCellListAdapter(this, allEventsList);
 
         // add default btn handler for each request btn on each item if custom handler not found
         adapter.setDefaultRequestBtnClickListener(new View.OnClickListener() {
@@ -58,6 +63,22 @@ public class FoldingEventsActivity extends BaseActivity {
                 adapter.registerToggle(pos);
             }
         });
+        loadEvents();
+    }
+    private void loadEvents() {
+        if (MobileHelper.hasNetwork(getApplicationContext(), FoldingEventsActivity.this, " to get events", null)) {
+            new InvtAppAsyncTask(this) {
 
+                @Override
+                public void process() {
+                    allEventsList = eventSyncher.getAllEventsNew();
+                }
+
+                @Override
+                public void afterPostExecute() {
+                    adapter.updateList(allEventsList);
+                }
+            }.execute();
+        }
     }
 }

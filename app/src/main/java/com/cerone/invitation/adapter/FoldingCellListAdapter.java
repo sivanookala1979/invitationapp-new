@@ -1,23 +1,25 @@
 package com.cerone.invitation.adapter;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.helpers.CircleTransform;
 import com.example.dataobjects.Event;
 import com.ramotion.foldingcell.FoldingCell;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
-import static com.google.android.gms.analytics.internal.zzy.v;
 
 
 public class FoldingCellListAdapter extends ArrayAdapter<Event> {
@@ -25,18 +27,31 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
 
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
     private View.OnClickListener defaultRequestBtnClickListener;
+    List<Event> events = new ArrayList<Event>();
     Context context;
 
 
-    public FoldingCellListAdapter(Context context, List<Event> objects) {
-        super(context, 0, objects);
+    public FoldingCellListAdapter(Context context, List<Event> allEventsList) {
+        super(context, 0, allEventsList);
         this.context = context;
+        this.events = allEventsList;
+    }
+
+    @Override
+    public int getCount() {
+        return events.size();
+    }
+
+    @Nullable
+    @Override
+    public Event getItem(int position) {
+        return events.get(position);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // get item for selected view
-        Event item = getItem(position);
+        Event event = getItem(position);
         // if cell is exists - reuse it, if not - create the new one from resource
         FoldingCell cell = (FoldingCell) convertView;
         ViewHolder viewHolder;
@@ -45,7 +60,23 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
             LayoutInflater vi = LayoutInflater.from(getContext());
             cell = (FoldingCell) vi.inflate(R.layout.event_folding_child, parent, false);
             // binding view parts to view holder
-
+            viewHolder.participantsListView = (RecyclerView) cell.findViewById(R.id.participantsList);
+            viewHolder.eventHeaderIcon = (ImageView)cell.findViewById(R.id.eventIconHeader);
+            viewHolder.eventNameHeader = (TextView)cell.findViewById(R.id.eventNameHeader);
+            viewHolder.eventAddressHeader = (TextView)cell.findViewById(R.id.eventAddressHeader);
+            viewHolder.eventDateTimeInfo = (TextView)cell.findViewById(R.id.eventTimingsHeading);
+            viewHolder.colourIndicator = (TextView)cell.findViewById(R.id.colorIndicator);
+            //FOOTER VIEW DETAILS
+            viewHolder.eventNameFooter = (TextView)cell.findViewById(R.id.eventNameFooter);
+            viewHolder.eventImageFooter = (ImageView)cell.findViewById(R.id.eventImageFooter);
+            viewHolder.ownerImage = (ImageView)cell.findViewById(R.id.eventOwnerImage);
+            viewHolder.ownerName = (TextView)cell.findViewById(R.id.ownerName);
+            viewHolder.eventStartDate = (TextView)cell.findViewById(R.id.eventDate);
+            viewHolder.eventTimings = (TextView)cell.findViewById(R.id.eventTimings);
+            viewHolder.eventAddressFooter = (TextView)cell.findViewById(R.id.eventAddressFooter);
+            viewHolder.inviteesCount = (TextView)cell.findViewById(R.id.totalInvitees);
+            viewHolder.acceptedCount = (TextView)cell.findViewById(R.id.totalAccepted);
+            viewHolder.rejectedCount = (TextView)cell.findViewById(R.id.totalRejected);
             cell.setTag(viewHolder);
         } else {
             if (unfoldedIndexes.contains(position)) {
@@ -55,10 +86,11 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
             }
             viewHolder = (ViewHolder) cell.getTag();
         }
-        viewHolder.participantsListView = (RecyclerView) cell.findViewById(R.id.participantsList);
         viewHolder.participantsListView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
         viewHolder.participantsListView.setAdapter(new ParticipantsImageAdapter(context));
-
+        Picasso.with(context).load(event.getOwnerInfo().getImage()).transform(new CircleTransform()).into(viewHolder.eventHeaderIcon);
+        Picasso.with(context).load(event.getImageUrl()).into(viewHolder.eventImageFooter);
+        Picasso.with(context).load(event.getOwnerInfo().getImage()).transform(new CircleTransform()).into(viewHolder.ownerImage);
         return cell;
     }
 
@@ -86,15 +118,15 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
         this.defaultRequestBtnClickListener = defaultRequestBtnClickListener;
     }
 
+    public void updateList(List<Event> allEventsList) {
+        this.events = allEventsList;
+        notifyDataSetChanged();
+    }
+
     // View lookup cache
     private static class ViewHolder {
         RecyclerView participantsListView;
-//        TextView contentRequestBtn;
-//        TextView pledgePrice;
-//        TextView fromAddress;
-//        TextView toAddress;
-//        TextView requestsCount;
-//        TextView date;
-//        TextView time;
+        ImageView eventHeaderIcon,eventImageFooter,ownerImage;
+        TextView eventNameHeader,colourIndicator,eventAddressHeader,eventDateTimeInfo,eventNameFooter,ownerName,eventStartDate,eventTimings,eventAddressFooter,inviteesCount,acceptedCount,rejectedCount;
     }
 }
