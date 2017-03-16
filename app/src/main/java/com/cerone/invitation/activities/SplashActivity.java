@@ -32,7 +32,6 @@ public class SplashActivity extends BaseActivity {
                 // Start your app main activity
                 Intent i = new Intent(new Intent(SplashActivity.this, SignInActivity.class));
                 startActivity(i);
-
                 // close this activity
                 finish();
             }

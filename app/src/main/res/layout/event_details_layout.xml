@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/blue_shade"
+        android:background="@drawable/my_theme"
         android:minHeight="?attr/actionBarSize"
         app:theme="@style/ToolbarColoredBackArrow"
         app:titleTextColor="@android:color/white">

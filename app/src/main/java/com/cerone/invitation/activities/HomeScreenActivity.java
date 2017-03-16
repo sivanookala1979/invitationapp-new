@@ -318,7 +318,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                 break;
             case R.id.folding_activity:
                 intent = new Intent(this, FoldingEventsActivity.class);
-                finish();
+              //  finish();
                 break;
 
             case R.id.nav_logout:
