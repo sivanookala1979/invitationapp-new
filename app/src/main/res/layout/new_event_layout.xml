@@ -43,7 +43,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/background"
+                    android:background="@drawable/my_theme"
                     android:orientation="vertical">
 
                     <ImageView
@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/camera"
+                        android:src="@drawable/camera"
                         android:scaleType="fitXY" />
 
                     <TextView
@@ -212,7 +212,7 @@
                         android:layout_width="0dp"
                         android:layout_height="25dp"
                         android:layout_weight="10"
-                        android:background="@drawable/datepicker" />
+                        android:background="@drawable/date"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -237,9 +237,9 @@
                     <ImageButton
                         android:id="@+id/startTimeLogo"
                         android:layout_width="0dp"
-                        android:layout_height="25dp"
+                        android:layout_height="27dp"
                         android:layout_weight="13"
-                        android:background="@drawable/clock" />
+                        android:background="@drawable/time" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -285,7 +285,7 @@
                         android:layout_width="0dp"
                         android:layout_height="25dp"
                         android:layout_weight="10"
-                        android:background="@drawable/datepicker" />
+                        android:background="@drawable/date" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -310,9 +310,9 @@
                     <ImageButton
                         android:id="@+id/endTimeLogo"
                         android:layout_width="0dp"
-                        android:layout_height="25dp"
+                        android:layout_height="27dp"
                         android:layout_weight="13"
-                        android:background="@drawable/clock" />
+                        android:background="@drawable/time" />
                 </LinearLayout>
             </LinearLayout>
 

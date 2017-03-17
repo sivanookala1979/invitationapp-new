@@ -79,7 +79,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/sky_blue"
+        app:backgroundTint="@color/happening_orange"
         android:src="@android:drawable/btn_star"
         app:layout_anchor="@+id/app_bar_layout"
         app:layout_anchorGravity="bottom|right"

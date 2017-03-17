@@ -37,7 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/shareEventData"
             android:layout_below="@+id/toolbar"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/cream">
 
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/activity_main_swipe_refresh_layout"

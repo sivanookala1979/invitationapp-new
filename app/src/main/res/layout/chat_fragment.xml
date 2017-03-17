@@ -18,7 +18,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/sky_blue"
+        android:background="@drawable/my_theme"
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         android:weightSum="5">
