@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="10"
         android:layout_marginRight="10dp"
+        android:tint="@color/happening_orange"
         android:src="@drawable/invitees" />
 
     <TextView
@@ -34,9 +35,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="10"
-        android:background="@color/blue_shade"
+        android:background="@color/happening_orange"
         android:gravity="center_vertical|center_horizontal"
         android:text=" X "
-        android:textColor="@color/red"
+        android:textColor="@color/white"
         android:textSize="@dimen/text_size" />
 </LinearLayout>

@@ -10,6 +10,16 @@ public class EventItem {
     String name;
     String imagePath;
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    boolean isSelected;
+
     public int getId() {
         return id;
     }

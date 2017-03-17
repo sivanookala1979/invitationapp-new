@@ -54,6 +54,7 @@
         android:id="@+id/gridView_events"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_margin="10dp"
         android:layout_below="@+id/txt_personalize"
         android:columnWidth="110dp"
         android:gravity="center"

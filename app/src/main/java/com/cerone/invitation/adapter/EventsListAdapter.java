@@ -1,6 +1,7 @@
 package com.cerone.invitation.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,11 @@ import java.util.List;
             return position;
         }
 
+    public void updateAdapter(List<EventItem> eventItems) {
+        this.eventItems = eventItems;
+        notifyDataSetChanged();
+    }
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -53,6 +59,13 @@ import java.util.List;
             ImageView eventImage = (ImageView)row.findViewById(R.id.eventItem_image);
             eventText.setText(event.getName());
             Picasso.with(context).load(event.getImagePath()).into(eventImage);
+            if(event.isSelected()){
+            eventText.setTextColor(Color.parseColor("#f06824"));
+            eventImage.setColorFilter(Color.parseColor("#f06824"));
+        }else{
+                eventText.setTextColor(Color.parseColor("#C0C0C0"));
+                eventImage.setColorFilter(Color.parseColor("#C0C0C0"));
+        }
             row.setOnClickListener(createOnClickListener(position, parent));
             return row;
         }

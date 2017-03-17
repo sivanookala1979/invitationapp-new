@@ -61,5 +61,13 @@ public class PersonalizeActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        EventItem eventItem = eventItems.get(position);
+        if(eventItem.isSelected()){
+            eventItem.setSelected(false);
+        }else{
+            eventItem.setSelected(true);
+        }
+        eventItems.set(position, eventItem);
+        eventsListAdapter.updateAdapter(eventItems);
     }
 }
