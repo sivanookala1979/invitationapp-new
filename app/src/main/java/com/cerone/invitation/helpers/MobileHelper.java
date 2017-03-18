@@ -143,9 +143,10 @@ public class MobileHelper {
 
     public static String BitMapToString(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();
         String temp = Base64.encodeToString(b, Base64.DEFAULT);
+        System.out.println(" JPEG Bitmap size : " + temp.length() + " JPEG Byte array length :" + b.length);
         return temp;
     }
 

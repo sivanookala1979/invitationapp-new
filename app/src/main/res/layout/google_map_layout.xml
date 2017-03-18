@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_weight="20"
-                android:background="@drawable/gradient_button"
+                android:background="@drawable/happening_button"
                 android:padding="5dp"
                 android:text="Done"
                 android:textColor="@color/white"

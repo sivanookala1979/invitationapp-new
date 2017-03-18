@@ -9,17 +9,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
 import com.cerone.invitation.helpers.CircleTransform;
 import com.example.dataobjects.Event;
+import com.example.dataobjects.Invitee;
 import com.ramotion.foldingcell.FoldingCell;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
+import static com.cerone.invitation.R.id.profileImage;
+import static com.google.android.gms.analytics.internal.zzy.g;
 
 
 public class FoldingCellListAdapter extends ArrayAdapter<Event> {
@@ -60,7 +65,6 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
             LayoutInflater vi = LayoutInflater.from(getContext());
             cell = (FoldingCell) vi.inflate(R.layout.event_folding_child, parent, false);
             // binding view parts to view holder
-            viewHolder.participantsListView = (RecyclerView) cell.findViewById(R.id.participantsList);
             viewHolder.eventHeaderIcon = (ImageView)cell.findViewById(R.id.eventIconHeader);
             viewHolder.eventNameHeader = (TextView)cell.findViewById(R.id.eventNameHeader);
             viewHolder.eventAddressHeader = (TextView)cell.findViewById(R.id.eventAddressHeader);
@@ -77,6 +81,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
             viewHolder.inviteesCount = (TextView)cell.findViewById(R.id.totalInvitees);
             viewHolder.acceptedCount = (TextView)cell.findViewById(R.id.totalAccepted);
             viewHolder.rejectedCount = (TextView)cell.findViewById(R.id.totalRejected);
+            viewHolder.participantsLayout =(LinearLayout) cell.findViewById(R.id.participantsLayout);
             cell.setTag(viewHolder);
         } else {
             if (unfoldedIndexes.contains(position)) {
@@ -86,11 +91,30 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
             }
             viewHolder = (ViewHolder) cell.getTag();
         }
-        viewHolder.participantsListView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
-        viewHolder.participantsListView.setAdapter(new ParticipantsImageAdapter(context));
         Picasso.with(context).load(event.getOwnerInfo().getImage()).transform(new CircleTransform()).into(viewHolder.eventHeaderIcon);
         Picasso.with(context).load(event.getImageUrl()).into(viewHolder.eventImageFooter);
         Picasso.with(context).load(event.getOwnerInfo().getImage()).transform(new CircleTransform()).into(viewHolder.ownerImage);
+        viewHolder.eventNameHeader.setText(event.getName());
+        viewHolder.eventNameFooter.setText(event.getName());
+        viewHolder.ownerName.setText(event.getOwnerInfo().getInviteeName());
+        viewHolder.inviteesCount.setText(""+event.getInviteesCount());
+        viewHolder.acceptedCount.setText(""+event.getAcceptedCount());
+        viewHolder.rejectedCount.setText(""+event.getRejectedCount());
+        viewHolder.participantsLayout.removeAllViews();
+        int backgroundColour = (!event.isInvitation()) ? context.getResources().getColor(R.color.green_light) : context.getResources().getColor(R.color.orange);
+        viewHolder.colourIndicator.setBackgroundColor(backgroundColour);
+        viewHolder.eventNameFooter.setBackgroundColor(backgroundColour);
+        for(Invitee invitee:event.getInviteesList()){
+            View view = LayoutInflater.from(context).inflate(R.layout.profile_image_layout, parent, false);
+            ImageView profileImage = (ImageView) view.findViewById(R.id.profileImage);
+            Picasso.with(context).load(invitee.getImage()).transform(new CircleTransform()).into(profileImage);
+            viewHolder.participantsLayout.addView(view);
+        }
+        if(event.getInviteesList().size()==0){
+            viewHolder.participantsLayout.setVisibility(View.GONE);
+        }else {
+            viewHolder.participantsLayout.setVisibility(View.VISIBLE);
+        }
         return cell;
     }
 
@@ -125,8 +149,8 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
 
     // View lookup cache
     private static class ViewHolder {
-        RecyclerView participantsListView;
         ImageView eventHeaderIcon,eventImageFooter,ownerImage;
         TextView eventNameHeader,colourIndicator,eventAddressHeader,eventDateTimeInfo,eventNameFooter,ownerName,eventStartDate,eventTimings,eventAddressFooter,inviteesCount,acceptedCount,rejectedCount;
+        LinearLayout participantsLayout;
     }
 }
