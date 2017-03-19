@@ -63,15 +63,6 @@
             android:icon="@drawable/settings"
             android:title="Settings" />
     </group>
-
-    <group
-        android:id="@+id/foldingactivity"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/folding_activity"
-            android:icon="@drawable/settings"
-            android:title="Settings" />
-    </group>
     <group
         android:id="@+id/logout"
         android:checkableBehavior="single">

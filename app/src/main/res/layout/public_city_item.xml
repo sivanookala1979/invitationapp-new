@@ -28,5 +28,11 @@
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_very_large"
         android:textStyle="normal|italic" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_transparant">
+
+    </LinearLayout>
 
 </RelativeLayout>

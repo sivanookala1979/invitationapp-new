@@ -10,7 +10,7 @@
 
 
     <include
-        layout="@layout/home_screen_layout_new"
+        layout="@layout/multli_tabs_template"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

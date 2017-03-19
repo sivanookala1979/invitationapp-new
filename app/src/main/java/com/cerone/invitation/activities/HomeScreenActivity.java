@@ -1,26 +1,28 @@
 package com.cerone.invitation.activities;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RadioButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cerone.invitation.MyGroupsActivity;
@@ -28,18 +30,18 @@ import com.cerone.invitation.R;
 import com.cerone.invitation.UserProfile;
 import com.cerone.invitation.activities.chat.AllChatsActivity;
 import com.cerone.invitation.adapter.HomeEventAdapter;
+import com.cerone.invitation.adapter.PagerAdapter;
 import com.cerone.invitation.fcm.RegistrationIntentService;
 import com.cerone.invitation.helpers.CircleTransform;
+import com.cerone.invitation.helpers.HomeScreenCommunicator;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
-import com.cerone.invitation.helpers.MobileHelper;
-import com.cerone.invitation.helpers.ToastHelper;
 import com.cerone.invitation.service.MyService;
 import com.cerone.invitation.service.NotificationService;
 import com.example.dataobjects.Event;
+import com.example.dataobjects.ScreenTab;
 import com.example.dataobjects.ServiceInformation;
 import com.example.dataobjects.User;
-import com.example.syncher.EventSyncher;
 import com.example.syncher.UserSyncher;
 import com.google.android.gms.iid.InstanceID;
 import com.squareup.picasso.Picasso;
@@ -48,10 +50,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeScreenActivity extends BaseActivity implements OnClickListener, OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    FloatingActionButton fabAdd;
-    ListView myEvents;
+public class HomeScreenActivity extends BaseActivity implements OnClickListener, NavigationView.OnNavigationItemSelectedListener, HomeScreenCommunicator
+
+{
+    //  SwipeRefreshLayout mSwipeRefreshLayout;
+    FloatingActionButton floatingActionButton;
     HomeEventAdapter adapter;
     List<Event> allEventsList;
     List<Event> myEventsList;
@@ -60,61 +63,21 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     User profile;
     TextView userName;
     ImageView userImage;
-    RadioButton on, off;
+    //   RadioButton on, off;
+    ViewPager viewPager;
+    TabLayout mPagerSlidingTabStrip;
+    PagerAdapter mPagerAdapter;
+    TextView screenTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_menu_activity);
         InvtAppPreferences.setScreenRefreshStatus(false);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
-        fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
-        myEvents = (ListView) findViewById(R.id.events_list);
-        on = (RadioButton) findViewById(R.id.radio_on);
-        on.setSelected(true);
-        off = (RadioButton) findViewById(R.id.radio_off);
-        on.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (on.isSelected()) {
-                    on.setSelected(false);
-                    off.setSelected(true);
-                } else {
-                    on.setSelected(true);
-                    off.setSelected(true);
-                }
-                loadEvents();
-            }
-        });
-        off.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (off.isSelected()) {
-                    off.setSelected(false);
-                    on.setSelected(true);
-                } else {
-                    off.setSelected(true);
-                    on.setSelected(true);
-                }
-                loadEvents();
-            }
-        });
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshContent();
-            }
-
-            private void refreshContent() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadEvents();
-                        mSwipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 1000);
-            }
-        });
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add);
+        floatingActionButton.setVisibility(View.VISIBLE);
+        screenTitle = (TextView) findViewById(R.id.toolbar_title);
         closePreviousServices();
         Log.d("Token", InvtAppPreferences.getAccessToken());
         ownerId = InvtAppPreferences.getOwnerId();
@@ -129,18 +92,65 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         userImage = (ImageView) hView.findViewById(R.id.nav_userImage);
         userName = (TextView) hView.findViewById(R.id.txt_nav_userName);
         navigationView.setNavigationItemSelectedListener(this);
-        myEvents.setOnItemClickListener(this);
-        fabAdd.setOnClickListener(this);
-        loadEvents();
+        floatingActionButton.setOnClickListener(this);
+        mPagerSlidingTabStrip = (TabLayout) findViewById(R.id.tabs);
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        screenTabs = getScreenTabs(0);
+        createTabViews();
+        final Resources res = getApplicationContext().getResources();
+        mPagerSlidingTabStrip.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getTag() != null) {
+                    updateTabSelectinOptions((Integer) tab.getTag());
+                    LinearLayout tabLayout = tabViews.get((Integer) tab.getTag());
+                    TextView title = (TextView) tabLayout.findViewById(R.id.tabTitle);
+                    ImageView image = (ImageView) tabLayout.findViewById(R.id.tabIcon);
+                    image.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                    title.setTextColor(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                if (tab.getTag() != null) {
+                    LinearLayout tabLayout = tabViews.get((Integer) tab.getTag());
+                    TextView title = (TextView) tabLayout.findViewById(R.id.tabTitle);
+                    title.setTextColor(Color.BLACK);
+                    ImageView image = (ImageView) tabLayout.findViewById(R.id.tabIcon);
+                    image.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        updateProfileImageAndName();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateProfileImageAndName();
-        if(InvtAppPreferences.isScreenRefresh()) {
-            loadEvents();
-            InvtAppPreferences.setScreenRefreshStatus(false);
+    private void createTabViews() {
+        // updateTabsCount();
+        mPagerAdapter = new PagerAdapter(getSupportFragmentManager(), screenTabs);
+        viewPager.setAdapter(mPagerAdapter);
+        mPagerSlidingTabStrip.setupWithViewPager(viewPager);
+        for (int i = 0; i < mPagerSlidingTabStrip.getTabCount(); i++) {
+            LinearLayout tabLayout = (LinearLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.tab_layout, null);
+            TextView title = (TextView) tabLayout.findViewById(R.id.tabTitle);
+            ImageView image = (ImageView) tabLayout.findViewById(R.id.tabIcon);
+            ScreenTab screenTab = screenTabs.get(i);
+            if (i == 0) {
+                image.setImageResource(screenTab.getImageResource());
+                title.setTextColor(Color.WHITE);
+                title.setText(screenTab.getName());
+            } else {
+                title.setText(screenTab.getName());
+            }
+            tabViews.add(tabLayout);
+            mPagerSlidingTabStrip.getTabAt(i).setTag(i);
+            mPagerSlidingTabStrip.getTabAt(i).setCustomView(tabLayout);
         }
     }
 
@@ -198,51 +208,6 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         }.execute();
     }
 
-    private void loadEvents() {
-        if (MobileHelper.hasNetwork(getApplicationContext(), HomeScreenActivity.this, " to get events", null)) {
-            new InvtAppAsyncTask(this) {
-
-                @Override
-                public void process() {
-                    EventSyncher eventSyncher = new EventSyncher();
-                    allEventsList = new ArrayList<Event>();
-                    allEventsList = eventSyncher.getAllEvents();
-                }
-
-                @Override
-                public void afterPostExecute() {
-                    myEventsList = new ArrayList<Event>();
-                    myInvitationsList = new ArrayList<Event>();
-
-                    if (allEventsList.size() > 0) {
-                        for (Event event : allEventsList) {
-                            if (event.getOwnerId() == ownerId) {
-                                myEventsList.add(event);
-                            } else {
-                                myInvitationsList.add(event);
-                            }
-                        }
-                        if (on.isSelected() && !off.isSelected()) {
-                            adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, myEventsList, true);
-                            myEvents.setAdapter(adapter);
-                        } if (off.isSelected() && !on.isSelected()) {
-                            adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, myInvitationsList, true);
-                            myEvents.setAdapter(adapter);
-                        } if(on.isSelected() && off.isSelected()){
-                            adapter = new HomeEventAdapter(getApplicationContext(), R.layout.home_event_item, allEventsList, true);
-                            myEvents.setAdapter(adapter);
-                        }
-                        if (!InvtAppPreferences.isServiceRefresh()) {
-                            InvtAppPreferences.setServiceRefresh(true);
-                            activateService();
-                        }
-                    } else {
-                        ToastHelper.blueToast(getApplicationContext(), "No events found.");
-                    }
-                }
-            }.execute();
-        }
-    }
 
     @Override
     public void onClick(View v) {
@@ -252,25 +217,6 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                 startActivity(new Intent(this, NewEventActivity.class));
                 break;
         }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent;
-        Event event = null;
-        if (on.isSelected() && !off.isSelected()) {
-            event = myEventsList.get(position);
-        } if (off.isSelected() && !on.isSelected()) {
-            event = myInvitationsList.get(position);
-        } if(on.isSelected() && off.isSelected()){
-            event = allEventsList.get(position);
-        }
-        if(event.getOwnerId()!=InvtAppPreferences.getOwnerId()){
-            event.setInvitation(true);
-        }
-        InvtAppPreferences.setEventDetails(event);
-        intent = new Intent(getApplicationContext(), EventDetailsActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -313,14 +259,6 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             case R.id.nav_myGroup:
                 intent = new Intent(this, MyGroupsActivity.class);
                 break;
-            case R.id.nav_settings:
-                intent = new Intent(this, PublicHomeActivity.class);
-                break;
-            case R.id.folding_activity:
-                intent = new Intent(this, FoldingEventsActivity.class);
-              //  finish();
-                break;
-
             case R.id.nav_logout:
                 try {
                     InstanceID.getInstance(getApplicationContext()).deleteInstanceID();
@@ -341,5 +279,16 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void updateTabSelectinOptions(int index) {
+        if (index == 0) {
+            screenTitle.setText("Events");
+            floatingActionButton.setVisibility(View.VISIBLE);
+        } else {
+            screenTitle.setText("Select City");
+            floatingActionButton.setVisibility(View.GONE);
+        }
     }
 }

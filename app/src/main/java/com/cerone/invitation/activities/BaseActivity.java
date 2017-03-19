@@ -34,6 +34,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -47,6 +48,7 @@ import com.cerone.invitation.service.MyService;
 import com.example.dataobjects.CurrencyTypes;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Invitation;
+import com.example.dataobjects.ScreenTab;
 import com.example.dataobjects.ServerResponse;
 import com.example.dataobjects.ServiceInformation;
 import com.example.syncher.BaseSyncher;
@@ -66,6 +68,21 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     InvtAppAsyncTask invtAppAsyncTask;
     List<Event> events = new ArrayList<Event>();
     String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_SMS, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    List<ScreenTab> screenTabs = new ArrayList<ScreenTab>();
+    List<LinearLayout> tabViews = new ArrayList<LinearLayout>();
+
+
+    public List<ScreenTab> getScreenTabs(int index) {
+        List<ScreenTab> screenTabs = new ArrayList<ScreenTab>();
+        if (index == 0) {
+            screenTabs.add(new ScreenTab(1, "Private", R.drawable.event));
+            screenTabs.add(new ScreenTab(0, "Public", R.drawable.event));
+        } else {
+            screenTabs.add(new ScreenTab(2, "Event", R.drawable.event));
+            screenTabs.add(new ScreenTab(3, "Chat", R.drawable.event));
+        }
+        return screenTabs;
+    }
 
     public void checkUserPermissions() {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.cerone.invitation.fragement.ChatFragment;
 import com.cerone.invitation.fragement.EventDetailsFragment;
+import com.cerone.invitation.fragement.HomeFoldingFragment;
+import com.cerone.invitation.fragement.PublicHomeFragment;
+import com.example.dataobjects.ScreenTab;
 
 import java.util.List;
 
@@ -15,22 +18,27 @@ import java.util.List;
  */
 public class PagerAdapter extends FragmentPagerAdapter {
 
-    int tabsCount= 2;
-    public PagerAdapter(FragmentManager fm,int tabsCount) {
-        super(fm);
-        this.tabsCount =tabsCount;
-    }
+    List<ScreenTab> screenTabs;
 
+    public PagerAdapter(FragmentManager fm, List<ScreenTab> screenTabs) {
+        super(fm);
+        this.screenTabs = screenTabs;
+    }
 
     @Override
     public int getCount() {
-        return tabsCount;
+        return screenTabs.size();
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
+        ScreenTab screenTab = screenTabs.get(position);
+        switch (screenTab.getIndex()) {
+            case 1:
+                return HomeFoldingFragment.newInstance();
             case 0:
+                return PublicHomeFragment.newInstance();
+            case 2:
                 return EventDetailsFragment.newInstance();
             default:
                 return ChatFragment.newInstance();

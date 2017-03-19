@@ -44,4 +44,6 @@
     <color name="indigoLight">#ebd0ff</color>
     <color name="happening_red">#eb1a51</color>
     <color name="happening_orange">#f06824</color>
+    <color name="black_transparant">#20000000</color>
+
 </resources>
