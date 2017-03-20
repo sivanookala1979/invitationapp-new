@@ -2,6 +2,8 @@ package com.cerone.invitation.fragement;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,8 @@ import com.ramotion.foldingcell.FoldingCell;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.android.gms.analytics.internal.zzy.r;
+
 /**
  * Created by adarsh on 3/19/17.
  */
@@ -30,11 +34,12 @@ import java.util.List;
 public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnItemClickListener {
     ListView eventsList;
     List<Event> allEventsList = new ArrayList<Event>();
+    List<Event> filterList = new ArrayList<Event>();
     EventSyncher eventSyncher = new EventSyncher();
     FoldingCellListAdapter adapter;
     private HomeScreenCommunicator activityCommunicator;
 
-
+    boolean eventFilter = true, invitationFilter = false;
 
     public static HomeFoldingFragment newInstance() {
         HomeFoldingFragment fragment = new HomeFoldingFragment();
@@ -57,11 +62,40 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                 adapter.registerToggle(pos);
             }
         });
-        activityCommunicator =(HomeScreenCommunicator) getActivity();
+
+        activityCommunicator = (HomeScreenCommunicator) getActivity();
+
         loadEvents();
         return view;
     }
 
+    public void updateData(boolean eventFilter, boolean invitationsFilter) {
+        this.eventFilter = eventFilter;
+        this.invitationFilter = invitationsFilter;
+        Log.d("Adarsh","Log  eventFilter "+eventFilter+" "+invitationFilter);
+        applyFilters();
+    }
+
+    private void applyFilters() {
+        filterList.clear();
+        if (eventFilter && invitationFilter) {
+            filterList.addAll(allEventsList);
+        } else if (eventFilter) {
+            for (Event event : allEventsList) {
+                if (!event.isInvitation()) {
+                    filterList.add(event);
+                }
+            }
+        } else {
+            for (Event event : allEventsList) {
+                if (event.isInvitation()) {
+                    filterList.add(event);
+                }
+            }
+        }
+        adapter.updateList(filterList);
+
+    }
 
     private void loadEvents() {
         if (MobileHelper.hasNetwork(getActivity(), getActivity(), " to get events", null)) {
@@ -74,7 +108,8 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
 
                 @Override
                 public void afterPostExecute() {
-                    adapter.updateList(allEventsList);
+                    applyFilters();
+                    //adapter.updateList(allEventsList);
                 }
             }.execute();
         }

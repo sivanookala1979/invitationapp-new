@@ -27,28 +27,30 @@
                 app:theme="@style/ToolbarColoredBackArrow"
                 app:titleTextColor="@android:color/white">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:orientation="horizontal"
-                    android:weightSum="10">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/toolbar_title"
                         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
                         android:layout_gravity="center"
-                        android:layout_weight="7.5"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                         android:gravity="center"
                         android:text="Events"
                         android:textColor="@android:color/white" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:id="@+id/filteringMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:layout_gravity="center"
-                        android:layout_weight="2.5"
+                        android:layout_margin="5dp"
+                        android:minHeight="30dp"
                         android:orientation="horizontal">
 
                         <RadioButton
@@ -67,7 +69,8 @@
 
                     </LinearLayout>
 
-                </LinearLayout>
+
+                </RelativeLayout>
 
             </android.support.v7.widget.Toolbar>
 

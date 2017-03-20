@@ -1,7 +1,6 @@
 package com.cerone.invitation.activities;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -10,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.cerone.invitation.MyGroupsActivity;
@@ -32,6 +33,7 @@ import com.cerone.invitation.activities.chat.AllChatsActivity;
 import com.cerone.invitation.adapter.HomeEventAdapter;
 import com.cerone.invitation.adapter.PagerAdapter;
 import com.cerone.invitation.fcm.RegistrationIntentService;
+import com.cerone.invitation.fragement.HomeFoldingFragment;
 import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.HomeScreenCommunicator;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
@@ -68,6 +70,8 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     TabLayout mPagerSlidingTabStrip;
     PagerAdapter mPagerAdapter;
     TextView screenTitle;
+    RadioButton eventFilter,invitationsFilter;
+    LinearLayout filteringLayout;
 
 
     @Override
@@ -78,6 +82,10 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add);
         floatingActionButton.setVisibility(View.VISIBLE);
         screenTitle = (TextView) findViewById(R.id.toolbar_title);
+        eventFilter = (RadioButton)findViewById(R.id.radio_events);
+        invitationsFilter = (RadioButton)findViewById(R.id.radio_invitations);
+        filteringLayout = (LinearLayout)findViewById(R.id.filteringMenu);
+
         closePreviousServices();
         Log.d("Token", InvtAppPreferences.getAccessToken());
         ownerId = InvtAppPreferences.getOwnerId();
@@ -97,7 +105,38 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         viewPager = (ViewPager) findViewById(R.id.pager);
         screenTabs = getScreenTabs(0);
         createTabViews();
-        final Resources res = getApplicationContext().getResources();
+        eventFilter.setSelected(true);
+        eventFilter.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(eventFilter.isSelected()){
+                    eventFilter.setSelected(true);
+                }else{
+                    if(!invitationsFilter.isSelected()){
+                        eventFilter.setSelected(true);
+                    }else {
+                        eventFilter.setSelected(false);
+                    }
+                }
+                applyFilters();
+            }
+        });
+        invitationsFilter.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(invitationsFilter.isSelected()){
+                    invitationsFilter.setSelected(true);
+                }else{
+                    if(!eventFilter.isSelected()){
+                        invitationsFilter.setSelected(true);
+                    }else {
+                        invitationsFilter.setSelected(false);
+                    }
+                }
+                applyFilters();
+            }
+        });
         mPagerSlidingTabStrip.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
@@ -147,10 +186,19 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                 title.setText(screenTab.getName());
             } else {
                 title.setText(screenTab.getName());
+                image.setImageResource(screenTab.getImageResource());
+                image.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
             }
             tabViews.add(tabLayout);
             mPagerSlidingTabStrip.getTabAt(i).setTag(i);
             mPagerSlidingTabStrip.getTabAt(i).setCustomView(tabLayout);
+        }
+    }
+
+    private void applyFilters() {
+        Fragment page = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + viewPager.getCurrentItem());
+        if (viewPager.getCurrentItem() == 0 && page != null) {
+            ((HomeFoldingFragment)page).updateData(eventFilter.isSelected(),invitationsFilter.isSelected());
         }
     }
 
@@ -286,9 +334,11 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         if (index == 0) {
             screenTitle.setText("Events");
             floatingActionButton.setVisibility(View.VISIBLE);
+            filteringLayout.setVisibility(View.VISIBLE);
         } else {
             screenTitle.setText("Select City");
             floatingActionButton.setVisibility(View.GONE);
+            filteringLayout.setVisibility(View.GONE);
         }
     }
 }

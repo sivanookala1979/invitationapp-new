@@ -75,8 +75,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public List<ScreenTab> getScreenTabs(int index) {
         List<ScreenTab> screenTabs = new ArrayList<ScreenTab>();
         if (index == 0) {
-            screenTabs.add(new ScreenTab(1, "Private", R.drawable.event));
-            screenTabs.add(new ScreenTab(0, "Public", R.drawable.event));
+            screenTabs.add(new ScreenTab(1, "Private", R.drawable.private_icon));
+            screenTabs.add(new ScreenTab(0, "Public", R.drawable.public_icon));
         } else {
             screenTabs.add(new ScreenTab(2, "Event", R.drawable.event));
             screenTabs.add(new ScreenTab(3, "Chat", R.drawable.event));
