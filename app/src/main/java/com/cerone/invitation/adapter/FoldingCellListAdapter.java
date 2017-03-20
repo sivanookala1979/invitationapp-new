@@ -2,7 +2,6 @@ package com.cerone.invitation.adapter;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +21,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
-import static com.cerone.invitation.R.id.profileImage;
-import static com.google.android.gms.analytics.internal.zzy.g;
 
 
 public class FoldingCellListAdapter extends ArrayAdapter<Event> {
@@ -100,6 +96,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
         viewHolder.inviteesCount.setText(""+event.getInviteesCount());
         viewHolder.acceptedCount.setText(""+event.getAcceptedCount());
         viewHolder.rejectedCount.setText(""+event.getRejectedCount());
+        viewHolder.eventDateTimeInfo.setText(""+event.getEndDateTime());
         viewHolder.participantsLayout.removeAllViews();
         int backgroundColour = (!event.isInvitation()) ? context.getResources().getColor(R.color.green_light) : context.getResources().getColor(R.color.orange);
         viewHolder.colourIndicator.setBackgroundColor(backgroundColour);

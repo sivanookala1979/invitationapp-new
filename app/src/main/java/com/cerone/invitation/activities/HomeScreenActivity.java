@@ -1,7 +1,6 @@
 package com.cerone.invitation.activities;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -109,13 +108,14 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         eventFilter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(eventFilter.isSelected()){
+                if(!eventFilter.isSelected()){
                     eventFilter.setSelected(true);
                 }else{
-                    if(!invitationsFilter.isSelected()){
-                        eventFilter.setSelected(true);
+                    if(invitationsFilter.isSelected()){
+                        eventFilter.setSelected(false);
                     }else {
                         eventFilter.setSelected(false);
+                        invitationsFilter.setSelected(true);
                     }
                 }
                 applyFilters();
@@ -125,13 +125,14 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             @Override
             public void onClick(View view) {
 
-                if(invitationsFilter.isSelected()){
+                if(!invitationsFilter.isSelected()){
                     invitationsFilter.setSelected(true);
                 }else{
-                    if(!eventFilter.isSelected()){
-                        invitationsFilter.setSelected(true);
+                    if(eventFilter.isSelected()){
+                        invitationsFilter.setSelected(false);
                     }else {
                         invitationsFilter.setSelected(false);
+                        eventFilter.setSelected(true);
                     }
                 }
                 applyFilters();

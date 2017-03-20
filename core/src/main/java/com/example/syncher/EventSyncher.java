@@ -131,9 +131,9 @@ public class EventSyncher extends BaseSyncher {
                         Event event = new Event();
                         event.setAddress(jsonObject.getString("address"));
                         event.setDescription(jsonObject.getString("description"));
-                        if (!jsonObject.isNull("end_date")) {
-                            event.setEndDateTime(StringUtils.getFormatedDateFromServerFormatedDate(jsonObject.getString("end_date")));
-                            event.setEndDateTime(StringUtils.getNewDate(event.getEndDateTime(), InvitationAppConstants.TIME_DIFFERENCE));
+                        if (!jsonObject.isNull("start_date")&&!jsonObject.isNull("end_date")) {
+                            event.setEndDateTime(StringUtils.getEventDateFormat(jsonObject.getString("end_date"))+" "+StringUtils.getEventTimeFormat(jsonObject.getString("start_date"),jsonObject.getString("end_date")));
+                            //event.setEndDateTime(StringUtils.getNewDate(event.getEndDateTime(), InvitationAppConstants.TIME_DIFFERENCE));
                         }
                         if (!jsonObject.isNull("accepted_count")) {
                             event.setAcceptedCount(jsonObject.getInt("accepted_count"));
