@@ -4,13 +4,15 @@
  */
 package com.example.tests;
 
+import com.example.dataobjects.Event;
+import com.example.dataobjects.User;
+import com.example.utills.StringUtils;
+
 import junit.framework.TestCase;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.dataobjects.*;
-import com.example.utills.StringUtils;
 
 
 /**
@@ -81,6 +83,18 @@ public class StringUtilsTest extends TestCase {
     private void testDifferentDates(String oldDate, String expected) {
         int hours = (60 * 10) + 30;
         String actual = StringUtils.getNewDate(oldDate, hours);
+        assertEquals(expected, actual);
+    }
+
+    public void testEventDateFormatHappyFlow() throws ParseException {
+        String expected = "Tue, 14/03/2017";
+        String actual = StringUtils.getEventDateFormat("2017-03-14T16:09:00+05:30");
+        assertEquals(expected, actual);
+    }
+
+    public void testEventTimeFormatHappyFlow() throws ParseException {
+        String expected = "04:09 PM-04:09 PM";
+        String actual = StringUtils.getEventTimeFormat("2017-03-14T16:09:00+05:30", "2017-03-14T16:09:00+05:30");
         assertEquals(expected, actual);
     }
 

@@ -1,5 +1,10 @@
 package com.example.utills;
 
+import com.example.dataobjects.Event;
+import com.example.dataobjects.Invitation;
+import com.example.dataobjects.User;
+import com.example.exception.InvtAppException;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,9 +19,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-
-import com.example.dataobjects.*;
-import com.example.exception.InvtAppException;
 
 import static com.example.syncher.BaseSyncher.exceptionHandler;
 
@@ -308,5 +310,30 @@ public class StringUtils {
 
     public static double getDoubleFormString(String input) {
         return ((input == null) || input.trim().isEmpty()) ? 0.0 : Double.valueOf(input.trim());
+    }
+
+    public static String getEventDateFormat(String dateTime) throws ParseException {
+        String[] d = dateTime.split("T");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = formatter.parse(d[0]);
+        SimpleDateFormat formatt = new SimpleDateFormat("EEE"+", "+"dd/MM/yyyy");
+        String newDate = formatt.format(date);
+        return newDate;
+    }
+
+    public static String getTimeFormat(String dateTime) throws ParseException {
+        String[] dt = dateTime.split("T");
+        String[] t = dt[1].split("\\+");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        Date time = formatter.parse(t[0]);
+        SimpleDateFormat formatt = new SimpleDateFormat("hh:mm a");
+        String newTime = formatt.format(time);
+        return newTime;
+    }
+
+    public static String getEventTimeFormat(String dateTime1, String dateTime2) throws ParseException {
+        String time1 = getTimeFormat(dateTime1);
+        String time2 = getTimeFormat(dateTime2);
+        return time1+"-"+time2;
     }
 }
