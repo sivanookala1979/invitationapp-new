@@ -106,9 +106,13 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
         viewHolder.actionTwoLayout.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.actionThreeLayout.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.eventDetailsLayout.setOnClickListener(createOnClickListener(position, parent));
-        Picasso.with(context).load(event.getOwnerInfo().getImage()).transform(new CircleTransform()).into(viewHolder.eventHeaderIcon);
-        Picasso.with(context).load(event.getImageUrl()).into(viewHolder.eventImageFooter);
-        Picasso.with(context).load(event.getOwnerInfo().getImage()).transform(new CircleTransform()).into(viewHolder.ownerImage);
+        if(event.getImageUrl()!=null && !event.getImageUrl().trim().isEmpty()) {
+            Picasso.with(context).load(event.getImageUrl()).into(viewHolder.eventImageFooter);
+        }
+        if(event.getOwnerInfo().getImage()!= null && !event.getOwnerInfo().getImage().trim().isEmpty()) {
+            Picasso.with(context).load(event.getOwnerInfo().getImage()).transform(new CircleTransform()).into(viewHolder.eventHeaderIcon);
+            Picasso.with(context).load(event.getOwnerInfo().getImage()).transform(new CircleTransform()).into(viewHolder.ownerImage);
+        }
         viewHolder.eventNameHeader.setText(event.getName());
         viewHolder.eventNameFooter.setText(event.getName());
         viewHolder.ownerName.setText(event.getOwnerInfo().getInviteeName());
@@ -124,11 +128,13 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
         for (Invitee invitee : event.getInviteesList()) {
             View view = LayoutInflater.from(context).inflate(R.layout.profile_image_layout, parent, false);
             ImageView profileImage = (ImageView) view.findViewById(R.id.profileImage);
-            Picasso.with(context).load(invitee.getImage()).transform(new CircleTransform()).into(profileImage);
-            viewHolder.participantsLayout.addView(view);
-            count++;
-            if (count > 5) {
-                break;
+            if(invitee.getImage()!=null && !invitee.getImage().trim().isEmpty()) {
+                Picasso.with(context).load(invitee.getImage()).transform(new CircleTransform()).into(profileImage);
+                viewHolder.participantsLayout.addView(view);
+                count++;
+                if (count > 5) {
+                    break;
+                }
             }
         }
         if (event.getInviteesList().size() == 0) {

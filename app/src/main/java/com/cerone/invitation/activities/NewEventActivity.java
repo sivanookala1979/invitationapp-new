@@ -301,7 +301,12 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
     }
 
     private boolean isEventDataValid() {
-        return event.getDescription().length() > 0 && event.getName().length() > 0 && event.getAddress() != null && event.getAddress().length() > 0;
+        if(event.getAddress()==null || event.getAddress().length() == 0) {
+            event.setAddress("");
+            event.setLatitude(0.0);
+            event.setLongitude(0.0);
+        }
+        return true;//event.getDescription().length() > 0 && event.getName().length() > 0 && event.getAddress() != null && event.getAddress().length() > 0;
     }
 
     public static String getCurrentDate() {

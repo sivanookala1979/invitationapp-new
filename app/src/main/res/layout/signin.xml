@@ -152,6 +152,7 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="Regenrate OTP"
+                    android:visibility="gone"
                     android:textColor="@color/happening_orange"
                     android:textSize="@dimen/text_medium" />
 
