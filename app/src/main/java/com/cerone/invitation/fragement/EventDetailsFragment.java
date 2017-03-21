@@ -39,17 +39,13 @@ import static com.cerone.invitation.R.id.rejectCount;
  */
 
 public class EventDetailsFragment extends BaseFragment implements View.OnClickListener{
-    Event eventDetails;
+
     LinearLayout participantsLayout, location,invitationSelection;
     Button editEvent, shareEvent, deleteEvent,accept, maybe, reject;
     TextView acceptCountText, rejectCountText, totalCount,checkedInCount;
     View eventBaseView;
     //INVITATIONS
-    String locationPermission = "";
 
-    public static final String LOCATION = "LOCATION";
-    public static final String DISTANCE = "DISTANCE";
-    public static final String NOTHING = "NOTHING";
     private ActivityCommunicator activityCommunicator;
 
 
@@ -172,6 +168,7 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
                 break;
         }
     }
+    @Override
     public void acceptOrRejectInvitation(final boolean status, final Event event, final String locationPermission) {
         final String response = "";
         new InvtAppAsyncTask(getActivity()) {
@@ -204,51 +201,7 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
         }.execute();
     }
 
-    public void showLocationPermissionDialog() {
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.logout_dialog);
-        Button accept = (Button) dialog.findViewById(R.id.btn_submit);
-        Button cancel = (Button) dialog.findViewById(R.id.btn_cancel);
-        cancel.setVisibility(View.GONE);
-        RadioGroup radioGroup = (RadioGroup) dialog.findViewById(R.id.invt_RadioGroup);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                switch (checkedId){
-                    case R.id.radio_location:
-                        locationPermission = LOCATION;
-                        Log.d("lacation", locationPermission);
-                        break;
-                    case R.id.radio_distance:
-                        locationPermission = DISTANCE;
-                        Log.d("lacation", locationPermission);
-                        break;
-                    case R.id.radio_nothing:
-                        locationPermission = NOTHING;
-                        Log.d("lacation", locationPermission);
-                        break;
-                }
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.cancel();
-            }
-        });
-        accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                acceptOrRejectInvitation(true, eventDetails, locationPermission);
-                dialog.cancel();
-            }
-        });
-        dialog.show();
 
-    }
     public static EventDetailsFragment newInstance() {
         EventDetailsFragment fragment = new EventDetailsFragment();
         Bundle args = new Bundle();

@@ -96,7 +96,18 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:rotation="-90"
+                        android:src="@drawable/chat"
+                        android:tint="@color/grey_light" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
@@ -163,14 +174,11 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grey_light" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/happening_top_botten_style"
                 android:minHeight="45dp"
                 android:orientation="horizontal"
                 android:weightSum="10">
@@ -218,12 +226,8 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grey_light" />
-
             <LinearLayout
+                android:id="@+id/participantsStatisticsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -318,6 +322,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/actionsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -326,6 +331,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/actionOne"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -333,15 +339,17 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:id="@+id/actionOneIcon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:scaleType="centerInside"
-                        android:src="@drawable/event_location"
-                        android:tint="@color/happening_orange" />
+                        android:src="@drawable/done_icon"
+                        android:tint="@color/event_accept" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/actionTwo"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -350,15 +358,17 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:id="@+id/actionTwoIcon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:scaleType="centerInside"
-                        android:src="@drawable/event_location"
-                        android:tint="@color/happening_orange" />
+                        android:src="@drawable/question_mark_icon"
+                        android:tint="@color/happening_indigo" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/actionThree"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -366,10 +376,12 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:id="@+id/actionThreeIcon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/delete_icon"
                         android:scaleType="centerInside"
-                        android:background="@drawable/delete_icon" />
+                        android:tint="@color/happening_red" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -387,12 +399,14 @@
                 android:background="@color/grey_light" />
 
             <LinearLayout
+                android:id="@+id/showEventDetails"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:background="#ECECEC"
                 android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/showEventIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="centerInside"

@@ -45,5 +45,10 @@
     <color name="happening_red">#eb1a51</color>
     <color name="happening_orange">#f06824</color>
     <color name="black_transparant">#20000000</color>
+    <color name="invitation_received_color">#ff9900</color>
+    <color name="my_events_color">#f23d3d</color>
+    <color name="event_accept">#6bc732</color>
+    <color name="happening_indigo">#3d58f2</color>
+
 
 </resources>

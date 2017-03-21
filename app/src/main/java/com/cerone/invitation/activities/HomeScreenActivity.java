@@ -84,7 +84,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         eventFilter = (RadioButton)findViewById(R.id.radio_events);
         invitationsFilter = (RadioButton)findViewById(R.id.radio_invitations);
         filteringLayout = (LinearLayout)findViewById(R.id.filteringMenu);
-
+        filteringLayout.setVisibility(View.VISIBLE);
         closePreviousServices();
         Log.d("Token", InvtAppPreferences.getAccessToken());
         ownerId = InvtAppPreferences.getOwnerId();
