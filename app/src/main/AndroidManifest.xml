@@ -44,7 +44,6 @@
         <activity
             android:name=".activities.SignInActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activities.HomeScreenActivity"
             android:screenOrientation="portrait" />
@@ -152,12 +151,17 @@
         <activity android:name=".MyGroupsActivity" />
         <activity android:name=".ProfileInfo" />
         <activity android:name=".fragement.PublicHomeActivity" />
-        <activity android:name=".activities.FoldingEventsActivity"></activity>
-        <activity android:name=".activities.PersonalizeActivity"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <activity android:name=".activities.FoldingEventsActivity" />
+        <activity android:name=".activities.PersonalizeActivity" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".activities.EventsDetailActivity"></activity>
     </application>
 
 </manifest>

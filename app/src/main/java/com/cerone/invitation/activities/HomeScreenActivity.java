@@ -168,6 +168,12 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
 
             }
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onRestart();
         updateProfileImageAndName();
     }
 
@@ -308,6 +314,9 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             case R.id.nav_myGroup:
                 intent = new Intent(this, MyGroupsActivity.class);
                 break;
+            case R.id.nav_settings:
+                intent = new Intent(this, EventsDetailActivity.class);
+                break;
             case R.id.nav_logout:
                 try {
                     InstanceID.getInstance(getApplicationContext()).deleteInstanceID();
@@ -339,7 +348,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         } else {
             screenTitle.setText("Select City");
             floatingActionButton.setVisibility(View.GONE);
-            filteringLayout.setVisibility(View.GONE);
+            filteringLayout.setVisibility(View.INVISIBLE);
         }
     }
 }
