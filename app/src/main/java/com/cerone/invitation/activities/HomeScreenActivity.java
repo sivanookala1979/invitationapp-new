@@ -39,7 +39,6 @@ import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.service.MyService;
 import com.cerone.invitation.service.NotificationService;
-import com.example.dataobjects.Event;
 import com.example.dataobjects.ScreenTab;
 import com.example.dataobjects.ServiceInformation;
 import com.example.dataobjects.User;
@@ -54,17 +53,13 @@ import java.util.List;
 public class HomeScreenActivity extends BaseActivity implements OnClickListener, NavigationView.OnNavigationItemSelectedListener, HomeScreenCommunicator
 
 {
-    //  SwipeRefreshLayout mSwipeRefreshLayout;
+
     FloatingActionButton floatingActionButton;
     HomeEventAdapter adapter;
-    List<Event> allEventsList;
-    List<Event> myEventsList;
-    List<Event> myInvitationsList;
     int ownerId = 0;
     User profile;
     TextView userName;
     ImageView userImage;
-    //   RadioButton on, off;
     ViewPager viewPager;
     TabLayout mPagerSlidingTabStrip;
     PagerAdapter mPagerAdapter;
@@ -178,7 +173,6 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     }
 
     private void createTabViews() {
-        // updateTabsCount();
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager(), screenTabs);
         viewPager.setAdapter(mPagerAdapter);
         mPagerSlidingTabStrip.setupWithViewPager(viewPager);
@@ -313,6 +307,9 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                 break;
             case R.id.nav_myGroup:
                 intent = new Intent(this, MyGroupsActivity.class);
+                break;
+            case R.id.nav_myNotification:
+                intent = new Intent(this, NotificationsActivity.class);
                 break;
             case R.id.nav_settings:
                 intent = new Intent(this, EventsDetailActivity.class);

@@ -55,7 +55,7 @@ public class MultipleGroupSelectionActivity extends BaseActivity implements OnCl
         switch (v.getId()) {
             case R.id.shareEventData :
                 Intent intent = new Intent();
-                setResult(1, intent);
+                setResult(300, intent);
                 InvtAppPreferences.setGroups(getSelectedGroups());
                 finish();
                 break;

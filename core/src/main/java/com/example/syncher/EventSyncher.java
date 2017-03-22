@@ -10,7 +10,6 @@ import com.example.dataobjects.Event;
 import com.example.dataobjects.Invitee;
 import com.example.dataobjects.ServerResponse;
 import com.example.utills.HTTPUtils;
-import com.example.utills.InvitationAppConstants;
 import com.example.utills.StringUtils;
 
 import org.json.JSONArray;
@@ -131,9 +130,11 @@ public class EventSyncher extends BaseSyncher {
                         Event event = new Event();
                         event.setAddress(jsonObject.getString("address"));
                         event.setDescription(jsonObject.getString("description"));
+                        if (!jsonObject.isNull("start_date")) {
+                            event.setStartDateTime(StringUtils.getEventDateFormat(jsonObject.getString("start_date")));
+                        }
                         if (!jsonObject.isNull("start_date")&&!jsonObject.isNull("end_date")) {
-                            event.setEndDateTime(StringUtils.getEventDateFormat(jsonObject.getString("end_date"))+" "+StringUtils.getEventTimeFormat(jsonObject.getString("start_date"),jsonObject.getString("end_date")));
-                            //event.setEndDateTime(StringUtils.getNewDate(event.getEndDateTime(), InvitationAppConstants.TIME_DIFFERENCE));
+                            event.setEndDateTime(StringUtils.getEventTimeFormat(jsonObject.getString("start_date"),jsonObject.getString("end_date")));
                         }
                         if (!jsonObject.isNull("accepted_count")) {
                             event.setAcceptedCount(jsonObject.getInt("accepted_count"));
@@ -214,8 +215,8 @@ public class EventSyncher extends BaseSyncher {
                         event.setOwnerId(jsonObject.getInt("owner_id"));
                         event.setPrivateType(jsonObject.getBoolean("private"));
                         event.setRemainder(jsonObject.getBoolean("remainder"));
-                        event.setStartDateTime(StringUtils.getFormatedDateFromServerFormatedDate(jsonObject.getString("start_date")));
-                        event.setStartDateTime(StringUtils.getNewDate(event.getStartDateTime(), InvitationAppConstants.TIME_DIFFERENCE));
+//                        event.setStartDateTime(StringUtils.getFormatedDateFromServerFormatedDate(jsonObject.getString("start_date")));
+//                        event.setStartDateTime(StringUtils.getNewDate(event.getStartDateTime(), InvitationAppConstants.TIME_DIFFERENCE));
                         event.setStatus(jsonObject.getString("status"));
                         event.setEventId(jsonObject.getInt("id"));
                         listOfEvents.add(event);

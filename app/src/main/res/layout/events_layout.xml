@@ -27,14 +27,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:weightSum="100" >
+                android:weightSum="10" >
 
             <TextView
                 android:id="@+id/toolbar_title"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="90"
+                android:layout_weight="9"
                 android:text="Events"
                 android:gravity="center"
                 android:textColor="@android:color/white" />
@@ -43,7 +43,7 @@
                 android:id="@+id/toolbarEvent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="10"
+                android:layout_weight="1"
                 android:layout_margin="5dp"
                 android:padding="5dp"
                 android:scaleType="centerCrop"

@@ -56,6 +56,16 @@
     </group>
 
     <group
+        android:id="@+id/myNotification"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_myNotification"
+            android:icon="@drawable/notification"
+            android:title="Notifications" />
+    </group>
+
+
+    <group
         android:id="@+id/settings"
         android:checkableBehavior="single">
         <item

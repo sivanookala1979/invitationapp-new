@@ -101,6 +101,9 @@
         <activity
             android:name=".activities.EventDetailsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MobileContactsActivity"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".service.MyService"
@@ -161,7 +164,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activities.EventsDetailActivity"></activity>
+        <activity android:name=".activities.EventsDetailActivity" />
+        <activity android:name=".activities.NotificationsActivity"></activity>
     </application>
 
 </manifest>

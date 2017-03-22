@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_margin">
+
+    <LinearLayout
+        android:id="@+id/layout_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center">
+
+            <com.github.akashandroid90.imageletter.MaterialLetterIcon
+                android:id="@+id/nameIndicator"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:letter_color="@color/white"
+                app:letters_number="3"
+                app:shape_type="circle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                android:gravity="center_vertical"
+                android:minHeight="40dp"
+                android:text="Name"
+                android:textSize="@dimen/text_size_intermediate" />
+
+            <TextView
+                android:id="@+id/contactNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                android:gravity="center_vertical"
+                android:minHeight="40dp"
+                android:text="9949257729"
+                android:textSize="@dimen/text_size_intermediate" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

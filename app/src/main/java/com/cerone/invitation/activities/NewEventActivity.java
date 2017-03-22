@@ -37,8 +37,6 @@ import com.example.utills.StringUtils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -101,9 +99,9 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_text_view, recurringData);
         arrayAdapter.setDropDownViewResource(R.layout.spinner_text_view);
         recurringInfo.setAdapter(arrayAdapter);
-        startTime.setText(getCurrentTime());
+        startTime.setText(getCurrentTime(30));
         startDate.setText(getCurrentDate());
-        endTime.setText(getCurrentTime());
+        endTime.setText(getCurrentTime(90));
         endDate.setText(getCurrentDate());
         startTimePicker = new InvtAppTimePicker(startTime, Calendar.getInstance());
         endTimePicker = new InvtAppTimePicker(endTime, Calendar.getInstance());
@@ -314,9 +312,10 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
         return sdf.format(new Date());
     }
 
-    public static String getCurrentTime() {
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        return dateFormat.format(new Date());
+    public static String getCurrentTime(int postMinutes) {
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.MINUTE,postMinutes);
+        return now.get(Calendar.HOUR_OF_DAY) + ":" + now.get(Calendar.MINUTE);
     }
 
     @Override

@@ -35,6 +35,7 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.ramotion.foldingcell:folding-cell:1.1.0'
+    compile 'com.github.akashandroid90:imageletter:1.8@aar'
 
     compile project(':core')
     //GCM

@@ -28,7 +28,6 @@ import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Group;
 import com.example.dataobjects.ServerResponse;
-import com.example.dataobjects.ShareContact;
 import com.example.dataobjects.User;
 import com.example.syncher.EventSyncher;
 import com.example.syncher.GroupSyncher;
@@ -52,12 +51,9 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
     ListView listView, groupList;
     ContactAdapter adapter;
     GroupAdapter groupAdapter;
-    Button shareEvent, groupsView, appContactsView, smsContactsView;
-    ShareContact shareContacts = new ShareContact();
+    Button shareEvent, groupsView, contactsView;
     List<Group> myGroups = new ArrayList<Group>();
     ArrayList<User> allPhoneContacts = new ArrayList<User>();
-    List<User> appContacts = new ArrayList<User>();
-    List<User> smsContacts = new ArrayList<User>();
     boolean isNewEvent;
 
     @Override
@@ -72,12 +68,10 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
         groupList = (ListView) findViewById(R.id.grouplist);
         shareEvent = (Button) findViewById(R.id.shareEventData);
         groupsView = (Button) findViewById(R.id.groups);
-        appContactsView = (Button) findViewById(R.id.appContacts);
-        smsContactsView = (Button) findViewById(R.id.smsContacts);
+        contactsView = (Button) findViewById(R.id.contacts);
         shareEvent.setOnClickListener(this);
         groupsView.setOnClickListener(this);
-        appContactsView.setOnClickListener(this);
-        smsContactsView.setOnClickListener(this);
+        contactsView.setOnClickListener(this);
         listView.setOnItemClickListener(this);
         groupList.setOnItemClickListener(this);
         showEventData();
@@ -91,8 +85,6 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
             public void process() {
                 allPhoneContacts = MobileHelper.getAllPhoneContacts(getApplicationContext());
                 GroupSyncher groupSyncher = new GroupSyncher();
-                shareContacts = groupSyncher.getDifferentiateContacts(StringUtils.getContactsListFromUsers(allPhoneContacts));
-                splitContacts();
                 myGroups = groupSyncher.getGroupItems();
             }
 
@@ -100,42 +92,15 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
             public void afterPostExecute() {
                 if (myGroups.size() > 0)
                     groupsView.setVisibility(View.VISIBLE);
-                if (shareContacts.getAppContacts().size() > 0)
-                    appContactsView.setVisibility(View.VISIBLE);
-                if (shareContacts.getSmsContacts().size() > 0)
-                    smsContactsView.setVisibility(View.VISIBLE);
+                    contactsView.setVisibility(View.VISIBLE);
                 updateButtons();
             }
         }.execute();
     }
 
     public void updateButtons() {
-        int smsCount = getsmsContactsCount();
-        int phoneCount = allSelectedlist.size() - smsCount;
         groupsView.setText("GROUPS " + listOfSelectedGroups.size() + " of " + myGroups.size());
-        appContactsView.setText("IN-APP CONTACTS " + smsCount + " of " + shareContacts.getAppContacts().size());
-        smsContactsView.setText("SMS CONTACTS " + phoneCount + " of " + shareContacts.getSmsContacts().size());
-    }
-
-    private int getsmsContactsCount() {
-        int count = 0;
-        for (User user : allSelectedlist) {
-            if (user.isPhoneContact())
-                count++;
-        }
-        return count;
-    }
-
-    private void splitContacts() {
-        List<String> appContactsinfo = shareContacts.getAppContacts();
-        for (User user : allPhoneContacts) {
-            if (appContactsinfo.contains(user.getPhoneNumber())) {
-                user.setPhoneContact(true);
-                appContacts.add(user);
-            } else {
-                smsContacts.add(user);
-            }
-        }
+        contactsView.setText("CONTACTS " + allSelectedlist.size() + " of " + allPhoneContacts.size());
     }
 
     private void showEventData() {
@@ -166,22 +131,14 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.groups :
-                //ToastHelper.blueToast(getApplicationContext(), "Need to implement groups information");
                 InvtAppPreferences.setGroups(myGroups);
                 Intent groupIntent = new Intent(this, MultipleGroupSelectionActivity.class);
                 startActivityForResult(groupIntent, 300);
                 break;
-            case R.id.appContacts :
-                InvtAppPreferences.setContacts(appContacts);
-                Intent contactIntent = new Intent(this, MultipleContactsActivity.class);
-                contactIntent.putExtra("group", false);
+            case R.id.contacts :
+                InvtAppPreferences.setContacts(allPhoneContacts);
+                Intent contactIntent = new Intent(this, MobileContactsActivity.class);
                 startActivityForResult(contactIntent, 100);
-                break;
-            case R.id.smsContacts :
-                InvtAppPreferences.setContacts(smsContacts);
-                Intent smsIntent = new Intent(this, MultipleContactsActivity.class);
-                smsIntent.putExtra("group", false);
-                startActivityForResult(smsIntent, 200);
                 break;
             case R.id.cancel :
                 finish();
@@ -206,7 +163,6 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                             System.out.println("Event id " + eventId);
                             if (eventId > 0) {
                                 getLatestContacts();
-                                //Log.d("admin", listOfParticipantsPhoneNumbers.get(0).isAdmin()+"");
                                 InvitationSyncher invitationSyncher = new InvitationSyncher();
                                 serverResponse = invitationSyncher.createNewInvitation(eventId, listOfParticipantsPhoneNumbers, listOfGroupIds);
                             }
@@ -239,14 +195,13 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // ToastHelper.yellowToast(getApplicationContext(), "you are done requestCode" + requestCode + " resultCode " + resultCode);
-        if (resultCode == 1 && (requestCode == 100 || requestCode == 200)) {
+        if (requestCode == 100) {
             updateContacts();
             adapter = new ContactAdapter(getApplicationContext(), R.layout.contact_item, allSelectedlist, false);
             setContactsListSize();
             listView.setAdapter(adapter);
         }
-        if (resultCode == 1 && requestCode == 300) {
+        if (requestCode == 300) {
             updateGroupsData();
             groupAdapter = new GroupAdapter(getApplicationContext(), R.layout.group_item, listOfSelectedGroups, false);
             setGroupListSize();
@@ -291,6 +246,8 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
 
     private void updateContacts() {
         List<User> usersList = InvtAppPreferences.getContacts();
+        Log.d("selected contacts", usersList.size()+"");
+
         for (User user : usersList) {
             if (!listOfParticipantsPhoneNumbers.contains(user.getPhoneNumber())) {
                 listOfParticipantsPhoneNumbers.add(user);
@@ -318,7 +275,7 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                     break;
                 case R.id.removeGroup:
                     Group group = listOfSelectedGroups.get(position);
-                    ToastHelper.blueToast(getApplicationContext(), "Contact Removed");
+                    ToastHelper.blueToast(getApplicationContext(), "Group Removed");
                     listOfSelectedGroups.remove(group);
                     listOfGroupIds.remove(position);
                     groupAdapter.setUsers(listOfSelectedGroups);

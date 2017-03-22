@@ -336,33 +336,20 @@
                 android:text="GROUPS"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <Button
-                android:id="@+id/appContacts"
+                android:id="@+id/contacts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:background="@color/gray"
                 android:minWidth="150dp"
                 android:padding="5dp"
-                android:text="IN-APP CONTACTS"
+                android:text="CONTACTS"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/smsContacts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@color/green_light"
-                android:minWidth="150dp"
-                android:padding="5dp"
-                android:text="SMS CONTACTS"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="match_parent"

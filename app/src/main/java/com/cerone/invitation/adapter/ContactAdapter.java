@@ -5,7 +5,6 @@
 package com.cerone.invitation.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,13 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-
 import com.cerone.invitation.R;
-import com.example.dataobjects.*;
+import com.example.dataobjects.User;
 
 import java.util.List;
 
@@ -31,16 +28,11 @@ public class ContactAdapter extends ArrayAdapter<User> {
 
     private List<User> users;
     Context context;
-    boolean isnewGroup;
-    int grey = Color.parseColor("#9e9e9e");
-    int green = Color.parseColor("#81c784");
-    int white = Color.parseColor("#FFFFFF");
 
     public ContactAdapter(Context context, int resource, List<User> users, boolean isnewGroup) {
         super(context, resource);
         this.context = context;
         this.setUsers(users);
-        this.isnewGroup = isnewGroup;
     }
 
     @Override
@@ -57,7 +49,6 @@ public class ContactAdapter extends ArrayAdapter<User> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.contact_item, parent, false);
-        LinearLayout parentLayout = (LinearLayout) row.findViewById(R.id.parentLayout);
         User user = getItem(position);
         CheckBox isAdmin = (CheckBox) row.findViewById(R.id.shareEvent_check);
         Button removeContact = (Button) row.findViewById(R.id.removeContact);
@@ -68,11 +59,6 @@ public class ContactAdapter extends ArrayAdapter<User> {
         removeContact.setOnClickListener(createOnClickListener(position, parent));
         isAdmin.setChecked(user.isAdmin());
         isAdmin.setOnClickListener(createOnClickListener(position, parent));
-        if (!isnewGroup) {
-            parentLayout.setBackgroundColor(user.isPhoneContact() ? grey : green);
-            mobileNumber.setTextColor(white);
-            name.setTextColor(white);
-        }
         return row;
     }
 

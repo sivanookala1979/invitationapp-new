@@ -1,8 +1,6 @@
 package com.cerone.invitation.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -119,7 +117,9 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
         viewHolder.inviteesCount.setText("" + event.getInviteesCount());
         viewHolder.acceptedCount.setText("" + event.getAcceptedCount());
         viewHolder.rejectedCount.setText("" + event.getRejectedCount());
-        viewHolder.eventDateTimeInfo.setText("" + event.getEndDateTime());
+        viewHolder.eventDateTimeInfo.setText(event.getStartDateTime()+" "+ event.getEndDateTime());
+        viewHolder.eventStartDate.setText("" + event.getStartDateTime());
+        viewHolder.eventTimings.setText("" + event.getEndDateTime());
         int backgroundColour = (!event.isInvitation()) ? context.getResources().getColor(R.color.invitation_received_color) :(event.isAccepted())? context.getResources().getColor(R.color.event_accept): context.getResources().getColor(R.color.my_events_color);
         viewHolder.colourIndicator.setBackgroundColor(backgroundColour);
         viewHolder.eventNameFooter.setBackgroundColor(backgroundColour);
