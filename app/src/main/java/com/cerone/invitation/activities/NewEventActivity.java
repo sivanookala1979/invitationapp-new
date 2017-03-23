@@ -37,6 +37,7 @@ import com.example.utills.StringUtils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -205,6 +206,7 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
             case R.id.startTime :
             case R.id.startTimeLayout1 :
                 startTimePicker.createAndUpdateTime(startTime.getText().toString(), NewEventActivity.this);
+                endTime.setText(updateEndTime(startTime.getText().toString(),2));
                 break;
             case R.id.startDateLayout :
             case R.id.startDate :
@@ -315,7 +317,11 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
     public static String getCurrentTime(int postMinutes) {
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE,postMinutes);
-        return now.get(Calendar.HOUR_OF_DAY) + ":" + now.get(Calendar.MINUTE);
+        return getValidText(now.get(Calendar.HOUR_OF_DAY)) + ":" + getValidText(now.get(Calendar.MINUTE));
+    }
+
+    private static String getValidText(int number) {
+        return (number >= 10) ? number + "" : "0" + number;
     }
 
     @Override
@@ -349,6 +355,21 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
             eventAddress.setText("");
             eventAddress.setHint("Pick Location");
         }
+    }
+
+    private static String updateEndTime(String startTime, int upTime){
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        Date date = null;
+        try {
+            date = formatter.parse(startTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR, upTime);
+        String time = getValidText(calendar.get(Calendar.HOUR_OF_DAY)) + ":" + getValidText(calendar.get(Calendar.MINUTE));
+        return time;
     }
 
     public List<UserLocation> getDefaultAddress() {

@@ -16,7 +16,6 @@ import com.cerone.invitation.R;
 import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.example.dataobjects.Event;
-import com.example.utills.StringUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -71,7 +70,7 @@ public class HomeEventAdapter extends ArrayAdapter<Event> {
             Picasso.with(context).load(imageResources[position % 3]).transform(new CircleTransform()).into(imageView);
         }
         eventName.setText(event.getName());
-        eventDate.setText(StringUtils.formatDateAndTime(event.getStartDateTime(), 5));
+        eventDate.setText(event.getStartDateTime()+" "+event.getEndDateTime());
         acceptCount.setText(event.getAcceptedCount() + "");
         checkInCount.setText(event.getCheckedInCount() + "");
         total.setText(event.getInviteesCount() + "");

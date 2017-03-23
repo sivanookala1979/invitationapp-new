@@ -18,8 +18,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.key;
-
 
 /**
  * @author CeroneFedora
@@ -143,6 +141,8 @@ public class InvitationSyncher extends BaseSyncher {
                         invitee.setMobileNumber(jsonObject.getString("mobile"));
                         invitee.setEmail(jsonObject.getString("email"));
                         invitee.setImage(jsonObject.getString("img_url"));
+                        invitee.setAdmin(jsonObject.getBoolean("is_admin"));
+                        invitee.setBlocked(jsonObject.getBoolean("is_blocked"));
                         listOfInvitees.add(invitee);
                     }
                 }
@@ -151,5 +151,33 @@ public class InvitationSyncher extends BaseSyncher {
             handleException(e);
         }
         return listOfInvitees;
+    }
+
+    public ServerResponse makeInviteeAdmin(int eventId, int userId) {
+        ServerResponse response = new ServerResponse();
+        try {
+            String JSONresponse = HTTPUtils.getDataFromServer(BASE_URL + "events/make_invite_as_admin_to_event.json?user_id="+userId+"&event_id="+eventId, "GET", true);
+            JSONObject responseObject = new JSONObject(JSONresponse);
+            if (responseObject.has("status")) {
+                response.setStatus(responseObject.getString("status") );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    public ServerResponse blockInvitee(int eventId, int userId) {
+        ServerResponse response = new ServerResponse();
+        try {
+            String JSONresponse = HTTPUtils.getDataFromServer(BASE_URL + "/events/block_invitations.json?event_id="+eventId+"&user_id="+userId, "GET", true);
+            JSONObject responseObject = new JSONObject(JSONresponse);
+            if (responseObject.has("status")) {
+                response.setStatus(responseObject.getString("status") );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
     }
 }

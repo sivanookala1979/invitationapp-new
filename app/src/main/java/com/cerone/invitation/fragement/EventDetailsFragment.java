@@ -1,17 +1,12 @@
 package com.cerone.invitation.fragement;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
@@ -27,11 +22,8 @@ import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Eventstatistics;
 import com.example.syncher.InvitationSyncher;
-import com.example.utills.StringUtils;
 
-import static android.support.v7.widget.AppCompatDrawableManager.get;
 import static com.cerone.invitation.R.id.acceptCount;
-import static com.cerone.invitation.R.id.eventName;
 import static com.cerone.invitation.R.id.rejectCount;
 
 /**
@@ -91,10 +83,10 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
         totalCount.setText("" + eventDetails.getInviteesCount());
         checkedInCount.setText("" + eventDetails.getCheckedInCount());
         description.setText(eventDetails.getDescription());
-        eventStartDate.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 1));
-        eventEndDate.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 1));
-        eventStartTime.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 2));
-        eventEndTime.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 2));
+        eventStartDate.setText(eventDetails.getStartDateTime());
+        eventEndDate.setText(eventDetails.getStartDateTime());
+        eventStartTime.setText(eventDetails.getEndDateTime());
+        eventEndTime.setText(eventDetails.getEndDateTime());
         eventLocation.setText(eventDetails.getAddress());
         participantsInfo.setText("invitees ");
         if(eventDetails.isInvitation()){
@@ -131,7 +123,7 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
             case R.id.participants:
             case R.id.participantsLayout:
                 intent = new Intent(getActivity(), ParticipantsActivity.class);
-                intent.putExtra("orderId", 0);
+                intent.putExtra("eventId", eventDetails.getEventId());
                 intent.putExtra("title", "Invitees");
                 startActivity(intent);
                 break;

@@ -9,12 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
-import com.example.dataobjects.*;
+import com.example.dataobjects.Invitee;
 import com.example.utills.StringUtils;
 
 import java.util.ArrayList;
@@ -57,10 +57,19 @@ public class ParticipantsAdapter extends ArrayAdapter<Invitee> {
         TextView participantMobileNumber = (TextView) row.findViewById(R.id.participant_number);
         TextView participantStatus = (TextView) row.findViewById(R.id.status);
         TextView distance = (TextView) row.findViewById(R.id.distance);
-        ImageButton chat = (ImageButton)row.findViewById(R.id.chat);
-        ImageButton call = (ImageButton)row.findViewById(R.id.call);
+        ImageView chat = (ImageView)row.findViewById(R.id.chat);
+        ImageView call = (ImageView)row.findViewById(R.id.call);
+        ImageView admin = (ImageView)row.findViewById(R.id.admin);
+        ImageView block = (ImageView)row.findViewById(R.id.block);
+        if(invitee.isAdmin())
+            admin.setColorFilter(getContext().getResources().getColor(R.color.green));
+        if(invitee.isBlocked())
+            block.setColorFilter(getContext().getResources().getColor(R.color.red));
+
         chat.setOnClickListener(createOnClickListener(position,parent));
         call.setOnClickListener(createOnClickListener(position,parent));
+        admin.setOnClickListener(createOnClickListener(position,parent));
+        block.setOnClickListener(createOnClickListener(position,parent));
         participantName.setText(" " + invitee.getInviteeName());
         participantMobileNumber.setText(" " + invitee.getMobileNumber());
         participantStatus.setText("Last seen " + invitee.getStatus() + " ago.");

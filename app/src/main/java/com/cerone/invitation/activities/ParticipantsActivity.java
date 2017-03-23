@@ -24,8 +24,10 @@ import com.cerone.invitation.activities.chat.IntraChatActivity;
 import com.cerone.invitation.adapter.ParticipantsAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
+import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Invitee;
+import com.example.dataobjects.ServerResponse;
 import com.example.syncher.GroupSyncher;
 import com.example.syncher.InvitationSyncher;
 
@@ -42,8 +44,9 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
     ListView listView;
     ParticipantsAdapter adapter;
     List<Invitee> participantsList = new ArrayList<Invitee>();
-    int groupId;
+    int groupId, eventId;
     String title;
+    ServerResponse serverResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
         listView = (ListView) findViewById(R.id.events_list);
         listView.setOnItemClickListener(this);
         groupId = getIntent().getExtras().getInt("groupId");
+        eventId = getIntent().getExtras().getInt("eventId");
         getParticipants();
     }
 
@@ -86,6 +90,51 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
         }.execute();
     }
 
+
+    private void makeInviteeAdmin(final int eventId, final int userId) {
+        new InvtAppAsyncTask(this) {
+
+            @Override
+            public void process() {
+                if(eventId > 0 & userId > 0){
+                    InvitationSyncher invitationSyncher = new InvitationSyncher();
+                    serverResponse = invitationSyncher.makeInviteeAdmin(eventId, userId);
+                }else{
+                    ToastHelper.blueToast(getApplicationContext(), "No inputs");
+                }
+            }
+
+            @Override
+            public void afterPostExecute() {
+                if (serverResponse!=null) {
+                    ToastHelper.blueToast(getApplicationContext(), serverResponse.getStatus());
+                }
+            }
+        }.execute();
+    }
+
+    private void blockInvitee(final int eventId, final int userId) {
+        new InvtAppAsyncTask(this) {
+
+            @Override
+            public void process() {
+                if(eventId > 0 & userId > 0){
+                    InvitationSyncher invitationSyncher = new InvitationSyncher();
+                    serverResponse = invitationSyncher.blockInvitee(eventId, userId);
+                }else{
+                    ToastHelper.blueToast(getApplicationContext(), "No inputs");
+                }
+            }
+
+            @Override
+            public void afterPostExecute() {
+                if (serverResponse.getStatus()!=null) {
+                    ToastHelper.blueToast(getApplicationContext(), serverResponse.getStatus());
+                }
+            }
+        }.execute();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -100,15 +149,30 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
         Intent intent;
         Invitee invitee = participantsList.get(i);
         switch (view.getId()) {
-            case R.id.call :
+            case R.id.call:
                 callToUser(invitee.getMobileNumber());
                 break;
-            case R.id.chat :
+            case R.id.chat:
                 intent = new Intent(ParticipantsActivity.this, IntraChatActivity.class);
+                intent.putExtra("UserId", invitee.getInviteeId());
                 intent.putExtra("UserId", invitee.getInviteeId());
                 intent.putExtra("UserImage", "");
                 intent.putExtra("UserName", invitee.getInviteeName());
                 startActivity(intent);
+                break;
+            case R.id.admin:
+                if(!invitee.isAdmin()){
+                    makeInviteeAdmin(eventId, invitee.getInviteeId());
+                    ImageView admin = (ImageView) findViewById(R.id.admin);
+                    admin.setColorFilter(adapterView.getResources().getColor(R.color.green));
+                }
+                break;
+            case R.id.block:
+                if(!invitee.isBlocked()) {
+                    blockInvitee(eventId, invitee.getInviteeId());
+                    ImageView block = (ImageView) findViewById(R.id.block);
+                    block.setColorFilter(adapterView.getResources().getColor(R.color.red));
+                }
                 break;
             default:
                 intent = new Intent(ParticipantsActivity.this, ProfileInfo.class);

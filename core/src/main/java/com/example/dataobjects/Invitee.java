@@ -19,6 +19,16 @@ public class Invitee {
     String email;
     String image;
     boolean admin;
+    boolean blocked;
+
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
 
     public boolean isAdmin() {
         return admin;

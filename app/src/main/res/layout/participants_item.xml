@@ -16,7 +16,7 @@
             android:id="@+id/participant_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="75"
+            android:layout_weight="60"
             android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
             android:padding="5dp"
             android:text="Name"
@@ -27,25 +27,40 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="25"
+            android:layout_weight="40"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            android:orientation="horizontal">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/call"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/call"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/call"
                 android:scaleType="fitXY" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/chat"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="@drawable/chat"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/chat"
+                android:scaleType="fitXY" />
+
+            <ImageView
+                android:id="@+id/admin"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/call"
+                android:scaleType="fitXY" />
+
+            <ImageView
+                android:id="@+id/block"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/chat"
                 android:scaleType="fitXY" />
         </LinearLayout>
     </LinearLayout>
