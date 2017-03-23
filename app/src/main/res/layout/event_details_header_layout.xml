@@ -17,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="85dp"
             android:clipChildren="true"
             android:orientation="horizontal"
             android:weightSum="10">
@@ -83,7 +83,8 @@
                     android:ellipsize="end"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:text="N Convension, Jubli Hills, Hyderabad."
-                    android:textSize="@dimen/text_size_too_small" />
+                    android:maxLines="2"
+                    android:textSize="@dimen/text_size_very_small" />
 
                 <TextView
                     android:id="@+id/eventTimingsHeading"
@@ -92,7 +93,7 @@
                     android:ellipsize="end"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:text="Sat, 18/06/2017 -09:00PM - 10:00PM"
-                    android:textSize="@dimen/text_size_too_small" />
+                    android:textSize="@dimen/text_size_very_small" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

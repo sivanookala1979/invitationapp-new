@@ -134,14 +134,13 @@
                     android:id="@+id/edit_otpNumber"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_margin="15dp"
                     android:background="@drawable/edit_text_border"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:hint="Enter OTP"
                     android:inputType="number"
                     android:padding="10dp"
-                    android:singleLine="true"
+                    android:lines="1"
                     android:textSize="@dimen/text_size_intermediate"></EditText>
 
                 <TextView

@@ -18,6 +18,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.key;
+
 
 /**
  * @author CeroneFedora
@@ -99,10 +101,12 @@ public class InvitationSyncher extends BaseSyncher {
                 if (response != null) {
                     eventstatistics.setValid(true);
                     eventstatistics.setMessage(response.getString("status"));
-                    eventstatistics.setAcceptCount(response.getInt("accepted_count"));
-                    eventstatistics.setTotalInviteesCount(response.getInt("invitees_count"));
-                    eventstatistics.setRejectCount(response.getInt("rejected_count"));
-                    eventstatistics.setCheckedInCount(response.getInt("check_in_count"));
+                    if(response.has("accepted_count")) {
+                        eventstatistics.setAcceptCount(response.getInt("accepted_count"));
+                        eventstatistics.setTotalInviteesCount(response.getInt("invitees_count"));
+                        eventstatistics.setRejectCount(response.getInt("rejected_count"));
+                        eventstatistics.setCheckedInCount(response.getInt("check_in_count"));
+                    }
                 }
             }
         } catch (Exception e) {

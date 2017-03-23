@@ -106,10 +106,23 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
         viewHolder.eventDetailsLayout.setOnClickListener(createOnClickListener(position, parent));
         if(event.getImageUrl()!=null && !event.getImageUrl().trim().isEmpty()) {
             Picasso.with(context).load(event.getImageUrl()).into(viewHolder.eventImageFooter);
+        }else {
+           Picasso.with(context).load("java").placeholder(R.drawable.event_picture).into(viewHolder.eventImageFooter);
         }
         if(event.getOwnerInfo().getImage()!= null && !event.getOwnerInfo().getImage().trim().isEmpty()) {
-            Picasso.with(context).load(event.getOwnerInfo().getImage()).transform(new CircleTransform()).into(viewHolder.eventHeaderIcon);
-            Picasso.with(context).load(event.getOwnerInfo().getImage()).transform(new CircleTransform()).into(viewHolder.ownerImage);
+            Picasso.with(context).load(event.getOwnerInfo().getImage()).placeholder(R.drawable.logo).transform(new CircleTransform()).into(viewHolder.eventHeaderIcon);
+            Picasso.with(context).load(event.getOwnerInfo().getImage()).placeholder(R.drawable.logo).transform(new CircleTransform()).into(viewHolder.ownerImage);
+        }else {
+            Picasso.with(context).load("java").placeholder(R.drawable.logo).transform(new CircleTransform()).into(viewHolder.eventHeaderIcon);
+            Picasso.with(context).load("java").placeholder(R.drawable.logo).transform(new CircleTransform()).into(viewHolder.ownerImage);
+        }
+        if(event.getAddress()!= null && !event.getAddress().isEmpty()){
+            String addressInfo = event.getAddress().replace("\n","");
+            viewHolder.eventAddressHeader.setText(addressInfo);
+            viewHolder.eventAddressFooter.setText(addressInfo);
+        }else{
+            viewHolder.eventAddressHeader.setText("Location details not provided");
+            viewHolder.eventAddressFooter.setText("Location details not provided");
         }
         viewHolder.eventNameHeader.setText(event.getName());
         viewHolder.eventNameFooter.setText(event.getName());

@@ -79,7 +79,9 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                 Intent intent;
                 switch (view.getId()) {
                     case R.id.actionOne:
+
                         if (!event.isInvitation()) {
+                            InvtAppPreferences.setEventDetails(event);
                             intent = new Intent(getActivity(), ShareEventActivity.class);
                             intent.putExtra("newEvent", false);
                             startActivity(intent);
@@ -90,7 +92,6 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                         break;
                     case R.id.actionTwo:
                         if (!event.isInvitation()) {
-                            InvtAppPreferences.setEventDetails(event);
                             intent = new Intent(getActivity(), NewEventActivity.class);
                             startActivity(intent);
                         } else {
