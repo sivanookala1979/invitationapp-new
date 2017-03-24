@@ -172,6 +172,9 @@ public class InvitationSyncher extends BaseSyncher {
         try {
             String JSONresponse = HTTPUtils.getDataFromServer(BASE_URL + "/events/block_invitations.json?event_id="+eventId+"&user_id="+userId, "GET", true);
             JSONObject responseObject = new JSONObject(JSONresponse);
+            if (responseObject.has("is_success")) {
+                response.setSuccess(responseObject.getBoolean("is_success") );
+            }
             if (responseObject.has("status")) {
                 response.setStatus(responseObject.getString("status") );
             }

@@ -81,6 +81,15 @@ public class ParticipantsAdapter extends ArrayAdapter<Invitee> {
         row.setOnClickListener(createOnClickListener(position,parent));
         return row;
     }
+    public List<Invitee> getInvitees() {
+        return participantsList;
+    }
+
+    public void updateAdapter(List<Invitee> participantsList) {
+        this.participantsList = participantsList;
+        notifyDataSetChanged();
+    }
+
     public View.OnClickListener createOnClickListener(final int position, final ViewGroup parent) {
         return new View.OnClickListener() {
 

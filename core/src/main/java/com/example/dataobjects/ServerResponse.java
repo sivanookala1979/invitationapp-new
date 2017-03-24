@@ -16,6 +16,15 @@ public class ServerResponse {
     String distance;
     int totalInvites;
     boolean profileGiven;
+    boolean success;
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 
     public boolean isProfileGiven() {
         return profileGiven;

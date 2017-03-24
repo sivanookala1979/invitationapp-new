@@ -128,7 +128,7 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
 
             @Override
             public void afterPostExecute() {
-                if (serverResponse.getStatus()!=null) {
+                if (serverResponse!=null) {
                     ToastHelper.blueToast(getApplicationContext(), serverResponse.getStatus());
                 }
             }
@@ -163,15 +163,17 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
             case R.id.admin:
                 if(!invitee.isAdmin()){
                     makeInviteeAdmin(eventId, invitee.getInviteeId());
-                    ImageView admin = (ImageView) findViewById(R.id.admin);
-                    admin.setColorFilter(adapterView.getResources().getColor(R.color.green));
+                    invitee.setAdmin(true);
+                    participantsList.set(i, invitee);
+                    adapter.updateAdapter(participantsList);
                 }
                 break;
             case R.id.block:
                 if(!invitee.isBlocked()) {
                     blockInvitee(eventId, invitee.getInviteeId());
-                    ImageView block = (ImageView) findViewById(R.id.block);
-                    block.setColorFilter(adapterView.getResources().getColor(R.color.red));
+                    invitee.setBlocked(true);
+                    participantsList.set(i, invitee);
+                    adapter.updateAdapter(participantsList);
                 }
                 break;
             default:
