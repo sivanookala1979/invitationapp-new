@@ -46,6 +46,7 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
     List<Invitee> participantsList = new ArrayList<Invitee>();
     int groupId, eventId;
     String title;
+    boolean isAdmin;
     ServerResponse serverResponse;
 
     @Override
@@ -62,6 +63,8 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
         listView.setOnItemClickListener(this);
         groupId = getIntent().getExtras().getInt("groupId");
         eventId = getIntent().getExtras().getInt("eventId");
+        eventId = getIntent().getExtras().getInt("eventId");
+        isAdmin = getIntent().getExtras().getBoolean("IsAdmin");
         getParticipants();
     }
 
@@ -161,7 +164,7 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
                 startActivity(intent);
                 break;
             case R.id.admin:
-                if(!invitee.isAdmin()){
+                if(isAdmin&!invitee.isAdmin()){
                     makeInviteeAdmin(eventId, invitee.getInviteeId());
                     invitee.setAdmin(true);
                     participantsList.set(i, invitee);
@@ -169,7 +172,7 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
                 }
                 break;
             case R.id.block:
-                if(!invitee.isBlocked()) {
+                if(isAdmin&!invitee.isBlocked()) {
                     blockInvitee(eventId, invitee.getInviteeId());
                     invitee.setBlocked(true);
                     participantsList.set(i, invitee);

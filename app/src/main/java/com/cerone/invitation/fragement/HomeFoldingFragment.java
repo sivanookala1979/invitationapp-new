@@ -1,8 +1,9 @@
 package com.cerone.invitation.fragement;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,17 +13,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.cerone.invitation.R;
-
 import com.cerone.invitation.activities.EventDetailsActivity;
-import com.cerone.invitation.activities.HomeScreenActivity;
-import com.cerone.invitation.activities.MyEventActivity;
 import com.cerone.invitation.activities.NewEventActivity;
-import com.cerone.invitation.activities.ParticipantsActivity;
 import com.cerone.invitation.activities.PersonalizeActivity;
 import com.cerone.invitation.activities.ShareEventActivity;
 import com.cerone.invitation.activities.chat.IntraChatActivity;
 import com.cerone.invitation.adapter.FoldingCellListAdapter;
-import com.cerone.invitation.helpers.ActivityCommunicator;
 import com.cerone.invitation.helpers.HomeScreenCommunicator;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
@@ -38,15 +34,6 @@ import com.ramotion.foldingcell.FoldingCell;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cerone.invitation.R.drawable.event;
-import static com.cerone.invitation.R.id.deleteEvent;
-import static com.cerone.invitation.R.id.invitationSelection;
-import static com.cerone.invitation.R.id.myInvitations;
-import static com.cerone.invitation.R.id.status;
-import static com.google.android.gms.analytics.internal.zzy.f;
-import static com.google.android.gms.analytics.internal.zzy.r;
-import static com.google.android.gms.common.api.Status.sw;
-
 /**
  * Created by adarsh on 3/19/17.
  */
@@ -57,6 +44,7 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
     List<Event> filterList = new ArrayList<Event>();
     EventSyncher eventSyncher = new EventSyncher();
     FoldingCellListAdapter adapter;
+    ServerResponse serverResponse;
     private HomeScreenCommunicator activityCommunicator;
 
     boolean eventFilter = true, invitationFilter = false;
@@ -77,7 +65,7 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 // toggle clicked cell state
-                Event event = filterList.get(pos);
+                final Event event = filterList.get(pos);
                 Intent intent;
                 InvtAppPreferences.setEventDetails(event);
                 switch (view.getId()) {
@@ -107,11 +95,29 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                         break;
                     case R.id.actionThree:
                         if (!event.isInvitation() || (event.isAccepted() && event.isAdmin())) {
-                            if (event.isInvitation()) {
-                                ToastHelper.blueToast(getActivity(), "Need to make new admin delete call.");
-                            } else {
-                                deleteEvent(event);
-                            }
+                            final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                            alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (event.isInvitation()&&event.isAdmin()) {
+                                        deleteAdmin(event.getEventId());
+                                        if(serverResponse != null) {
+                                            if (serverResponse.isSuccess()) {
+                                                deleteEvent(event);
+                                            } else {
+                                                ToastHelper.blueToast(getActivity(),serverResponse.getStatus() );
+                                            }
+                                        }
+                                    } else {
+                                        deleteEvent(event);
+                                    }
+                                }
+                            });
+
+                            alertDialog.setNegativeButton("No", null);
+                            alertDialog.setMessage("Do you want to delete?");
+                            alertDialog.show();
                         } else {
                             if (event.isAccepted()) {
                                 ToastHelper.blueToast(getActivity(), "Need to check.");
@@ -193,7 +199,26 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
             }.execute();
         }
     }
+    private void deleteAdmin(final int eventId) {
+        new InvtAppAsyncTask(getActivity()) {
 
+            @Override
+            public void process() {
+                if(eventId > 0){
+                    serverResponse = eventSyncher.deleteAdmin(eventId);
+                }else{
+                    ToastHelper.blueToast(getActivity(), "No inputs");
+                }
+            }
+
+            @Override
+            public void afterPostExecute() {
+                if (serverResponse!=null) {
+                    ToastHelper.blueToast(getActivity(), serverResponse.getStatus());
+                }
+            }
+        }.execute();
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -229,7 +254,6 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
 
     @Override
     public void acceptOrRejectInvitation(final boolean status, final Event event, final String locationPermission) {
-        final String response = "";
         new InvtAppAsyncTask(getActivity()) {
 
             Eventstatistics response;
@@ -255,4 +279,5 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
             }
         }.execute();
     }
+
 }

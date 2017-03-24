@@ -42,7 +42,7 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
         addToolbarView();
         searchTextField = (EditText) findViewById(R.id.search);
         contactsListView = (ListView) findViewById(R.id.contactsListView);
-        inviteFriends = (TextView) findViewById(R.id.invite);
+        inviteFriends = (TextView) findViewById(R.id.done);
         inviteFriends.setOnClickListener(this);
         contactsListView.setOnItemClickListener(this);
         contactsAdapter = new ContactsAdapter(MobileContactsActivity.this, R.layout.contact_layout, allContacts);
@@ -69,7 +69,7 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
-            case R.id.invite:
+            case R.id.done:
                     if (selectedList.size() >= 1) {
                         Intent intent = new Intent();
                         setResult(100, intent);

@@ -22,6 +22,7 @@ import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Eventstatistics;
 import com.example.syncher.InvitationSyncher;
+import com.example.utills.StringUtils;
 
 import static com.cerone.invitation.R.id.acceptCount;
 import static com.cerone.invitation.R.id.rejectCount;
@@ -83,10 +84,10 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
         totalCount.setText("" + eventDetails.getInviteesCount());
         checkedInCount.setText("" + eventDetails.getCheckedInCount());
         description.setText(eventDetails.getDescription());
-        eventStartDate.setText(eventDetails.getStartDateTime());
-        eventEndDate.setText(eventDetails.getStartDateTime());
-        eventStartTime.setText(eventDetails.getEndDateTime());
-        eventEndTime.setText(eventDetails.getEndDateTime());
+        eventStartDate.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 1));
+        eventEndDate.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 1));
+        eventStartTime.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 2));
+        eventEndTime.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 2));
         eventLocation.setText(eventDetails.getAddress());
         participantsInfo.setText("invitees ");
         if(eventDetails.isInvitation()){

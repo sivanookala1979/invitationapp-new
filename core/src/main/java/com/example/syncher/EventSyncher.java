@@ -18,6 +18,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.utills.StringUtils.getFormatedDateFromServerFormatedDate;
+
 
 /**
  * @author CeroneFedora
@@ -131,10 +133,13 @@ public class EventSyncher extends BaseSyncher {
                         event.setAddress(jsonObject.getString("address"));
                         event.setDescription(jsonObject.getString("description"));
                         if (!jsonObject.isNull("start_date")) {
-                            event.setStartDateTime(StringUtils.getEventDateFormat(jsonObject.getString("start_date")));
+                            event.setStartDateTime(getFormatedDateFromServerFormatedDate(jsonObject.getString("start_date")));
+                            Log.d("start date", event.getStartDateTime()+"");
                         }
-                        if (!jsonObject.isNull("start_date")&&!jsonObject.isNull("end_date")) {
-                            event.setEndDateTime(StringUtils.getEventTimeFormat(jsonObject.getString("start_date"),jsonObject.getString("end_date")));
+                        if (!jsonObject.isNull("end_date")) {
+                            event.setEndDateTime(getFormatedDateFromServerFormatedDate(jsonObject.getString("end_date")));
+                            Log.d("end date", event.getEndDateTime()+"");
+
                         }
                         if (!jsonObject.isNull("accepted_count")) {
                             event.setAcceptedCount(jsonObject.getInt("accepted_count"));
@@ -247,4 +252,23 @@ public class EventSyncher extends BaseSyncher {
         }
         return response;
     }
+
+    public ServerResponse deleteAdmin(int eventId) {
+        ServerResponse response = new ServerResponse();
+        try {
+            JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "events/delete_admins_form_events.json?event_id=" + eventId, "GET", true));
+            if (jsonResponse.has("status")) {
+                response.setStatus(jsonResponse.getString("status"));
+            }
+            if (jsonResponse.has("is_success")) {
+                response.setSuccess(jsonResponse.getBoolean("is_success"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+
 }

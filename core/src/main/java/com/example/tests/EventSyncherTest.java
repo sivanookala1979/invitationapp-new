@@ -4,13 +4,14 @@
  */
 package com.example.tests;
 
+import com.example.dataobjects.Event;
+import com.example.dataobjects.ServerResponse;
+import com.example.syncher.BaseSyncher;
+import com.example.syncher.EventSyncher;
+
 import junit.framework.TestCase;
 
 import java.util.List;
-
-import com.example.dataobjects.*;
-import com.example.syncher.BaseSyncher;
-import com.example.syncher.EventSyncher;
 
 
 
@@ -63,6 +64,14 @@ public class EventSyncherTest extends TestCase {
         event.setRecurringType(recurringType);
         event.setTheme(theam);
         return event;
+    }
+
+    public void testDeleteAdminHAPPYFlow() throws Exception {
+        // Setup fixture
+        // Exercise SUT
+        ServerResponse response = sut.deleteAdmin(105);
+        // Verify outcome
+        assertEquals("dsanfd", response.isSuccess()+" "+response.getStatus());
     }
 
     public void testGetMyEventsHAPPYFlow() throws Exception {
@@ -125,7 +134,7 @@ public class EventSyncherTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         sut = new EventSyncher();
-        BaseSyncher.setAccessToken("9049d4b65472891215997844d");
+        BaseSyncher.setAccessToken("ced34ed2c58a4c82a167fd0a24e8ef14");
         //9049d4b65472891215997844d Adarsh
         //b39b545dd564d649528233f2044f adarsh Local testing
     }

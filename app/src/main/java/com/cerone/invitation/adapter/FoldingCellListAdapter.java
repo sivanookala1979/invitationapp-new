@@ -16,9 +16,11 @@ import com.cerone.invitation.R;
 import com.cerone.invitation.helpers.CircleTransform;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Invitee;
+import com.example.utills.StringUtils;
 import com.ramotion.foldingcell.FoldingCell;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -134,9 +136,21 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
         viewHolder.inviteesCount.setText("" + event.getInviteesCount());
         viewHolder.acceptedCount.setText("" + event.getAcceptedCount());
         viewHolder.rejectedCount.setText("" + event.getRejectedCount());
-        viewHolder.eventDateTimeInfo.setText(event.getStartDateTime()+" "+ event.getEndDateTime());
-        viewHolder.eventStartDate.setText("" + event.getStartDateTime());
-        viewHolder.eventTimings.setText("" + event.getEndDateTime());
+        try {
+            viewHolder.eventDateTimeInfo.setText(StringUtils.getEventDateFormat(event.getStartDateTime()) +" "+ StringUtils.getEventTimeFormat(event.getStartDateTime(), event.getEndDateTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            viewHolder.eventStartDate.setText(StringUtils.getEventDateFormat(event.getStartDateTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            viewHolder.eventTimings.setText(StringUtils.getEventTimeFormat(event.getStartDateTime(), event.getEndDateTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         int backgroundColour = (!event.isInvitation()) ? context.getResources().getColor(R.color.invitation_received_color) :(event.isAccepted())? context.getResources().getColor(R.color.event_accept): context.getResources().getColor(R.color.my_events_color);
         viewHolder.colourIndicator.setBackgroundColor(backgroundColour);
         viewHolder.eventNameFooter.setBackgroundColor(backgroundColour);

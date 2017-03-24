@@ -26,7 +26,7 @@ import static com.example.syncher.BaseSyncher.exceptionHandler;
 public class StringUtils {
 
     public static final SimpleDateFormat eventDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-    public static final SimpleDateFormat eventTimeFormat = new SimpleDateFormat("HH:mm a");
+    public static final SimpleDateFormat eventTimeFormat = new SimpleDateFormat("hh:mm a");
     public static final SimpleDateFormat newEventDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public static final SimpleDateFormat newEventTimeFormat = new SimpleDateFormat("HH:mm");
     public static final SimpleDateFormat eventInfoFormat = new SimpleDateFormat("E, yyyy MMM dd - HH:mm a");
@@ -225,7 +225,7 @@ public class StringUtils {
 
     public static String formatDateAndTime(String string, int index) {
         String info = "Not found";
-        Date dateTime = null;
+        Date dateTime;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             dateTime = simpleDateFormat.parse(string);
@@ -313,7 +313,7 @@ public class StringUtils {
     }
 
     public static String getEventDateFormat(String dateTime) throws ParseException {
-        String[] d = dateTime.split("T");
+        String[] d = dateTime.split(" ");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = formatter.parse(d[0]);
         SimpleDateFormat formatt = new SimpleDateFormat("EEE"+", "+"dd/MM/yyyy");
@@ -322,10 +322,9 @@ public class StringUtils {
     }
 
     public static String getTimeFormat(String dateTime) throws ParseException {
-        String[] dt = dateTime.split("T");
-        String[] t = dt[1].split("\\+");
+        String[] t = dateTime.split(" ");
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-        Date time = formatter.parse(t[0]);
+        Date time = formatter.parse(t[1]);
         SimpleDateFormat formatt = new SimpleDateFormat("hh:mm a");
         String newTime = formatt.format(time);
         return newTime;
