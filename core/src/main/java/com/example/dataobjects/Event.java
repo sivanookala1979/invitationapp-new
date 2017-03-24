@@ -42,6 +42,16 @@ public class Event {
     boolean isInvitation;
     boolean expired;
     Invitee ownerInfo;
+    boolean admin;
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
     List<Invitee> inviteesList= new ArrayList<Invitee>();
 
     public Invitee getOwnerInfo() {

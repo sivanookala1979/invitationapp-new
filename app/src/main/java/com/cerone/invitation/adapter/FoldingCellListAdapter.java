@@ -89,6 +89,8 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
             viewHolder.showEventIcon = (ImageView) cell.findViewById(R.id.showEventIcon);
             viewHolder.participantsStatisticsLayout = (LinearLayout) cell.findViewById(R.id.participantsStatisticsLayout);
             viewHolder.actionsLayout = (LinearLayout)cell.findViewById(R.id.actionsLayout);
+            viewHolder.chatLayout = (LinearLayout)cell.findViewById(R.id.chatLayout);
+            viewHolder.individualChatIcon = (ImageView) cell.findViewById(R.id.chatIcon);
             cell.setTag(viewHolder);
         } else {
             if (unfoldedIndexes.contains(position)) {
@@ -99,6 +101,8 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
             viewHolder = (ViewHolder) cell.getTag();
         }
         viewHolder.participantsStatisticsLayout.setVisibility(View.GONE);
+        viewHolder.chatLayout.setOnClickListener(createOnClickListener(position, parent));
+        //viewHolder.individualChatIcon.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.showEventIcon.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.actionOneLayout.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.actionTwoLayout.setOnClickListener(createOnClickListener(position, parent));
@@ -150,7 +154,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
                 }
             }
         }
-        if (event.getInviteesList().size() == 0) {
+        if (count == 0) {
             viewHolder.participantsLayout.setVisibility(View.GONE);
         } else {
             viewHolder.participantsLayout.setVisibility(View.VISIBLE);
@@ -169,7 +173,8 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
             viewHolder.actionOneIcon.setImageResource(R.drawable.done_icon);
             viewHolder.actionTwoIcon.setImageResource(R.drawable.question_mark_icon);
             if(event.isAccepted()){
-                viewHolder.actionsLayout.setVisibility(View.GONE);
+                viewHolder.actionOneIcon.setImageResource(R.drawable.near_me);
+                viewHolder.actionTwoIcon.setImageResource(R.drawable.chat_balloon);
             }
         }
     }
@@ -217,8 +222,8 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
     private static class ViewHolder {
         ImageView eventHeaderIcon, eventImageFooter, ownerImage;
         TextView eventNameHeader, colourIndicator, eventAddressHeader, eventDateTimeInfo, eventNameFooter, ownerName, eventStartDate, eventTimings, eventAddressFooter, inviteesCount, acceptedCount, rejectedCount;
-        LinearLayout participantsLayout, actionOneLayout, actionTwoLayout, actionThreeLayout, eventDetailsLayout, participantsStatisticsLayout,actionsLayout;
-        ImageView actionOneIcon, actionTwoIcon, actionThreeIcon, showEventIcon;
+        LinearLayout participantsLayout, actionOneLayout, actionTwoLayout, actionThreeLayout, eventDetailsLayout, participantsStatisticsLayout,actionsLayout,chatLayout;
+        ImageView actionOneIcon, actionTwoIcon, actionThreeIcon, showEventIcon,individualChatIcon;
 
     }
 }

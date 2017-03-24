@@ -17,8 +17,10 @@ import com.cerone.invitation.activities.EventDetailsActivity;
 import com.cerone.invitation.activities.HomeScreenActivity;
 import com.cerone.invitation.activities.MyEventActivity;
 import com.cerone.invitation.activities.NewEventActivity;
+import com.cerone.invitation.activities.ParticipantsActivity;
 import com.cerone.invitation.activities.PersonalizeActivity;
 import com.cerone.invitation.activities.ShareEventActivity;
+import com.cerone.invitation.activities.chat.IntraChatActivity;
 import com.cerone.invitation.adapter.FoldingCellListAdapter;
 import com.cerone.invitation.helpers.ActivityCommunicator;
 import com.cerone.invitation.helpers.HomeScreenCommunicator;
@@ -77,38 +79,58 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                 // toggle clicked cell state
                 Event event = filterList.get(pos);
                 Intent intent;
+                InvtAppPreferences.setEventDetails(event);
                 switch (view.getId()) {
                     case R.id.actionOne:
-
-                        if (!event.isInvitation()) {
-                            InvtAppPreferences.setEventDetails(event);
+                        if (!event.isInvitation() || (event.isAccepted() && event.isAdmin())) {
                             intent = new Intent(getActivity(), ShareEventActivity.class);
                             intent.putExtra("newEvent", false);
                             startActivity(intent);
                         } else {
                             eventDetails = event;
-                            showLocationPermissionDialog();
+                            if (event.isAccepted()) {
+                                ToastHelper.blueToast(getActivity(), "Need to show google map.");
+                            } else {
+                                showLocationPermissionDialog();
+                            }
                         }
                         break;
                     case R.id.actionTwo:
-                        if (!event.isInvitation()) {
+                        if (!event.isInvitation() || (event.isAccepted() && event.isAdmin())) {
                             intent = new Intent(getActivity(), NewEventActivity.class);
                             startActivity(intent);
                         } else {
-
+                            if (event.isAccepted()) {
+                                ToastHelper.blueToast(getActivity(), "Need to show Chat screen");
+                            }
                         }
                         break;
                     case R.id.actionThree:
-                        if (!event.isInvitation()) {
-                            deleteEvent(event);
+                        if (!event.isInvitation() || (event.isAccepted() && event.isAdmin())) {
+                            if (event.isInvitation()) {
+                                ToastHelper.blueToast(getActivity(), "Need to make new admin delete call.");
+                            } else {
+                                deleteEvent(event);
+                            }
                         } else {
-                            acceptOrRejectInvitation(false, event, locationPermission);
+                            if (event.isAccepted()) {
+                                ToastHelper.blueToast(getActivity(), "Need to check.");
+                            } else {
+                                acceptOrRejectInvitation(false, event, locationPermission);
+                            }
                         }
                         break;
                     case R.id.showEventIcon:
                     case R.id.showEventDetails:
-                        InvtAppPreferences.setEventDetails(event);
                         intent = new Intent(getActivity(), EventDetailsActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.chatLayout:
+                    case R.id.chatIcon:
+                        intent = new Intent(getActivity(), IntraChatActivity.class);
+                        intent.putExtra("UserId", event.getOwnerId());
+                        intent.putExtra("UserImage", "");
+                        intent.putExtra("UserName", event.getOwnerName());
                         startActivity(intent);
                         break;
                     default:

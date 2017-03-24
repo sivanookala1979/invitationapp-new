@@ -59,12 +59,12 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     int ownerId = 0;
     User profile;
     TextView userName;
-    ImageView userImage;
+    ImageView userImage,eventFilterIcon,invitationFilterIcon;
     ViewPager viewPager;
     TabLayout mPagerSlidingTabStrip;
     PagerAdapter mPagerAdapter;
     TextView screenTitle;
-    RadioButton eventFilter,invitationsFilter;
+    LinearLayout eventFilter,invitationsFilter;
     LinearLayout filteringLayout;
 
 
@@ -76,8 +76,10 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add);
         floatingActionButton.setVisibility(View.VISIBLE);
         screenTitle = (TextView) findViewById(R.id.toolbar_title);
-        eventFilter = (RadioButton)findViewById(R.id.radio_events);
-        invitationsFilter = (RadioButton)findViewById(R.id.radio_invitations);
+        eventFilterIcon = (ImageView)findViewById(R.id.eventFilterIcon);
+        invitationFilterIcon = (ImageView)findViewById(R.id.invitationFilterIcon);
+        eventFilter = (LinearLayout)findViewById(R.id.radio_events);
+        invitationsFilter = (LinearLayout)findViewById(R.id.radio_invitations);
         filteringLayout = (LinearLayout)findViewById(R.id.filteringMenu);
         filteringLayout.setVisibility(View.VISIBLE);
         closePreviousServices();
@@ -197,6 +199,9 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     }
 
     private void applyFilters() {
+        int color = getResources().getColor(R.color.happening_red);
+        eventFilterIcon.setColorFilter(eventFilterIcon.isSelected()?color:Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        invitationFilterIcon.setColorFilter(invitationFilterIcon.isSelected()?color:Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         Fragment page = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + viewPager.getCurrentItem());
         if (viewPager.getCurrentItem() == 0 && page != null) {
             ((HomeFoldingFragment)page).updateData(eventFilter.isSelected(),invitationsFilter.isSelected());

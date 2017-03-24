@@ -175,6 +175,9 @@ public class EventSyncher extends BaseSyncher {
                         if(jsonObject.has("is_my_event")) {
                             event.setInvitation(!jsonObject.getBoolean("is_my_event"));
                         }
+                        if(jsonObject.has("is_admin")) {
+                            event.setAdmin(jsonObject.getBoolean("is_admin"));
+                        }
                         if(jsonObject.has("owner_information")){
                             JSONObject ownerJson = jsonObject.getJSONObject("owner_information");
                             Invitee ownerInfo = new Invitee();
