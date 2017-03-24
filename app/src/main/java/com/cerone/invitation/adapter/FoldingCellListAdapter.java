@@ -172,9 +172,17 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
         } else {
             viewHolder.actionOneIcon.setImageResource(R.drawable.done_icon);
             viewHolder.actionTwoIcon.setImageResource(R.drawable.question_mark_icon);
+
             if(event.isAccepted()){
-                viewHolder.actionOneIcon.setImageResource(R.drawable.near_me);
-                viewHolder.actionTwoIcon.setImageResource(R.drawable.chat_balloon);
+                if(event.isAdmin()){
+                    viewHolder.actionOneIcon.setImageResource(R.drawable.share_icon);
+                    viewHolder.actionTwoIcon.setImageResource(R.drawable.edit_icon);
+                    viewHolder.participantsStatisticsLayout.setVisibility(View.VISIBLE);
+                }else {
+                    viewHolder.actionOneIcon.setImageResource(R.drawable.near_me);
+                    viewHolder.actionTwoIcon.setImageResource(R.drawable.chat_balloon);
+                }
+
             }
         }
     }

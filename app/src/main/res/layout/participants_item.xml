@@ -56,7 +56,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/add_person"
+                android:src="@drawable/admin"
                 android:tint="@color/darkgray"
                 android:scaleType="fitXY" />
 
@@ -65,7 +65,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/clock"
+                android:src="@drawable/block_icon"
                 android:tint="@color/darkgray"
                 android:scaleType="fitXY" />
         </LinearLayout>

@@ -133,7 +133,9 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
                 break;
             case R.id.shareEvent:
                 if(eventDetails.isInvitation()){
-                    intent = new Intent(getActivity(), InvitieesTabActivity.class);
+                    intent = new Intent(getActivity(), ParticipantsActivity.class);
+                    intent.putExtra("eventId", eventDetails.getEventId());
+                    intent.putExtra("title", "Invitees");
                 }else {
                     intent = new Intent(getActivity(), ShareEventActivity.class);
                     intent.putExtra("newEvent", false);
