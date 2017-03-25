@@ -43,7 +43,7 @@
             android:layout_toRightOf="@+id/chat_add"
             android:layout_toStartOf="@+id/send_chat_message"
             android:background="@null"
-            android:hint="please type your question here"
+            android:hint="please type your message here"
             android:padding="10dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white" />

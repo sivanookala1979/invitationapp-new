@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,10 +34,10 @@ import static com.cerone.invitation.R.id.rejectCount;
 
 public class EventDetailsFragment extends BaseFragment implements View.OnClickListener{
 
-    LinearLayout participantsLayout, location,invitationSelection;
-    Button editEvent, shareEvent, deleteEvent,accept, maybe, reject;
+    LinearLayout participantsLayout, location,invitationSelection,accept, maybe, reject,editEvent, shareEvent, deleteEvent;
     TextView acceptCountText, rejectCountText, totalCount,checkedInCount;
     View eventBaseView;
+    ImageView editOrShareIdon;
     //INVITATIONS
 
     private ActivityCommunicator activityCommunicator;
@@ -47,9 +48,10 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
         View view= inflater.inflate(R.layout.event_details_fragment, container, false);
         eventBaseView = view;
         participantsLayout = (LinearLayout)view.findViewById(R.id.participantsLayout);
-        editEvent = (Button)view.findViewById(R.id.editEvent);
-        shareEvent = (Button) view.findViewById(R.id.shareEvent);
-        deleteEvent = (Button) view.findViewById(R.id.deleteEvent);
+        editEvent = (LinearLayout) view.findViewById(R.id.editEvent);
+        shareEvent = (LinearLayout) view.findViewById(R.id.shareEvent);
+        deleteEvent = (LinearLayout) view.findViewById(R.id.deleteEvent);
+        editOrShareIdon = (ImageView) view.findViewById(R.id.shareOrEditIcon);
         participantsLayout.setOnClickListener(this);
         editEvent.setOnClickListener(this);
         shareEvent.setOnClickListener(this);
@@ -93,12 +95,12 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
         if(eventDetails.isInvitation()){
             editEvent.setVisibility(View.INVISIBLE);
             deleteEvent.setVisibility(View.INVISIBLE);
-            shareEvent.setText("invitees");
+            editOrShareIdon.setBackgroundResource(R.drawable.group);
             invitationSelection = (LinearLayout) eventBaseView.findViewById(R.id.invitationSelection);
             invitationSelection.setVisibility(View.VISIBLE);
-            accept = (Button) eventBaseView.findViewById(R.id.acceptInvitation);
-            maybe = (Button) eventBaseView.findViewById(R.id.mayBe);
-            reject = (Button) eventBaseView.findViewById(R.id.rejected);
+            accept = (LinearLayout) eventBaseView.findViewById(R.id.acceptInvitation);
+            maybe = (LinearLayout) eventBaseView.findViewById(R.id.mayBe);
+            reject = (LinearLayout) eventBaseView.findViewById(R.id.rejected);
             location = (LinearLayout) eventBaseView.findViewById(R.id.gpsLocationLayout);
             participantsLayout.setVisibility(View.GONE);
             location.setVisibility(View.VISIBLE);

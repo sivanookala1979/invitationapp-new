@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <ScrollView
         android:id="@+id/headerLayout"
@@ -23,58 +24,65 @@
                     android:id="@+id/invitationSelection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:layout_weight="3"
+                    android:visibility="gone"
+                    android:background="@drawable/happening_top_botten_style"
+                    android:minHeight="50dp"
+                    android:orientation="horizontal">
 
-                    <Button
+                    <LinearLayout
                         android:id="@+id/acceptInvitation"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="2dp"
-                        android:layout_weight="30"
-                        android:background="@color/green_light"
-                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                        android:minWidth="150dp"
-                        android:padding="10dp"
-                        android:text="Accept"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_size"
-                        android:textStyle="normal|bold" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-                    <Button
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:duplicateParentState="true"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/done_icon"
+                            android:tint="@color/event_accept" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/mayBe"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="30"
-                        android:background="@color/blue_shade"
-                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                        android:minWidth="150dp"
-                        android:padding="10dp"
-                        android:text="May Be"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_size"
-                        android:textStyle="normal|bold" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/happening_gray_rectangle"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-                    <Button
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:duplicateParentState="true"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/question_mark_icon"
+                            android:tint="@color/happening_indigo" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/rejected"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="2dp"
-                        android:layout_weight="30"
-                        android:background="@color/red_light"
-                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                        android:minWidth="150dp"
-                        android:padding="10dp"
-                        android:text="Decline"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_size"
-                        android:textStyle="normal|bold" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/delete_icon"
+                            android:duplicateParentState="true"
+                            android:scaleType="centerInside"
+                            android:tint="@color/happening_red" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <TextView
@@ -89,21 +97,21 @@
 
                 <TextView
                     android:id="@+id/expiredMessage"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:gravity="center"
                     android:text="Event expired "
                     android:textColor="@color/red"
-                    android:textSize="@dimen/text_size_intermediate" />
+                    android:textSize="@dimen/text_size_intermediate"
+                    android:visibility="gone" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:background="@color/black" />
+                    android:background="@color/grey_light" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -136,7 +144,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:background="@color/black" />
+                    android:background="@color/grey_light" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -239,7 +247,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:background="@color/black" />
+                        android:background="@color/grey_light" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -304,7 +312,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:background="@color/black" />
+                    android:background="@color/grey_light" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -337,7 +345,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:background="@color/black" />
+                    android:background="@color/grey_light" />
 
                 <LinearLayout
                     android:id="@+id/extraAddressLayout"
@@ -376,7 +384,7 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:background="@color/black" />
+                        android:background="@color/grey_light" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -423,10 +431,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="10"
                         android:background="@color/white"
-                        android:src="@drawable/invitees"
-                        android:tint="@color/happening_orange"
                         android:onClick="onClick"
-                        android:scaleType="fitCenter" />
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/invitees"
+                        android:tint="@color/happening_orange" />
 
                     <TextView
                         android:id="@+id/participantsInfo"
@@ -447,6 +455,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@color/grey_light" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -457,213 +472,201 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="1dp"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/acceptCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/ola_button_style_green"
                                 android:ellipsize="end"
                                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:singleLine="true"
                                 android:text="100"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_medium" />
+                                android:textColor="@color/happening_orange"
+                                android:textSize="@dimen/text_size_small" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/ola_four_side_button_green"
                                 android:ellipsize="end"
                                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                                 android:gravity="center"
                                 android:padding="5dp"
-                                android:singleLine="true"
                                 android:text="Accept "
-                                android:textColor="@color/green_light"
-                                android:textSize="@dimen/text_medium" />
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_small" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="1dp"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/rejectCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/ola_button_style_red"
                                 android:ellipsize="end"
                                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:singleLine="true"
                                 android:text="100"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_medium" />
+                                android:textColor="@color/happening_orange"
+                                android:textSize="@dimen/text_size_small" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/ola_four_side_button_red"
                                 android:ellipsize="end"
                                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                                 android:gravity="center"
                                 android:padding="5dp"
-                                android:singleLine="true"
                                 android:text="Reject"
-                                android:textColor="@color/red_light"
-                                android:textSize="@dimen/text_medium" />
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_small" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="1dp"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/checkedinCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/ola_button_style_orange"
                                 android:ellipsize="end"
                                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:singleLine="true"
                                 android:text="100"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_medium" />
+                                android:textColor="@color/happening_orange"
+                                android:textSize="@dimen/text_size_small" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/ola_four_side_button_orange"
                                 android:ellipsize="end"
                                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:singleLine="true"
                                 android:text="Checked In"
-                                android:textColor="@color/orange"
-                                android:textSize="@dimen/text_medium" />
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_small" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="1dp"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/totalCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/ola_button_style_blue"
                                 android:ellipsize="end"
                                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:singleLine="true"
                                 android:text="100"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_medium" />
+                                android:textColor="@color/happening_orange"
+                                android:textSize="@dimen/text_size_small" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/ola_four_side_button_blue"
                                 android:ellipsize="end"
                                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:singleLine="true"
                                 android:text="Total "
-                                android:textColor="@color/blue_shade"
-                                android:textSize="@dimen/text_medium" />
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_small" />
                         </LinearLayout>
                     </LinearLayout>
 
-
                     <LinearLayout
                         android:id="@+id/shareEventData"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
+                        android:layout_weight="3"
+                        android:background="@drawable/happening_top_botten_style"
                         android:gravity="center"
-                        android:orientation="horizontal"
-                        android:weightSum="90">
+                        android:minHeight="50dp"
+                        android:orientation="horizontal">
 
-                        <Button
+                        <LinearLayout
                             android:id="@+id/editEvent"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_margin="2dp"
-                            android:layout_weight="30"
-                            android:background="@drawable/happening_button"
-                            android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                            android:minWidth="150dp"
-                            android:padding="10dp"
-                            android:text="Edit"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size" />
 
-                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:duplicateParentState="true"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/share_icon"
+                                android:tint="@color/event_accept" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/shareEvent"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
-                            android:layout_weight="30"
-                            android:background="@drawable/happening_button"
-                            android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                            android:minWidth="150dp"
-                            android:padding="10dp"
-                            android:text="Share"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size" />
+                            android:layout_weight="1"
+                            android:background="@drawable/happening_gray_rectangle"
+                            android:gravity="center"
+                            android:orientation="horizontal">
 
-                        <Button
-                            android:id="@+id/inviteesInfo"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_margin="2dp"
-                            android:layout_weight="30"
-                            android:background="@drawable/gradient_button"
-                            android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                            android:minWidth="150dp"
-                            android:padding="10dp"
-                            android:text="Invitees"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size"
-                            android:visibility="gone" />
+                            <ImageView
+                                android:id="@+id/shareOrEditIcon"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:duplicateParentState="true"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/edit"
+                                android:tint="@color/happening_indigo" />
 
-                        <Button
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/deleteEvent"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_margin="2dp"
-                            android:layout_weight="30"
-                            android:background="@drawable/happening_button"
-                            android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                            android:minWidth="150dp"
-                            android:padding="10dp"
-                            android:text="Delete"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size" />
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:background="@drawable/delete_icon"
+                                android:duplicateParentState="true"
+                                android:scaleType="centerInside"
+                                android:tint="@color/happening_red" />
+                        </LinearLayout>
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <TextView

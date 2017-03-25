@@ -79,8 +79,11 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener{
         chatMessagesAdapter.clear();
         ImageView sendChatMessageButton = (ImageView) view.findViewById(R.id.send_chat_message);
         sendChatMessageButton.setOnClickListener(this);
-
-        loadChatMessages();
+        if(event.isAccepted()) {
+            loadChatMessages();
+        }else{
+            chatMessageTextView.setEnabled(false);
+        }
         return view;
     }
     void loadChatMessages() {

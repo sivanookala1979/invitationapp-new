@@ -17,6 +17,7 @@ import com.cerone.invitation.R;
 import com.cerone.invitation.adapter.PagerAdapter;
 import com.cerone.invitation.helpers.ActivityCommunicator;
 import com.cerone.invitation.helpers.InvtAppPreferences;
+import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.ScreenTab;
 import com.google.android.gms.appindexing.Action;
@@ -67,6 +68,9 @@ public class EventDetailsActivity extends BaseActivity implements ActivityCommun
                     ImageView image = (ImageView) tabLayout.findViewById(R.id.tabIcon);
                     image.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
                     title.setTextColor(Color.WHITE);
+                    if ((Integer) tab.getTag() == 1 && !eventDetails.isAccepted()) {
+                        ToastHelper.blueToast(getApplicationContext(), "Accept invitation to enable chat.");
+                    }
                 }
             }
 
@@ -92,7 +96,7 @@ public class EventDetailsActivity extends BaseActivity implements ActivityCommun
     }
 
     private void createTabViews() {
-       // updateTabsCount();
+        // updateTabsCount();
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager(), screenTabs);
         viewPager.setAdapter(mPagerAdapter);
         mPagerSlidingTabStrip.setupWithViewPager(viewPager);
@@ -126,6 +130,7 @@ public class EventDetailsActivity extends BaseActivity implements ActivityCommun
     public void enableChatView(boolean enableChat) {
         InvtAppPreferences.setScreenRefreshStatus(true);
         eventDetails.setAccepted(true);
+        InvtAppPreferences.setEventDetails(eventDetails);
         createTabViews();
     }
 
