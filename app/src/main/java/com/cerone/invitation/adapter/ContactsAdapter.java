@@ -8,7 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
@@ -63,8 +64,10 @@ public class ContactsAdapter extends ArrayAdapter<User> {
         View row = inflater.inflate(R.layout.contact_layout, parent, false);
         User contactInfo = getItem(position);
         TextView userName = (TextView) row.findViewById(R.id.userName);
-        LinearLayout superView = (LinearLayout) row.findViewById(R.id.layout_contacts);
-        superView.setBackgroundColor(contactInfo.isSelected() ? Color.parseColor("#A9A9A9") :Color.parseColor("#ffffff"));
+        CheckBox contact = (CheckBox) row.findViewById(R.id.contact_check);
+        contact.setOnClickListener(createOnClickListener(position, parent));
+        if(contactInfo.isSelected())
+            contact.setChecked(true);
         MaterialLetterIcon materialLetterIcon = (MaterialLetterIcon) row.findViewById(R.id.nameIndicator);
         materialLetterIcon.setLetter("A");
         materialLetterIcon.setShapeColor(mColors.getColor(position%8, Color.BLACK));
@@ -76,5 +79,15 @@ public class ContactsAdapter extends ArrayAdapter<User> {
         mobileNumber.setText("" + contactInfo.getPhoneNumber());
         return row;
 
+    }
+
+    public View.OnClickListener createOnClickListener(final int position, final ViewGroup parent) {
+        return new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ((ListView) parent).performItemClick(v, position, 0);
+            }
+        };
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bottom_margin">
@@ -17,13 +16,13 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:gravity="center">
 
             <com.github.akashandroid90.imageletter.MaterialLetterIcon
                 android:id="@+id/nameIndicator"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:letter_color="@color/white"
                 app:letters_number="3"
                 app:shape_type="circle" />
@@ -41,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                 android:gravity="center_vertical"
-                android:minHeight="40dp"
+                android:minHeight="30dp"
                 android:text="Name"
                 android:textSize="@dimen/text_size_intermediate" />
 
@@ -51,9 +50,17 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                 android:gravity="center_vertical"
-                android:minHeight="40dp"
+                android:minHeight="30dp"
                 android:text="9949257729"
                 android:textSize="@dimen/text_size_intermediate" />
         </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/contact_check"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
     </LinearLayout>
 </LinearLayout>

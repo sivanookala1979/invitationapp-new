@@ -23,7 +23,6 @@ import com.cerone.invitation.adapter.ContactAdapter;
 import com.cerone.invitation.adapter.GroupAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
-import com.cerone.invitation.helpers.MobileHelper;
 import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Group;
@@ -45,7 +44,6 @@ import java.util.List;
 public class ShareEventActivity extends BaseActivity implements OnClickListener, OnItemClickListener {
 
     List<User> allSelectedlist = new ArrayList<User>();
-    List<User> listOfParticipantsPhoneNumbers = new ArrayList<User>();
     List<Group> listOfSelectedGroups = new ArrayList<Group>();
     List<String> listOfGroupIds = new ArrayList<String>();
     ListView listView, groupList;
@@ -53,7 +51,6 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
     GroupAdapter groupAdapter;
     Button shareEvent, groupsView, contactsView;
     List<Group> myGroups = new ArrayList<Group>();
-    ArrayList<User> allPhoneContacts = new ArrayList<User>();
     boolean isNewEvent;
 
     @Override
@@ -61,8 +58,8 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.share_events_layout);
         addToolbarView();
-        setFontType(R.id.shareEventData,R.id.cancel,R.id.eventDescription,R.id.txt_start,R.id.txt_end,R.id.eventstartDate,R.id.eventStartTime,
-                R.id.eventEndDate,R.id.eventEndtime,R.id.eventLocation);
+        setFontType(R.id.shareEventData, R.id.cancel, R.id.eventDescription, R.id.txt_start, R.id.txt_end, R.id.eventstartDate, R.id.eventStartTime,
+                R.id.eventEndDate, R.id.eventEndtime, R.id.eventLocation);
         isNewEvent = getIntent().getExtras().getBoolean("newEvent");
         listView = (ListView) findViewById(R.id.attendeeslist);
         groupList = (ListView) findViewById(R.id.grouplist);
@@ -83,7 +80,6 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
 
             @Override
             public void process() {
-                allPhoneContacts = MobileHelper.getAllPhoneContacts(getApplicationContext());
                 GroupSyncher groupSyncher = new GroupSyncher();
                 myGroups = groupSyncher.getGroupItems();
             }
@@ -92,15 +88,15 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
             public void afterPostExecute() {
                 if (myGroups.size() > 0)
                     groupsView.setVisibility(View.VISIBLE);
-                    contactsView.setVisibility(View.VISIBLE);
+                contactsView.setVisibility(View.VISIBLE);
                 updateButtons();
             }
         }.execute();
     }
 
     public void updateButtons() {
-        groupsView.setText("GROUPS " + listOfSelectedGroups.size() + " of " + myGroups.size());
-        contactsView.setText("CONTACTS " + allSelectedlist.size() + " of " + allPhoneContacts.size());
+        groupsView.setText("GROUPS ");
+        contactsView.setText("CONTACTS ");
     }
 
     private void showEventData() {
@@ -130,21 +126,21 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.groups :
+            case R.id.groups:
                 InvtAppPreferences.setGroups(myGroups);
                 Intent groupIntent = new Intent(this, MultipleGroupSelectionActivity.class);
                 startActivityForResult(groupIntent, 300);
                 break;
-            case R.id.contacts :
-                InvtAppPreferences.setContacts(allPhoneContacts);
+            case R.id.contacts:
+                InvtAppPreferences.setContacts(new ArrayList<User>());
                 Intent contactIntent = new Intent(this, MobileContactsActivity.class);
                 startActivityForResult(contactIntent, 100);
                 break;
-            case R.id.cancel :
+            case R.id.cancel:
                 finish();
                 break;
-            case R.id.shareEventData :
-                if (listOfParticipantsPhoneNumbers.size() > 0 || listOfGroupIds.size() > 0) {
+            case R.id.shareEventData:
+                if (allSelectedlist.size() > 0 || listOfGroupIds.size() > 0) {
                     new InvtAppAsyncTask(this) {
 
                         ServerResponse serverResponse;
@@ -162,15 +158,14 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                             }
                             System.out.println("Event id " + eventId);
                             if (eventId > 0) {
-                                getLatestContacts();
                                 InvitationSyncher invitationSyncher = new InvitationSyncher();
-                                serverResponse = invitationSyncher.createNewInvitation(eventId, listOfParticipantsPhoneNumbers, listOfGroupIds);
+                                serverResponse = invitationSyncher.createNewInvitation(eventId, allSelectedlist, listOfGroupIds);
                             }
                         }
 
                         @Override
                         public void afterPostExecute() {
-                            if (serverResponse!=null) {
+                            if (serverResponse != null) {
                                 String serverStatus = serverResponse.getStatus();
                                 Toast.makeText(getApplicationContext(), serverStatus, Toast.LENGTH_LONG).show();
                                 if (eventId > 0 && serverStatus.equals("Success")) {
@@ -246,29 +241,33 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
 
     private void updateContacts() {
         List<User> usersList = InvtAppPreferences.getContacts();
-        Log.d("selected contacts", usersList.size()+"");
-
-        for (User user : usersList) {
-            if (!listOfParticipantsPhoneNumbers.contains(user.getPhoneNumber())) {
-                listOfParticipantsPhoneNumbers.add(user);
-                allSelectedlist.add(user);
+        Log.d("user list", usersList.size() + "");
+        if (allSelectedlist.size() > 0) {
+            for (int i = 0; i < usersList.size(); i++) {
+                int count = 0;
+                for (int j = 0; j < allSelectedlist.size(); j++) {
+                    if (allSelectedlist.get(j).getUserName().equalsIgnoreCase(usersList.get(i).getUserName())) {
+                        count++;
+                        break;
+                    }
+                }
+                if (count == 0) {
+                    allSelectedlist.add(usersList.get(i));
+                }
             }
-        }
-    }
 
-    private void getLatestContacts(){
-        listOfParticipantsPhoneNumbers = new ArrayList<User>();
-            listOfParticipantsPhoneNumbers.addAll(allSelectedlist);
+        } else {
+            allSelectedlist.addAll(usersList);
+        }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if(allSelectedlist.size()>0) {
+        if (allSelectedlist.size() > 0) {
             User user = allSelectedlist.get(position);
             switch (view.getId()) {
                 case R.id.removeContact:
                     ToastHelper.blueToast(getApplicationContext(), "Contact Removed");
-                    listOfParticipantsPhoneNumbers.remove(user.getPhoneNumber());
                     allSelectedlist.remove(user);
                     adapter.setUsers(allSelectedlist);
                     setContactsListSize();

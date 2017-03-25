@@ -26,17 +26,126 @@
             android:textColor="@android:color/white" />
 
         <TextView
-            android:id="@+id/done"
+            android:id="@+id/share"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:layout_marginRight="10dp"
             android:clickable="true"
             android:padding="10dp"
-            android:text="DONE"
+            android:text="SHARE"
             android:textColor="@android:color/white" />
 
     </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:padding="5dp"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DATE"
+                android:textColor="@color/darkgray"
+                android:textSize="@dimen/text_size_small"
+                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                android:padding="5dp"/>
+
+            <TextView
+                android:id="@+id/event_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sat, 21/03/2017"
+                android:textColor="@color/black_shade"
+                android:textSize="@dimen/text_size_small"
+                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                android:padding="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TIME"
+                android:textColor="@color/darkgray"
+                android:textSize="@dimen/text_size_small"
+                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                android:padding="5dp"/>
+
+            <TextView
+                android:id="@+id/event_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="11.00AM - 01:00AM"
+                android:textColor="@color/black_shade"
+                android:textSize="@dimen/text_size_small"
+                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                android:padding="5dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:weightSum="10">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:src="@drawable/location_icon"
+            android:tint="@color/happening_orange"/>
+
+        <TextView
+            android:id="@+id/event_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:text="N Convention, Jubilee Hills, Hyderabad"
+            android:textColor="@color/black_shade"
+            android:textSize="@dimen/text_size_small"
+            android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:rotation="-90"
+            android:src="@drawable/near_me"
+            android:tint="@color/gray"/>
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/search"
@@ -44,7 +153,7 @@
         android:layout_height="wrap_content"
         android:minHeight="30dp"
         android:padding="5dp"
-        android:drawableLeft="@drawable/places_ic_search"
+        android:drawableRight="@drawable/places_ic_search"
         android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
         android:hint="Search by contact no or name"
         android:singleLine="true"
