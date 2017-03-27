@@ -32,44 +32,25 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="50dp"
+                    android:gravity="center"
+                    android:text="Profile"
+                    android:textColor="@android:color/white"
+                    android:visibility="invisible"/>
+
+        </android.support.v7.widget.Toolbar>
 
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/profileInfo_contactNumber"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:gravity="center_vertical"
-                android:text="Contact Number"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_medium" />
-
-            <TextView
-                android:id="@+id/profileInfo_emailId"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:gravity="center_vertical"
-                android:text="Email ID"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_medium" />
-
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_poke"
@@ -84,5 +65,115 @@
         app:layout_anchor="@+id/app_bar_layout"
         app:layout_anchorGravity="bottom|right"
         android:layout_gravity="center_vertical|left" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profileInfo_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:gravity="center_vertical"
+                android:text="Contact Name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size"
+                android:background="@color/black_shade"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:src="@drawable/phone"
+                    android:tint="@color/happening_orange"/>
+
+                <TextView
+                    android:id="@+id/txt_phoneNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Mobile"
+                    android:textColor="@color/happening_orange"
+                    android:textSize="@dimen/text_medium" />
+
+                <TextView
+                    android:id="@+id/profileInfo_contactNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:text="Contact Number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/grey_light"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:src="@drawable/mail"
+                    android:tint="@color/happening_orange"/>
+
+                <TextView
+                    android:id="@+id/txt_email"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Email"
+                    android:textColor="@color/happening_orange"
+                    android:textSize="@dimen/text_medium" />
+
+                <TextView
+                    android:id="@+id/profileInfo_emailId"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:text="Email ID"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/grey_light"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

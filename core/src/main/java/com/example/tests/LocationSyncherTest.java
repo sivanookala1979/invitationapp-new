@@ -21,7 +21,7 @@ public class LocationSyncherTest extends BaseSyncherTest {
 
         public void testForPostUserLocationHAPPYFlow() throws Exception {
             // Setup fixture
-            UserLocation location = getDefaultLocation(14.912731, 79.988869, "2015-12-30 11:23:23");
+            UserLocation location = getDefaultLocation(15.5057, 80.0499, "2017-03-27 01:11:23");
             // Exercise SUT
             ServerResponse response = sut.postUserLocation(location);
             String actual = response.getStatus();
@@ -48,7 +48,7 @@ public class LocationSyncherTest extends BaseSyncherTest {
     protected void setUp() throws Exception {
         super.setUp();
         sut = new LocationSyncher();
-        BaseSyncher.setAccessToken("cf80d2e44bd34aa78eb7dc4d17f7ea33");
+        BaseSyncher.setAccessToken("ced34ed2c58a4c82a167fd0a24e8ef14");
     }
 
     @Override

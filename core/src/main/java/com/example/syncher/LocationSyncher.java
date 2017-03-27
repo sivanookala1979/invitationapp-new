@@ -119,7 +119,7 @@ public class LocationSyncher extends BaseSyncher {
                 {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        MyMarker location = new MyMarker();
+                        MyMarker location = new MyMarker("Adarsh", "9949257729", "", 14.9132, 79.9930, 5);
                         location.setDateTime(StringUtils.getFormatedDateFromServerFormatedDate(jsonObject.getString("time")));
                         if (!jsonObject.isNull("latitude")) {
                             location.setLatitude(StringUtils.getDoubleFormString(jsonObject.getString("latitude")));

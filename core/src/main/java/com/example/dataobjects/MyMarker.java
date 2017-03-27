@@ -15,8 +15,32 @@ public class MyMarker {
     private Double latitude;
     private Double longitude;
     private String dateTime;
+    private String image;
+    private int distance;
 
-    public MyMarker() {
+    public MyMarker(String inviteeeName, String contactNumber, String image, Double latitude, Double longitude, int distance) {
+        this.inviteeeName = inviteeeName;
+        this.contactNumber = contactNumber;
+        this.image = image;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.distance = distance;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getInviteeName() {

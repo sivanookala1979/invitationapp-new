@@ -17,6 +17,7 @@ import com.cerone.invitation.activities.EventDetailsActivity;
 import com.cerone.invitation.activities.NewEventActivity;
 import com.cerone.invitation.activities.PersonalizeActivity;
 import com.cerone.invitation.activities.ShareEventActivity;
+import com.cerone.invitation.activities.ShowInviteePositions;
 import com.cerone.invitation.activities.chat.IntraChatActivity;
 import com.cerone.invitation.adapter.FoldingCellListAdapter;
 import com.cerone.invitation.helpers.HomeScreenCommunicator;
@@ -137,6 +138,10 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                         intent.putExtra("UserId", event.getOwnerId());
                         intent.putExtra("UserImage", "");
                         intent.putExtra("UserName", event.getOwnerName());
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_address:
+                        intent = new Intent(getActivity(), ShowInviteePositions.class);
                         startActivity(intent);
                         break;
                     default:

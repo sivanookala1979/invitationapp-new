@@ -1,8 +1,9 @@
 package com.cerone.invitation;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.AppBarLayout;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,7 +12,7 @@ import com.squareup.picasso.Picasso;
 
 public class ProfileInfo extends BaseActivity {
 
-    TextView profileMobileNum, profileEmail;
+    TextView profileName, profileMobileNum, profileEmail;
     ImageView profileImage;
     String image;
 
@@ -21,21 +22,41 @@ public class ProfileInfo extends BaseActivity {
         setContentView(R.layout.activity_profile_info);
         addToolbarView();
 
-        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
-        collapsingToolbar.setTitle(getIntent().getExtras().getString("UserName"));
-        final Typeface tf = Typeface.createFromAsset(this.getAssets(), "fonts/AvenirNextLTPro-Regular.otf");
-        collapsingToolbar.setCollapsedTitleTypeface(tf);
-        collapsingToolbar.setExpandedTitleTypeface(tf);
-        setFontType(R.id.profileInfo_contactNumber,R.id.profileInfo_emailId);
+        setFontType(R.id.profileInfo_name, R.id.profileInfo_contactNumber,R.id.profileInfo_emailId, R.id.txt_phoneNumber, R.id.txt_email);
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
 
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                TextView title = (TextView) findViewById(R.id.toolbar_title);
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    title.setVisibility(View.VISIBLE);
+                    toolbar.setBackground(getResources().getDrawable(R.drawable.my_theme));
+                    isShow = true;
+                } else if(isShow) {
+                    title.setVisibility(View.INVISIBLE);
+                    toolbar.getBackground().setAlpha(0);
+                    isShow = false;
+                }
+            }
+        });
+
+        profileName = (TextView) findViewById(R.id.profileInfo_name);
         profileMobileNum = (TextView) findViewById(R.id.profileInfo_contactNumber);
         profileEmail = (TextView) findViewById(R.id.profileInfo_emailId);
         profileImage = (ImageView) findViewById(R.id.header);
 
         image = getIntent().getExtras().getString("UserImage");
 
-        profileMobileNum.setText("Contact Number: "+getIntent().getExtras().getString("UserMobile"));
-        profileEmail.setText("Email ID: "+getIntent().getExtras().getString("UserEmail"));
+        profileName.setText(getIntent().getExtras().getString("UserName"));
+        profileMobileNum.setText(getIntent().getExtras().getString("UserMobile"));
+        profileEmail.setText(getIntent().getExtras().getString("UserEmail"));
         if(image!= null && image.length()>0) {
             Picasso.with(getApplicationContext()).load(image).into(profileImage);
         }

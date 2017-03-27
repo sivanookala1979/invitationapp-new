@@ -93,6 +93,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
             viewHolder.actionsLayout = (LinearLayout)cell.findViewById(R.id.actionsLayout);
             viewHolder.chatLayout = (LinearLayout)cell.findViewById(R.id.chatLayout);
             viewHolder.individualChatIcon = (ImageView) cell.findViewById(R.id.chatIcon);
+            viewHolder.navAddress = (ImageView) cell.findViewById(R.id.nav_address);
             cell.setTag(viewHolder);
         } else {
             if (unfoldedIndexes.contains(position)) {
@@ -104,7 +105,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
         }
         viewHolder.participantsStatisticsLayout.setVisibility(View.GONE);
         viewHolder.chatLayout.setOnClickListener(createOnClickListener(position, parent));
-        //viewHolder.individualChatIcon.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.navAddress.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.showEventIcon.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.actionOneLayout.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.actionTwoLayout.setOnClickListener(createOnClickListener(position, parent));
@@ -245,7 +246,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
         ImageView eventHeaderIcon, eventImageFooter, ownerImage;
         TextView eventNameHeader, colourIndicator, eventAddressHeader, eventDateTimeInfo, eventNameFooter, ownerName, eventStartDate, eventTimings, eventAddressFooter, inviteesCount, acceptedCount, rejectedCount;
         LinearLayout participantsLayout, actionOneLayout, actionTwoLayout, actionThreeLayout, eventDetailsLayout, participantsStatisticsLayout,actionsLayout,chatLayout;
-        ImageView actionOneIcon, actionTwoIcon, actionThreeIcon, showEventIcon,individualChatIcon;
+        ImageView actionOneIcon, actionTwoIcon, actionThreeIcon, showEventIcon,individualChatIcon, navAddress;
 
     }
 }

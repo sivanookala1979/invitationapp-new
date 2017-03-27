@@ -32,10 +32,9 @@ public class EventsDetailActivity extends BaseActivity implements OnMapReadyCall
     public void onMapReady(GoogleMap googleMap) {
 
         map = googleMap;
-        map.clear();
         LatLng location = new LatLng(17.4325, 78.4070);
-        map.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.happening)).position(location).title("N Convention, Jubilee Hills, Hyderabad")).setVisible(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 16));
+        map.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.locatin_marker_user)).position(location).title("Kavali")).setVisible(true);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 5));
     }
 }
 
