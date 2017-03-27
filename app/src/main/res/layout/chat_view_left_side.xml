@@ -6,6 +6,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="horizontal"
@@ -14,9 +16,25 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp">
+
+            <ImageView
+                android:id="@+id/participantImage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/avatar" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/bubble_out"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -28,11 +46,11 @@
                     android:id="@+id/chat_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:text="Adverd Waston"
                     android:textColor="@color/white"
-                    android:layout_marginRight="10dp"
-                    android:textSize="@dimen/small_text_size" />
+                    android:textSize="@dimen/text_size_very_small" />
 
                 <TextView
                     android:id="@+id/date_time"
@@ -42,15 +60,13 @@
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:text="9:10 AM"
                     android:textColor="@color/blue_shade"
-
-                    android:textSize="@dimen/small_text_size"
+                    android:textSize="@dimen/text_size_very_small"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -60,7 +76,9 @@
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:text="Hi, how are you?"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_medium" />
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textSize="@dimen/text_size_very_small" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

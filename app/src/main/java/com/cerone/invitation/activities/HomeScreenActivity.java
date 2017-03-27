@@ -59,12 +59,12 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     int ownerId = 0;
     User profile;
     TextView userName;
-    ImageView userImage,eventFilterIcon,invitationFilterIcon;
+    ImageView userImage, eventFilterIcon, invitationFilterIcon;
     ViewPager viewPager;
     TabLayout mPagerSlidingTabStrip;
     PagerAdapter mPagerAdapter;
     TextView screenTitle;
-    LinearLayout eventFilter,invitationsFilter;
+    LinearLayout eventFilter, invitationsFilter;
     LinearLayout filteringLayout;
 
 
@@ -73,14 +73,15 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_menu_activity);
         InvtAppPreferences.setScreenRefreshStatus(false);
+        InvtAppPreferences.setProfileUpdatedStatus(false);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add);
         floatingActionButton.setVisibility(View.VISIBLE);
         screenTitle = (TextView) findViewById(R.id.toolbar_title);
-        eventFilterIcon = (ImageView)findViewById(R.id.eventFilterIcon);
-        invitationFilterIcon = (ImageView)findViewById(R.id.invitationFilterIcon);
-        eventFilter = (LinearLayout)findViewById(R.id.radio_events);
-        invitationsFilter = (LinearLayout)findViewById(R.id.radio_invitations);
-        filteringLayout = (LinearLayout)findViewById(R.id.filteringMenu);
+        eventFilterIcon = (ImageView) findViewById(R.id.eventFilterIcon);
+        invitationFilterIcon = (ImageView) findViewById(R.id.invitationFilterIcon);
+        eventFilter = (LinearLayout) findViewById(R.id.radio_events);
+        invitationsFilter = (LinearLayout) findViewById(R.id.radio_invitations);
+        filteringLayout = (LinearLayout) findViewById(R.id.filteringMenu);
         filteringLayout.setVisibility(View.VISIBLE);
         closePreviousServices();
         Log.d("Token", InvtAppPreferences.getAccessToken());
@@ -105,12 +106,12 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         eventFilter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!eventFilter.isSelected()){
+                if (!eventFilter.isSelected()) {
                     eventFilter.setSelected(true);
-                }else{
-                    if(invitationsFilter.isSelected()){
+                } else {
+                    if (invitationsFilter.isSelected()) {
                         eventFilter.setSelected(false);
-                    }else {
+                    } else {
                         eventFilter.setSelected(false);
                         invitationsFilter.setSelected(true);
                     }
@@ -122,12 +123,12 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             @Override
             public void onClick(View view) {
 
-                if(!invitationsFilter.isSelected()){
+                if (!invitationsFilter.isSelected()) {
                     invitationsFilter.setSelected(true);
-                }else{
-                    if(eventFilter.isSelected()){
+                } else {
+                    if (eventFilter.isSelected()) {
                         invitationsFilter.setSelected(false);
-                    }else {
+                    } else {
                         invitationsFilter.setSelected(false);
                         eventFilter.setSelected(true);
                     }
@@ -165,13 +166,17 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
 
             }
         });
+        updateProfileImageAndName();
 
     }
 
     @Override
     protected void onResume() {
-        super.onRestart();
-        updateProfileImageAndName();
+        super.onResume();
+        if (InvtAppPreferences.isProfileUpdated()) {
+            updateProfileImageAndName();
+            InvtAppPreferences.setProfileUpdatedStatus(false);
+        }
     }
 
     private void createTabViews() {
@@ -200,11 +205,11 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
 
     private void applyFilters() {
         int color = getResources().getColor(R.color.happening_red);
-        eventFilterIcon.setColorFilter(eventFilterIcon.isSelected()?color:Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        invitationFilterIcon.setColorFilter(invitationFilterIcon.isSelected()?color:Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        eventFilterIcon.setColorFilter(eventFilterIcon.isSelected() ? color : Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        invitationFilterIcon.setColorFilter(invitationFilterIcon.isSelected() ? color : Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         Fragment page = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + viewPager.getCurrentItem());
         if (viewPager.getCurrentItem() == 0 && page != null) {
-            ((HomeFoldingFragment)page).updateData(eventFilter.isSelected(),invitationsFilter.isSelected());
+            ((HomeFoldingFragment) page).updateData(eventFilter.isSelected(), invitationsFilter.isSelected());
         }
     }
 
@@ -259,7 +264,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                 }
             }
 
-        }.execute();
+        }.setShowProgress(false).execute();
     }
 
 

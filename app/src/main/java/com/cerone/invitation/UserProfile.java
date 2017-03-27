@@ -160,6 +160,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
                                     if (userDetails != null) {
                                         InvtAppPreferences.setProfileDetails(userDetails);
                                         InvtAppPreferences.setProfileGiven(true);
+                                        InvtAppPreferences.setProfileUpdatedStatus(true);
                                         Toast.makeText(getApplicationContext(), "Profile Successfully updated", Toast.LENGTH_LONG).show();
                                         finish();
                                     } else {

@@ -38,6 +38,9 @@ public class IntraChatSyncher extends BaseSyncher {
                 if(jsonObject.has("id")) {
                     message.setId(jsonObject.getInt("id"));
                 }
+                if(jsonObject.has("image")) {
+                    message.setUserImage(jsonObject.getString("image"));
+                }
                 message.setUserName(jsonObject.getString("user_name"));
 
                 Date updatedAt = StringUtils.chatStringToDate(StringUtils.getFormatedDateFromServerFormatedDate(jsonObject.getString("updated_at")));
@@ -55,6 +58,9 @@ public class IntraChatSyncher extends BaseSyncher {
                 message.setFromID(jsonObject.getInt("from_id"));
                 if(jsonObject.has("id")) {
                     message.setId(jsonObject.getInt("id"));
+                }
+                if(jsonObject.has("image")) {
+                    message.setUserImage(jsonObject.getString("image"));
                 }
                 message.setUserName(jsonObject.getString("user_name"));
                 Date updatedAt = StringUtils.chatStringToDate(StringUtils.getFormatedDateFromServerFormatedDate(jsonObject.getString("updated_at")));

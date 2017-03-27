@@ -51,6 +51,8 @@ public class InvtAppPreferences {
     private static final String IS_PROFILE_GIVEN = "profilegiven";
     private static final String CHAT_INFO = "chatinfo";
     private static final String SCREEN_REFRESH_STATUS = "screenRefreshScreen";
+    private static final String PROFILE_SCREEN_STATUS = "profileScreenStatus";
+
 
 
     public static SharedPreferences getPref() {
@@ -73,6 +75,14 @@ public class InvtAppPreferences {
 
     public static boolean isScreenRefresh() {
         return pref.getBoolean(SCREEN_REFRESH_STATUS, false);
+    }
+
+    public static void setProfileUpdatedStatus(boolean loggedIn) {
+        pref.edit().putBoolean(PROFILE_SCREEN_STATUS, loggedIn).commit();
+    }
+
+    public static boolean isProfileUpdated() {
+        return pref.getBoolean(PROFILE_SCREEN_STATUS, false);
     }
 
 

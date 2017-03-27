@@ -6,18 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.FontTypes;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.example.dataobjects.ChatInfo;
 import com.example.dataobjects.ChatMessage;
 import com.example.utills.HTTPUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static com.cerone.invitation.R.id.cameraIcon;
 
 /**
  * Created by suzuki on 11-05-2016.
@@ -79,6 +84,10 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
             }else{
                 userName.setText(chatMessageObj.getUserName());
             }
+            ImageView profileImage = (ImageView) row.findViewById(R.id.participantImage);
+            String image = chatMessageObj.getUserImage();
+            Picasso.with(this.context).load((image==null ||image.isEmpty())?"sfd":chatMessageObj.getUserImage()).placeholder(R.drawable.logo).transform(new CircleTransform()).into(profileImage);
+
         } else {
             row = inflater.inflate(R.layout.chat_view_right_side, parent, false);
             me = (TextView) row.findViewById(R.id.me);
