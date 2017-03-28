@@ -5,12 +5,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cerone.invitation.activities.BaseActivity;
@@ -53,15 +54,35 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_user_profile);
         addToolbarView();
-        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
-        collapsingToolbar.setTitle("Profile");
-        final Typeface tf = Typeface.createFromAsset(this.getAssets(), "fonts/AvenirNextLTPro-Regular.otf");
-        collapsingToolbar.setCollapsedTitleTypeface(tf);
-        collapsingToolbar.setExpandedTitleTypeface(tf);
         setFontType(R.id.txt_name, R.id.txt_phone, R.id.txt_status, R.id.txt_email, R.id.txt_gender, R.id.profile_name, R.id.profile_phone, R.id.profile_status,
                 R.id.profile_email, R.id.register);
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                TextView title = (TextView) findViewById(R.id.toolbar_title);
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    title.setVisibility(View.VISIBLE);
+                    toolbar.setBackground(getResources().getDrawable(R.drawable.my_theme));
+                    isShow = true;
+                } else if(isShow) {
+                    title.setVisibility(View.INVISIBLE);
+                    toolbar.getBackground().setAlpha(0);
+                    isShow = false;
+                }
+            }
+        });
         name = (EditText) findViewById(R.id.profile_name);
         phone = (EditText) findViewById(R.id.profile_phone);
         status = (EditText) findViewById(R.id.profile_status);
@@ -98,7 +119,6 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
                     email.setText(userDetails.getEmailId());
                     user.setUserName(userDetails.getUserName());
                     user.setPhoneNumber(userDetails.getPhoneNumber());
-                    if(userDetails.getStatus()==null) userDetails.setStatus("");
                     user.setStatus(userDetails.getStatus());
                     user.setImage(userDetails.getImage());
                     user.setEmailId(userDetails.getEmailId());

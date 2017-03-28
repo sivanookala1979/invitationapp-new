@@ -11,11 +11,11 @@
 
     <ImageView
         android:id="@+id/pickerImage"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="32dp"
+        android:layout_height="35dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="9dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="8dp"
         android:src="@drawable/circle_image"
          />
 

@@ -92,8 +92,8 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
         eventLocation.setText(eventDetails.getAddress());
         participantsInfo.setText("invitees ");
         if(eventDetails.isInvitation()){
-            editEvent.setVisibility(View.INVISIBLE);
-            deleteEvent.setVisibility(View.INVISIBLE);
+            editEvent.setVisibility(View.GONE);
+            deleteEvent.setVisibility(View.GONE);
             editOrShareIdon.setBackgroundResource(R.drawable.group);
             invitationSelection = (LinearLayout) eventBaseView.findViewById(R.id.invitationSelection);
             invitationSelection.setVisibility(View.VISIBLE);

@@ -4,14 +4,14 @@
     android:layout_height="100dp"
     android:orientation="vertical"
     android:padding="5dp"
-    android:backgroundTint="@color/darkgray">
+    android:backgroundTint="@color/black_shade">
 
     <ImageView
         android:id="@+id/eventItem_image"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:src="@drawable/google"
-        android:tint="@color/darkgray"
+        android:tint="@color/black_shade"
         android:layout_gravity="center">
 
     </ImageView>
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Event Item"
         android:gravity="center"
-        android:textColor="@color/darkgray"
+        android:textColor="@color/black_shade"
         android:textSize="@dimen/small_text_size">
 
     </TextView>

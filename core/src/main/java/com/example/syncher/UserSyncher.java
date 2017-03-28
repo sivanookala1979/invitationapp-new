@@ -133,13 +133,13 @@ public class UserSyncher extends BaseSyncher {
                 user.setUserName(jsonObject.getString("user_name"));
             if (jsonObject.has("phone_number"))
                 user.setPhoneNumber(jsonObject.getString("phone_number"));
-            if (jsonObject.has("status"))
+            if (!jsonObject.isNull("status")&&jsonObject.has("status"))
                 user.setStatus(jsonObject.getString("status"));
             if (jsonObject.has("image_url"))
                 user.setImage(jsonObject.getString("image_url"));
-            if (jsonObject.has("email"))
+            if (!jsonObject.isNull("email")&&jsonObject.has("email"))
                 user.setEmailId(jsonObject.getString("email"));
-            if (jsonObject.has("gender"))
+            if (!jsonObject.isNull("gender")&&jsonObject.has("gender"))
                 user.setGender(jsonObject.getString("gender"));
             if (jsonObject.has("is_profile_given"))
                 user.setProfileGiven(jsonObject.getBoolean("is_profile_given"));

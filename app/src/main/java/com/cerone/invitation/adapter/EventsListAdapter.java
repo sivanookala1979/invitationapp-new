@@ -63,8 +63,8 @@ import java.util.List;
             eventText.setTextColor(Color.parseColor("#f06824"));
             eventImage.setColorFilter(Color.parseColor("#f06824"));
         }else{
-                eventText.setTextColor(Color.parseColor("#C0C0C0"));
-                eventImage.setColorFilter(Color.parseColor("#C0C0C0"));
+                eventText.setTextColor(Color.parseColor("#696969"));
+                eventImage.setColorFilter(Color.parseColor("#696969"));
         }
             row.setOnClickListener(createOnClickListener(position, parent));
             return row;
