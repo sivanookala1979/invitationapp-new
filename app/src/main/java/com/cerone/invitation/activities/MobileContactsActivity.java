@@ -2,6 +2,8 @@ package com.cerone.invitation.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
@@ -33,7 +35,7 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
     EditText searchTextField;
     ListView contactsListView;
     TextView inviteFriends;
-    List<User> allContacts = new ArrayList<User>();
+    List<User> allContacts;
     List<User> filterList = new ArrayList<User>();
     List<User> selectedList = new ArrayList<User>();
     ContactsAdapter contactsAdapter;
@@ -43,13 +45,12 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contacts_activity_layout);
         addToolbarView();
+        final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         searchTextField = (EditText) findViewById(R.id.search);
         contactsListView = (ListView) findViewById(R.id.contactsListView);
         inviteFriends = (TextView) findViewById(R.id.share);
         inviteFriends.setOnClickListener(this);
         contactsListView.setOnItemClickListener(this);
-        contactsAdapter = new ContactsAdapter(MobileContactsActivity.this, R.layout.contact_layout, allContacts);
-        contactsListView.setAdapter(contactsAdapter);
         contactsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         searchTextField.addTextChangedListener(new HappeningTextWatcher() {
             @Override
@@ -65,12 +66,35 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
                 contactsAdapter.updateAdapter(filterList);
             }
         });
-        loadAllMobileContacts();
+        allContacts = InvtAppPreferences.getAllContacts();
+        if(allContacts.size() == 0){
+            loadAllMobileContacts();
+            InvtAppPreferences.setAllContacts(allContacts);
+        }
+        contactsAdapter = new ContactsAdapter(MobileContactsActivity.this, R.layout.contact_layout, allContacts);
+        contactsListView.setAdapter(contactsAdapter);
         try {
             showEventData();
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeView.setRefreshing(true);
+                allContacts.clear();
+                loadAllMobileContacts();
+                InvtAppPreferences.setAllContacts(allContacts);
+                Log.d("Swipe", "Refreshing Number");
+                ( new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeView.setRefreshing(false);
+                    }
+                }, 1000);
+            }
+        });
     }
 
     private void showEventData() throws ParseException {
@@ -115,8 +139,10 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
 
                 @Override
                 public void afterPostExecute() {
-                    filterList.addAll(allContacts);
-                    contactsAdapter.updateAdapter(filterList);
+                    if(allContacts.size()>0) {
+                        filterList.addAll(allContacts);
+                        contactsAdapter.updateAdapter(filterList);
+                    }
                 }
             }.execute();
         }

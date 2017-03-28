@@ -41,6 +41,7 @@ public class InvtAppPreferences {
     private static final String PARTICIPANT_LOCATIONS = "ParticipantLocations";
     private static final String SERVICE_INFORMATION = "serviceInformation";
     private static final String SELECTED_CONTACTS = "contacts";
+    private static final String ALL_CONTACTS = "allContacts";
     private static final String INVITATION = "invitation";
     private static final String SELECTED_GROUPS = "groups";
     private static final String REFRESH_SERVICE = "refreshService";
@@ -180,7 +181,7 @@ public class InvtAppPreferences {
     public static List<User> getContacts() {
         java.lang.reflect.Type type = new TypeToken<List<User>>() {
         }.getType();
-        List<User> contacts = new Gson().fromJson(pref.getString(SELECTED_CONTACTS, ""), type);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        List<User> contacts = new Gson().fromJson(pref.getString(SELECTED_CONTACTS, ""), type);
         if (contacts == null) {
             contacts = new ArrayList<User>();
         }
@@ -190,6 +191,21 @@ public class InvtAppPreferences {
     public static void setContacts(List<User> contacts) {
         String contactDetails = new Gson().toJson(contacts);
         pref.edit().putString(SELECTED_CONTACTS, contactDetails).commit();
+    }
+
+    public static List<User> getAllContacts() {
+        java.lang.reflect.Type type = new TypeToken<List<User>>() {
+        }.getType();
+        List<User> contacts = new Gson().fromJson(pref.getString(ALL_CONTACTS, ""), type);
+        if (contacts == null) {
+            contacts = new ArrayList<User>();
+        }
+        return contacts;
+    }
+
+    public static void setAllContacts(List<User> contacts) {
+        String contactDetails = new Gson().toJson(contacts);
+        pref.edit().putString(ALL_CONTACTS, contactDetails).commit();
     }
 
     public static List<Group> getGroups() {

@@ -161,6 +161,12 @@
         android:textColor="@color/black"
         android:textStyle="normal|italic" />
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeRefresh">
+
     <ListView
         android:id="@+id/contactsListView"
         android:layout_width="match_parent"
@@ -168,5 +174,7 @@
         android:dividerHeight="1dp"
         android:divider="@color/gray"
         android:background="@color/white"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>
