@@ -36,6 +36,8 @@ import com.ramotion.foldingcell.FoldingCell;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cerone.invitation.R.drawable.event;
+
 /**
  * Created by adarsh on 3/19/17.
  */
@@ -79,7 +81,8 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                         } else {
                             eventDetails = event;
                             if (event.isAccepted()) {
-                                ToastHelper.blueToast(getActivity(), "Need to show google map.");
+                                intent = new Intent(getActivity(), ShowInviteePositions.class);
+                                startActivity(intent);
                             } else {
                                 showLocationPermissionDialog();
                             }
@@ -91,7 +94,8 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                             startActivity(intent);
                         } else {
                             if (event.isAccepted()) {
-                                ToastHelper.blueToast(getActivity(), "Need to show Chat screen");
+                                intent = new Intent(getActivity(), EventDetailsActivity.class);
+                                startActivity(intent);
                             }
                         }
                         break;
@@ -246,12 +250,7 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
             public void afterPostExecute() {
                 Toast.makeText(getActivity(), serverResponse.getStatus(), Toast.LENGTH_LONG).show();
                 if (serverResponse.getId() > 0) {
-                    for (Event eventInfo : allEventsList) {
-                        if (eventInfo.getEventId() == event.getEventId()) {
-                            allEventsList.remove(eventInfo);
-                            break;
-                        }
-                    }
+                    deleteEventByEventId(event.getEventId());
                     applyFilters();
                 }
             }
@@ -279,11 +278,25 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                             break;
                         }
                     }
+                    if(!status){
+                        deleteEventByEventId(event.getEventId());
+                    }
                     applyFilters();
                 }
                 ToastHelper.blueToast(getActivity(), response.getMessage());
             }
+
+
         }.execute();
+    }
+    public void deleteEventByEventId(int eventId) {
+        for (Event eventInfo : allEventsList) {
+            if (eventInfo.getEventId() == eventId) {
+                allEventsList.remove(eventInfo);
+                Log.d("Delete","Removed event");
+                break;
+            }
+        }
     }
 
 }

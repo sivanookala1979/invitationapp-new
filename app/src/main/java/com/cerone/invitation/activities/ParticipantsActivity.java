@@ -48,6 +48,8 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
     String title;
     boolean isAdmin;
     ServerResponse serverResponse;
+    Event selectedEvent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,12 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
         groupId = getIntent().getExtras().getInt("groupId");
         eventId = getIntent().getExtras().getInt("eventId");
         eventId = getIntent().getExtras().getInt("eventId");
-        isAdmin = getIntent().getExtras().getBoolean("IsAdmin");
+        selectedEvent= InvtAppPreferences.getEventDetails();
+        if(selectedEvent!=null && eventId==selectedEvent.getEventId()){
+            if(selectedEvent.isAccepted()||(selectedEvent.getOwnerId()==InvtAppPreferences.getOwnerId())) {
+                isAdmin = selectedEvent.isAdmin();
+            }
+        }
         getParticipants();
     }
 
