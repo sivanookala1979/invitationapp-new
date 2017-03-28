@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
@@ -21,12 +22,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.MyMarker;
 import com.example.syncher.LocationSyncher;
+import com.example.utills.HTTPUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -38,6 +41,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +50,7 @@ import java.util.List;
 import static com.cerone.invitation.R.id.map;
 
 
-public class ShowInviteePositions extends BaseActivity implements OnClickListener,OnMapReadyCallback {
+public class ShowInviteePositions extends BaseActivity implements OnClickListener, OnMapReadyCallback {
 
     GoogleMap googleMap;
     Button doneButton;
@@ -61,7 +65,7 @@ public class ShowInviteePositions extends BaseActivity implements OnClickListene
         setContentView(R.layout.google_map_layout);
         addToolbarView();
         doneButton = (Button) findViewById(R.id.done);
-        TextView headerTitle = (TextView)findViewById(R.id.toolbar_title);
+        TextView headerTitle = (TextView) findViewById(R.id.toolbar_title);
         headerTitle.setText("Participants Locations");
         findViewById(R.id.selectionDetailsLayout).setVisibility(View.GONE);
         doneButton.setOnClickListener(this);
@@ -116,7 +120,7 @@ public class ShowInviteePositions extends BaseActivity implements OnClickListene
     }
 
     private void plotMarkers() {
-        if(googleMap != null) {
+        if (googleMap != null) {
             if (mMyMarkersArray.size() > 0) {
                 plotMarkers(mMyMarkersArray);
             } else {
@@ -126,13 +130,40 @@ public class ShowInviteePositions extends BaseActivity implements OnClickListene
     }
 
     private void plotMarkers(List<MyMarker> markers) {
-        Log.d("size", markers.size()+"");
+        Log.d("size", markers.size() + "");
         if (markers.size() > 0) {
             for (MyMarker myMarker : markers) {
                 final View customMarker = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-                    .inflate(R.layout.custom_marker, null);
+                        .inflate(R.layout.custom_marker, null);
                 final ImageView pickerImage = (ImageView) customMarker.findViewById(R.id.pickerImage);
-                Picasso.with(getApplicationContext()).load(myMarker.getImage()).into(pickerImage);
+                Picasso.with(getApplicationContext())
+                        .load(myMarker.getImage()).into(new Target() {
+
+                    @Override
+                    public void onPrepareLoad(Drawable arg0) {
+
+                    }
+
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap,
+                                               Picasso.LoadedFrom arg1) {
+                        Log.d("DEBUGMAPS", "on Success Start");
+
+                        try {
+                            Thread.sleep(100);
+                            Bitmap roundedCornerBitmap = HTTPUtils.getRoundedCornerBitmap(bitmap, 96);
+                            pickerImage.setImageBitmap(roundedCornerBitmap);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable arg0) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
                 LatLng latLng = new LatLng(myMarker.getLatitude(), myMarker.getLongitude());
                 MarkerOptions markerOption = new MarkerOptions().position(latLng);
                 markerOption.icon(BitmapDescriptorFactory.fromBitmap(ShowInviteePositions.createDrawableFromView(this, customMarker)));
@@ -154,7 +185,7 @@ public class ShowInviteePositions extends BaseActivity implements OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.done :
+            case R.id.done:
                 finish();
                 break;
         }
@@ -176,16 +207,17 @@ public class ShowInviteePositions extends BaseActivity implements OnClickListene
                     .inflate(R.layout.infowindow_layout, null);
             MyMarker myMarker = mMarkersHashMap.get(marker);
             TextView distance = (TextView) v.findViewById(R.id.distance);
-            distance.setText(myMarker.getDistance()+"KM");
+            distance.setText(myMarker.getDistance() + "KM");
             return v;
         }
     }
+
     @Override
     public void onMapReady(GoogleMap map) {
         googleMap = map;
         loadAndShowLocationData();
         try {
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)!= MockPackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != MockPackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this,
                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_PERMISSION);
                 // If any permission above not allowed by user, this condition will execute every time, else your else part will work

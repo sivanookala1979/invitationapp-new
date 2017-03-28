@@ -46,7 +46,7 @@
                     android:layout_margin="5dp"
                     android:minHeight="30dp"
                     android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:id="@+id/radio_events"
