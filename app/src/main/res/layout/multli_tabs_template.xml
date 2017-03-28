@@ -62,7 +62,7 @@
                             android:duplicateParentState="true"
                             android:scaleType="centerCrop"
                             android:tint="@color/happening_red"
-                            android:src="@drawable/open_mail" />
+                            android:src="@drawable/events_calander" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -79,7 +79,8 @@
                             android:layout_height="20dp"
                             android:duplicateParentState="true"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/open_mail" />
+                            android:tint="@color/white"
+                            android:src="@drawable/invitation_icon" />
                     </LinearLayout>
 
 
