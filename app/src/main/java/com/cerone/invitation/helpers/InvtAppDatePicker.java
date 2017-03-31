@@ -8,15 +8,15 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.utills.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
-
 
 
 /**
@@ -25,22 +25,22 @@ import java.util.Locale;
  */
 public class InvtAppDatePicker implements DatePickerDialog.OnDateSetListener {
 
-    EditText editText;
-    String DATE_FORMAT = "yyyy-MM-dd ";
+    TextView textView1;
+    TextView textView2;
+    TextView textView3;
+    String referDate;
+    String DATE_FORMAT = "dd MM yyyy";
     Calendar calendar;
-    EditText refEditText;
     boolean isStartDate;
 
-    public InvtAppDatePicker(EditText editText, Calendar calendar) {
-        this.editText = editText;
-        this.calendar = calendar;
-    }
-
-    public InvtAppDatePicker(EditText editText, Calendar calendar, EditText refEditText, boolean isStartDate) {
+    public InvtAppDatePicker(TextView textView1, TextView textView2, TextView textView3, Calendar calendar, String referDate, boolean isStartDate) {
         this.isStartDate = isStartDate;
-        this.refEditText = refEditText;
-        this.editText = editText;
+        this.textView1 = textView1;
+        this.textView2 = textView2;
+        this.textView3 = textView3;
+        this.referDate = referDate;
         this.calendar = calendar;
+
     }
 
     @Override
@@ -50,43 +50,51 @@ public class InvtAppDatePicker implements DatePickerDialog.OnDateSetListener {
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, monthOfYear);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        if (editText != null && calendar != null) {
-            String selectdData = simpleDateFormat.format(calendar.getTime());
-            if (refEditText == null)
-                editText.setText(selectdData);
-            else {
-                String refDate = refEditText.getText().toString();
-                if (isStartDate) {
-                    if (StringUtils.isOldDate(selectdData)) {
-                        editText.setText(selectdData);
-                        if (!StringUtils.validateStartAndEndDates(selectdData, refDate)) {
-                            refEditText.setText(selectdData);
-                        }
+        String selectdData = simpleDateFormat.format(calendar.getTime());
+        String[] date = selectdData.split(" ");
+        if (textView1 != null && textView2 != null && textView3 != null && calendar != null) {
+            if (referDate == null && referDate.isEmpty())
+                textView1.setText(date[0]);
+                textView2.setText(date[1]);
+                textView3.setText(date[2]);
+        } else {
+            String refDate = referDate;
+            if (isStartDate) {
+                if (StringUtils.isOldDate(selectdData)) {
+                    textView1.setText(date[0]);
+                    textView2.setText(date[1]);
+                    textView3.setText(date[2]);
+                    if (!StringUtils.validateStartAndEndDates(selectdData, refDate)) {
+                        //refEditText.setText(selectdData);
                     } else {
-                        ToastHelper.redToast(editText.getContext(), "Start date should not be past date.");
+                        ToastHelper.redToast(textView1.getContext(), "Start date should not be past date.");
                     }
                 } else {
                     if (StringUtils.validateStartAndEndDates(refDate, selectdData)) {
-                        editText.setText(selectdData);
+                        textView1.setText(date[0]);
+                        textView2.setText(date[1]);
+                        textView3.setText(date[2]);
                     }
                 }
             }
         }
     }
 
-    public void createAndUpdateDate(View v, String date, Context context) {
+    public void createAndUpdateDate(View v1,View v2,View v3, String date, Context context) {
         Calendar calendar = Calendar.getInstance();
-        setDate(v, date, calendar);
+        setDate(v1, v2, v3, date, calendar);
         new DatePickerDialog(context, this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    private void setDate(View v, String date, Calendar calendar) {
+    private void setDate(View v1,View v2,View v3, String date, Calendar calendar) {
         try {
             if (date != null && !date.isEmpty()) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy", Locale.US);
                 calendar.setTime(sdf.parse(date.substring(0, 10)));
-                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                ((EditText) v).setText(sdf1.format(calendar.getTime()));
+                String[] time = sdf.format(new Date()).split(" ");
+                ((TextView) v1).setText(time[0]);
+                ((TextView) v2).setText(time[1]);
+                ((TextView) v3).setText(time[2]);
             }
         } catch (ParseException e) {
             e.printStackTrace();

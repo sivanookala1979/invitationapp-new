@@ -22,7 +22,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.cerone.invitation.MyGroupsActivity;
@@ -166,7 +165,6 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             }
         });
         updateProfileImageAndName();
-
     }
 
     @Override
@@ -272,7 +270,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         switch (v.getId()) {
             case R.id.fab_add:
                 InvtAppPreferences.setEventDetails(null);
-                startActivity(new Intent(this, NewEventActivity.class));
+                startActivity(new Intent(this, CreateNewEventActivity.class));
                 break;
         }
     }

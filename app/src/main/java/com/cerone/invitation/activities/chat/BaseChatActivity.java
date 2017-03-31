@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,8 +22,6 @@ import com.example.dataobjects.ChatMessage;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static com.google.android.gms.analytics.internal.zzy.l;
 
 /**
  * Created by suzuki on 11-05-2016.

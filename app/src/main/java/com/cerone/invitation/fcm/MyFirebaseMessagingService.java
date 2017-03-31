@@ -11,10 +11,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.cerone.invitation.R;
-import com.cerone.invitation.activities.GeneratePictureNotification;
 import com.cerone.invitation.activities.HomeScreenActivity;
 import com.cerone.invitation.activities.NotificationsHelper;
-import com.cerone.invitation.activities.SupportChatActivity;
 import com.cerone.invitation.activities.chat.IntraChatActivity;
 import com.cerone.invitation.fragement.ChatFragment;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -26,8 +24,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cerone.invitation.helpers.InvtAppPreferences.getPref;
-import static com.google.android.gms.analytics.internal.zzy.e;
 
 /**
  * Created by adarsht on 22/11/16.

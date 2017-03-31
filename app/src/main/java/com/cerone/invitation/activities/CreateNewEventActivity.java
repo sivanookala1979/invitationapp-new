@@ -5,17 +5,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +21,6 @@ import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppDatePicker;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.InvtAppTimePicker;
-import com.cerone.invitation.helpers.InvtTextWatcher;
 import com.cerone.invitation.helpers.MobileHelper;
 import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.Event;
@@ -33,10 +28,10 @@ import com.example.dataobjects.ServerResponse;
 import com.example.dataobjects.UserLocation;
 import com.example.syncher.EventSyncher;
 import com.example.utills.InvitationAppConstants;
-import com.example.utills.StringUtils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,100 +40,100 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static com.cerone.invitation.R.id.layout_start_date;
 
-public class NewEventActivity extends BaseActivity implements OnClickListener {
 
-    LinearLayout startDateLayout;
+public class CreateNewEventActivity extends BaseActivity implements OnClickListener {
+
+    LinearLayout layoutStartDate, layoutStartTime, layoutEndDate, layoutEndTime, layoutCreateEvent, layoutShareEvent, layoutCancel;
     InvtAppTimePicker startTimePicker, endTimePicker;
     InvtAppDatePicker startDatePicker, endDatePicker;
-    EditText startTime, startDate, extraAddress, endDate, endTime, eventName, description, theme;
-    TextView eventAddress;
+    TextView startDay, startMonth, startYear, startHour, startMin, startMeridiem,
+            endDay, endMonth, endYear, endHour, endMin, endMeridiem, eventName, eventAddress;
     String eventPictureInfo = "";
     ServerResponse createEvent;
-    CheckBox manualCheckIn, recurring;
-    Spinner recurringInfo;
-    String recurringData[] = {
-            "Daily",
-            "Weekly",
-            "Monthly"};
+    CheckBox recurring;
     Event event = new Event();
     Button editOrCreate, shareEvent;
-    ImageView cameraIcon;
-    TextInputLayout eventNameInput, eventDescriptionInput, eventThemeInput, extraAddressInput;
+    ImageView eventImage, getLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_event_layout);
+        setContentView(R.layout.activity_create_event);
         addToolbarView();
-        setFontType(R.id.txt_eventPicture, R.id.eventName, R.id.description, R.id.manualCheckIn, R.id.recurring, R.id.eventAddress, R.id.extraAddress, R.id.startDate,
-                R.id.startTime, R.id.endDate, R.id.endTime, R.id.txt_startDatetime, R.id.txt_endDateTime, R.id.getLocation, R.id.createEvent, R.id.shareEvent, R.id.Cancel);
-        startDateLayout = (LinearLayout) findViewById(R.id.startTimeLayout1);
-        eventNameInput = (TextInputLayout) findViewById(R.id.eventNameInput);
-        eventDescriptionInput = (TextInputLayout) findViewById(R.id.eventDescriptionInput);
-        extraAddressInput = (TextInputLayout) findViewById(R.id.extraAddressInput);
-        eventThemeInput = (TextInputLayout) findViewById(R.id.eventThemeInput);
-        cameraIcon = (ImageView) findViewById(R.id.cameraIcon);
-        cameraIcon.setOnClickListener(this);
-        startTime = (EditText) findViewById(R.id.startTime);
-        startDate = (EditText) findViewById(R.id.startDate);
-        endDate = (EditText) findViewById(R.id.endDate);
-        endTime = (EditText) findViewById(R.id.endTime);
-        extraAddress = (EditText) findViewById(R.id.extraAddress);
+        layoutStartDate = (LinearLayout) findViewById(layout_start_date);
+        layoutStartTime = (LinearLayout) findViewById(R.id.layout_start_time);
+        layoutEndDate = (LinearLayout) findViewById(R.id.layout_end_date);
+        layoutEndTime = (LinearLayout) findViewById(R.id.layout_end_time);
+        layoutCreateEvent = (LinearLayout) findViewById(R.id.layout_createEvent);
+        layoutShareEvent = (LinearLayout) findViewById(R.id.layout_shareEvent);
+        layoutCancel = (LinearLayout) findViewById(R.id.layout_cancelEvent);
+        eventName = (TextView) findViewById(R.id.event_name);
+        eventAddress = (TextView) findViewById(R.id.event_address);
+        startDay = (TextView) findViewById(R.id.start_day);
+        startMonth = (TextView) findViewById(R.id.start_month);
+        startYear = (TextView) findViewById(R.id.start_year);
+        startHour = (TextView) findViewById(R.id.start_hour);
+        startMin = (TextView) findViewById(R.id.start_min);
+        startMeridiem = (TextView) findViewById(R.id.start_meridiem);
+        endDay = (TextView) findViewById(R.id.end_day);
+        endMonth = (TextView) findViewById(R.id.end_month);
+        endYear = (TextView) findViewById(R.id.end_year);
+        endHour = (TextView) findViewById(R.id.end_hour);
+        endMin = (TextView) findViewById(R.id.end_min);
+        endMeridiem = (TextView) findViewById(R.id.end_meridiem);
+        eventImage = (ImageView) findViewById(R.id.event_image);
+        getLocation = (ImageView) findViewById(R.id.get_location);
         editOrCreate = (Button) findViewById(R.id.createEvent);
         shareEvent = (Button) findViewById(R.id.shareEvent);
-        eventName = (EditText) findViewById(R.id.eventName);
-        description = (EditText) findViewById(R.id.description);
-        theme = (EditText) findViewById(R.id.theam);
-        eventName.addTextChangedListener(new InvtTextWatcher(eventName, eventNameInput, "Event name should not be empty."));
-        description.addTextChangedListener(new InvtTextWatcher(description, eventDescriptionInput, "Event name should not be empty."));
-        extraAddress.addTextChangedListener(new InvtTextWatcher(extraAddress, extraAddressInput, ""));
-        eventAddress = (TextView) findViewById(R.id.eventAddress);
-        manualCheckIn = (CheckBox) findViewById(R.id.manualCheckIn);
         recurring = (CheckBox) findViewById(R.id.recurring);
-        recurringInfo = (Spinner) findViewById(R.id.recurringInfo);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_text_view, recurringData);
-        arrayAdapter.setDropDownViewResource(R.layout.spinner_text_view);
-        recurringInfo.setAdapter(arrayAdapter);
-        startTime.setText(getCurrentTime(30));
-        startDate.setText(getCurrentDate());
-        endTime.setText(getCurrentTime(90));
-        endDate.setText(getCurrentDate());
-//        startTimePicker = new InvtAppTimePicker(startTime, Calendar.getInstance());
-//        endTimePicker = new InvtAppTimePicker(endTime, Calendar.getInstance());
-//        startDatePicker = new InvtAppDatePicker(startDate, Calendar.getInstance(), endDate, true);
-//        endDatePicker = new InvtAppDatePicker(endDate, Calendar.getInstance(), startDate, false);
+        String startDate = getCurrentDate();
+        String[] currentDate = startDate.split(" ");
+        startDay.setText(currentDate[0]);
+        startMonth.setText(currentDate[1]);
+        startYear.setText(currentDate[2]);
+        endDay.setText(currentDate[0]);
+        endMonth.setText(currentDate[1]);
+        endYear.setText(currentDate[2]);
+        String[] currentStartTime = getCurrentTime(30).split(" ");
+        startHour.setText(currentStartTime[0]);
+        startMin.setText(currentStartTime[1]);
+        startMeridiem.setText(currentStartTime[2]);
+        String[] currentEndTime = getCurrentTime(90).split(" ");
+        endHour.setText(currentEndTime[0]);
+        endMin.setText(currentEndTime[1]);
+        endMeridiem.setText(currentEndTime[2]);
+        startTimePicker = new InvtAppTimePicker(startHour, startMin, startMeridiem, Calendar.getInstance());
+        endTimePicker = new InvtAppTimePicker(endHour, endMin, endMeridiem, Calendar.getInstance());
+        startDatePicker = new InvtAppDatePicker(startDay, startMonth, startYear, Calendar.getInstance(), startDate, true);
+        endDatePicker = new InvtAppDatePicker(endDay, endMonth, endYear, Calendar.getInstance(), startDate, false);
         Event eventDetails = InvtAppPreferences.getEventDetails();
         if (eventDetails != null) {
             shareEvent.setVisibility(View.GONE);
             editOrCreate.setText("Update");
             eventName.setText(eventDetails.getName());
-            description.setText(eventDetails.getDescription());
-            theme.setText(eventDetails.getTheme());
-            manualCheckIn.setChecked(eventDetails.isManualCheckIn());
             recurring.setChecked(eventDetails.isRecurring());
-            recurringInfo.setVisibility(eventDetails.isRecurring() ? View.VISIBLE : View.GONE);
-            startTime.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 4));
-            startDate.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 3));
-            endTime.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 4));
-            endDate.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 3));
+//            startTime.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 4));
+//            startDate.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 3));
+//            endTime.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 4));
+//            endDate.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 3));
             event.setEventId(eventDetails.getEventId());
             event.setLatitude(eventDetails.getLatitude());
             if(eventDetails.getImageUrl()!=null && !eventDetails.getImageUrl().isEmpty()) {
-                Picasso.with(getApplicationContext()).load(eventDetails.getImageUrl()).transform(new CircleTransform()).into(cameraIcon);
+                Picasso.with(getApplicationContext()).load(eventDetails.getImageUrl()).transform(new CircleTransform()).into(eventImage);
                 loadBitmap(eventDetails.getImageUrl());
             }
             event.setLongitude(eventDetails.getLongitude());
             event.setAddress(eventDetails.getAddress());
-            extraAddress.setText(eventDetails.getExtraAddress() + "");
-            event.setExtraAddress(eventDetails.getExtraAddress());
             if (event.getAddress() != null && event.getAddress().length() > 0) {
                 eventAddress.setText(event.getAddress());
             }
         }
         loadMostRecentAddress();
-        setlisteners(recurring, startDateLayout, startTime, startDate, endDate, endTime);
-        createAndSetOnclickListeners(R.id.createEvent, R.id.shareEvent, R.id.Cancel, R.id.getLocation, R.id.startDateLogo, R.id.endDateLogo, R.id.startTimeLogo, R.id.endTimeLogo);
+        setlisteners(layoutStartDate, layoutStartTime, layoutEndDate, layoutEndTime, layoutCreateEvent, layoutShareEvent, layoutCancel, eventImage, getLocation);
+        createAndSetOnclickListeners(layout_start_date, R.id.layout_start_time, R.id.layout_end_date, R.id.layout_end_time, R.id.layout_createEvent, R.id.layout_shareEvent, R.id.layout_cancelEvent,
+                R.id.event_image, R.id.get_location);
     }
     private Target loadtarget;
 
@@ -169,7 +164,7 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
         eventPictureInfo = MobileHelper.BitMapToString(bitmap);
     }
     private void loadMostRecentAddress() {
-        new InvtAppAsyncTask(NewEventActivity.this) {
+        new InvtAppAsyncTask(CreateNewEventActivity.this) {
 
             @Override
             public void process() {
@@ -202,39 +197,36 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         switch (v.getId()) {
-            case R.id.startTimeLogo :
-            case R.id.startTime :
-            case R.id.startTimeLayout1 :
-                startTimePicker.createAndUpdateTime(startTime.getText().toString(), NewEventActivity.this);
-                endTime.setText(updateEndTime(startTime.getText().toString(),2));
+            case R.id.layout_start_time :
+                startTimePicker.createAndUpdateTime(startHour.getText().toString()+":"+startMin.getText().toString(), CreateNewEventActivity.this);
+                String[] time = updateEndTime(startHour.getText().toString()+":"+startMin.getText().toString(),2).split(" ");
+                endHour.setText(time[0]);
+                endMin.setText(time[1]);
+                endMeridiem.setText(time[2]);
                 break;
-            case R.id.startDateLayout :
-            case R.id.startDate :
-            case R.id.startDateLogo :
-                //startDatePicker.createAndUpdateDate(startDate, startDate.getText().toString(), NewEventActivity.this);
+            case R.id.layout_start_date :
+                startDatePicker.createAndUpdateDate(startDay,startMonth,startYear, startDay.getText().toString()+" "+startMonth.getText().toString()+" "+startYear.getText().toString(), CreateNewEventActivity.this);
                 break;
-            case R.id.endDate :
-            case R.id.endDateLayout :
-            case R.id.endDateLogo :
-                //endDatePicker.createAndUpdateDate(endDate, endDate.getText().toString(), NewEventActivity.this);
+            case R.id.layout_end_date :
+                endDatePicker.createAndUpdateDate(endDay,endMonth,endYear, endYear.getText().toString()+"-"+endMonth.getText().toString()+"-"+endDay.getText().toString(), CreateNewEventActivity.this);
                 break;
-            case R.id.endTimeLayout :
-            case R.id.endTime :
-            case R.id.endTimeLogo :
-                //endTimePicker.createAndUpdateTime(endTime.getText().toString(), NewEventActivity.this);
+            case R.id.layout_end_time :
+                endTimePicker.createAndUpdateTime(endHour.getText().toString()+":"+endMin.getText().toString(), CreateNewEventActivity.this);
                 break;
-            case R.id.getLocation :
+            case R.id.get_location :
                 Intent locationIntent = new Intent(getApplicationContext(), LocationActivity.class);
                 startActivityForResult(locationIntent, GOOGLE_MAPS_REQUEST);
                 break;
-            case R.id.cameraIcon :
+            case R.id.event_image :
                 pictureDialog();
                 break;
-            case R.id.createEvent :
+            case R.id.layout_createEvent :
+            case R.id.create :
                 collectEventData();
                 validateAndPostEvent();
                 break;
-            case R.id.shareEvent :
+            case R.id.layout_shareEvent :
+            case R.id.share :
                 collectEventData();
                 if (isEventDataValid()) {
                     InvtAppPreferences.setEventDetails(event);
@@ -245,14 +237,8 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
                     ToastHelper.redToast(getApplicationContext(), "Fields should not be empty");
                 }
                 break;
-            case R.id.recurring :
-                if (recurringInfo.getVisibility() == View.VISIBLE) {
-                    recurringInfo.setVisibility(View.GONE);
-                } else {
-                    recurringInfo.setVisibility(View.VISIBLE);
-                }
-                break;
-            case R.id.Cancel :
+            case R.id.layout_cancelEvent :
+            case R.id.cancel :
                 finish();
                 break;
         }
@@ -272,7 +258,7 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
                 public void afterPostExecute() {
                     if ( createEvent.getId() > 0) {
                         Toast.makeText(getApplicationContext(), "Event Created.", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(NewEventActivity.this, HomeScreenActivity.class);
+                        Intent intent = new Intent(CreateNewEventActivity.this, HomeScreenActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     } else {
@@ -286,17 +272,12 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
     }
 
     private void collectEventData() {
-        event.setDescription(description.getText().toString());
         event.setName(eventName.getText().toString());
-        String startDateInfo = startDate.getText() + " " + startTime.getText() + ":00";
-        String endDateInfo = endDate.getText() + " " + endTime.getText() + ":00";
+        String startDateInfo = startDay.getText().toString()+startMonth.getText().toString()+startYear.getText().toString() + " " + startHour.getText().toString()+startMin.getText().toString() + ":00";
+        String endDateInfo = endDay.getText().toString()+endMonth.getText().toString()+endYear.getText().toString() + " " + endHour.getText().toString()+endMin.getText().toString() + ":00";
         event.setStartDateTime(startDateInfo);
         event.setEndDateTime(endDateInfo);
-        event.setManualCheckIn(manualCheckIn.isChecked());
         event.setRecurring(recurring.isChecked());
-        event.setTheme(theme.getText().toString());
-        event.setRecurringType(recurringInfo.getSelectedItem().toString());
-        event.setExtraAddress(extraAddress.getText().toString());
         event.setImageData(eventPictureInfo);
     }
 
@@ -306,18 +287,20 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
             event.setLatitude(0.0);
             event.setLongitude(0.0);
         }
-        return true;//event.getDescription().length() > 0 && event.getName().length() > 0 && event.getAddress() != null && event.getAddress().length() > 0;
+        return true;
     }
 
     public static String getCurrentDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy", Locale.US);
         return sdf.format(new Date());
     }
 
     public static String getCurrentTime(int postMinutes) {
+
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE,postMinutes);
-        return getValidText(now.get(Calendar.HOUR_OF_DAY)) + ":" + getValidText(now.get(Calendar.MINUTE));
+        Format formatter = new SimpleDateFormat("hh mm a");
+        return formatter.format(now.getTime());
     }
 
     private static String getValidText(int number) {
@@ -339,10 +322,10 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
             if (requestCode == InvitationAppConstants.IMAGE_CAPTURE) {
                 bitmap = (Bitmap) data.getExtras().get("data");
             } else {
-                bitmap = MobileHelper.getBitmapFromCameraData(data, NewEventActivity.this);
+                bitmap = MobileHelper.getBitmapFromCameraData(data, CreateNewEventActivity.this);
             }
             if (bitmap != null) {
-                cameraIcon.setImageBitmap(getRoundedCornerBitmap(bitmap));
+                eventImage.setImageBitmap(bitmap);
                 eventPictureInfo = MobileHelper.BitMapToString(bitmap);
             }
         }
@@ -368,8 +351,8 @@ public class NewEventActivity extends BaseActivity implements OnClickListener {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.HOUR, upTime);
-        String time = getValidText(calendar.get(Calendar.HOUR_OF_DAY)) + ":" + getValidText(calendar.get(Calendar.MINUTE));
-        return time;
+        Format format = new SimpleDateFormat("hh mm a");
+        return format.format(calendar.getTime());
     }
 
     public List<UserLocation> getDefaultAddress() {

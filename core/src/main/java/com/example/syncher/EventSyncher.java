@@ -223,8 +223,6 @@ public class EventSyncher extends BaseSyncher {
                         event.setOwnerId(jsonObject.getInt("owner_id"));
                         event.setPrivateType(jsonObject.getBoolean("private"));
                         event.setRemainder(jsonObject.getBoolean("remainder"));
-//                        event.setStartDateTime(StringUtils.getFormatedDateFromServerFormatedDate(jsonObject.getString("start_date")));
-//                        event.setStartDateTime(StringUtils.getNewDate(event.getStartDateTime(), InvitationAppConstants.TIME_DIFFERENCE));
                         event.setStatus(jsonObject.getString("status"));
                         event.setEventId(jsonObject.getInt("id"));
                         listOfEvents.add(event);

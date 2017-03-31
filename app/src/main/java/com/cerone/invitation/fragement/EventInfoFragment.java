@@ -10,44 +10,47 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.activities.HomeScreenActivity;
 import com.cerone.invitation.activities.InvitieesTabActivity;
 import com.cerone.invitation.activities.NewEventActivity;
 import com.cerone.invitation.activities.ParticipantsActivity;
 import com.cerone.invitation.activities.ShareEventActivity;
 import com.cerone.invitation.activities.ShowInviteePositions;
 import com.cerone.invitation.helpers.ActivityCommunicator;
+import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Eventstatistics;
+import com.example.dataobjects.ServerResponse;
+import com.example.syncher.EventSyncher;
 import com.example.syncher.InvitationSyncher;
 import com.example.utills.StringUtils;
+import com.squareup.picasso.Picasso;
 
-/**
- * Created by adarsht on 09/03/17.
- */
+import java.text.ParseException;
 
-public class EventDetailsFragment extends BaseFragment implements View.OnClickListener{
 
-    LinearLayout participantsLayout, location,invitationSelection,accept, maybe, reject,editEvent, shareEvent, deleteEvent;
-    TextView acceptCountText, rejectCountText, totalCount,checkedInCount;
+public class EventInfoFragment extends BaseFragment implements View.OnClickListener{
+
+    LinearLayout participantsLayout, invitationSelection, accept, maybe, reject,editEvent, shareEvent, deleteEvent;
+    TextView totalInviteesText, acceptCountText, rejectCountText;
     View eventBaseView;
     ImageView editOrShareIdon;
     //INVITATIONS
 
     private ActivityCommunicator activityCommunicator;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.event_details_fragment, container, false);
+        View view = inflater.inflate(R.layout.event_info_fragment, container, false);
         eventBaseView = view;
         participantsLayout = (LinearLayout)view.findViewById(R.id.participantsLayout);
-        editEvent = (LinearLayout) view.findViewById(R.id.editEvent);
-        shareEvent = (LinearLayout) view.findViewById(R.id.shareEvent);
-        deleteEvent = (LinearLayout) view.findViewById(R.id.deleteEvent);
-        editOrShareIdon = (ImageView) view.findViewById(R.id.shareOrEditIcon);
+        shareEvent = (LinearLayout) view.findViewById(R.id.actionOne);
+        editEvent = (LinearLayout) view.findViewById(R.id.actionTwo);
+        deleteEvent = (LinearLayout) view.findViewById(R.id.actionThree);
+        editOrShareIdon = (ImageView) view.findViewById(R.id.actionTwoIcon);
         participantsLayout.setOnClickListener(this);
         editEvent.setOnClickListener(this);
         shareEvent.setOnClickListener(this);
@@ -55,39 +58,43 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
         eventDetails = InvtAppPreferences.getEventDetails();
         loadEventData(view);
         activityCommunicator =(ActivityCommunicator) getActivity();
+
         return view;
     }
-    private void loadEventData(View view) {
-        TextView description = (TextView) view.findViewById(R.id.description);
-        TextView eventStartDate = (TextView) view.findViewById(R.id.eventStartDate);
-        TextView eventEndDate = (TextView) view.findViewById(R.id.eventEndDate);
-        TextView eventStartTime = (TextView) view.findViewById(R.id.eventStartTime);
-        TextView eventEndTime = (TextView) view.findViewById(R.id.eventEndTime);
-        TextView eventLocation = (TextView) view.findViewById(R.id.eventLocation);
-        TextView participantsInfo = (TextView) view.findViewById(R.id.participantsInfo);
-        acceptCountText = (TextView) view.findViewById(R.id.acceptCount);
-        rejectCountText = (TextView) view.findViewById(R.id.rejectCount);
-        checkedInCount = (TextView) view.findViewById(R.id.checkedinCount);
 
-        if (!eventDetails.getExtraAddress().isEmpty()) {
-            LinearLayout extraAddressLayout = (LinearLayout) view.findViewById(R.id.extraAddressLayout);
-            extraAddressLayout.setVisibility(View.VISIBLE);
-            TextView extraAddress = (TextView) view.findViewById(R.id.extraAddress);
-            extraAddress.setText("" + eventDetails.getExtraAddress());
-        }
-        totalCount = (TextView) view.findViewById(R.id.totalCount);
-        TextView checkedInCount = (TextView) view.findViewById(R.id.checkedinCount);
+    private void loadEventData(View view) {
+        TextView ownerName = (TextView) view.findViewById(R.id.ownerName);
+        TextView eventDate = (TextView) view.findViewById(R.id.eventDate);
+        TextView eventTime = (TextView) view.findViewById(R.id.eventTimings);
+        TextView eventLocation = (TextView) view.findViewById(R.id.event_address);
+        ImageView eventImage = (ImageView) view.findViewById(R.id.eventImage);
+        ImageView eventOwnerImage = (ImageView) view.findViewById(R.id.eventOwnerImage);
+        totalInviteesText = (TextView) view.findViewById(R.id.totalInvitees);
+        acceptCountText = (TextView) view.findViewById(R.id.totalAccepted);
+        rejectCountText = (TextView) view.findViewById(R.id.totalRejected);
         acceptCountText.setText("" + eventDetails.getAcceptedCount());
         rejectCountText.setText("" + eventDetails.getRejectedCount());
-        totalCount.setText("" + eventDetails.getInviteesCount());
-        checkedInCount.setText("" + eventDetails.getCheckedInCount());
-        description.setText(eventDetails.getDescription());
-        eventStartDate.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 1));
-        eventEndDate.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 1));
-        eventStartTime.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 2));
-        eventEndTime.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 2));
-        eventLocation.setText(eventDetails.getAddress());
-        participantsInfo.setText("invitees ");
+        totalInviteesText.setText("" + eventDetails.getInviteesCount());
+        if(eventDetails.getImageUrl()!=null&&!eventDetails.getImageUrl().isEmpty()) {
+            Picasso.with(getActivity()).load(eventDetails.getImageUrl()).placeholder(R.drawable.event_picture).into(eventImage);
+        }
+        if(eventDetails.getImageUrl()!=null&&!eventDetails.getImageUrl().isEmpty()) {
+            Picasso.with(getActivity()).load(eventDetails.getOwnerInfo().getImage()).placeholder(R.drawable.logo).transform(new CircleTransform()).into(eventOwnerImage);
+        }
+            ownerName.setText(eventDetails.getOwnerInfo().getInviteeName());
+        try {
+            eventDate.setText(StringUtils.getEventDateFormat(eventDetails.getStartDateTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            eventTime.setText(StringUtils.getEventTimeFormat(eventDetails.getStartDateTime(), eventDetails.getEndDateTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(eventDetails.getAddress()!=null&&!eventDetails.getAddress().isEmpty()) {
+            eventLocation.setText(eventDetails.getAddress());
+        }
         if(eventDetails.isInvitation()){
             editEvent.setVisibility(View.GONE);
             deleteEvent.setVisibility(View.GONE);
@@ -97,15 +104,12 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
             accept = (LinearLayout) eventBaseView.findViewById(R.id.acceptInvitation);
             maybe = (LinearLayout) eventBaseView.findViewById(R.id.mayBe);
             reject = (LinearLayout) eventBaseView.findViewById(R.id.rejected);
-            location = (LinearLayout) eventBaseView.findViewById(R.id.gpsLocationLayout);
             participantsLayout.setVisibility(View.GONE);
-            location.setVisibility(View.VISIBLE);
             if(eventDetails.isAccepted()){
                 invitationSelection.setVisibility(View.GONE);
             }else {
                 invitationSelection.setVisibility(View.VISIBLE);
             }
-            location.setOnClickListener(this);
             accept.setOnClickListener(this);
             maybe.setOnClickListener(this);
             reject.setOnClickListener(this);
@@ -119,18 +123,8 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
-            case R.id.participants:
-            case R.id.participantsLayout:
-                intent = new Intent(getActivity(), ParticipantsActivity.class);
-                intent.putExtra("eventId", eventDetails.getEventId());
-                intent.putExtra("title", "Invitees");
-                startActivity(intent);
-                break;
-            case R.id.editEvent:
-                intent = new Intent(getActivity(), NewEventActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.shareEvent:
+
+            case R.id.actionOne:
                 if(eventDetails.isInvitation()){
                     intent = new Intent(getActivity(), ParticipantsActivity.class);
                     intent.putExtra("eventId", eventDetails.getEventId());
@@ -141,8 +135,17 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
                 }
                 startActivity(intent);
                 break;
-            case R.id.gpsLocationIcon :
-            case R.id.gpsLocationLayout :
+            case R.id.actionTwo:
+                intent = new Intent(getActivity(), NewEventActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.actionThree:
+                deleteEvent();
+                intent = new Intent(getActivity(), HomeScreenActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+                break;
+            case R.id.location_address :
                 intent = new Intent(getActivity(), ShowInviteePositions.class);
                 startActivity(intent);
                 break;
@@ -155,7 +158,7 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
             case R.id.rejected :
                 acceptOrRejectInvitation(false, eventDetails, locationPermission);
                 break;
-            case R.id.inviteesInfo :
+            case R.id.actionTwoIcon :
                 intent = new Intent(getActivity(), InvitieesTabActivity.class);
                 startActivity(intent);
                 break;
@@ -182,10 +185,9 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
                         //activateService();
                         activityCommunicator.enableChatView(true);
                     }
+                    totalInviteesText.setText(response.getAcceptCount() + "");
                     rejectCountText.setText(response.getRejectCount() + "");
                     acceptCountText.setText(response.getAcceptCount() + "");
-                    totalCount.setText(response.getAcceptCount() + "");
-                    checkedInCount.setText("" + response.getCheckedInCount());
                     invitationSelection.setVisibility(View.GONE);
                 }
                 ToastHelper.blueToast(getActivity(), response.getMessage());
@@ -193,9 +195,30 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
         }.execute();
     }
 
+    public void deleteEvent() {
+        new InvtAppAsyncTask(getActivity()) {
 
-    public static EventDetailsFragment newInstance() {
-        EventDetailsFragment fragment = new EventDetailsFragment();
+            ServerResponse response;
+
+            @Override
+            public void process() {
+                if(eventDetails.getEventId()>0) {
+                    EventSyncher syncher = new EventSyncher();
+                    response = syncher.deleteEvent(eventDetails.getEventId());
+                }
+            }
+
+            @Override
+            public void afterPostExecute() {
+                if (response!=null) {
+                    ToastHelper.blueToast(getActivity(), response.getStatus());
+                }
+            }
+        }.execute();
+    }
+
+    public static EventInfoFragment newInstance() {
+        EventInfoFragment fragment = new EventInfoFragment();
         Bundle args = new Bundle();
         return fragment;
     }
