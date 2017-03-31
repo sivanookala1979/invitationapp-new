@@ -67,7 +67,6 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     LinearLayout eventFilter, invitationsFilter;
     LinearLayout filteringLayout;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -356,6 +355,13 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             screenTitle.setText("Select City");
             floatingActionButton.setVisibility(View.GONE);
             filteringLayout.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void updateServices(boolean status) {
+        if(status){
+            activateService();
         }
     }
 }

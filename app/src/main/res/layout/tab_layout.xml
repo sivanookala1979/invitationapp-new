@@ -10,7 +10,7 @@
         android:layout_height="25dp"
         android:src="@drawable/chat"
         />
-    <TextView
+    <com.cerone.invitation.helpers.CeroneTextView
         android:id="@+id/tabTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         android:text="Tap One"
         android:textSize="15dp"
         android:textColor="@color/black"
-        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+        android:tag="fonts/Montserrat-Light.otf"
         android:gravity="center"/>
 
 </LinearLayout>

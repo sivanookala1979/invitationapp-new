@@ -9,15 +9,14 @@
         android:id="@+id/cv_events"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_margin="5dp"
         android:background="@drawable/rectangle_shaped"
-        app:cardCornerRadius="5dp"
+        app:cardCornerRadius="7dp"
         app:cardElevation="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="85dp"
+            android:layout_height="70dp"
             android:clipChildren="true"
             android:orientation="horizontal"
             android:weightSum="10">
@@ -25,7 +24,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="2.5"
                 android:orientation="horizontal"
                 android:weightSum="10">
 
@@ -33,19 +32,19 @@
                     android:id="@+id/colorIndicator"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5"
-                    android:background="@color/red" />
+                    android:layout_weight="0.6"
+                    android:background="@color/my_events_color" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="9.5"
-                    android:background="@android:color/white">
+                    android:layout_weight="9.4"
+                    android:background="@color/white">
 
                     <ImageView
                         android:id="@+id/eventIconHeader"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/avatar" />
@@ -55,35 +54,41 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.03"
-                android:background="@android:color/darker_gray" />
+                android:layout_weight="0.05"
+                android:background="@color/grey_light" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="7.97"
+                android:layout_weight="7.35"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp">
 
-                <TextView
+
+                <com.cerone.invitation.helpers.CeroneTextView
                     android:id="@+id/eventNameHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                    android:text="Event name"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/text_size_small" />
+                    android:tag="fonts/Montserrat-Medium.otf"
+                    android:text="Jvent name"
+                    android:textColor="@color/happening_text_black_color"
+                    android:textSize="@dimen/text_size_too_small" />
 
                 <TextView
                     android:id="@+id/eventAddressHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:fontFamily="fonts/Montserrat-Light.otf"
+                    android:maxLines="1"
                     android:text="N Convension, Jubli Hills, Hyderabad."
-                    android:maxLines="2"
+                    android:textColor="@color/happening_text_black_color"
                     android:textSize="@dimen/text_size_very_small" />
 
                 <TextView
@@ -91,8 +96,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:fontFamily="fonts/Montserrat-Light.otf"
                     android:text="Sat, 18/06/2017 -09:00PM - 10:00PM"
+                    android:textColor="@color/happening_text_grey_color"
                     android:textSize="@dimen/text_size_very_small" />
             </LinearLayout>
         </LinearLayout>

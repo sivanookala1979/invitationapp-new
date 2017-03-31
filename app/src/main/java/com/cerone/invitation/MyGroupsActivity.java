@@ -14,6 +14,7 @@ import com.cerone.invitation.activities.NewGroupActivity;
 import com.cerone.invitation.activities.ParticipantsActivity;
 import com.cerone.invitation.adapter.GroupsAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
+import com.example.dataobjects.Event;
 import com.example.dataobjects.Group;
 import com.example.syncher.GroupSyncher;
 

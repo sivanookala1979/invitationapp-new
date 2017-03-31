@@ -44,11 +44,16 @@
     <color name="indigoLight">#ebd0ff</color>
     <color name="happening_red">#eb1a51</color>
     <color name="happening_orange">#f06824</color>
-    <color name="black_transparant">#20000000</color>
-    <color name="invitation_received_color">#ff9900</color>
-    <color name="my_events_color">#f23d3d</color>
-    <color name="event_accept">#6bc732</color>
+    <color name="black_transparant">#40000000</color>
+    <color name="invitation_received_color">#FF9C00</color>
+    <color name="my_events_color">#F43B3B</color>
+    <color name="event_accept">#69C730</color>
     <color name="happening_indigo">#3d58f2</color>
+    <color name="happening_text_black_color">#444444</color>
+    <color name="happening_text_grey_color">#999999</color>
+    <color name="happening_grey_color">#EEEEEE</color>
+
+
 
     <array name="letter_tile_colors">
         <item>#f16364</item>

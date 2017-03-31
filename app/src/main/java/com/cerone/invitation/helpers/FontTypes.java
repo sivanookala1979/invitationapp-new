@@ -16,8 +16,8 @@ public class FontTypes {
 
 
     public FontTypes(Context context) {
-        tfRegular = Typeface.createFromAsset(context.getAssets(), "fonts/AvenirNextLTPro-Regular.otf");
-        tfBold = Typeface.createFromAsset(context.getAssets(), "fonts/AvenirNextLTPro-Demi.otf");
+        tfRegular = Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Light.otf");
+        tfBold = Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Medium.otf");
     }
 
     public void setTypeface(TextView view, Typeface fotntType) {
@@ -44,11 +44,18 @@ public class FontTypes {
         }
     }
 
-    public void setRegularFontToButtons(TextView... view) {
-        for (TextView button : view) {
-            button.setTypeface(tfRegular);
+    public void setRegularFontToTextViews(TextView... view) {
+        for (TextView textView : view) {
+            textView.setTypeface(tfRegular);
         }
     }
+
+    public void setBoldFontToTextViews(TextView... view) {
+        for (TextView textView : view) {
+            textView.setTypeface(tfRegular);
+        }
+    }
+
 
     public void setEditTextRegularFont(EditText... view) {
         for (EditText button : view) {

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.cerone.invitation.R;
 import com.cerone.invitation.helpers.CircleTransform;
+import com.cerone.invitation.helpers.FontTypes;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Invitee;
 import com.example.utills.StringUtils;
@@ -33,12 +34,14 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
     private View.OnClickListener defaultRequestBtnClickListener;
     List<Event> events = new ArrayList<Event>();
     Context context;
+    FontTypes fontType;
 
 
     public FoldingCellListAdapter(Context context, List<Event> allEventsList) {
         super(context, 0, allEventsList);
         this.context = context;
         this.events = allEventsList;
+        fontType = new FontTypes(context);
     }
 
     @Override
@@ -94,6 +97,9 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
             viewHolder.chatLayout = (LinearLayout)cell.findViewById(R.id.chatLayout);
             viewHolder.individualChatIcon = (ImageView) cell.findViewById(R.id.chatIcon);
             viewHolder.navAddress = (ImageView) cell.findViewById(R.id.nav_address);
+            fontType.setRegularFontToTextViews(viewHolder.eventAddressHeader,viewHolder.eventDateTimeInfo,viewHolder.eventStartDate,viewHolder.eventTimings,viewHolder.eventAddressFooter);
+            fontType.setRegularFontToTextViews(viewHolder.inviteesCount,viewHolder.acceptedCount,viewHolder.rejectedCount);
+
             cell.setTag(viewHolder);
         } else {
             if (unfoldedIndexes.contains(position)) {
@@ -130,6 +136,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
         }else{
             viewHolder.eventAddressHeader.setText("Location details not provided");
             viewHolder.eventAddressFooter.setText("Location details not provided");
+
         }
         viewHolder.eventNameHeader.setText(event.getName());
         viewHolder.eventNameFooter.setText(event.getName());

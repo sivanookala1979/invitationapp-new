@@ -280,6 +280,8 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                     }
                     if(!status){
                         deleteEventByEventId(event.getEventId());
+                    }else{
+                        activityCommunicator.updateServices(true);
                     }
                     applyFilters();
                 }
