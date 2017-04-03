@@ -58,8 +58,8 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.share_events_layout);
         addToolbarView();
-        setFontType(R.id.shareEventData, R.id.cancel, R.id.eventDescription, R.id.txt_start, R.id.txt_end, R.id.eventstartDate, R.id.eventStartTime,
-                R.id.eventEndDate, R.id.eventEndtime, R.id.eventLocation);
+        setFontType(R.id.shareEventData, R.id.cancel, R.id.txt_start, R.id.txt_end, R.id.eventstartDate, R.id.eventStartTime,
+                R.id.eventEndDate, R.id.eventEndtime, R.id.eventLocation, R.id.groups, R.id.contact);
         isNewEvent = getIntent().getExtras().getBoolean("newEvent");
         listView = (ListView) findViewById(R.id.attendeeslist);
         groupList = (ListView) findViewById(R.id.grouplist);
@@ -102,24 +102,26 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
     private void showEventData() {
         Event eventDetails = InvtAppPreferences.getEventDetails();
         TextView eventName = (TextView) findViewById(R.id.eventNameInfo);
-        TextView eventDescription = (TextView) findViewById(R.id.eventDescription);
+        //TextView eventDescription = (TextView) findViewById(R.id.eventDescription);
         TextView eventStartDate = (TextView) findViewById(R.id.eventstartDate);
         TextView eventEndDate = (TextView) findViewById(R.id.eventEndDate);
         TextView eventStartTime = (TextView) findViewById(R.id.eventStartTime);
         TextView eventEndTime = (TextView) findViewById(R.id.eventEndtime);
         TextView eventLocation = (TextView) findViewById(R.id.eventLocation);
         eventName.setText(eventDetails.getName().trim() + " Details");
-        eventDescription.setText(eventDetails.getDescription());
+        //eventDescription.setText(eventDetails.getDescription());
         eventStartDate.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 1));
         eventEndDate.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 1));
         eventStartTime.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 2));
         eventEndTime.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 2));
-        eventLocation.setText(eventDetails.getAddress());
-        if (!eventDetails.getExtraAddress().isEmpty()) {
-            LinearLayout extraAddressLayout = (LinearLayout) findViewById(R.id.extraAddressLayout);
-            extraAddressLayout.setVisibility(View.VISIBLE);
-            TextView extraAddress = (TextView) findViewById(R.id.extraAddress);
-            extraAddress.setText("" + eventDetails.getExtraAddress());
+        if (eventDetails.getAddress() != null && !eventDetails.getAddress().isEmpty()) {
+            eventLocation.setText(eventDetails.getAddress());
+            if (!eventDetails.getExtraAddress().isEmpty()) {
+                LinearLayout extraAddressLayout = (LinearLayout) findViewById(R.id.extraAddressLayout);
+                extraAddressLayout.setVisibility(View.VISIBLE);
+                TextView extraAddress = (TextView) findViewById(R.id.extraAddress);
+                extraAddress.setText("" + eventDetails.getExtraAddress());
+            }
         }
     }
 

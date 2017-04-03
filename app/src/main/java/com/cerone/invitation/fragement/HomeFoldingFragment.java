@@ -3,7 +3,6 @@ package com.cerone.invitation.fragement;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +13,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.activities.CreateNewEventActivity;
 import com.cerone.invitation.activities.EventDetailsActivity;
-import com.cerone.invitation.activities.NewEventActivity;
 import com.cerone.invitation.activities.PersonalizeActivity;
 import com.cerone.invitation.activities.ShareEventActivity;
 import com.cerone.invitation.activities.ShowInviteePositions;
@@ -35,8 +34,6 @@ import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.cerone.invitation.R.drawable.event;
 
 /**
  * Created by adarsh on 3/19/17.
@@ -90,7 +87,7 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                         break;
                     case R.id.actionTwo:
                         if (!event.isInvitation() || (event.isAccepted() && event.isAdmin())) {
-                            intent = new Intent(getActivity(), NewEventActivity.class);
+                            intent = new Intent(getActivity(), CreateNewEventActivity.class);
                             startActivity(intent);
                         } else {
                             if (event.isAccepted()) {

@@ -10,10 +10,19 @@ public class User {
     String status;
     boolean profileGiven;
     boolean appLogin;
+    boolean active;
     String image;
     String errorMessage;
     String gender;
     String emailId;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public String getEmailId() {
         return emailId;

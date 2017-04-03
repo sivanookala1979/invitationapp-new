@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,9 +25,6 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by adarsht on 09/03/17.
@@ -111,6 +109,10 @@ public class EventDetailsActivity extends BaseActivity implements ActivityCommun
                 title.setText(screenTab.getName());
             } else {
                 title.setText(screenTab.getName());
+                LinearLayout filteringMenu = (LinearLayout) findViewById(R.id.filteringMenu);
+                filteringMenu.setVisibility(View.GONE);
+                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
+                fab.setVisibility(View.GONE);
             }
             tabViews.add(tabLayout);
             mPagerSlidingTabStrip.getTabAt(i).setTag(i);

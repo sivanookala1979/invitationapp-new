@@ -9,6 +9,7 @@ import android.util.Log;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Invitee;
 import com.example.dataobjects.ServerResponse;
+import com.example.dataobjects.User;
 import com.example.utills.HTTPUtils;
 import com.example.utills.StringUtils;
 
@@ -268,5 +269,46 @@ public class EventSyncher extends BaseSyncher {
         return response;
     }
 
-
+    public List<User> getcontactsList(List<User> contactList) {
+        List<User> contactsList = new ArrayList<User>();
+        try {
+            JSONArray contactsArray = new JSONArray();
+            JSONObject contacts = new JSONObject();
+            for (User user : contactList) {
+                JSONObject contact = new JSONObject();
+                contact.put("user_name", user.getUserName());
+                contact.put("mobile_number", user.getPhoneNumber());
+                contactsArray.put(contact);
+            }
+            contacts.put("my_contacts", contactsArray);
+            String dataFromServer = HTTPUtils.getDataFromServer(BASE_URL + "events/check_contacts.json", "POST", contacts.toString(), true);
+            if (StringUtils.isJSONValid(dataFromServer)) {
+                JSONObject jsonResponse = new JSONObject(dataFromServer);
+                JSONArray jsonArray = (JSONArray) jsonResponse.get("contacts_details");
+                if (jsonArray != null) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        User user = new User();
+                        if(jsonObject.has("name"))
+                            user.setUserName(jsonObject.getString("name"));
+                        if(jsonObject.has("mobile_number"))
+                            user.setPhoneNumber(jsonObject.getString("mobile_number"));
+                        if(jsonObject.has("is_active_user"))
+                            user.setActive(jsonObject.getBoolean("is_active_user"));
+                        if(jsonObject.has("email"))
+                            user.setEmailId(jsonObject.getString("email"));
+                        if(jsonObject.has("img_url"))
+                            user.setImage(jsonObject.getString("img_url"));
+                        else
+                        if(jsonObject.has("error_message"))
+                            user.setErrorMessage(jsonObject.getString("error_message"));
+                        contactsList.add(user);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return contactsList;
+    }
 }

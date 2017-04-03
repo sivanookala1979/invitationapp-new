@@ -27,9 +27,9 @@ public class StringUtils {
 
     public static final SimpleDateFormat eventDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
     public static final SimpleDateFormat eventTimeFormat = new SimpleDateFormat("hh:mm a");
-    public static final SimpleDateFormat newEventDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    public static final SimpleDateFormat newEventTimeFormat = new SimpleDateFormat("HH:mm");
-    public static final SimpleDateFormat eventInfoFormat = new SimpleDateFormat("E, yyyy MMM dd - HH:mm a");
+    public static final SimpleDateFormat newEventDateFormat = new SimpleDateFormat("dd MM yyyy");
+    public static final SimpleDateFormat newEventTimeFormat = new SimpleDateFormat("hh mm a");
+    public static final SimpleDateFormat eventInfoFormat = new SimpleDateFormat("E, yyyy MMM dd - hh:mm a");
 
     public static Date StringToDate(String date) {
         Date dateTime = null;
@@ -111,7 +111,7 @@ public class StringUtils {
         Date startDate = null;
         Date endDate = null;
         boolean status = true;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
         try {
             startDate = simpleDateFormat.parse(startDateInfo);
             endDate = simpleDateFormat.parse(endDateInfo);
@@ -268,7 +268,7 @@ public class StringUtils {
     public static boolean isOldDate(String dateTimeInfo) {
         boolean status = false;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
             Date date1 = sdf.parse(dateTimeInfo);
             Date date2 = sdf.parse(sdf.format(new Date()));
             System.out.println(sdf.format(date1));

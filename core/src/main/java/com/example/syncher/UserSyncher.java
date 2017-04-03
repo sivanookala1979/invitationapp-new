@@ -196,6 +196,8 @@ public class UserSyncher extends BaseSyncher {
         }
         return userDetails;
     }
+
+
     public void updateGcmCode(String gcmCode) {
         if (BaseSyncher.getAccessToken() != null && !BaseSyncher.getAccessToken().isEmpty()) {
             SaveResult result = new SaveResult();

@@ -10,9 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.activities.CreateNewEventActivity;
 import com.cerone.invitation.activities.HomeScreenActivity;
 import com.cerone.invitation.activities.InvitieesTabActivity;
-import com.cerone.invitation.activities.NewEventActivity;
 import com.cerone.invitation.activities.ParticipantsActivity;
 import com.cerone.invitation.activities.ShareEventActivity;
 import com.cerone.invitation.activities.ShowInviteePositions;
@@ -78,10 +78,10 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         if(eventDetails.getImageUrl()!=null&&!eventDetails.getImageUrl().isEmpty()) {
             Picasso.with(getActivity()).load(eventDetails.getImageUrl()).placeholder(R.drawable.event_picture).into(eventImage);
         }
-        if(eventDetails.getImageUrl()!=null&&!eventDetails.getImageUrl().isEmpty()) {
+        if(eventDetails!=null&&eventDetails.getOwnerInfo()!=null&&eventDetails.getOwnerInfo().getImage()!=null) {
             Picasso.with(getActivity()).load(eventDetails.getOwnerInfo().getImage()).placeholder(R.drawable.logo).transform(new CircleTransform()).into(eventOwnerImage);
-        }
             ownerName.setText(eventDetails.getOwnerInfo().getInviteeName());
+        }
         try {
             eventDate.setText(StringUtils.getEventDateFormat(eventDetails.getStartDateTime()));
         } catch (ParseException e) {
@@ -136,7 +136,7 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.actionTwo:
-                intent = new Intent(getActivity(), NewEventActivity.class);
+                intent = new Intent(getActivity(), CreateNewEventActivity.class);
                 startActivity(intent);
                 break;
             case R.id.actionThree:

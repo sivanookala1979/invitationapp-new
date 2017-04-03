@@ -20,6 +20,7 @@ import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.MobileHelper;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.User;
+import com.example.syncher.EventSyncher;
 import com.example.utills.StringUtils;
 
 import java.text.ParseException;
@@ -36,6 +37,7 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
     ListView contactsListView;
     TextView inviteFriends;
     List<User> allContacts;
+    List<User> allContactsList;
     List<User> filterList = new ArrayList<User>();
     List<User> selectedList = new ArrayList<User>();
     ContactsAdapter contactsAdapter;
@@ -45,6 +47,7 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contacts_activity_layout);
         addToolbarView();
+        setFontType(R.id.share, R.id.event_date, R.id.event_time, R.id.event_address, R.id.search);
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         searchTextField = (EditText) findViewById(R.id.search);
         contactsListView = (ListView) findViewById(R.id.contactsListView);
@@ -61,17 +64,19 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
                 }
                 if (filterString.length() == 0) {
                     filterList.clear();
-                    filterList.addAll(allContacts);
+                    filterList.addAll(allContactsList);
                 }
                 contactsAdapter.updateAdapter(filterList);
             }
         });
-        allContacts = InvtAppPreferences.getAllContacts();
-        if(allContacts.size() == 0){
+        allContactsList = InvtAppPreferences.getAllContacts();
+        Log.d("list size", allContactsList.size()+"");
+        if(allContactsList.size() == 0){
             loadAllMobileContacts();
-            InvtAppPreferences.setAllContacts(allContacts);
+            InvtAppPreferences.setAllContacts(allContactsList);
+            Log.d("list size", allContactsList.size()+"");
         }
-        contactsAdapter = new ContactsAdapter(MobileContactsActivity.this, R.layout.contact_layout, allContacts);
+        contactsAdapter = new ContactsAdapter(MobileContactsActivity.this, R.layout.contact_layout, allContactsList);
         contactsListView.setAdapter(contactsAdapter);
         try {
             showEventData();
@@ -83,9 +88,9 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
             @Override
             public void onRefresh() {
                 swipeView.setRefreshing(true);
-                allContacts.clear();
+                allContactsList.clear();
                 loadAllMobileContacts();
-                InvtAppPreferences.setAllContacts(allContacts);
+                InvtAppPreferences.setAllContacts(allContactsList);
                 Log.d("Swipe", "Refreshing Number");
                 ( new Handler()).postDelayed(new Runnable() {
                     @Override
@@ -102,13 +107,16 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
         TextView eventDate = (TextView) findViewById(R.id.event_date);
         TextView eventTime = (TextView) findViewById(R.id.event_time);
         TextView eventLocation = (TextView) findViewById(R.id.event_address);
-        try {
-            eventDate.setText(StringUtils.getEventDateFormat(eventDetails.getStartDateTime()));
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if(eventDetails!=null) {
+            try {
+                eventDate.setText(StringUtils.getEventDateFormat(eventDetails.getStartDateTime()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            eventTime.setText(StringUtils.getEventTimeFormat(eventDetails.getStartDateTime(), eventDetails.getEndDateTime()));
+            if(eventDetails.getAddress()!=null&&!eventDetails.getAddress().isEmpty())
+            eventLocation.setText(eventDetails.getAddress());
         }
-        eventTime.setText(StringUtils.getEventTimeFormat(eventDetails.getStartDateTime(), eventDetails.getEndDateTime()));
-        eventLocation.setText(eventDetails.getAddress());
     }
 
     @Override
@@ -135,12 +143,14 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
                 @Override
                 public void process() {
                     allContacts = MobileHelper.getAllPhoneContacts(MobileContactsActivity.this);
+                    EventSyncher syncher = new EventSyncher();
+                    allContactsList = syncher.getcontactsList(allContacts);
                 }
 
                 @Override
                 public void afterPostExecute() {
-                    if(allContacts.size()>0) {
-                        filterList.addAll(allContacts);
+                    if(allContactsList.size()>0) {
+                        filterList.addAll(allContactsList);
                         contactsAdapter.updateAdapter(filterList);
                     }
                 }
@@ -165,7 +175,7 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
 
     private List<User> getFilterList(String filterString) {
         List<User> list = new ArrayList<User>();
-        for (User contact : allContacts) {
+        for (User contact : allContactsList) {
             if (contact.getUserName().toLowerCase().contains(filterString.toLowerCase()) || contact.getPhoneNumber().contains(filterString)) {
                 list.add(contact);
                 if (contact.isSelected()) {

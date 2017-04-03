@@ -6,6 +6,7 @@ package com.cerone.invitation.helpers;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -28,16 +29,23 @@ public class InvtAppDatePicker implements DatePickerDialog.OnDateSetListener {
     TextView textView1;
     TextView textView2;
     TextView textView3;
+    TextView textView4;
+    TextView textView5;
+    TextView textView6;
     String referDate;
-    String DATE_FORMAT = "dd MM yyyy";
     Calendar calendar;
     boolean isStartDate;
+    String DATE_FORMAT = "dd MM yyyy";
 
-    public InvtAppDatePicker(TextView textView1, TextView textView2, TextView textView3, Calendar calendar, String referDate, boolean isStartDate) {
+    public InvtAppDatePicker(TextView textView1, TextView textView2, TextView textView3,
+                             TextView textView4, TextView textView5, TextView textView6, Calendar calendar, String referDate, boolean isStartDate) {
         this.isStartDate = isStartDate;
         this.textView1 = textView1;
         this.textView2 = textView2;
         this.textView3 = textView3;
+        this.textView4 = textView4;
+        this.textView5 = textView5;
+        this.textView6 = textView6;
         this.referDate = referDate;
         this.calendar = calendar;
 
@@ -51,31 +59,31 @@ public class InvtAppDatePicker implements DatePickerDialog.OnDateSetListener {
         calendar.set(Calendar.MONTH, monthOfYear);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         String selectdData = simpleDateFormat.format(calendar.getTime());
+        Log.d("selected date", selectdData);
+        Log.d("refer date", referDate);
         String[] date = selectdData.split(" ");
-        if (textView1 != null && textView2 != null && textView3 != null && calendar != null) {
-            if (referDate == null && referDate.isEmpty())
+        if(isStartDate) {
+            if (StringUtils.isOldDate(selectdData)) {
                 textView1.setText(date[0]);
                 textView2.setText(date[1]);
                 textView3.setText(date[2]);
-        } else {
-            String refDate = referDate;
-            if (isStartDate) {
-                if (StringUtils.isOldDate(selectdData)) {
-                    textView1.setText(date[0]);
-                    textView2.setText(date[1]);
-                    textView3.setText(date[2]);
-                    if (!StringUtils.validateStartAndEndDates(selectdData, refDate)) {
-                        //refEditText.setText(selectdData);
-                    } else {
-                        ToastHelper.redToast(textView1.getContext(), "Start date should not be past date.");
-                    }
-                } else {
-                    if (StringUtils.validateStartAndEndDates(refDate, selectdData)) {
-                        textView1.setText(date[0]);
-                        textView2.setText(date[1]);
-                        textView3.setText(date[2]);
-                    }
+
+                if(!StringUtils.validateStartAndEndDates(selectdData, referDate)) {
+                    textView4.setText(date[0]);
+                    textView5.setText(date[1]);
+                    textView6.setText(date[2]);
                 }
+            }
+            else {
+                ToastHelper.redToast(textView1.getContext(), "Start date should not be past date.");
+            }
+        }else{
+            if (!StringUtils.validateStartAndEndDates(selectdData, referDate)) {
+                textView4.setText(date[0]);
+                textView5.setText(date[1]);
+                textView6.setText(date[2]);
+            } else {
+                ToastHelper.redToast(textView1.getContext(), "end date should not be past to start date.");
             }
         }
     }
@@ -89,8 +97,10 @@ public class InvtAppDatePicker implements DatePickerDialog.OnDateSetListener {
     private void setDate(View v1,View v2,View v3, String date, Calendar calendar) {
         try {
             if (date != null && !date.isEmpty()) {
+                Log.d("date", date);
                 SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy", Locale.US);
-                calendar.setTime(sdf.parse(date.substring(0, 10)));
+                calendar.setTime(sdf.parse(date));
+                Log.d("new date", sdf.format(new Date()));
                 String[] time = sdf.format(new Date()).split(" ");
                 ((TextView) v1).setText(time[0]);
                 ((TextView) v2).setText(time[1]);

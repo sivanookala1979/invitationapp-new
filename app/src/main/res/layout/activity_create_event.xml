@@ -63,7 +63,7 @@
                 android:hint="Event Name"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textSize="@dimen/text_size"/>
+                android:textSize="@dimen/text_medium"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,13 +80,14 @@
                     android:background="@drawable/edit_text_border"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.cerone.invitation.helpers.CeroneTextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:text="Start Date/Time"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_medium"
+                        android:textSize="@dimen/small_text_size"
+                        android:tag="fonts/Montserrat-Light.otf"
                         android:background="@color/happening_orange"
                         android:gravity="center"/>
 
@@ -105,7 +106,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="30"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/small_text_size"
                             android:gravity="center"/>
 
                         <TextView
@@ -119,7 +120,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="Mar"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/small_text_size"
                             android:gravity="center"/>
 
                         <TextView
@@ -134,7 +135,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="2017"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/small_text_size"
                             android:gravity="center"/>
 
                     </LinearLayout>
@@ -154,7 +155,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="6hr"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/small_text_size"
                             android:gravity="center"/>
 
                         <TextView
@@ -168,7 +169,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="30min"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/small_text_size"
                             android:gravity="center"/>
 
                         <TextView
@@ -183,7 +184,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="PM"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/small_text_size"
                             android:gravity="center"/>
 
                     </LinearLayout>
@@ -197,13 +198,14 @@
                     android:background="@drawable/edit_text_border"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.cerone.invitation.helpers.CeroneTextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:text="End Date/Time"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_medium"
+                        android:textSize="@dimen/small_text_size"
+                        android:tag="fonts/Montserrat-Light.otf"
                         android:background="@color/happening_orange"
                         android:gravity="center"/>
 
@@ -222,7 +224,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="30"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/small_text_size"
                             android:gravity="center"/>
 
                         <TextView
@@ -236,7 +238,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="Mar"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/small_text_size"
                             android:gravity="center"/>
 
                         <TextView
@@ -251,7 +253,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="2017"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/small_text_size"
                             android:gravity="center"/>
 
                     </LinearLayout>
@@ -271,7 +273,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="6hr"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/small_text_size"
                             android:gravity="center"/>
 
                         <TextView
@@ -285,7 +287,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="30min"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/small_text_size"
                             android:gravity="center"/>
 
                         <TextView
@@ -300,7 +302,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="PM"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/small_text_size"
                             android:gravity="center"/>
 
                     </LinearLayout>
@@ -327,7 +329,7 @@
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:layout_gravity="center"
                     android:hint="Pick Location"
-                    android:textSize="@dimen/text_size" />
+                    android:textSize="@dimen/text_medium" />
 
                 <ImageView
                     android:id="@+id/get_location"
@@ -349,7 +351,7 @@
                 android:layout_margin="10dp"
                 android:checked="true"
                 android:text="Recurring"
-                android:textSize="@dimen/text_size"
+                android:textSize="@dimen/text_medium"
                 android:textColor="@color/black_shade" />
 
         </LinearLayout>
@@ -382,13 +384,14 @@
                 android:src="@drawable/done_icon"
                 android:tint="@color/happening_indigo" />
 
-            <TextView
+            <com.cerone.invitation.helpers.CeroneTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="Save"
                 android:textSize="@dimen/text_size"
-                android:textColor="@color/happening_indigo"/>
+                android:textColor="@color/happening_indigo"
+                android:tag="fonts/Montserrat-Light.otf" />
 
         </LinearLayout>
 
@@ -409,13 +412,14 @@
                 android:src="@drawable/share_icon"
                 android:tint="@color/green_light" />
 
-            <TextView
+            <com.cerone.invitation.helpers.CeroneTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="Share"
                 android:textSize="@dimen/text_size"
-                android:textColor="@color/event_accept"/>
+                android:textColor="@color/event_accept"
+                android:tag="fonts/Montserrat-Light.otf" />
 
         </LinearLayout>
 
@@ -435,13 +439,14 @@
                 android:scaleType="centerInside"
                 android:tint="@color/happening_red" />
 
-            <TextView
+            <com.cerone.invitation.helpers.CeroneTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="Cancel"
                 android:textSize="@dimen/text_size"
-                android:textColor="@color/happening_red"/>
+                android:textColor="@color/happening_red"
+                android:tag="fonts/Montserrat-Light.otf" />
 
         </LinearLayout>
     </LinearLayout>

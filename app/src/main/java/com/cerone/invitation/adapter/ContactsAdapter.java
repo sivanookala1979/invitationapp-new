@@ -13,8 +13,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.helpers.CircleTransform;
 import com.example.dataobjects.User;
 import com.github.akashandroid90.imageletter.MaterialLetterIcon;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -69,16 +71,19 @@ public class ContactsAdapter extends ArrayAdapter<User> {
         if(contactInfo.isSelected())
             contact.setChecked(true);
         MaterialLetterIcon materialLetterIcon = (MaterialLetterIcon) row.findViewById(R.id.nameIndicator);
-        materialLetterIcon.setLetter("A");
-        materialLetterIcon.setShapeColor(mColors.getColor(position%8, Color.BLACK));
-        if (!contactInfo.getUserName().isEmpty()) {
-            materialLetterIcon.setLetter(""+contactInfo.getUserName().substring(0, 1));
+        if(contactInfo.isActive()){
+            Picasso.with(context).load(contactInfo.getImage()).transform(new CircleTransform()).into(materialLetterIcon);
+        }else{
+            materialLetterIcon.setLetter("A");
+            materialLetterIcon.setShapeColor(mColors.getColor(position%8, Color.BLACK));
+            if (!contactInfo.getUserName().isEmpty()) {
+                materialLetterIcon.setLetter(""+contactInfo.getUserName().substring(0, 1));
+            }
         }
         TextView mobileNumber = (TextView) row.findViewById(R.id.contactNumber);
         userName.setText("" + contactInfo.getUserName());
         mobileNumber.setText("" + contactInfo.getPhoneNumber());
         return row;
-
     }
 
     public View.OnClickListener createOnClickListener(final int position, final ViewGroup parent) {

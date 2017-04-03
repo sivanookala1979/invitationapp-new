@@ -34,7 +34,8 @@
             android:clickable="true"
             android:padding="10dp"
             android:text="SHARE"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/small_text_size"/>
 
     </android.support.v7.widget.Toolbar>
 
@@ -52,14 +53,14 @@
             android:layout_weight="5"
             android:orientation="vertical">
 
-            <TextView
+            <com.cerone.invitation.helpers.CeroneTextView
                 android:id="@+id/txt_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="DATE"
                 android:textColor="@color/darkgray"
                 android:textSize="@dimen/text_size_small"
-                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                android:tag="fonts/Montserrat-Light.otf"
                 android:padding="5dp"/>
 
             <TextView
@@ -80,14 +81,14 @@
             android:layout_weight="5"
             android:orientation="vertical">
 
-            <TextView
+            <com.cerone.invitation.helpers.CeroneTextView
                 android:id="@+id/txt_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TIME"
                 android:textColor="@color/darkgray"
                 android:textSize="@dimen/text_size_small"
-                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                android:tag="fonts/Montserrat-Light.otf"
                 android:padding="5dp"/>
 
             <TextView
@@ -129,7 +130,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:text="N Convention, Jubilee Hills, Hyderabad"
+            android:text="Location details not provided"
             android:textColor="@color/black_shade"
             android:textSize="@dimen/text_size_small"
             android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
@@ -159,6 +160,7 @@
         android:singleLine="true"
         android:background="@drawable/bottom_margin"
         android:textColor="@color/black"
+        android:textSize="@dimen/text_medium"
         android:textStyle="normal|italic" />
 
     <android.support.v4.widget.SwipeRefreshLayout
