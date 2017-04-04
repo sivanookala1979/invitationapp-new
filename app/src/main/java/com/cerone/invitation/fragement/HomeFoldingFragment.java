@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.cerone.invitation.R;
 import com.cerone.invitation.activities.CreateNewEventActivity;
 import com.cerone.invitation.activities.EventDetailsActivity;
+import com.cerone.invitation.activities.LocationDetailsActivity;
 import com.cerone.invitation.activities.PersonalizeActivity;
 import com.cerone.invitation.activities.ShareEventActivity;
 import com.cerone.invitation.activities.ShowInviteePositions;
@@ -143,7 +144,7 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                         startActivity(intent);
                         break;
                     case R.id.nav_address:
-                        intent = new Intent(getActivity(), ShowInviteePositions.class);
+                        intent = new Intent(getActivity(), LocationDetailsActivity.class);
                         startActivity(intent);
                         break;
                     default:

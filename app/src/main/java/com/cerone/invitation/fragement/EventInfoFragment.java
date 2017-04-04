@@ -13,9 +13,9 @@ import com.cerone.invitation.R;
 import com.cerone.invitation.activities.CreateNewEventActivity;
 import com.cerone.invitation.activities.HomeScreenActivity;
 import com.cerone.invitation.activities.InvitieesTabActivity;
+import com.cerone.invitation.activities.LocationDetailsActivity;
 import com.cerone.invitation.activities.ParticipantsActivity;
 import com.cerone.invitation.activities.ShareEventActivity;
-import com.cerone.invitation.activities.ShowInviteePositions;
 import com.cerone.invitation.helpers.ActivityCommunicator;
 import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
@@ -31,13 +31,15 @@ import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 
+import static com.cerone.invitation.R.id.location_address;
+
 
 public class EventInfoFragment extends BaseFragment implements View.OnClickListener{
 
     LinearLayout participantsLayout, invitationSelection, accept, maybe, reject,editEvent, shareEvent, deleteEvent;
     TextView totalInviteesText, acceptCountText, rejectCountText;
     View eventBaseView;
-    ImageView editOrShareIdon;
+    ImageView editOrShareIdon, locationAddress;
     //INVITATIONS
 
     private ActivityCommunicator activityCommunicator;
@@ -51,10 +53,12 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         editEvent = (LinearLayout) view.findViewById(R.id.actionTwo);
         deleteEvent = (LinearLayout) view.findViewById(R.id.actionThree);
         editOrShareIdon = (ImageView) view.findViewById(R.id.actionTwoIcon);
+        locationAddress = (ImageView) view.findViewById(location_address);
         participantsLayout.setOnClickListener(this);
         editEvent.setOnClickListener(this);
         shareEvent.setOnClickListener(this);
         deleteEvent.setOnClickListener(this);
+        locationAddress.setOnClickListener(this);
         eventDetails = InvtAppPreferences.getEventDetails();
         loadEventData(view);
         activityCommunicator =(ActivityCommunicator) getActivity();
@@ -145,8 +149,8 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                 startActivity(intent);
                 getActivity().finish();
                 break;
-            case R.id.location_address :
-                intent = new Intent(getActivity(), ShowInviteePositions.class);
+            case location_address :
+                intent = new Intent(getActivity(), LocationDetailsActivity.class);
                 startActivity(intent);
                 break;
             case R.id.acceptInvitation :

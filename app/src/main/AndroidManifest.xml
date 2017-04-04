@@ -167,7 +167,8 @@
         <activity android:name=".activities.EventsDetailActivity" />
         <activity android:name=".activities.NotificationsActivity" />
         <activity android:name=".activities.CreateNewEventActivity" />
-        <activity android:name=".fragement.EventInfoFragment"></activity>
+        <activity android:name=".fragement.EventInfoFragment" />
+        <activity android:name=".activities.LocationDetailsActivity"></activity>
     </application>
 
 </manifest>
