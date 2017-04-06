@@ -16,11 +16,19 @@ public class Invitee {
     int inviteeId;
     String status = "Not found";
     String distance = "Not found";
+    String updatedAt;
     String email;
     String image;
     boolean admin;
     boolean blocked;
 
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     public boolean isBlocked() {
         return blocked;

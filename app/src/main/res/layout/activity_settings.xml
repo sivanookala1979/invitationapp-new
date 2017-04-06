@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_settings"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.cerone.invitation.activities.SettingsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/my_theme"
+        android:gravity="center"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Settings"
+            android:textColor="@android:color/white" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.cerone.invitation.helpers.CeroneTextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Location Settings"
+            android:textColor="@color/black_shade"
+            android:padding="10dp"
+            android:textSize="@dimen/text_medium"
+            android:tag="fonts/Montserrat-Light.otf"
+            android:background="@color/cream"
+            android:gravity="center_vertical"
+            android:textStyle="normal|bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+            <Switch
+                android:id="@+id/switch_host"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Share Location with Host"
+                android:textColor="@color/black_shade"
+                android:textSize="@dimen/text_medium"
+                android:padding="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_light"/>
+
+            <Switch
+                android:id="@+id/switch_guests"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Share Location with Guests"
+                android:textColor="@color/black_shade"
+                android:textSize="@dimen/text_medium"
+                android:padding="10dp"/>
+
+        </LinearLayout>
+
+        <com.cerone.invitation.helpers.CeroneTextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Notification Settings"
+            android:textColor="@color/black_shade"
+            android:padding="10dp"
+            android:textSize="@dimen/text_medium"
+            android:tag="fonts/Montserrat-Light.otf"
+            android:background="@color/cream"
+            android:gravity="center_vertical"
+            android:textStyle="normal|bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="vertical">
+
+            <Switch
+                android:id="@+id/switch_invitation"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Invitation"
+                android:textColor="@color/black_shade"
+                android:textSize="@dimen/text_medium"
+                android:padding="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_light"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <com.cerone.invitation.helpers.CeroneTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:text="Remainders"
+                    android:textColor="@color/black_shade"
+                    android:textSize="@dimen/text_medium"
+                    android:tag="fonts/Montserrat-Light.otf"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"/>
+
+                <Spinner
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:id="@+id/spinner"
+                    android:layout_margin="10dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_light"/>
+
+            <Switch
+                android:id="@+id/switch_comments"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Comments"
+                android:textColor="@color/black_shade"
+                android:textSize="@dimen/text_medium"
+                android:padding="10dp"/>
+
+        </LinearLayout>
+
+        <com.cerone.invitation.helpers.CeroneTextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Blocked Users"
+            android:textColor="@color/black_shade"
+            android:padding="10dp"
+            android:textSize="@dimen/text_medium"
+            android:tag="fonts/Montserrat-Light.otf"
+            android:background="@color/cream"
+            android:gravity="center_vertical"
+            android:textStyle="normal|bold" />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

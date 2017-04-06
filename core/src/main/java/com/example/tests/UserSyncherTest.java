@@ -5,14 +5,11 @@
 package com.example.tests;
 
 
-import com.example.dataobjects.*;
-import com.example.syncher.BaseSyncher;
-import com.example.syncher.EventSyncher;
-import com.example.syncher.LocationSyncher;
-import com.example.syncher.UserSyncher;
-import com.example.utills.StringUtils;
+import android.util.Log;
 
-import junit.framework.TestCase;
+import com.example.dataobjects.ServerResponse;
+import com.example.syncher.BaseSyncher;
+import com.example.syncher.UserSyncher;
 
 
 /**
@@ -50,10 +47,13 @@ public class UserSyncherTest extends BaseSyncherTest {
 //
     public void testToGetAccessTokenHAPPYFlow() throws Exception {
         // Setup fixture
-        String mobileNumber = "919949257729";
+        String mobileNumber = "918008446701";
+        String otp = "5555";
+        String name = "Srikanth";
         // Exercise SUT
-        ServerResponse response = sut.getAccesToken(mobileNumber);
+        ServerResponse response = sut.getSignInWithMobileAndOtp(mobileNumber, otp, name);
         String token = response.getToken();
+        Log.d("Access Token", token);
         // Verify outcome
         assertNotNull(token);
         assertTrue(response.getId() > 0);

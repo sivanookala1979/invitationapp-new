@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckBox;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,12 +49,19 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
     InvtAppTimePicker startTimePicker, endTimePicker;
     InvtAppDatePicker startDatePicker, endDatePicker;
     TextView startDay, startMonth, startYear, startHour, startMin, startMeridiem,
-            endDay, endMonth, endYear, endHour, endMin, endMeridiem, eventName, eventAddress;
+            endDay, endMonth, endYear, endHour, endMin, endMeridiem, toolbarTitle;
+    EditText eventName, eventLocation, extraAddress;
     String eventPictureInfo = "";
     ServerResponse createEvent;
-    CheckBox recurring;
+    Spinner recurringInfo;
+    String recurringData[] = {
+            " Does not repeate",
+            " Every day",
+            " Every week",
+            " Every month"};
     Event event = new Event();
     ImageView eventImage, getLocation;
+    int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +69,7 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         setContentView(R.layout.activity_create_event);
         addToolbarView();
         setFontType(R.id.event_name, R.id.event_address, R.id.start_day, R.id.start_month, R.id.start_year, R.id.start_hour, R.id.start_min, R.id.start_meridiem,
-                R.id.end_day, R.id.end_month, R.id.end_year, R.id.end_hour, R.id.end_min, R.id.end_meridiem, R.id.recurring);
+                R.id.end_day, R.id.end_month, R.id.end_year, R.id.end_hour, R.id.end_min, R.id.end_meridiem, R.id.event_name, R.id.event_location, R.id.extra_address);
         layoutStartDate = (LinearLayout) findViewById(layout_start_date);
         layoutStartTime = (LinearLayout) findViewById(R.id.layout_start_time);
         layoutEndDate = (LinearLayout) findViewById(R.id.layout_end_date);
@@ -68,8 +77,10 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         layoutCreateEvent = (LinearLayout) findViewById(R.id.layout_createEvent);
         layoutShareEvent = (LinearLayout) findViewById(R.id.layout_shareEvent);
         layoutCancel = (LinearLayout) findViewById(R.id.layout_cancelEvent);
-        eventName = (TextView) findViewById(R.id.event_name);
-        eventAddress = (TextView) findViewById(R.id.event_address);
+        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        eventName = (EditText) findViewById(R.id.event_name);
+        eventLocation = (EditText) findViewById(R.id.event_location);
+        extraAddress = (EditText) findViewById(R.id.extra_address);
         startDay = (TextView) findViewById(R.id.start_day);
         startMonth = (TextView) findViewById(R.id.start_month);
         startYear = (TextView) findViewById(R.id.start_year);
@@ -84,7 +95,10 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         endMeridiem = (TextView) findViewById(R.id.end_meridiem);
         eventImage = (ImageView) findViewById(R.id.event_image);
         getLocation = (ImageView) findViewById(R.id.get_location);
-        recurring = (CheckBox) findViewById(R.id.recurring);
+        recurringInfo = (Spinner) findViewById(R.id.recurringInfo);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_text_view, recurringData);
+        arrayAdapter.setDropDownViewResource(R.layout.spinner_text_view);
+        recurringInfo.setAdapter(arrayAdapter);
         String startDate = getCurrentDate();
         String[] currentDate = startDate.split(" ");
         startDay.setText(currentDate[0]);
@@ -105,7 +119,6 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         if (eventDetails != null) {
             layoutShareEvent.setVisibility(View.GONE);
             eventName.setText(eventDetails.getName());
-            recurring.setChecked(eventDetails.isRecurring());
             String[] s1 = StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 3).split(" ");
             startDay.setText(s1[0]);
             startMonth.setText(s1[1]);
@@ -122,16 +135,16 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
             endHour.setText(s4[0]);
             endMin.setText(s4[1]);
             endMeridiem.setText(s4[2]);
-            event.setEventId(eventDetails.getEventId());
-            event.setLatitude(eventDetails.getLatitude());
             if(eventDetails.getImageUrl()!=null && !eventDetails.getImageUrl().isEmpty()) {
                 Picasso.with(getApplicationContext()).load(eventDetails.getImageUrl()).into(eventImage);
                 loadBitmap(eventDetails.getImageUrl());
             }
+            event.setEventId(eventDetails.getEventId());
+            event.setLatitude(eventDetails.getLatitude());
             event.setLongitude(eventDetails.getLongitude());
             event.setAddress(eventDetails.getAddress());
             if (event.getAddress() != null && event.getAddress().length() > 0) {
-                eventAddress.setText(event.getAddress());
+                eventLocation.setText(event.getAddress());
             }
         }
         loadMostRecentAddress();
@@ -283,7 +296,6 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         String endDateInfo = endDay.getText().toString()+"-"+endMonth.getText().toString()+"-"+endYear.getText().toString() + " " + endHour.getText().toString()+":"+endMin.getText().toString() + ":00";
         event.setStartDateTime(startDateInfo);
         event.setEndDateTime(endDateInfo);
-        event.setRecurring(recurring.isChecked());
         event.setImageData(eventPictureInfo);
     }
 
@@ -321,7 +333,8 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
             event.setLatitude(eventLocationDetails.getLatitude());
             event.setLongitude(eventLocationDetails.getLongitude());
             event.setAddress(eventLocationDetails.getAddress());
-            updateLocationDetails();
+            updateLocationDetails(count);
+            count++;
         }
         if ((requestCode == InvitationAppConstants.IMAG_LOAD || requestCode == InvitationAppConstants.IMAGE_CAPTURE) && resultCode == RESULT_OK) {
             Bitmap bitmap;
@@ -333,16 +346,20 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
             if (bitmap != null) {
                 eventImage.setImageBitmap(bitmap);
                 eventPictureInfo = MobileHelper.BitMapToString(bitmap);
+                ImageView imageCamera = (ImageView) findViewById(R.id.image_camera);
+                imageCamera.setVisibility(View.GONE);
             }
         }
     }
 
-    private void updateLocationDetails() {
+    private void updateLocationDetails(int i) {
         if (event.getAddress() != null && event.getAddress().length() > 0) {
-            eventAddress.setText(event.getAddress());
+            if(count == 0)
+            extraAddress.setText(eventLocation.getText().toString());
+            eventLocation.setText(event.getAddress());
         } else {
-            eventAddress.setText("");
-            eventAddress.setHint("Pick Location");
+            eventLocation.setText("");
+            eventLocation.setHint("Event Location");
         }
     }
 

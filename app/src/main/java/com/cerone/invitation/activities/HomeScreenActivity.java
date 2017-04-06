@@ -319,7 +319,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                 intent = new Intent(this, NotificationsActivity.class);
                 break;
             case R.id.nav_settings:
-                intent = new Intent(this, EventsDetailActivity.class);
+                intent = new Intent(this, SettingsActivity.class);//EventsDetailActivity
                 break;
             case R.id.nav_logout:
                 try {

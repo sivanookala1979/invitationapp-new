@@ -7,7 +7,6 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.test.mock.MockPackageManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -42,8 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static com.cerone.invitation.R.id.map;
-
 
 
 public class LocationActivity extends BaseActivity implements OnClickListener,OnMapReadyCallback {
@@ -56,7 +53,6 @@ public class LocationActivity extends BaseActivity implements OnClickListener,On
     List<String> oldLocations = new ArrayList<String>();
     List<String> locaionInfo = new ArrayList<String>();
     ArrayAdapter<String> myAdapter;
-    boolean loadCoordinates;
     UserLocation location;
     private static final int REQUEST_CODE_PERMISSION = 2;
 
@@ -83,10 +79,10 @@ public class LocationActivity extends BaseActivity implements OnClickListener,On
             dialog.show();
         } else { // Google Play Services are available
             // Getting reference to the SupportMapFragment of activity_main.xml
-            SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(map);
+            SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.invitee_map);
             fm.getMapAsync(this);
-
         }
+
         locationFilterSetUp();
         checkUserPermissions();
     }

@@ -7,6 +7,7 @@ package com.example.syncher;
 import com.example.dataobjects.Eventstatistics;
 import com.example.dataobjects.Invitation;
 import com.example.dataobjects.Invitee;
+import com.example.dataobjects.Invitees;
 import com.example.dataobjects.ServerResponse;
 import com.example.dataobjects.User;
 import com.example.utills.HTTPUtils;
@@ -183,4 +184,58 @@ public class InvitationSyncher extends BaseSyncher {
         }
         return response;
     }
+
+    public List<Invitees> getAllInviteesList(int eventId) {
+        List<Invitees> listOfAllInvitees = new ArrayList<>();
+        try {
+            String dataFromServer = HTTPUtils.getDataFromServer(BASE_URL + "events/differentiate_invitees.json?event_id="+eventId, "GET", true);
+            if (StringUtils.isJSONValid(dataFromServer)) {
+                JSONObject jsonResponse = new JSONObject(dataFromServer);
+                JSONArray allInviteesList = jsonResponse.getJSONArray("all_invitees_list");
+                if (allInviteesList != null) {
+                    for (int i = 0; i < allInviteesList.length(); i++) {
+                        JSONObject jsonObject = allInviteesList.getJSONObject(i);
+                        Invitees invitees = new Invitees();
+                        if (jsonObject.has("title"))
+                            invitees.setTitle(jsonObject.getString("title"));
+                        if (jsonObject.has("total_invitees"))
+                            invitees.setTotalInvitees(jsonObject.getInt("total_invitees"));
+                        if (jsonObject.has("invitees_list")){
+                            JSONArray inviteesList = jsonObject.getJSONArray("invitees_list");
+                            List<Invitee> listOfInvitees = new ArrayList<>();
+                            if (inviteesList != null) {
+                                for (int j = 0; j < inviteesList.length(); j++) {
+                                    JSONObject jsonInvitees = inviteesList.getJSONObject(j);
+                                    Invitee invitee = new Invitee();
+                                    if (jsonObject.has("name"))
+                                        invitee.setInviteeName(jsonInvitees.getString("name"));
+                                    if (jsonObject.has("mobile"))
+                                        invitee.setMobileNumber(jsonInvitees.getString("mobile"));
+                                    if (jsonObject.has("email"))
+                                        invitee.setEmail(jsonInvitees.getString("email"));
+                                    if (jsonObject.has("user_id"))
+                                        invitee.setInviteeId(jsonInvitees.getInt("user_id"));
+                                    if (jsonObject.has("img_url"))
+                                        invitee.setImage(jsonInvitees.getString("img_url"));
+                                    if (jsonObject.has("distance"))
+                                        invitee.setDistance(jsonInvitees.getString("distance"));
+                                    if (jsonObject.has("update_at"))
+                                        invitee.setUpdatedAt(jsonInvitees.getString("update_at"));
+                                    if (jsonObject.has("is_admin"))
+                                        invitee.setAdmin(jsonInvitees.getBoolean("is_admin"));
+                                    listOfInvitees.add(invitee);
+                                }
+                            }
+
+                        }
+                        listOfAllInvitees.add(invitees);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return listOfAllInvitees;
+    }
+
 }

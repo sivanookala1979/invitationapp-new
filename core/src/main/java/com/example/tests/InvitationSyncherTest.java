@@ -4,6 +4,7 @@
  */
 package com.example.tests;
 
+import com.example.dataobjects.Invitees;
 import com.example.dataobjects.ServerResponse;
 import com.example.dataobjects.User;
 import com.example.syncher.BaseSyncher;
@@ -52,6 +53,13 @@ public class InvitationSyncherTest extends TestCase {
             assertEquals(12, response.getTotalInvites());
         }
     }
+
+    public void testGetAllInviteesListTestHAPPYFlow() throws Exception {
+
+        List<Invitees> listOfAllInvitees = sut.getAllInviteesList(127);
+        assertEquals(4, listOfAllInvitees.size());
+
+        }
 
     private List<User> getDefaultNumbers() {
         List<User> mobileNUmbers = new ArrayList<User>();

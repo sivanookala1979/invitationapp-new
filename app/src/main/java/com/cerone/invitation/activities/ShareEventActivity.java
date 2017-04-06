@@ -49,7 +49,8 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
     ListView listView, groupList;
     ContactAdapter adapter;
     GroupAdapter groupAdapter;
-    Button shareEvent, groupsView, contactsView;
+    Button groupsView, contactsView;
+    LinearLayout layoutShareEvent, layoutCancelEvent;
     List<Group> myGroups = new ArrayList<Group>();
     boolean isNewEvent;
 
@@ -61,12 +62,14 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
         setFontType(R.id.shareEventData, R.id.cancel, R.id.txt_start, R.id.txt_end, R.id.eventstartDate, R.id.eventStartTime,
                 R.id.eventEndDate, R.id.eventEndtime, R.id.eventLocation, R.id.groups, R.id.contact);
         isNewEvent = getIntent().getExtras().getBoolean("newEvent");
+        layoutShareEvent = (LinearLayout) findViewById(R.id.layout_shareEvent);
+        layoutCancelEvent = (LinearLayout) findViewById(R.id.layout_cancelEvent);
         listView = (ListView) findViewById(R.id.attendeeslist);
         groupList = (ListView) findViewById(R.id.grouplist);
-        shareEvent = (Button) findViewById(R.id.shareEventData);
         groupsView = (Button) findViewById(R.id.groups);
         contactsView = (Button) findViewById(R.id.contacts);
-        shareEvent.setOnClickListener(this);
+        layoutShareEvent.setOnClickListener(this);
+        layoutCancelEvent.setOnClickListener(this);
         groupsView.setOnClickListener(this);
         contactsView.setOnClickListener(this);
         listView.setOnItemClickListener(this);
@@ -138,10 +141,12 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                 Intent contactIntent = new Intent(this, MobileContactsActivity.class);
                 startActivityForResult(contactIntent, 100);
                 break;
+            case R.id.layout_cancelEvent:
             case R.id.cancel:
                 finish();
                 break;
-            case R.id.shareEventData:
+            case R.id.layout_shareEvent:
+            case R.id.share:
                 if (allSelectedlist.size() > 0 || listOfGroupIds.size() > 0) {
                     new InvtAppAsyncTask(this) {
 
