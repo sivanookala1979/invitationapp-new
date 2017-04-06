@@ -59,8 +59,8 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.share_events_layout);
         addToolbarView();
-        setFontType(R.id.shareEventData, R.id.cancel, R.id.txt_start, R.id.txt_end, R.id.eventstartDate, R.id.eventStartTime,
-                R.id.eventEndDate, R.id.eventEndtime, R.id.eventLocation, R.id.groups, R.id.contact);
+        setFontType(R.id.txt_start, R.id.txt_end, R.id.eventstartDate, R.id.eventStartTime,
+                R.id.eventEndDate, R.id.eventEndtime, R.id.eventLocation, R.id.groups, R.id.contacts);
         isNewEvent = getIntent().getExtras().getBoolean("newEvent");
         layoutShareEvent = (LinearLayout) findViewById(R.id.layout_shareEvent);
         layoutCancelEvent = (LinearLayout) findViewById(R.id.layout_cancelEvent);

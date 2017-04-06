@@ -46,8 +46,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.cerone.invitation.R.id.map;
-
 
 public class ShowInviteePositions extends BaseActivity implements OnClickListener, OnMapReadyCallback {
 
@@ -79,7 +77,7 @@ public class ShowInviteePositions extends BaseActivity implements OnClickListene
             dialog.show();
         } else {
             // Getting reference to the SupportMapFragment of activity_main.xml
-            SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(map);
+            SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.invitee_map);
             fm.getMapAsync(this);
             mMarkersHashMap = new HashMap<Marker, MyMarker>();
         }

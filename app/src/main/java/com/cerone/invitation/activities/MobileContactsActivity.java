@@ -73,8 +73,6 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
         Log.d("list size", allContactsList.size()+"");
         if(allContactsList.size() == 0){
             loadAllMobileContacts();
-            InvtAppPreferences.setAllContacts(allContactsList);
-            Log.d("list size", allContactsList.size()+"");
         }
         contactsAdapter = new ContactsAdapter(MobileContactsActivity.this, R.layout.contact_layout, allContactsList);
         contactsListView.setAdapter(contactsAdapter);
@@ -90,7 +88,6 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
                 swipeView.setRefreshing(true);
                 allContactsList.clear();
                 loadAllMobileContacts();
-                InvtAppPreferences.setAllContacts(allContactsList);
                 Log.d("Swipe", "Refreshing Number");
                 ( new Handler()).postDelayed(new Runnable() {
                     @Override
@@ -152,6 +149,7 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
                     if(allContactsList.size()>0) {
                         filterList.addAll(allContactsList);
                         contactsAdapter.updateAdapter(filterList);
+                        InvtAppPreferences.setAllContacts(allContactsList);
                     }
                 }
             }.execute();

@@ -180,7 +180,7 @@ public class LocationDetailsActivity extends BaseActivity implements OnMapReadyC
         else{
             map.addMarker(markerOptions.icon(BitmapDescriptorFactory.fromBitmap(ShowInviteePositions.createDrawableFromView(this, customMarker))));
         }
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 1));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 5));
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

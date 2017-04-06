@@ -398,8 +398,8 @@
 
             <ImageView
                 android:id="@+id/share"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/share_icon"
                 android:tint="@color/green_light" />
@@ -425,8 +425,8 @@
 
             <ImageView
                 android:id="@+id/cancel"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/delete_icon"
                 android:scaleType="centerInside"
                 android:tint="@color/happening_red" />

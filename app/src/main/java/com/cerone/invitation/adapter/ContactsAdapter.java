@@ -65,24 +65,26 @@ public class ContactsAdapter extends ArrayAdapter<User> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.contact_layout, parent, false);
         User contactInfo = getItem(position);
-        TextView userName = (TextView) row.findViewById(R.id.userName);
+    if(contactInfo!=null){
+        TextView userName = (TextView) row.findViewById(R.id.user_name);
         CheckBox contact = (CheckBox) row.findViewById(R.id.contact_check);
         contact.setOnClickListener(createOnClickListener(position, parent));
-        if(contactInfo.isSelected())
+        if (contactInfo.isSelected())
             contact.setChecked(true);
         MaterialLetterIcon materialLetterIcon = (MaterialLetterIcon) row.findViewById(R.id.nameIndicator);
-        if(contactInfo.isActive()){
+        if (contactInfo.getImage()!=null&&!contactInfo.getImage().equals(" ")) {
             Picasso.with(context).load(contactInfo.getImage()).transform(new CircleTransform()).into(materialLetterIcon);
-        }else{
+        } else {
             materialLetterIcon.setLetter("A");
-            materialLetterIcon.setShapeColor(mColors.getColor(position%8, Color.BLACK));
+            materialLetterIcon.setShapeColor(mColors.getColor(position % 8, Color.BLACK));
             if (!contactInfo.getUserName().isEmpty()) {
-                materialLetterIcon.setLetter(""+contactInfo.getUserName().substring(0, 1));
+                materialLetterIcon.setLetter("" + contactInfo.getUserName().substring(0, 1));
             }
         }
         TextView mobileNumber = (TextView) row.findViewById(R.id.contactNumber);
         userName.setText("" + contactInfo.getUserName());
         mobileNumber.setText("" + contactInfo.getPhoneNumber());
+    }
         return row;
     }
 

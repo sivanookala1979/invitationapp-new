@@ -92,13 +92,16 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                             startActivity(intent);
                         } else {
                             if (event.isAccepted()) {
-                                intent = new Intent(getActivity(), EventDetailsActivity.class);
+                                intent = new Intent(getActivity(), IntraChatActivity.class);
+                                intent.putExtra("UserId", event.getOwnerId());
+                                intent.putExtra("UserImage", "");
+                                intent.putExtra("UserName", event.getOwnerName());
                                 startActivity(intent);
                             }
                         }
                         break;
                     case R.id.actionThree:
-                        if (!event.isInvitation() || (event.isAccepted() && event.isAdmin())) {
+                        if ((event.isInvitation()&&event.isAccepted()) || (event.isAccepted() && event.isAdmin())) {
                             final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                             alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
@@ -123,12 +126,8 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                             alertDialog.setMessage("Do you want to delete?");
                             alertDialog.show();
                         } else {
-                            if (event.isAccepted()) {
-                                ToastHelper.blueToast(getActivity(), "Need to check.");
-                            } else {
                                 acceptOrRejectInvitation(false, event, locationPermission);
                             }
-                        }
                         break;
                     case R.id.showEventIcon:
                     case R.id.showEventDetails:

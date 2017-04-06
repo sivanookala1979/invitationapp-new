@@ -1,7 +1,9 @@
 package com.cerone.invitation.fragement;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +38,7 @@ import static com.cerone.invitation.R.id.location_address;
 
 public class EventInfoFragment extends BaseFragment implements View.OnClickListener{
 
-    LinearLayout participantsLayout, invitationSelection, accept, maybe, reject,editEvent, shareEvent, deleteEvent;
+    LinearLayout participantsLayout, invitationSelection, accept, maybe, reject,actionsLayout, editEvent, shareEvent, deleteEvent, inviteesLayout;
     TextView totalInviteesText, acceptCountText, rejectCountText;
     View eventBaseView;
     ImageView editOrShareIdon, locationAddress;
@@ -49,20 +51,23 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.event_info_fragment, container, false);
         eventBaseView = view;
         participantsLayout = (LinearLayout)view.findViewById(R.id.participantsLayout);
+        actionsLayout = (LinearLayout)view.findViewById(R.id.actionsLayout);
         shareEvent = (LinearLayout) view.findViewById(R.id.actionOne);
         editEvent = (LinearLayout) view.findViewById(R.id.actionTwo);
         deleteEvent = (LinearLayout) view.findViewById(R.id.actionThree);
+        inviteesLayout = (LinearLayout) view.findViewById(R.id.invitees_layout);
         editOrShareIdon = (ImageView) view.findViewById(R.id.actionTwoIcon);
         locationAddress = (ImageView) view.findViewById(location_address);
         participantsLayout.setOnClickListener(this);
+        actionsLayout.setOnClickListener(this);
         editEvent.setOnClickListener(this);
         shareEvent.setOnClickListener(this);
         deleteEvent.setOnClickListener(this);
+        inviteesLayout.setOnClickListener(this);
         locationAddress.setOnClickListener(this);
         eventDetails = InvtAppPreferences.getEventDetails();
         loadEventData(view);
         activityCommunicator =(ActivityCommunicator) getActivity();
-
         return view;
     }
 
@@ -100,8 +105,9 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
             eventLocation.setText(eventDetails.getAddress());
         }
         if(eventDetails.isInvitation()){
-            editEvent.setVisibility(View.GONE);
-            deleteEvent.setVisibility(View.GONE);
+//            editEvent.setVisibility(View.GONE);
+//            deleteEvent.setVisibility(View.GONE);
+            actionsLayout.setVisibility(View.GONE);
             editOrShareIdon.setBackgroundResource(R.drawable.group);
             invitationSelection = (LinearLayout) eventBaseView.findViewById(R.id.invitationSelection);
             invitationSelection.setVisibility(View.VISIBLE);
@@ -144,10 +150,20 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.actionThree:
-                deleteEvent();
-                intent = new Intent(getActivity(), HomeScreenActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteEvent();
+                        Intent intent = new Intent(getActivity(), HomeScreenActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();                        }
+                });
+
+                alertDialog.setNegativeButton("No", null);
+                alertDialog.setMessage("Do you want to delete?");
+                alertDialog.show();
                 break;
             case location_address :
                 intent = new Intent(getActivity(), LocationDetailsActivity.class);
@@ -166,6 +182,15 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                 intent = new Intent(getActivity(), InvitieesTabActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.invitees_layout :
+                if(eventDetails.isInvitation()){
+                    intent = new Intent(getActivity(), ParticipantsActivity.class);
+                    intent.putExtra("eventId", eventDetails.getEventId());
+                    intent.putExtra("title", "Invitees");
+                    startActivity(intent);
+                }
+                break;
+
         }
     }
     @Override

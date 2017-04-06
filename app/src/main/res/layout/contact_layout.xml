@@ -35,7 +35,7 @@
             android:orientation="vertical">
 
             <com.cerone.invitation.helpers.CeroneTextView
-                android:id="@+id/userName"
+                android:id="@+id/user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"

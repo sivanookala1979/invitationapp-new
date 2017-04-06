@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -51,7 +53,7 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
     TextView startDay, startMonth, startYear, startHour, startMin, startMeridiem,
             endDay, endMonth, endYear, endHour, endMin, endMeridiem, toolbarTitle;
     EditText eventName, eventLocation, extraAddress;
-    String eventPictureInfo = "";
+    String eventPictureInfo = "", eventTitle;
     ServerResponse createEvent;
     Spinner recurringInfo;
     String recurringData[] = {
@@ -151,6 +153,29 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         setlisteners(layoutStartDate, layoutStartTime, layoutEndDate, layoutEndTime, layoutCreateEvent, layoutShareEvent, layoutCancel, eventImage, getLocation);
         createAndSetOnclickListeners(layout_start_date, R.id.layout_start_time, R.id.layout_end_date, R.id.layout_end_time, R.id.layout_createEvent, R.id.layout_shareEvent, R.id.layout_cancelEvent,
                 R.id.event_image, R.id.get_location);
+
+        eventName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO Auto-generated method stub
+                eventTitle = eventName.getText().toString();
+                toolbarTitle.setText(eventTitle);
+                if(eventTitle.isEmpty()){
+                    toolbarTitle.setText("New Event");
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+        });
     }
     private Target loadtarget;
 
@@ -297,6 +322,8 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         event.setStartDateTime(startDateInfo);
         event.setEndDateTime(endDateInfo);
         event.setImageData(eventPictureInfo);
+        event.setRecurringType(recurringInfo.getSelectedItem().toString());
+        event.setExtraAddress(extraAddress.getText().toString());
     }
 
     private boolean isEventDataValid() {
