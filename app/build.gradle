@@ -47,7 +47,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.ramotion.foldingcell:folding-cell:1.1.0'
     compile 'com.github.akashandroid90:imageletter:1.8@aar'
-    compile 'com.google.android.gms:play-services:10.2.0'
+    compile 'com.google.android.gms:play-services:10.2.1'
     compile 'com.android.support:multidex:1.0.0'
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support:support-annotations:24.2.1'

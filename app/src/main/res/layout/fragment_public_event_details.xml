@@ -1,0 +1,214 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.cerone.invitation.fragement.PublicEventDetailsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <com.cerone.invitation.helpers.CeroneTextView
+                android:id="@+id/txt_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DATE"
+                android:textColor="@color/darkgray"
+                android:textSize="@dimen/text_size_small"
+                android:tag="fonts/Montserrat-Light.otf"
+                android:padding="5dp"/>
+
+            <com.cerone.invitation.helpers.CeroneTextView
+                android:id="@+id/event_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sat, 21/03/2017"
+                android:textColor="@color/black_shade"
+                android:textSize="@dimen/text_size_small"
+                android:tag="fonts/Montserrat-Light.otf"
+                android:padding="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <com.cerone.invitation.helpers.CeroneTextView
+                android:id="@+id/txt_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TIME"
+                android:textColor="@color/darkgray"
+                android:textSize="@dimen/text_size_small"
+                android:tag="fonts/Montserrat-Light.otf"
+                android:padding="5dp"/>
+
+            <com.cerone.invitation.helpers.CeroneTextView
+                android:id="@+id/event_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="11.00AM - 01:00AM"
+                android:textColor="@color/black_shade"
+                android:textSize="@dimen/text_size_small"
+                android:tag="fonts/Montserrat-Light.otf"
+                android:padding="5dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@drawable/location_icon"
+            android:tint="@color/happening_orange"/>
+
+        <com.cerone.invitation.helpers.CeroneTextView
+            android:id="@+id/event_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:text="N Convention, Jubilee Hills, Hyderabad"
+            android:textColor="@color/black_shade"
+            android:textSize="@dimen/text_medium"
+            android:tag="fonts/Montserrat-Light.otf"
+            android:padding="10dp"/>
+
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/publicEvent_map"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="12dp"
+            android:src="@drawable/favourite"
+            android:tint="@color/gray" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@drawable/cart"
+            android:tint="@color/gray"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@drawable/fb"
+            android:tint="@color/black_shade" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@drawable/eye"
+            android:tint="@color/gray" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:src="@drawable/cross"
+            android:tint="@color/gray" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_light"/>
+    
+    <com.cerone.invitation.helpers.CeroneTextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="Friends Attending"
+        android:textColor="@color/black_shade"
+        android:textSize="@dimen/text_medium"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:tag="fonts/Montserrat-Light.otf"
+        android:background="@color/cream"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_light"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_light"/>
+
+    <com.cerone.invitation.helpers.CeroneTextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="Similar Events List"
+        android:textColor="@color/black_shade"
+        android:textSize="@dimen/text_medium"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:tag="fonts/Montserrat-Light.otf"
+        android:background="@color/cream"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_light"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
+
+</LinearLayout>
