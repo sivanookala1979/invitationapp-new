@@ -8,7 +8,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="2.5dp">
+        android:layout_margin="2.5dp"
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/profileImage"
@@ -16,6 +17,20 @@
             android:layout_height="40dp"
             android:background="@drawable/logo"
             android:scaleType="fitXY" />
+
+        <com.cerone.invitation.helpers.CeroneTextView
+            android:id="@+id/moreCount"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/circle_shape"
+            android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+            android:gravity="center"
+            android:tag="fonts/Montserrat-Light.otf"
+            android:text="5+"
+            android:textColor="@color/happening_orange"
+            android:textSize="@dimen/text_size_medium"
+            android:visibility="gone" />
+
     </LinearLayout>
 
 

@@ -18,35 +18,42 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/my_theme"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         android:weightSum="5">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/gray" />
+
         <ImageView
-            android:id="@+id/chat_add"
+            android:id="@+id/emoji_btn"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:layout_margin="10dp"
-            android:src="@drawable/chat_add_icon"
-            android:visibility="gone" />
+            android:src="@drawable/emoji_icon"
+            android:tint="@color/gray" />
 
         <EditText
             android:id="@+id/chat_message_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="40dp"
             android:layout_toEndOf="@+id/chat_add"
             android:layout_toLeftOf="@+id/send_chat_message"
-            android:layout_toRightOf="@+id/chat_add"
+            android:layout_toRightOf="@+id/emoji_btn"
             android:layout_toStartOf="@+id/send_chat_message"
             android:background="@null"
-            android:hint="please type your message here"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            android:hint="Say Something.."
+            android:padding="5dp"
+            android:textColor="@color/grey_light"
+            android:textColorHint="@color/gray" />
 
         <ImageView
             android:id="@+id/send_chat_message"
@@ -56,7 +63,7 @@
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
             android:src="@drawable/send_chat_icon"
-            android:tint="@color/white" />
+            android:tint="@color/gray" />
     </RelativeLayout>
 
 </LinearLayout>

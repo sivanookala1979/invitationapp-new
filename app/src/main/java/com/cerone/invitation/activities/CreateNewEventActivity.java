@@ -277,8 +277,6 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
                     Intent intent = new Intent(this, ShareEventActivity.class);
                     intent.putExtra("newEvent", true);
                     startActivity(intent);
-                } else {
-                    ToastHelper.redToast(getApplicationContext(), "Fields should not be empty");
                 }
                 break;
             case R.id.layout_cancelEvent :
@@ -310,8 +308,6 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
                     }
                 }
             }.execute();
-        } else {
-            ToastHelper.redToast(getApplicationContext(), "Fields should not be empty");
         }
     }
 
@@ -327,12 +323,17 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
     }
 
     private boolean isEventDataValid() {
+        boolean status = true;
         if(event.getAddress()==null || event.getAddress().length() == 0) {
             event.setAddress("");
             event.setLatitude(0.0);
             event.setLongitude(0.0);
         }
-        return true;
+        if(event.getName()==null || event.getName().isEmpty()){
+            status = false;
+            ToastHelper.redToast(getApplicationContext(),"Event name should not be empty.");
+        }
+        return status;
     }
 
     public static String getCurrentDate() {

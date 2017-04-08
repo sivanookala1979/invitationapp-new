@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +20,13 @@ import com.cerone.invitation.activities.InvitieesTabActivity;
 import com.cerone.invitation.activities.LocationDetailsActivity;
 import com.cerone.invitation.activities.ParticipantsActivity;
 import com.cerone.invitation.activities.ShareEventActivity;
+import com.cerone.invitation.adapter.AcceptedParticipantsAdapater;
 import com.cerone.invitation.helpers.ActivityCommunicator;
 import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.ToastHelper;
+import com.cerone.invitation.helpers.UIHelper;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Eventstatistics;
 import com.example.dataobjects.ServerResponse;
@@ -33,13 +37,18 @@ import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 
+import static com.cerone.invitation.R.id.actionsLayout;
+import static com.cerone.invitation.R.id.deleteEvent;
 import static com.cerone.invitation.R.id.location_address;
+import static com.cerone.invitation.R.id.participantsLayout;
+import static com.cerone.invitation.R.id.shareEvent;
 
 
 public class EventInfoFragment extends BaseFragment implements View.OnClickListener{
 
-    LinearLayout participantsLayout, invitationSelection, accept, maybe, reject,actionsLayout, editEvent, shareEvent, deleteEvent, inviteesLayout;
+    LinearLayout invitationSelection,inviteesLayout, accept, maybe, reject,editEvent,actionsLayout, shareEvent, deleteEvent;
     TextView totalInviteesText, acceptCountText, rejectCountText;
+    RecyclerView participantsLayout;
     View eventBaseView;
     ImageView editOrShareIdon, locationAddress;
     //INVITATIONS
@@ -50,7 +59,14 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.event_info_fragment, container, false);
         eventBaseView = view;
-        participantsLayout = (LinearLayout)view.findViewById(R.id.participantsLayout);
+        participantsLayout = (RecyclerView)view.findViewById(R.id.participantsLayout);
+        participantsLayout.setLayoutManager( new LinearLayoutManager(getActivity()));
+        AcceptedParticipantsAdapater acceptedParticipantsAdapater = new AcceptedParticipantsAdapater(getActivity());
+        participantsLayout.setAdapter(acceptedParticipantsAdapater);
+        ViewGroup.LayoutParams params=participantsLayout.getLayoutParams();
+        params.height=AcceptedParticipantsAdapater.CELL_HEIGHT*4;
+        participantsLayout.setLayoutParams(params);
+        participantsLayout.stopScroll();
         actionsLayout = (LinearLayout)view.findViewById(R.id.actionsLayout);
         shareEvent = (LinearLayout) view.findViewById(R.id.actionOne);
         editEvent = (LinearLayout) view.findViewById(R.id.actionTwo);
@@ -68,6 +84,7 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         eventDetails = InvtAppPreferences.getEventDetails();
         loadEventData(view);
         activityCommunicator =(ActivityCommunicator) getActivity();
+
         return view;
     }
 
@@ -114,7 +131,6 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
             accept = (LinearLayout) eventBaseView.findViewById(R.id.acceptInvitation);
             maybe = (LinearLayout) eventBaseView.findViewById(R.id.mayBe);
             reject = (LinearLayout) eventBaseView.findViewById(R.id.rejected);
-            participantsLayout.setVisibility(View.GONE);
             if(eventDetails.isAccepted()){
                 invitationSelection.setVisibility(View.GONE);
             }else {

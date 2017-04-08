@@ -6,453 +6,458 @@
     android:layout_height="match_parent"
     tools:context="com.cerone.invitation.fragement.EventInfoFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/invitationSelection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:visibility="gone"
-            android:background="@drawable/happening_top_botten_style"
-            android:minHeight="50dp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/acceptInvitation"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:duplicateParentState="true"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/done_icon"
-                    android:tint="@color/event_accept" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/mayBe"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/happening_gray_rectangle"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:duplicateParentState="true"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/question_mark_icon"
-                    android:tint="@color/happening_indigo" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/rejected"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/delete_icon"
-                    android:duplicateParentState="true"
-                    android:scaleType="centerInside"
-                    android:tint="@color/happening_red" />
-            </LinearLayout>
-        </LinearLayout>
-
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/eventImage"
+            <LinearLayout
+                android:id="@+id/invitationSelection"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/event_picture" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@drawable/happening_top_botten_style"
+                android:minHeight="50dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
+                <LinearLayout
+                    android:id="@+id/acceptInvitation"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:duplicateParentState="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/done_icon"
+                        android:tint="@color/event_accept" />
 
-                <ImageView
-                    android:id="@+id/eventOwnerImage"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/avatar" />
-            </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mayBe"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/happening_gray_rectangle"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:duplicateParentState="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/question_mark_icon"
+                        android:tint="@color/happening_indigo" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/rejected"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/delete_icon"
+                        android:duplicateParentState="true"
+                        android:scaleType="centerInside"
+                        android:tint="@color/happening_red" />
+                </LinearLayout>
+            </LinearLayout>
+
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="6.5"
-                android:gravity="center_horizontal|center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.cerone.invitation.helpers.CeroneTextView
-                    android:id="@+id/ownerName"
+                <ImageView
+                    android:id="@+id/eventImage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                    android:text="Adarsh"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/text_size_intermediate"
-                    android:tag="fonts/Montserrat-Light.otf"/>
-
-                <com.cerone.invitation.helpers.CeroneTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                    android:text="Event Owner"
-                    android:textSize="@dimen/text_size_small"
-                    android:tag="fonts/Montserrat-Light.otf" />
-
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/event_picture" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/chatLayout"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.5"
-                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/chatIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:duplicateParentState="true"
-                    android:src="@drawable/chat_balloon"
-                    android:tint="@color/happening_orange" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
+
+                    <ImageView
+                        android:id="@+id/eventOwnerImage"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/avatar" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6.5"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
+
+                    <com.cerone.invitation.helpers.CeroneTextView
+                        android:id="@+id/ownerName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:tag="fonts/Montserrat-Light.otf"
+                        android:text="Adarsh"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size_intermediate" />
+
+                    <com.cerone.invitation.helpers.CeroneTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:tag="fonts/Montserrat-Light.otf"
+                        android:text="Event Owner"
+                        android:textSize="@dimen/text_size_small" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/chatLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/chatIcon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:duplicateParentState="true"
+                        android:src="@drawable/chat_balloon"
+                        android:tint="@color/happening_orange" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey_light" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_light" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-                <com.cerone.invitation.helpers.CeroneTextView
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                    android:text="Date"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/text_size_small"
-                    android:tag="fonts/Montserrat-Light.otf" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <com.cerone.invitation.helpers.CeroneTextView
-                    android:id="@+id/eventDate"
-                    android:layout_width="match_parent"
+                    <com.cerone.invitation.helpers.CeroneTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:tag="fonts/Montserrat-Light.otf"
+                        android:text="Date"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <com.cerone.invitation.helpers.CeroneTextView
+                        android:id="@+id/eventDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="fonts/Montserrat-Light.otf"
+                        android:text="Sat, 15/03/2017"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_too_small" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Sat, 15/03/2017"
-                    android:textColor="@color/black"
-                    android:tag="fonts/Montserrat-Light.otf"
-                    android:textSize="@dimen/text_size_too_small" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
+                    <com.cerone.invitation.helpers.CeroneTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:tag="fonts/Montserrat-Light.otf"
+                        android:text="Time"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <com.cerone.invitation.helpers.CeroneTextView
+                        android:id="@+id/eventTimings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:tag="fonts/Montserrat-Light.otf"
+                        android:text="09:10PM - 11:30PM"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_too_small" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:background="@drawable/happening_top_botten_style"
+                android:minHeight="35dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/event_location"
+                        android:tint="@color/happening_orange" />
+                </RelativeLayout>
 
                 <com.cerone.invitation.helpers.CeroneTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                    android:text="Time"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/text_size_small"
-                    android:tag="fonts/Montserrat-Light.otf" />
-
-                <com.cerone.invitation.helpers.CeroneTextView
-                    android:id="@+id/eventTimings"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                    android:text="09:10PM - 11:30PM"
-                    android:textColor="@color/black"
+                    android:id="@+id/event_address"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7.5"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:lines="2"
                     android:tag="fonts/Montserrat-Light.otf"
+                    android:text="Location details not provided"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/text_size_too_small" />
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5">
+
+                    <ImageView
+                        android:id="@+id/location_address"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:rotation="-90"
+                        android:src="@drawable/near_me"
+                        android:tint="@color/grey_light" />
+                </RelativeLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/happening_top_botten_style"
-            android:minHeight="45dp"
-            android:orientation="horizontal"
-            android:weightSum="10">
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/event_location"
-                    android:tint="@color/happening_orange" />
-            </RelativeLayout>
-
-            <com.cerone.invitation.helpers.CeroneTextView
-                android:id="@+id/event_address"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="7.5"
-                android:ellipsize="end"
-                android:tag="fonts/Montserrat-Light.otf"
-                android:gravity="center_vertical"
-                android:lines="2"
-                android:text="Location details not provided"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_too_small" />
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.5">
-
-                <ImageView
-                    android:id="@+id/location_address"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:rotation="-90"
-                    android:src="@drawable/near_me"
-                    android:tint="@color/grey_light" />
-            </RelativeLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/participantsStatisticsLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/participantsStatisticsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/invitees_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="left"
                 android:orientation="horizontal">
 
-                <com.cerone.invitation.helpers.CeroneTextView
-                    android:id="@+id/totalInvitees"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                    android:gravity="center"
-                    android:text="5"
-                    android:textColor="@color/happening_orange"
-                    android:textSize="@dimen/text_size_small"
-                    android:tag="fonts/Montserrat-Light.otf"/>
+                    <com.cerone.invitation.helpers.CeroneTextView
+                        android:id="@+id/totalInvitees"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:gravity="left"
+                        android:tag="fonts/Montserrat-Light.otf"
+                        android:text="5"
+                        android:textColor="@color/happening_orange"
+                        android:textSize="@dimen/text_size_small" />
 
-                <com.cerone.invitation.helpers.CeroneTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                    android:gravity="center"
-                    android:text="invitees"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    android:tag="fonts/Montserrat-Light.otf"/>
+                    <com.cerone.invitation.helpers.CeroneTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:gravity="center"
+                        android:tag="fonts/Montserrat-Light.otf"
+                        android:text="invitees"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:orientation="horizontal">
+
+                    <com.cerone.invitation.helpers.CeroneTextView
+                        android:id="@+id/totalAccepted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:gravity="center"
+                        android:tag="fonts/Montserrat-Light.otf"
+                        android:text="4"
+                        android:textColor="@color/happening_orange"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <com.cerone.invitation.helpers.CeroneTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:gravity="center"
+                        android:tag="fonts/Montserrat-Light.otf"
+                        android:text="Accepted"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:orientation="horizontal">
+
+                    <com.cerone.invitation.helpers.CeroneTextView
+                        android:id="@+id/totalRejected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:gravity="center"
+                        android:tag="fonts/Montserrat-Light.otf"
+                        android:text="5"
+                        android:textColor="@color/happening_orange"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <com.cerone.invitation.helpers.CeroneTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:gravity="center"
+                        android:tag="fonts/Montserrat-Light.otf"
+                        android:text="Rejected"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/actionsLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_weight="3"
+                android:background="@drawable/happening_top_botten_style"
+                android:minHeight="45dp"
                 android:orientation="horizontal">
 
-                <com.cerone.invitation.helpers.CeroneTextView
-                    android:id="@+id/totalAccepted"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                    android:gravity="center"
-                    android:text="4"
-                    android:textColor="@color/happening_orange"
-                    android:textSize="@dimen/text_size_small"
-                    android:tag="fonts/Montserrat-Light.otf"/>
-
-                <com.cerone.invitation.helpers.CeroneTextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/actionOne"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Accepted"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    android:tag="fonts/Montserrat-Light.otf"/>
-            </LinearLayout>
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/actionOneIcon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/share_icon"
+                        android:tint="@color/event_accept" />
 
-                <com.cerone.invitation.helpers.CeroneTextView
-                    android:id="@+id/totalRejected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                    android:gravity="center"
-                    android:text="5"
-                    android:textColor="@color/happening_orange"
-                    android:textSize="@dimen/text_size_small"
-                    android:tag="fonts/Montserrat-Light.otf"/>
+                </LinearLayout>
 
-                <com.cerone.invitation.helpers.CeroneTextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/actionTwo"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:layout_weight="1"
+                    android:background="@drawable/happening_gray_rectangle"
                     android:gravity="center"
-                    android:text="Rejected"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    android:tag="fonts/Montserrat-Light.otf"/>
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/actionTwoIcon"
+                        android:layout_width="25dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/edit_icon"
+                        android:tint="@color/happening_indigo" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/actionThree"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/actionThreeIcon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/delete_icon"
+                        android:scaleType="centerInside"
+                        android:tint="@color/happening_red" />
+                </LinearLayout>
             </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/participantsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal">
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/actionsLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:background="@drawable/happening_top_botten_style"
-            android:minHeight="50dp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/actionOne"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/actionOneIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/share_icon"
-                    android:tint="@color/event_accept" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/actionTwo"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/happening_gray_rectangle"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/actionTwoIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/edit_icon"
-                    android:tint="@color/happening_indigo" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/actionThree"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/actionThreeIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/delete_icon"
-                    android:scaleType="centerInside"
-                    android:tint="@color/happening_red" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/participantsLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="horizontal"></LinearLayout>
-
-    </LinearLayout>
-
-
+    </ScrollView>
 </RelativeLayout>
