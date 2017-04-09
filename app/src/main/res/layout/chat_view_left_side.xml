@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -69,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <hani.momanii.supernova_emoji_library.Helper.EmojiconTextView
                     android:id="@+id/msgr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -77,6 +78,7 @@
                     android:text="Hi, how are you?"
                     android:textColor="@color/black"
                     android:paddingLeft="5dp"
+                    emojicon:emojiconSize="28sp"
                     android:paddingRight="5dp"
                     android:textSize="@dimen/text_size_very_small" />
             </LinearLayout>

@@ -29,9 +29,16 @@ import com.example.dataobjects.ChatRoom;
 import com.example.dataobjects.Event;
 import com.example.syncher.IntraChatSyncher;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
+
+import static com.cerone.invitation.R.id.rootView;
 
 /**
  * Created by adarsht on 09/03/17.
@@ -41,7 +48,10 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener{
 
     ListView chatMessagesView;
     ChatArrayAdapter chatMessagesAdapter;
-    TextView chatMessageTextView;
+    EmojIconActions emojIcon;
+    EmojiconEditText chatMessageTextView;
+    View rootView;
+    ImageView emojiButton;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
@@ -73,7 +83,11 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener{
             }
         };
         chatMessagesView = (ListView) view.findViewById(R.id.chat_messages);
-        chatMessageTextView = (TextView) view.findViewById(R.id.chat_message_text);
+        chatMessageTextView = (EmojiconEditText) view.findViewById(R.id.chat_message_text);
+        emojiButton = (ImageView) view.findViewById(R.id.chat_add);
+        rootView = view.findViewById(R.id.rootView);
+        emojIcon = new EmojIconActions(getActivity(), rootView, chatMessageTextView, emojiButton);
+        emojIcon.ShowEmojIcon();
         chatMessagesAdapter = new ChatArrayAdapter(getContext(), R.layout.chat_view_right_side, InvtAppPreferences.getOwnerId());
         chatMessagesView.setAdapter(chatMessagesAdapter);
         chatMessagesAdapter.clear();
@@ -127,11 +141,11 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.send_chat_message:
-                final String chatMessage = chatMessageTextView.getText().toString();
+                final String chatMessage = StringEscapeUtils.escapeJava(chatMessageTextView.getText().toString());
                 if (chatMessage != null && chatMessage.length() > 0) {
                     chatMessageTextView.setText("");
                     // TODO - Should pass the current user ID instead of -1
-                    handlePushNotification(chatMessage, InvtAppPreferences.getOwnerId(),"me");
+                    handlePushNotification(StringEscapeUtils.unescapeJava(chatMessage), InvtAppPreferences.getOwnerId(),"me");
                     new InvtAppAsyncTask(getActivity()) {
 
                         @Override

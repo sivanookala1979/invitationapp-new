@@ -18,9 +18,13 @@ import com.example.dataobjects.ChatMessage;
 import com.example.utills.HTTPUtils;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import hani.momanii.supernova_emoji_library.Helper.EmojiconTextView;
 
 import static com.cerone.invitation.R.id.cameraIcon;
 
@@ -29,7 +33,9 @@ import static com.cerone.invitation.R.id.cameraIcon;
  */
 public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
 
-    private TextView chatText, dateTime, userName,me;
+    private TextView dateTime, userName,me;
+    EmojiconTextView chatText;
+
    // private ImageView userImage;
     private List<ChatMessage> chatMessageList = new ArrayList<ChatMessage>();
     int ownerId;
@@ -95,9 +101,9 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         }
        // userImage = (ImageView) row.findViewById(R.id.user_image);
 
-        chatText = (TextView) row.findViewById(R.id.msgr);
+        chatText = (EmojiconTextView) row.findViewById(R.id.msgr);
         dateTime = (TextView) row.findViewById(R.id.date_time);
-        chatText.setText(chatMessageObj.getMessage());
+        chatText.setText(StringEscapeUtils.unescapeJava(chatMessageObj.getMessage()));
         dateTime.setText(HTTPUtils.convertDateToString(chatMessageObj.getDate()));
         fontTypes.setTypeface(chatText, dateTime,userName,me);
         return row;

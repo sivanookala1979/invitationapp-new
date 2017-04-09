@@ -16,11 +16,15 @@ import com.cerone.invitation.helpers.FontTypes;
 import com.example.dataobjects.ChatRoom;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
+import hani.momanii.supernova_emoji_library.Helper.EmojiconTextView;
 
 public class AllChatDetailsAdapter extends ArrayAdapter<ChatRoom> {
     Context context;
@@ -87,8 +91,8 @@ public class AllChatDetailsAdapter extends ArrayAdapter<ChatRoom> {
                 e.printStackTrace();
             }
         }
-        TextView packageText = (TextView) row.findViewById(R.id.last_chat);
-        packageText.setText(chatRommList.get(position).getLatestMessage());
+        EmojiconTextView packageText = (EmojiconTextView) row.findViewById(R.id.last_chat);
+        packageText.setText(StringEscapeUtils.unescapeJava(chatRommList.get(position).getLatestMessage()));
 
 
         fontTypes.setTypeface(row.findViewById(R.id.name_text), row.findViewById(R.id.time_text),

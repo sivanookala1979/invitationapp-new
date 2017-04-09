@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -14,7 +15,9 @@
         android:layout_gravity="right"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="5dp"
-        android:background="@drawable/bubble_in"
+        android:layout_marginBottom="3dp"
+        android:background="@drawable/chat_pink"
+        android:gravity=""
         android:orientation="vertical">
 
         <LinearLayout
@@ -29,7 +32,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                 android:gravity="right"
-                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
                 android:text="10:20"
                 android:textColor="@color/blue_shade"
                 android:textSize="@dimen/very_small_text_size" />
@@ -41,21 +46,24 @@
                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                 android:gravity="right"
                 android:padding="10dp"
+                android:visibility="gone"
                 android:text="Me"
                 android:textColor="@color/white"
                 android:textSize="@dimen/very_small_text_size" />
 
         </LinearLayout>
 
-        <TextView
+        <hani.momanii.supernova_emoji_library.Helper.EmojiconTextView
             android:id="@+id/msgr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/msgr"
             android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
             android:gravity="left"
-            android:padding="10dp"
+            android:padding="5dp"
             android:text="Sample left"
+            emojicon:emojiconSize="28sp"
+            android:layout_marginRight="18dp"
             android:textColor="@color/black"
             android:textSize="@dimen/small_text_size" />
     </LinearLayout>

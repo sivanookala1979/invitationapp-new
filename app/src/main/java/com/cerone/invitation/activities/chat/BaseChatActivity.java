@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,9 +20,14 @@ import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.example.dataobjects.ChatMessage;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
 
 /**
  * Created by suzuki on 11-05-2016.
@@ -29,8 +35,12 @@ import java.util.List;
 public abstract class BaseChatActivity extends BaseActivity implements View.OnClickListener {
     ListView chatMessagesView;
     ChatArrayAdapter chatMessagesAdapter;
-    TextView chatMessageTextView;
+    EmojiconEditText chatMessageTextView;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
+    ImageView emojiButton;
+    EmojIconActions emojIcon;
+    View rootView;
+
 
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
@@ -60,14 +70,17 @@ public abstract class BaseChatActivity extends BaseActivity implements View.OnCl
         addToolbarView();
 
         chatMessagesView = (ListView) findViewById(R.id.chat_messages);
-        chatMessageTextView = (TextView) findViewById(R.id.chat_message_text);
+        chatMessageTextView = (EmojiconEditText) findViewById(R.id.chat_message_text);
+        emojiButton = (ImageView) findViewById(R.id.chat_add);
         setFontType(R.id.chat_message_text);
+        rootView = findViewById(R.id.rootView);
+        emojIcon = new EmojIconActions(this, rootView, chatMessageTextView, emojiButton);
+        emojIcon.ShowEmojIcon();
         chatMessagesAdapter = new ChatArrayAdapter(getApplicationContext(), R.layout.chat_view_right_side, InvtAppPreferences.getOwnerId());
         chatMessagesView.setAdapter(chatMessagesAdapter);
         chatMessagesAdapter.clear();
         ImageView sendChatMessageButton = (ImageView) findViewById(R.id.send_chat_message);
         sendChatMessageButton.setOnClickListener(this);
-
         loadChatMessages();
     }
 
@@ -107,11 +120,11 @@ public abstract class BaseChatActivity extends BaseActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.send_chat_message:
-                final String chatMessage = chatMessageTextView.getText().toString();
+                final String chatMessage = StringEscapeUtils.escapeJava(chatMessageTextView.getText().toString());
                 if (chatMessage != null && chatMessage.length() > 0) {
                     chatMessageTextView.setText("");
                     // TODO - Should pass the current user ID instead of -1
-                    handlePushNotification(chatMessage, InvtAppPreferences.getOwnerId());
+                    handlePushNotification(StringEscapeUtils.unescapeJava(chatMessage), InvtAppPreferences.getOwnerId());
                     new InvtAppAsyncTask(BaseChatActivity.this) {
 
                         @Override
