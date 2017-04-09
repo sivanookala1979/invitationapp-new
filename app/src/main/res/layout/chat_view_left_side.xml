@@ -9,16 +9,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="3dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="3dp"
         android:orientation="horizontal"
         android:weightSum="100">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="5dp">
+            android:layout_gravity="bottom">
 
             <ImageView
                 android:id="@+id/participantImage"
@@ -33,9 +34,11 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bubble_out"
+            android:background="@drawable/left_chat_text_view_copy"
+            android:gravity="center"
             android:orientation="vertical"
-            >
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -68,19 +71,21 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="left"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp">
 
                 <hani.momanii.supernova_emoji_library.Helper.EmojiconTextView
                     android:id="@+id/msgr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="5dp"
                     android:text="Hi, how are you?"
                     android:textColor="@color/black"
-                    android:paddingLeft="5dp"
-                    emojicon:emojiconSize="28sp"
-                    android:paddingRight="5dp"
-                    android:textSize="@dimen/text_size_very_small" />
+                    android:textSize="@dimen/text_size_very_small"
+                    emojicon:emojiconSize="28sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

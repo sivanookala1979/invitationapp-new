@@ -16,6 +16,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
         android:background="@drawable/chat_pink"
         android:gravity=""
         android:orientation="vertical">

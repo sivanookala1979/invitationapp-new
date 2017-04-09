@@ -55,7 +55,7 @@
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:src="@drawable/emoji_icon"
             android:visibility="visible" />
 
@@ -72,8 +72,8 @@
             emojicon:emojiconSize="30sp"
             android:background="@null"
             android:hint="Say something..."
-            android:padding="10dp"
-            android:textColor="@color/gray"
+            android:padding="5dp"
+            android:textColor="@color/happening_text_black_color"
             android:textColorHint="@color/gray" />
 
         <ImageView
@@ -82,7 +82,7 @@
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:src="@drawable/send_chat_icon"
             android:tint="@color/gray" />
     </RelativeLayout>
