@@ -101,10 +101,10 @@ public class InvtAppDatePicker implements DatePickerDialog.OnDateSetListener {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy", Locale.US);
                 calendar.setTime(sdf.parse(date));
                 Log.d("new date", sdf.format(new Date()));
-                String[] time = sdf.format(new Date()).split(" ");
-                ((TextView) v1).setText(time[0]);
-                ((TextView) v2).setText(time[1]);
-                ((TextView) v3).setText(time[2]);
+//                String[] time = sdf.format(new Date()).split(" ");
+//                ((TextView) v1).setText(time[0]);
+//                ((TextView) v2).setText(time[1]);
+//                ((TextView) v3).setText(time[2]);
             }
         } catch (ParseException e) {
             e.printStackTrace();
