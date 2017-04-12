@@ -87,7 +87,7 @@ public class LocationDetailsActivity extends BaseActivity implements OnMapReadyC
         if(eventDetails!=null) {
             if ((gpsTracker.getLatitude() != 0 && gpsTracker.getLongitude() != 0)) {
                 sourcePosition = new LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude());
-                destPosition = new LatLng(15.5057, 80.0499);
+                destPosition = new LatLng(eventDetails.getLatitude(), eventDetails.getLongitude());
                 drawMarker(sourcePosition, false);
                 drawMarker(destPosition, true);
                 InvtAppAsyncTask task = new InvtAppAsyncTask(LocationDetailsActivity.this) {
@@ -130,7 +130,12 @@ public class LocationDetailsActivity extends BaseActivity implements OnMapReadyC
                 task.setShowProgress(false);
                 task.execute();
             } else {
-                ToastHelper.redToast(getApplicationContext(), "Failed to get current location details.");
+                if(eventDetails.getLatitude()>0 && eventDetails.getLongitude()>0) {
+                    destPosition = new LatLng(eventDetails.getLatitude(), eventDetails.getLongitude());
+                    drawMarker(destPosition, true);
+                }else {
+                    ToastHelper.redToast(getApplicationContext(), "Failed to get location details.");
+                }
             }
         }
         }
@@ -180,7 +185,7 @@ public class LocationDetailsActivity extends BaseActivity implements OnMapReadyC
         else{
             map.addMarker(markerOptions.icon(BitmapDescriptorFactory.fromBitmap(ShowInviteePositions.createDrawableFromView(this, customMarker))));
         }
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 5));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15));
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

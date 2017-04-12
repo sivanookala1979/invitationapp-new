@@ -33,7 +33,7 @@ public class StringUtils {
 
     public static Date StringToDate(String date) {
         Date dateTime = null;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         try {
             dateTime = simpleDateFormat.parse(date);
         } catch (ParseException ex) {

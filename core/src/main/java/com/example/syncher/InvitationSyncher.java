@@ -207,26 +207,26 @@ public class InvitationSyncher extends BaseSyncher {
                                 for (int j = 0; j < inviteesList.length(); j++) {
                                     JSONObject jsonInvitees = inviteesList.getJSONObject(j);
                                     Invitee invitee = new Invitee();
-                                    if (jsonObject.has("name"))
+                                    if (jsonInvitees.has("name"))
                                         invitee.setInviteeName(jsonInvitees.getString("name"));
-                                    if (jsonObject.has("mobile"))
+                                    if (jsonInvitees.has("mobile"))
                                         invitee.setMobileNumber(jsonInvitees.getString("mobile"));
-                                    if (jsonObject.has("email"))
+                                    if (jsonInvitees.has("email"))
                                         invitee.setEmail(jsonInvitees.getString("email"));
-                                    if (jsonObject.has("user_id"))
+                                    if (jsonInvitees.has("user_id"))
                                         invitee.setInviteeId(jsonInvitees.getInt("user_id"));
-                                    if (jsonObject.has("img_url"))
+                                    if (jsonInvitees.has("img_url"))
                                         invitee.setImage(jsonInvitees.getString("img_url"));
-                                    if (jsonObject.has("distance"))
+                                    if (jsonInvitees.has("distance"))
                                         invitee.setDistance(jsonInvitees.getString("distance"));
-                                    if (jsonObject.has("update_at"))
+                                    if (jsonInvitees.has("update_at"))
                                         invitee.setUpdatedAt(jsonInvitees.getString("update_at"));
-                                    if (jsonObject.has("is_admin"))
+                                    if (jsonInvitees.has("is_admin"))
                                         invitee.setAdmin(jsonInvitees.getBoolean("is_admin"));
                                     listOfInvitees.add(invitee);
                                 }
                             }
-
+                            invitees.setInviteesList(listOfInvitees);
                         }
                         listOfAllInvitees.add(invitees);
                     }

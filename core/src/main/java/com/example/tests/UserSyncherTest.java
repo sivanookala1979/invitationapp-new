@@ -47,9 +47,9 @@ public class UserSyncherTest extends BaseSyncherTest {
 //
     public void testToGetAccessTokenHAPPYFlow() throws Exception {
         // Setup fixture
-        String mobileNumber = "918008446701";
+        String mobileNumber = "919100411028";
         String otp = "5555";
-        String name = "Srikanth";
+        String name = "Naga";
         // Exercise SUT
         ServerResponse response = sut.getSignInWithMobileAndOtp(mobileNumber, otp, name);
         String token = response.getToken();

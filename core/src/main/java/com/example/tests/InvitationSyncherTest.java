@@ -56,8 +56,8 @@ public class InvitationSyncherTest extends TestCase {
 
     public void testGetAllInviteesListTestHAPPYFlow() throws Exception {
 
-        List<Invitees> listOfAllInvitees = sut.getAllInviteesList(127);
-        assertEquals(4, listOfAllInvitees.size());
+        List<Invitees> listOfAllInvitees = sut.getAllInviteesList(133);
+        assertEquals(1, listOfAllInvitees.get(0).getInviteesList().size());
 
         }
 
