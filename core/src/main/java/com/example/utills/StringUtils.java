@@ -1,5 +1,7 @@
 package com.example.utills;
 
+import android.util.Log;
+
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Invitation;
 import com.example.dataobjects.User;
@@ -11,6 +13,7 @@ import org.json.JSONObject;
 
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,8 +35,14 @@ public class StringUtils {
     public static final SimpleDateFormat eventInfoFormat = new SimpleDateFormat("E, yyyy MMM dd - hh:mm a");
 
     public static Date StringToDate(String date) {
+
+        return StringToDateByIndex(date, 0);
+    }
+
+    public static Date StringToDateByIndex(String date, int index) {
+        Log.d("old date", date);
         Date dateTime = null;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat((index==0)?"yyyy-MM-dd HH:mm:ss":"dd-MM-yyyy hh:mm a");
         try {
             dateTime = simpleDateFormat.parse(date);
         } catch (ParseException ex) {
@@ -45,6 +54,13 @@ public class StringUtils {
     public static String getCurrentDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return (simpleDateFormat.format(new Date()));
+    }
+
+    public static String getCurrentTime() {
+
+        Calendar now = Calendar.getInstance();
+        Format formatter = new SimpleDateFormat("hh mm a");
+        return formatter.format(now.getTime());
     }
 
     public static boolean inOrder(String startDateString, String endDateString) {

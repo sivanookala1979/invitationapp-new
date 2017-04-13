@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class InvtAppTimePicker implements TimePickerDialog.OnTimeSetListener {
@@ -34,52 +36,42 @@ public class InvtAppTimePicker implements TimePickerDialog.OnTimeSetListener {
     public void onTimeSet(android.widget.TimePicker view, int hourOfDay, int minute) {
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
+        SimpleDateFormat formatter = new SimpleDateFormat("hh mm a");
+        String[] time = formatter.format(calendar.getTime()).split(" ");
         Log.d("selected Time", hourOfDay +":"+minute);
         if(startTime) {
             if (textView1 != null && textView2 != null && textView3 != null && calendar != null) {
-                textView1.setText(getValidText(calendar.get(Calendar.HOUR_OF_DAY)));
-                textView2.setText(getValidText(calendar.get(Calendar.MINUTE)));
-                textView3.setText(getMeridiem(calendar.get(Calendar.AM_PM)));
+                textView1.setText(time[0]);
+                textView2.setText(time[1]);
+                textView3.setText(time[2]);
                 calendar.add(Calendar.MINUTE, 60);
-                textView4.setText(getValidText(calendar.get(Calendar.HOUR_OF_DAY)));
-                textView5.setText(getValidText(calendar.get(Calendar.MINUTE)));
-                textView6.setText(getMeridiem(calendar.get(Calendar.AM_PM)));
+                String[] time1 = formatter.format(calendar.getTime()).split(" ");
+                textView4.setText(time1[0]);
+                textView5.setText(time1[1]);
+                textView6.setText(time1[2]);
             }
         }else{
-            textView4.setText(getValidText(calendar.get(Calendar.HOUR_OF_DAY)));
-            textView5.setText(getValidText(calendar.get(Calendar.MINUTE)));
-            textView6.setText(getMeridiem(calendar.get(Calendar.AM_PM)));
+            textView4.setText(time[0]);
+            textView5.setText(time[1]);
+            textView6.setText(time[2]);
         }
-    }
-
-    private String getValidText(int number) {
-        return (number >= 10) ? number + "" : "0" + number;
     }
 
     public void createAndUpdateTime(String time, Context context) {
         setTime(time);
-        new TimePickerDialog(context, this, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
+        new TimePickerDialog(context, this, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show();
     }
 
     private void setTime(String time) {
         Log.d("set Time", time);
         if (time != null && !time.isEmpty()) {
-            String timeInfo[] = time.split(":");
-            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeInfo[0]));
-            calendar.set(Calendar.MINUTE, Integer.parseInt(timeInfo[1]));
-            if(startTime) {
-                textView1.setText(getValidText(calendar.get(Calendar.HOUR_OF_DAY)));
-                textView2.setText(getValidText(calendar.get(Calendar.MINUTE)));
-                textView3.setText(getMeridiem(calendar.get(Calendar.AM_PM)));
-            }else{
-                textView4.setText(getValidText(calendar.get(Calendar.HOUR_OF_DAY)));
-                textView5.setText(getValidText(calendar.get(Calendar.MINUTE)));
-                textView6.setText(getMeridiem(calendar.get(Calendar.AM_PM)));
+            SimpleDateFormat formatter = new SimpleDateFormat("hh mm a");
+            try {
+                calendar.setTime(formatter.parse(time));
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
     }
 
-    private static String getMeridiem(int hourOfDay) {
-        return (hourOfDay < 12) ? "AM" : "PM";
-    }
 }

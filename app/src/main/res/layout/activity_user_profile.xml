@@ -158,11 +158,13 @@
                         android:layout_weight="7"
                         android:background="@null"
                         android:hint="Enter Phone"
+                        android:editable="false"
                         android:padding="5dp"
                         android:textSize="@dimen/text_size"
                         android:singleLine="true"
                         android:selectAllOnFocus="true"/>
                     <requestFocus />
+
                 </LinearLayout>
 
                 <TextView

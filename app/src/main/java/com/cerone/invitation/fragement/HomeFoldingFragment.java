@@ -92,10 +92,8 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                             startActivity(intent);
                         } else {
                             if (event.isAccepted()) {
-                                intent = new Intent(getActivity(), IntraChatActivity.class);
-                                intent.putExtra("UserId", event.getOwnerId());
-                                intent.putExtra("UserImage", "");
-                                intent.putExtra("UserName", event.getOwnerName());
+                                intent = new Intent(getActivity(), EventDetailsActivity.class);
+                                intent.putExtra("fragmentNumber", 3);
                                 startActivity(intent);
                             }
                         }

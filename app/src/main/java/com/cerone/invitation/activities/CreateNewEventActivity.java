@@ -251,11 +251,11 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
                 break;
             case R.id.layout_start_time :
                 startTimePicker = new InvtAppTimePicker(startHour, startMin, startMeridiem, endHour, endMin, endMeridiem, Calendar.getInstance(), true);
-                startTimePicker.createAndUpdateTime(startHour.getText().toString()+":"+startMin.getText().toString(), CreateNewEventActivity.this);
+                startTimePicker.createAndUpdateTime(startHour.getText().toString()+" "+startMin.getText().toString()+" "+startMeridiem.getText().toString(), CreateNewEventActivity.this);
                 break;
             case R.id.layout_end_time :
                 endTimePicker = new InvtAppTimePicker(startHour, startMin, startMeridiem, endHour, endMin, endMeridiem, Calendar.getInstance(), false);
-                endTimePicker.createAndUpdateTime(endHour.getText().toString()+":"+endMin.getText().toString(), CreateNewEventActivity.this);
+                endTimePicker.createAndUpdateTime(endHour.getText().toString()+" "+endMin.getText().toString()+" "+endMeridiem.getText().toString(), CreateNewEventActivity.this);
                 break;
             case R.id.get_location :
                 Intent locationIntent = new Intent(getApplicationContext(), LocationActivity.class);
@@ -313,8 +313,8 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
 
     private void collectEventData() {
         event.setName(eventName.getText().toString());
-        String startDateInfo = startDay.getText().toString()+"-"+startMonth.getText().toString()+"-"+startYear.getText().toString() + " " + startHour.getText().toString()+":"+startMin.getText().toString() + ":00";
-        String endDateInfo = endDay.getText().toString()+"-"+endMonth.getText().toString()+"-"+endYear.getText().toString() + " " + endHour.getText().toString()+":"+endMin.getText().toString() + ":00";
+        String startDateInfo = startDay.getText().toString()+"-"+startMonth.getText().toString()+"-"+startYear.getText().toString() + " " + startHour.getText().toString()+":"+startMin.getText().toString() +" "+startMeridiem.getText().toString();
+        String endDateInfo = endDay.getText().toString()+"-"+endMonth.getText().toString()+"-"+endYear.getText().toString() + " " + endHour.getText().toString()+":"+endMin.getText().toString() +" "+endMeridiem.getText().toString();
         event.setStartDateTime(startDateInfo);
         event.setEndDateTime(endDateInfo);
         event.setImageData(eventPictureInfo);

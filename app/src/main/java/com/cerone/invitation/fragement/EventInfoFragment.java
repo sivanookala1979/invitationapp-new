@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +21,16 @@ import com.cerone.invitation.activities.InvitieesTabActivity;
 import com.cerone.invitation.activities.LocationDetailsActivity;
 import com.cerone.invitation.activities.ParticipantsActivity;
 import com.cerone.invitation.activities.ShareEventActivity;
+import com.cerone.invitation.activities.chat.IntraChatActivity;
 import com.cerone.invitation.adapter.AcceptedParticipantsAdapater;
 import com.cerone.invitation.helpers.ActivityCommunicator;
 import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.ToastHelper;
-import com.cerone.invitation.helpers.UIHelper;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Eventstatistics;
+import com.example.dataobjects.Invitees;
 import com.example.dataobjects.ServerResponse;
 import com.example.syncher.EventSyncher;
 import com.example.syncher.InvitationSyncher;
@@ -36,21 +38,21 @@ import com.example.utills.StringUtils;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
+import java.util.List;
 
-import static com.cerone.invitation.R.id.actionsLayout;
-import static com.cerone.invitation.R.id.deleteEvent;
 import static com.cerone.invitation.R.id.location_address;
-import static com.cerone.invitation.R.id.participantsLayout;
-import static com.cerone.invitation.R.id.shareEvent;
 
 
 public class EventInfoFragment extends BaseFragment implements View.OnClickListener{
 
-    LinearLayout invitationSelection,inviteesLayout, accept, maybe, reject,editEvent,actionsLayout, shareEvent, deleteEvent;
+    LinearLayout invitationSelection,inviteesLayout, accept, maybe, reject,editEvent,actionsLayout, shareEvent, deleteEvent, chatLayout;
     TextView totalInviteesText, acceptCountText, rejectCountText;
     RecyclerView participantsLayout;
     View eventBaseView;
-    ImageView editOrShareIdon, locationAddress;
+    ImageView editOrShareIdon, locationAddress, chatIcon;
+    List<Invitees> allInvitees;
+    AcceptedParticipantsAdapater acceptedParticipantsAdapater;
+
     //INVITATIONS
 
     private ActivityCommunicator activityCommunicator;
@@ -59,21 +61,24 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.event_info_fragment, container, false);
         eventBaseView = view;
+        eventDetails = InvtAppPreferences.getEventDetails();
         participantsLayout = (RecyclerView)view.findViewById(R.id.participantsLayout);
         participantsLayout.setLayoutManager( new LinearLayoutManager(getActivity()));
-        AcceptedParticipantsAdapater acceptedParticipantsAdapater = new AcceptedParticipantsAdapater(getActivity());
+        acceptedParticipantsAdapater = new AcceptedParticipantsAdapater(getActivity(), allInvitees, eventDetails.getEventId());
         participantsLayout.setAdapter(acceptedParticipantsAdapater);
         ViewGroup.LayoutParams params=participantsLayout.getLayoutParams();
-        params.height=AcceptedParticipantsAdapater.CELL_HEIGHT*4;
+        params.height=ViewGroup.LayoutParams.WRAP_CONTENT;
         participantsLayout.setLayoutParams(params);
-        participantsLayout.stopScroll();
+        participantsLayout.setNestedScrollingEnabled(false);
         actionsLayout = (LinearLayout)view.findViewById(R.id.actionsLayout);
         shareEvent = (LinearLayout) view.findViewById(R.id.actionOne);
         editEvent = (LinearLayout) view.findViewById(R.id.actionTwo);
         deleteEvent = (LinearLayout) view.findViewById(R.id.actionThree);
         inviteesLayout = (LinearLayout) view.findViewById(R.id.invitees_layout);
+        chatLayout = (LinearLayout) view.findViewById(R.id.chatLayout);
         editOrShareIdon = (ImageView) view.findViewById(R.id.actionTwoIcon);
-        locationAddress = (ImageView) view.findViewById(location_address);
+        locationAddress = (ImageView) view.findViewById(R.id.location_address);
+        chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
         participantsLayout.setOnClickListener(this);
         actionsLayout.setOnClickListener(this);
         editEvent.setOnClickListener(this);
@@ -81,8 +86,10 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         deleteEvent.setOnClickListener(this);
         inviteesLayout.setOnClickListener(this);
         locationAddress.setOnClickListener(this);
-        eventDetails = InvtAppPreferences.getEventDetails();
+        chatLayout.setOnClickListener(this);
+        chatIcon.setOnClickListener(this);
         loadEventData(view);
+        getAllInvitees();
         activityCommunicator =(ActivityCommunicator) getActivity();
 
         return view;
@@ -122,8 +129,6 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
             eventLocation.setText(eventDetails.getAddress());
         }
         if(eventDetails.isInvitation()){
-//            editEvent.setVisibility(View.GONE);
-//            deleteEvent.setVisibility(View.GONE);
             actionsLayout.setVisibility(View.GONE);
             editOrShareIdon.setBackgroundResource(R.drawable.group);
             invitationSelection = (LinearLayout) eventBaseView.findViewById(R.id.invitationSelection);
@@ -174,7 +179,8 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                         deleteEvent();
                         Intent intent = new Intent(getActivity(), HomeScreenActivity.class);
                         startActivity(intent);
-                        getActivity().finish();                        }
+                        getActivity().finish();
+                    }
                 });
 
                 alertDialog.setNegativeButton("No", null);
@@ -199,14 +205,19 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.invitees_layout :
-                if(eventDetails.isInvitation()){
                     intent = new Intent(getActivity(), ParticipantsActivity.class);
                     intent.putExtra("eventId", eventDetails.getEventId());
                     intent.putExtra("title", "Invitees");
                     startActivity(intent);
-                }
                 break;
-
+            case R.id.chatLayout:
+            case R.id.chatIcon:
+                intent = new Intent(getActivity(), IntraChatActivity.class);
+                intent.putExtra("UserId", eventDetails.getOwnerId());
+                intent.putExtra("UserImage", "");
+                intent.putExtra("UserName", eventDetails.getOwnerName());
+                startActivity(intent);
+                break;
         }
     }
     @Override
@@ -257,6 +268,29 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
             public void afterPostExecute() {
                 if (response!=null) {
                     ToastHelper.blueToast(getActivity(), response.getStatus());
+                }
+            }
+        }.execute();
+    }
+
+    public void getAllInvitees() {
+        new InvtAppAsyncTask(getActivity()) {
+
+            @Override
+            public void process() {
+                if(eventDetails.getEventId()>0) {
+                    InvitationSyncher syncher = new InvitationSyncher();
+                    allInvitees = syncher.getAllInviteesList(eventDetails.getEventId());
+                }
+            }
+
+            @Override
+            public void afterPostExecute() {
+                if (allInvitees!=null) {
+                    Log.d("all invitees", allInvitees.size()+"");
+                    acceptedParticipantsAdapater.updateAdapter(allInvitees);
+                }else{
+                    ToastHelper.blueToast(getActivity(), "no invitees");
                 }
             }
         }.execute();

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.test.mock.MockPackageManager;
@@ -36,7 +38,10 @@ import com.squareup.picasso.Target;
 
 import org.w3c.dom.Document;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class LocationDetailsActivity extends BaseActivity implements OnMapReadyCallback {
 
@@ -180,10 +185,10 @@ public class LocationDetailsActivity extends BaseActivity implements OnMapReadyC
         // Adding marker on the Google Map
         if (isDestination) {
             BitmapDescriptor fromResource = BitmapDescriptorFactory.fromResource(R.drawable.location_marker_default);
-            map.addMarker(markerOptions.icon(fromResource));
+            map.addMarker(markerOptions.icon(fromResource).title(eventDetails.getAddress())).setVisible(true);
         }
         else{
-            map.addMarker(markerOptions.icon(BitmapDescriptorFactory.fromBitmap(ShowInviteePositions.createDrawableFromView(this, customMarker))));
+            map.addMarker(markerOptions.icon(BitmapDescriptorFactory.fromBitmap(ShowInviteePositions.createDrawableFromView(this, customMarker))).title(getAddress(gpsTracker.getLatitude(), gpsTracker.getLongitude()))).setVisible(true);
         }
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15));
     }
@@ -200,6 +205,25 @@ public class LocationDetailsActivity extends BaseActivity implements OnMapReadyC
             }
         }
 
+    }
+
+    public String getAddress(double latitude, double longitude){
+
+        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+
+        List<Address> addresses  = null;
+        try {
+            addresses = geocoder.getFromLocation(latitude,longitude, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String city = addresses.get(0).getLocality();
+        String state = addresses.get(0).getAdminArea();
+        String zip = addresses.get(0).getPostalCode();
+        String country = addresses.get(0).getCountryName();
+
+        return city+", "+state+", "+zip+".";
     }
 
 }

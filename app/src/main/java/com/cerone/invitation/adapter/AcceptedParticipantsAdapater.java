@@ -1,6 +1,7 @@
 package com.cerone.invitation.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,26 +12,36 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.activities.ParticipantsActivity;
+import com.cerone.invitation.helpers.CircleTransform;
+import com.example.dataobjects.Invitee;
+import com.example.dataobjects.Invitees;
+import com.squareup.picasso.Picasso;
 
-import static com.cerone.invitation.R.id.view;
+import java.util.List;
 
 /**
  * Created by adarsht on 07/04/17.
  */
 
 public class AcceptedParticipantsAdapater extends RecyclerView.Adapter<AcceptedParticipantsAdapater.MyImageViewHolder> {
-    Context context;
+    static Context context;
     View mainView;
     public static int CELL_HEIGHT = 120;
     public static int PROFILE_IMAGE_WIDTH = 90;
+    List<Invitees> allInvitees;
+    int eventId;
+
 
 
     public View getMainView() {
         return mainView;
     }
 
-    public AcceptedParticipantsAdapater(Context context) {
+    public AcceptedParticipantsAdapater(Context context, List<Invitees> allInvitees, int eventId) {
         this.context = context;
+        this.allInvitees = allInvitees;
+        this.eventId = eventId;
     }
 
     @Override
@@ -43,24 +54,13 @@ public class AcceptedParticipantsAdapater extends RecyclerView.Adapter<AcceptedP
 
     @Override
     public void onBindViewHolder(MyImageViewHolder holder, int position) {
-        int index = (position%3);
-        switch(index){
-            case 0:
-                holder.timeToReachEvent.setText("5-10 min");
-                addParticipants(holder,8);
-                break;
-            case 1:
-                holder.timeToReachEvent.setText("10-20 min");
-                addParticipants(holder,4);
-                break;
-            case 2:
-                holder.timeToReachEvent.setText("20-30 min");
-                addParticipants(holder,7);
-                break;
+        if(allInvitees!= null) {
+            holder.timeToReachEvent.setText( allInvitees.get(position).getTitle());
+            addParticipants(holder, allInvitees.get(position).getInviteesList().size(), position);
         }
     }
 
-    private void addParticipants(final MyImageViewHolder holder, final int cout) {
+    private void addParticipants(final MyImageViewHolder holder, final int cout, final int position) {
         holder.participantsInfoView.removeAllViews();
         holder.participantsInfoView.post(new Runnable()
         {
@@ -68,39 +68,71 @@ public class AcceptedParticipantsAdapater extends RecyclerView.Adapter<AcceptedP
             public void run()
             {
                 int width = holder.participantsInfoView.getWidth();
-                Log.d("participantsInfoView","participantsInfoView widht "+width);
-                updateData(holder,cout,width);
-
+                Log.d("participantsInfoView","participantsInfoView widht "+width+" count "+cout);
+                updateData(holder,cout,width, position);
             }
         });
     }
-    public void updateData(MyImageViewHolder holder, int count, int layoutWidth) {
-        int maxCount = (layoutWidth/PROFILE_IMAGE_WIDTH);
-        int remainingCount = (maxCount>count)?0:(count-(maxCount-1));
-        Log.d("participantsInfoView","maxCount  "+maxCount+" remainingCount "+remainingCount+" layoutWidth "+layoutWidth);
 
-        for(int i=0;i<count;i++){
-            View view = LayoutInflater.from(context).inflate(R.layout.profile_image_layout, null, false);
-            ImageView profileImage = (ImageView)view.findViewById(R.id.profileImage);
-            boolean showRemaining = (i==(maxCount-1));
-            if(showRemaining) {
-                profileImage.setVisibility(View.GONE);
-                TextView moreCount = (TextView) view.findViewById(R.id.moreCount);
-                moreCount.setText("" + remainingCount + "+");
-                moreCount.setVisibility(View.VISIBLE);
+    public void updateData(MyImageViewHolder holder, int count, int layoutWidth, int position) {
+        int maxCount = 6; //(layoutWidth/PROFILE_IMAGE_WIDTH);
+        int remainingCount = (maxCount>count)?0:(count-(maxCount-1));
+        Log.d("participantsInfoView","maxCount  "+maxCount+" count "+count+" remainingCount "+remainingCount+" layoutWidth "+layoutWidth);
+        if(allInvitees!= null) {
+            List<Invitee> inviteesList = allInvitees.get(position).getInviteesList();
+            if (inviteesList!=null) {
+                for (int i = 0; i < count; i++) {
+                    View view = LayoutInflater.from(context).inflate(R.layout.profile_image_layout, null, false);
+                    ImageView image = (ImageView) view.findViewById(R.id.profileImage);
+                    image.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent =  new Intent(context, ParticipantsActivity.class);
+                            intent.putExtra("eventId", eventId);
+                            intent.putExtra("title", "Invitees");
+                            context.startActivity(intent);
+                        }
+                    });
+                    Picasso.with(context).load(inviteesList.get(i).getImage()).placeholder(R.drawable.logo).transform(new CircleTransform()).into(image);
+                    boolean showRemaining = (i == (maxCount - 1));
+                    Log.d("showRemaining", showRemaining+"");
+
+                    if (showRemaining) {
+                        image.setVisibility(View.GONE);
+                        TextView moreCount = (TextView) view.findViewById(R.id.moreCount);
+                        moreCount.setText("" + remainingCount + "+");
+                        moreCount.setVisibility(View.VISIBLE);
+
+                        moreCount.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent =  new Intent(context, ParticipantsActivity.class);
+                                intent.putExtra("eventId", eventId);
+                                intent.putExtra("title", "Invitees");
+                                context.startActivity(intent);
+                            }
+                        });
+                    }
+                    holder.participantsInfoView.addView(view);
+                    if (showRemaining) {
+                        break;
+                    }
+                }
             }
-            holder.participantsInfoView.addView(view);
-            if(showRemaining){
-                break;
-            }
+
         }
     }
 
+    public void updateAdapter(List<Invitees> allInvitees) {
+        this.allInvitees = allInvitees;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {
         return 4;
     }
+
 
     public static class MyImageViewHolder extends RecyclerView.ViewHolder {
         TextView timeToReachEvent;
@@ -110,5 +142,6 @@ public class AcceptedParticipantsAdapater extends RecyclerView.Adapter<AcceptedP
             timeToReachEvent = (TextView) view.findViewById(R.id.timeToReachEvent);
             participantsInfoView = (LinearLayout) view.findViewById(R.id.participants);
         }
+
     }
 }

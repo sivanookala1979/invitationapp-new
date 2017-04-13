@@ -76,6 +76,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
             viewHolder.eventNameFooter = (TextView) cell.findViewById(R.id.eventNameFooter);
             viewHolder.eventImageFooter = (ImageView) cell.findViewById(R.id.eventImageFooter);
             viewHolder.ownerImage = (ImageView) cell.findViewById(R.id.eventOwnerImage);
+            viewHolder.chatIcon = (ImageView) cell.findViewById(R.id.chatIcon);
             viewHolder.ownerName = (TextView) cell.findViewById(R.id.ownerName);
             viewHolder.eventStartDate = (TextView) cell.findViewById(R.id.eventDate);
             viewHolder.eventTimings = (TextView) cell.findViewById(R.id.eventTimings);
@@ -250,7 +251,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
 
     // View lookup cache
     private static class ViewHolder {
-        ImageView eventHeaderIcon, eventImageFooter, ownerImage;
+        ImageView eventHeaderIcon, eventImageFooter, ownerImage, chatIcon;
         TextView eventNameHeader, colourIndicator, eventAddressHeader, eventDateTimeInfo, eventNameFooter, ownerName, eventStartDate, eventTimings, eventAddressFooter, inviteesCount, acceptedCount, rejectedCount;
         LinearLayout participantsLayout, actionOneLayout, actionTwoLayout, actionThreeLayout, eventDetailsLayout, participantsStatisticsLayout,actionsLayout,chatLayout;
         ImageView actionOneIcon, actionTwoIcon, actionThreeIcon, showEventIcon,individualChatIcon, navAddress;
