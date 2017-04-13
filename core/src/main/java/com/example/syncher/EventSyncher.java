@@ -11,7 +11,6 @@ import com.example.dataobjects.Invitee;
 import com.example.dataobjects.ServerResponse;
 import com.example.dataobjects.User;
 import com.example.utills.HTTPUtils;
-import com.example.utills.InvitationAppConstants;
 import com.example.utills.StringUtils;
 
 import org.json.JSONArray;
@@ -34,9 +33,9 @@ public class EventSyncher extends BaseSyncher {
         try {
             JSONObject object = new JSONObject();
             object.put("event_name", event.getName());
-                object.put("start_date", StringUtils.StringToDateByIndex(event.getStartDateTime(), 1));
+                object.put("start_date", StringUtils.eventStringToDate(event.getStartDateTime()));
             if (event.getEndDateTime() != null) {
-                object.put("end_date", StringUtils.StringToDateByIndex(event.getEndDateTime(), 1));
+                object.put("end_date", StringUtils.eventStringToDate(event.getEndDateTime()));
             }
             if (!event.isRecurring()) {
                 object.put("recurring_type", "");
@@ -55,7 +54,7 @@ public class EventSyncher extends BaseSyncher {
             object.put("status", event.getStatus());
             object.put("owner_name", event.getOwnerName());
             object.put("image", event.getImageData());
-            Log.d("json Object", object.toString());
+            Log.d("ObjectData", object.toString());
             Log.d("image", event.getImageData());
             String extenction = (event.getEventId() == 0) ? "" : "?event_id=" + event.getEventId();
             JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "events/create_event.json" + extenction, "POST", object.toString(), true));
@@ -136,13 +135,11 @@ public class EventSyncher extends BaseSyncher {
                         event.setAddress(jsonObject.getString("address"));
                         event.setDescription(jsonObject.getString("description"));
                         if (!jsonObject.isNull("start_date")) {
-                            event.setStartDateTime(StringUtils.getNewDate(getFormatedDateFromServerFormatedDate(jsonObject.getString("start_date")), InvitationAppConstants.TIME_DIFFERENCE));
-                            Log.d("start date", event.getStartDateTime()+"");
+                            event.setStartDateTime(getFormatedDateFromServerFormatedDate(jsonObject.getString("start_date")));
                         }
                         if (!jsonObject.isNull("end_date")) {
-                            event.setEndDateTime(StringUtils.getNewDate(getFormatedDateFromServerFormatedDate(jsonObject.getString("end_date")), InvitationAppConstants.TIME_DIFFERENCE));
+                            event.setEndDateTime(getFormatedDateFromServerFormatedDate(jsonObject.getString("end_date")));
                             Log.d("end date", event.getEndDateTime()+"");
-
                         }
                         if (!jsonObject.isNull("accepted_count")) {
                             event.setAcceptedCount(jsonObject.getInt("accepted_count"));

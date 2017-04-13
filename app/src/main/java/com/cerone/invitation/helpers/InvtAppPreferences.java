@@ -11,6 +11,7 @@ import android.util.Log;
 import com.example.dataobjects.ChatInfo;
 import com.example.dataobjects.CurrencyTypes;
 import com.example.dataobjects.Event;
+import com.example.dataobjects.EventFilter;
 import com.example.dataobjects.Group;
 import com.example.dataobjects.Invitation;
 import com.example.dataobjects.MyMarker;
@@ -53,6 +54,7 @@ public class InvtAppPreferences {
     private static final String CHAT_INFO = "chatinfo";
     private static final String SCREEN_REFRESH_STATUS = "screenRefreshScreen";
     private static final String PROFILE_SCREEN_STATUS = "profileScreenStatus";
+    private static final String EVENT_FILTERS = "eventFilters";
 
 
 
@@ -323,4 +325,14 @@ public class InvtAppPreferences {
         return new Gson().fromJson(pref.getString(CHAT_INFO, ""), type);
     }
 
+    public static void setEventFilters(EventFilter eventFilter) {
+        String filterDetails = new Gson().toJson(eventFilter);
+        pref.edit().putString(EVENT_FILTERS, filterDetails).commit();
+    }
+
+    public static EventFilter getEventFilters() {
+        java.lang.reflect.Type type = new TypeToken<EventFilter>() {
+        }.getType();
+        return new Gson().fromJson(pref.getString(EVENT_FILTERS, ""), type);
+    }
 }

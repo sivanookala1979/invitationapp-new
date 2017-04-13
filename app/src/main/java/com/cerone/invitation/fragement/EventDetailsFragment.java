@@ -28,10 +28,10 @@ import com.example.utills.StringUtils;
  * Created by adarsht on 09/03/17.
  */
 
-public class EventDetailsFragment extends BaseFragment implements View.OnClickListener{
+public class EventDetailsFragment extends BaseFragment implements View.OnClickListener {
 
-    LinearLayout participantsLayout, location,invitationSelection,accept, maybe, reject,editEvent, shareEvent, deleteEvent;
-    TextView acceptCountText, rejectCountText, totalCount,checkedInCount;
+    LinearLayout participantsLayout, location, invitationSelection, accept, maybe, reject, editEvent, shareEvent, deleteEvent;
+    TextView acceptCountText, rejectCountText, totalCount, checkedInCount;
     View eventBaseView;
     ImageView editOrShareIdon;
     //INVITATIONS
@@ -41,9 +41,9 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.event_details_fragment, container, false);
+        View view = inflater.inflate(R.layout.event_details_fragment, container, false);
         eventBaseView = view;
-        participantsLayout = (LinearLayout)view.findViewById(R.id.participantsLayout);
+        participantsLayout = (LinearLayout) view.findViewById(R.id.participantsLayout);
         editEvent = (LinearLayout) view.findViewById(R.id.editEvent);
         shareEvent = (LinearLayout) view.findViewById(R.id.shareEvent);
         deleteEvent = (LinearLayout) view.findViewById(R.id.deleteEvent);
@@ -54,9 +54,10 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
         deleteEvent.setOnClickListener(this);
         eventDetails = InvtAppPreferences.getEventDetails();
         loadEventData(view);
-        activityCommunicator =(ActivityCommunicator) getActivity();
+        activityCommunicator = (ActivityCommunicator) getActivity();
         return view;
     }
+
     private void loadEventData(View view) {
         TextView description = (TextView) view.findViewById(R.id.description);
         TextView eventStartDate = (TextView) view.findViewById(R.id.eventStartDate);
@@ -88,7 +89,7 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
         eventEndTime.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 2));
         eventLocation.setText(eventDetails.getAddress());
         participantsInfo.setText("invitees ");
-        if(eventDetails.isInvitation()){
+        if (eventDetails.isInvitation()) {
             editEvent.setVisibility(View.GONE);
             deleteEvent.setVisibility(View.GONE);
             editOrShareIdon.setBackgroundResource(R.drawable.group);
@@ -100,9 +101,9 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
             location = (LinearLayout) eventBaseView.findViewById(R.id.gpsLocationLayout);
             participantsLayout.setVisibility(View.GONE);
             location.setVisibility(View.VISIBLE);
-            if(eventDetails.isAccepted()){
+            if (eventDetails.isAccepted()) {
                 invitationSelection.setVisibility(View.GONE);
-            }else {
+            } else {
                 invitationSelection.setVisibility(View.VISIBLE);
             }
             location.setOnClickListener(this);
@@ -110,7 +111,7 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
             maybe.setOnClickListener(this);
             reject.setOnClickListener(this);
         }
-        if(eventDetails.isExpired()){
+        if (eventDetails.isExpired()) {
             view.findViewById(R.id.expiredMessage).setVisibility(View.VISIBLE);
         }
     }
@@ -130,37 +131,43 @@ public class EventDetailsFragment extends BaseFragment implements View.OnClickLi
                 intent = new Intent(getActivity(), NewEventActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.participantsDetails:
+                intent = new Intent(getActivity(), ParticipantsActivity.class);
+                intent.putExtra("eventId", eventDetails.getEventId());
+                intent.putExtra("title", "Invitees");
+                break;
             case R.id.shareEvent:
-                if(eventDetails.isInvitation()){
+                if (eventDetails.isInvitation()) {
                     intent = new Intent(getActivity(), ParticipantsActivity.class);
                     intent.putExtra("eventId", eventDetails.getEventId());
                     intent.putExtra("title", "Invitees");
-                }else {
+                } else {
                     intent = new Intent(getActivity(), ShareEventActivity.class);
                     intent.putExtra("newEvent", false);
                 }
                 startActivity(intent);
                 break;
-            case R.id.gpsLocationIcon :
-            case R.id.gpsLocationLayout :
+            case R.id.gpsLocationIcon:
+            case R.id.gpsLocationLayout:
                 intent = new Intent(getActivity(), ShowInviteePositions.class);
                 startActivity(intent);
                 break;
-            case R.id.acceptInvitation :
+            case R.id.acceptInvitation:
                 showLocationPermissionDialog();
                 break;
-            case R.id.mayBe :
+            case R.id.mayBe:
                 invitationSelection.setVisibility(View.GONE);
                 break;
-            case R.id.rejected :
+            case R.id.rejected:
                 acceptOrRejectInvitation(false, eventDetails, locationPermission);
                 break;
-            case R.id.inviteesInfo :
+            case R.id.inviteesInfo:
                 intent = new Intent(getActivity(), InvitieesTabActivity.class);
                 startActivity(intent);
                 break;
         }
     }
+
     @Override
     public void acceptOrRejectInvitation(final boolean status, final Event event, final String locationPermission) {
         new InvtAppAsyncTask(getActivity()) {

@@ -25,10 +25,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:visibility="gone"
                     android:background="@drawable/happening_top_botten_style"
                     android:minHeight="50dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:id="@+id/acceptInvitation"
@@ -469,6 +469,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/participantsDetails"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="1dp"
@@ -479,6 +480,7 @@
                                 android:id="@+id/acceptCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:duplicateParentState="true"
                                 android:ellipsize="end"
                                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                                 android:gravity="center"
@@ -491,6 +493,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:duplicateParentState="true"
                                 android:ellipsize="end"
                                 android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                                 android:gravity="center"

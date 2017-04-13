@@ -49,14 +49,13 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
     ServerResponse serverResponse;
     private HomeScreenCommunicator activityCommunicator;
 
-    boolean eventFilter = true, invitationFilter = false;
+    boolean eventFilter = true, invitationFilter = true;
 
     public static HomeFoldingFragment newInstance() {
         HomeFoldingFragment fragment = new HomeFoldingFragment();
         Bundle args = new Bundle();
         return fragment;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_folding_layout, container, false);
@@ -154,7 +153,6 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
         });
 
         activityCommunicator = (HomeScreenCommunicator) getActivity();
-
         loadEvents();
         return view;
     }

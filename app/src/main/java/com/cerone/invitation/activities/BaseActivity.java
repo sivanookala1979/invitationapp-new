@@ -45,6 +45,7 @@ import com.cerone.invitation.helpers.FontTypes;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.service.MyService;
+import com.cerone.invitation.service.NotificationService;
 import com.example.dataobjects.CurrencyTypes;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Invitation;
@@ -195,8 +196,18 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         return result;
     }
 
-
+    public void closePreviousServices() {
+        List<ServiceInformation> serviceDetailsList = InvtAppPreferences.getServiceDetails();
+        for (int i = 0; i < serviceDetailsList.size(); i++) {
+            MyService service = new MyService();
+            service.CancelAlarm(getApplicationContext(), i);
+            NotificationService notificationService = new NotificationService();
+            notificationService.CancelAlarm(getApplicationContext(), i);
+        }
+        InvtAppPreferences.setServiceDetails(new ArrayList<ServiceInformation>());
+    }
     public void activateService() {
+        closePreviousServices();
         Log.d("Data", "Service started at " + InvtAppPreferences.getAccessToken() + " " + InvtAppPreferences.isLoggedIn());
         new AsyncTask<String, Void, String>() {
 
@@ -239,9 +250,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     Log.d("Data", "No future events found");
                 }
-            }
-
-            ;
+            };
         }.execute();
     }
 
@@ -260,16 +269,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 cal.setTime(StringUtils.StringToDate(serviceDetails.getServiceStartTime()));
                 alarmManager.cancel(pendingIntent);
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 60000 * 2, pendingIntent);
-//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-//                    Log.d("Data", "Service started at " + StringUtils.getCurrentDate());
-//                    alarmManager.cancel(pendingIntent);
-//                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 60000 * 2, pendingIntent);
-//                } else {
-//                    Log.d("Data", "Service else started at " + serviceDetails.getServiceStartTime());
-//                    AlarmManager.AlarmClockInfo alarmClockInfo = new AlarmManager.AlarmClockInfo(cal.getTimeInMillis(), pendingIntent);
-//                    alarmManager.setAlarmClock(alarmClockInfo, pendingIntent);
-//                   // alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 60000 * 2, pendingIntent);
-//                }
             }
             tag++;
         }

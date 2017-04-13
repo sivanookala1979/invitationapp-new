@@ -13,7 +13,6 @@ import org.json.JSONObject;
 
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
-import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,14 +34,9 @@ public class StringUtils {
     public static final SimpleDateFormat eventInfoFormat = new SimpleDateFormat("E, yyyy MMM dd - hh:mm a");
 
     public static Date StringToDate(String date) {
-
-        return StringToDateByIndex(date, 0);
-    }
-
-    public static Date StringToDateByIndex(String date, int index) {
-        Log.d("old date", date);
+        Log.d("StringToDate",date);
         Date dateTime = null;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat((index==0)?"yyyy-MM-dd HH:mm:ss":"dd-MM-yyyy hh:mm a");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         try {
             dateTime = simpleDateFormat.parse(date);
         } catch (ParseException ex) {
@@ -51,16 +45,20 @@ public class StringUtils {
         return dateTime;
     }
 
+    public static Date eventStringToDate(String date) {
+        Log.d("StringToDate",date);
+        Date dateTime = null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        try {
+            dateTime = simpleDateFormat.parse(date);
+        } catch (ParseException ex) {
+            System.out.println("Exception " + ex);
+        }
+        return dateTime;
+    }
     public static String getCurrentDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return (simpleDateFormat.format(new Date()));
-    }
-
-    public static String getCurrentTime() {
-
-        Calendar now = Calendar.getInstance();
-        Format formatter = new SimpleDateFormat("hh mm a");
-        return formatter.format(now.getTime());
     }
 
     public static boolean inOrder(String startDateString, String endDateString) {
@@ -154,7 +152,7 @@ public class StringUtils {
         for (Event event : events) {
             String startDateTime = event.getStartDateTime().replace('T', ' ').replace('Z', ' ').trim();
             String endDateTime = event.getEndDateTime().replace('T', ' ').replace('Z', ' ').trim();
-            if (isGivenDateGreaterThanOrEqualToCurrentDate(startDateTime)) {
+            if (isGivenDateGreaterThanOrEqualToCurrentDate(StringUtils.getNewDate(startDateTime, 15))) {
                 futureEvents.add(event);
             }
         }
@@ -178,10 +176,13 @@ public class StringUtils {
     }
 
     public static String getNewDate(String oldDate, int minutes) {
+        return getNewDateByIndex(oldDate,minutes,0);
+    }
+    public static String getNewDateByIndex(String oldDate, int minutes,int index) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println("Old dateTime " + oldDate);
+        System.out.println("Old dateTime " + oldDate+" mintues "+minutes);
         String newDate = oldDate;
-        Date stringToDate = StringToDate(oldDate);
+        Date stringToDate = (index==0)?StringToDate(oldDate):chatStringToDate(oldDate);
         Calendar cal = Calendar.getInstance();
         cal.setTime(stringToDate);
         cal.add(Calendar.MINUTE, minutes);

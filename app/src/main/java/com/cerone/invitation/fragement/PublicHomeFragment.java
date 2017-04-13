@@ -2,6 +2,7 @@ package com.cerone.invitation.fragement;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,6 @@ public class PublicHomeFragment extends BaseFragment implements AdapterView.OnIt
         getCities();
         return view;
     }
-
 
     private void getCities() {
         if (MobileHelper.hasNetwork(getActivity(), getActivity(), " to get cities", null)) {

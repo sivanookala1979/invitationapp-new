@@ -49,7 +49,7 @@ public class HTTPUtils {
         }
         if (content != null) {
             byte[] postDataBytes = content.getBytes("UTF-8");
-            con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             con.setDoOutput(true);
             con.setDoInput(true);
             OutputStream outputStream = con.getOutputStream();

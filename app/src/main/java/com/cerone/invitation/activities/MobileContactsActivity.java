@@ -73,6 +73,8 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
         Log.d("list size", allContactsList.size()+"");
         if(allContactsList.size() == 0){
             loadAllMobileContacts();
+        }else{
+            filterList = allContactsList;
         }
         contactsAdapter = new ContactsAdapter(MobileContactsActivity.this, R.layout.contact_layout, allContactsList);
         contactsListView.setAdapter(contactsAdapter);

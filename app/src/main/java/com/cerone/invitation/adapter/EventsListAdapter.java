@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
-import com.example.dataobjects.EventItem;
+import com.example.dataobjects.FavoriteTopic;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -23,9 +23,9 @@ import java.util.List;
 
     public class EventsListAdapter extends BaseAdapter{
         private Context context;
-        private List<EventItem> eventItems;
+        private List<FavoriteTopic> eventItems;
 
-        public EventsListAdapter(Context context, List<EventItem> eventItems) {
+        public EventsListAdapter(Context context, List<FavoriteTopic> eventItems) {
             this.context = context;
             this.eventItems = eventItems;
         }
@@ -36,7 +36,7 @@ import java.util.List;
         }
 
         @Override
-        public EventItem getItem(int position) {
+        public FavoriteTopic getItem(int position) {
             return eventItems.get(position);
         }
 
@@ -45,7 +45,7 @@ import java.util.List;
             return position;
         }
 
-    public void updateAdapter(List<EventItem> eventItems) {
+    public void updateAdapter(List<FavoriteTopic> eventItems) {
         this.eventItems = eventItems;
         notifyDataSetChanged();
     }
@@ -54,7 +54,7 @@ import java.util.List;
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = inflater.inflate(R.layout.event_row_item, parent, false);
-            EventItem event = getItem(position);
+            FavoriteTopic event = getItem(position);
             TextView eventText = (TextView) row.findViewById(R.id.eventItem_name);
             ImageView eventImage = (ImageView)row.findViewById(R.id.eventItem_image);
             eventText.setText(event.getName());

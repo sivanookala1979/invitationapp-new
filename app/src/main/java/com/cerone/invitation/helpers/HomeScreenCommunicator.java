@@ -7,5 +7,4 @@ package com.cerone.invitation.helpers;
 public interface HomeScreenCommunicator {
     public void updateTabSelectinOptions(int index);
     public void updateServices(boolean status);
-
 }

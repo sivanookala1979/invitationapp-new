@@ -181,7 +181,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/happening_top_botten_style"
+                android:background="@drawable/happening_top_border_style"
                 android:minHeight="35dp"
                 android:orientation="horizontal"
                 android:weightSum="10">
@@ -197,8 +197,8 @@
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:scaleType="fitCenter"
-                        android:tint="@color/happening_orange"
-                        android:src="@drawable/location_icon" />
+                        android:src="@drawable/location_icon"
+                        android:tint="@color/happening_orange" />
                 </RelativeLayout>
 
                 <TextView
@@ -226,8 +226,8 @@
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:rotation="-90"
-                        android:tint="@color/grey_light"
-                        android:src="@drawable/near_me" />
+                        android:src="@drawable/near_me"
+                        android:tint="@color/grey_light" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -236,14 +236,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
                 android:layout_marginTop="5dp"
+                android:background="@drawable/happening_top_border_style"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:gravity="left"
                     android:orientation="horizontal">
@@ -300,6 +302,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:gravity="left"
                     android:orientation="horizontal">
@@ -396,7 +399,9 @@
                 android:layout_height="50dp"
                 android:background="@color/white"
                 android:gravity="center"
-                android:orientation="horizontal"></LinearLayout>
+                android:orientation="horizontal">
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

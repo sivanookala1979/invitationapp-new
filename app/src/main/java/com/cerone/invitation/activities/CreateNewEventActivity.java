@@ -62,7 +62,7 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
             " Every week",
             " Every month"};
     Event event = new Event();
-    ImageView eventImage, getLocation;
+    ImageView eventImage, getLocation,imageCamera;
     int count;
 
     @Override
@@ -98,6 +98,7 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         eventImage = (ImageView) findViewById(R.id.event_image);
         getLocation = (ImageView) findViewById(R.id.get_location);
         recurringInfo = (Spinner) findViewById(R.id.recurringInfo);
+        imageCamera = (ImageView) findViewById(R.id.image_camera);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_text_view, recurringData);
         arrayAdapter.setDropDownViewResource(R.layout.spinner_text_view);
         recurringInfo.setAdapter(arrayAdapter);
@@ -140,6 +141,7 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
             if(eventDetails.getImageUrl()!=null && !eventDetails.getImageUrl().isEmpty()) {
                 Picasso.with(getApplicationContext()).load(eventDetails.getImageUrl()).into(eventImage);
                 loadBitmap(eventDetails.getImageUrl());
+                imageCamera.setVisibility(View.GONE);
             }
             event.setEventId(eventDetails.getEventId());
             event.setLatitude(eventDetails.getLatitude());
@@ -251,11 +253,11 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
                 break;
             case R.id.layout_start_time :
                 startTimePicker = new InvtAppTimePicker(startHour, startMin, startMeridiem, endHour, endMin, endMeridiem, Calendar.getInstance(), true);
-                startTimePicker.createAndUpdateTime(startHour.getText().toString()+" "+startMin.getText().toString()+" "+startMeridiem.getText().toString(), CreateNewEventActivity.this);
+                startTimePicker.createAndUpdateTime(startHour.getText().toString()+":"+startMin.getText().toString(), CreateNewEventActivity.this);
                 break;
             case R.id.layout_end_time :
                 endTimePicker = new InvtAppTimePicker(startHour, startMin, startMeridiem, endHour, endMin, endMeridiem, Calendar.getInstance(), false);
-                endTimePicker.createAndUpdateTime(endHour.getText().toString()+" "+endMin.getText().toString()+" "+endMeridiem.getText().toString(), CreateNewEventActivity.this);
+                endTimePicker.createAndUpdateTime(endHour.getText().toString()+":"+endMin.getText().toString(), CreateNewEventActivity.this);
                 break;
             case R.id.get_location :
                 Intent locationIntent = new Intent(getApplicationContext(), LocationActivity.class);
@@ -374,7 +376,6 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
             if (bitmap != null) {
                 eventImage.setImageBitmap(bitmap);
                 eventPictureInfo = MobileHelper.BitMapToString(bitmap);
-                ImageView imageCamera = (ImageView) findViewById(R.id.image_camera);
                 imageCamera.setVisibility(View.GONE);
             }
         }

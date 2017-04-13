@@ -65,6 +65,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     TextView screenTitle;
     LinearLayout eventFilter, invitationsFilter;
     LinearLayout filteringLayout;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,6 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         invitationsFilter = (LinearLayout) findViewById(R.id.radio_invitations);
         filteringLayout = (LinearLayout) findViewById(R.id.filteringMenu);
         filteringLayout.setVisibility(View.VISIBLE);
-        closePreviousServices();
         Log.d("Token", InvtAppPreferences.getAccessToken());
         ownerId = InvtAppPreferences.getOwnerId();
         Log.d("Owner id", ownerId + "");
@@ -89,8 +89,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         Intent intent = new Intent(this, RegistrationIntentService.class);
         startService(intent);
         checkUserPermissions();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         View hView = navigationView.getHeaderView(0);
         userImage = (ImageView) hView.findViewById(R.id.nav_userImage);
         userName = (TextView) hView.findViewById(R.id.txt_nav_userName);
@@ -101,6 +100,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         screenTabs = getScreenTabs(0);
         createTabViews();
         eventFilter.setSelected(true);
+        invitationsFilter.setSelected(true);
         eventFilter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,7 +164,10 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
 
             }
         });
+        applyFilters();
         updateProfileImageAndName();
+        updateNavigationMenuOptions(false);
+        activateService();
     }
 
     @Override
@@ -209,18 +212,6 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             ((HomeFoldingFragment) page).updateData(eventFilter.isSelected(), invitationsFilter.isSelected());
         }
     }
-
-    private void closePreviousServices() {
-        List<ServiceInformation> serviceDetailsList = InvtAppPreferences.getServiceDetails();
-        for (int i = 0; i < serviceDetailsList.size(); i++) {
-            MyService service = new MyService();
-            service.CancelAlarm(getApplicationContext(), i);
-            NotificationService notificationService = new NotificationService();
-            notificationService.CancelAlarm(getApplicationContext(), i);
-        }
-        InvtAppPreferences.setServiceDetails(new ArrayList<ServiceInformation>());
-    }
-
 
     private void createLeftMenu() {
         addToolbarView();
@@ -349,10 +340,12 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             screenTitle.setText("Events");
             floatingActionButton.setVisibility(View.VISIBLE);
             filteringLayout.setVisibility(View.VISIBLE);
+            updateNavigationMenuOptions(false);
         } else {
             screenTitle.setText("Select City");
             floatingActionButton.setVisibility(View.GONE);
             filteringLayout.setVisibility(View.INVISIBLE);
+            updateNavigationMenuOptions(true);
         }
     }
 
@@ -361,5 +354,15 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         if(status){
             activateService();
         }
+    }
+
+    public void updateNavigationMenuOptions(boolean isPublicFragment) {
+        Menu menu = navigationView.getMenu();
+        if(isPublicFragment){
+            menu.findItem(R.id.nav_changeCity).setVisible(true);
+        }else{
+            menu.findItem(R.id.nav_changeCity).setVisible(false);
+        }
+        Log.d("Adarsh","Status info "+isPublicFragment);
     }
 }

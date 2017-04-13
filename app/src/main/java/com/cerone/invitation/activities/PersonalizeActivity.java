@@ -11,14 +11,14 @@ import com.cerone.invitation.adapter.EventsListAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.MobileHelper;
 import com.cerone.invitation.helpers.ToastHelper;
-import com.example.dataobjects.EventItem;
+import com.example.dataobjects.FavoriteTopic;
 import com.example.syncher.PublicHomeSyncher;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersonalizeActivity extends BaseActivity implements AdapterView.OnItemClickListener{
-    List<EventItem> eventItems;
+    List<FavoriteTopic> eventItems;
     GridView gridViewEvents;
     EventsListAdapter eventsListAdapter;
 
@@ -42,7 +42,7 @@ public class PersonalizeActivity extends BaseActivity implements AdapterView.OnI
                 @Override
                 public void process() {
                     PublicHomeSyncher Syncher = new PublicHomeSyncher();
-                    eventItems = new ArrayList<EventItem>();
+                    eventItems = new ArrayList<FavoriteTopic>();
                     eventItems = Syncher.getEventItems();
                 }
 
@@ -61,7 +61,7 @@ public class PersonalizeActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        EventItem eventItem = eventItems.get(position);
+        FavoriteTopic eventItem = eventItems.get(position);
         if(eventItem.isSelected()){
             eventItem.setSelected(false);
         }else{

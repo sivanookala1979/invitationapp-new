@@ -1,7 +1,7 @@
 package com.example.syncher;
 
 import com.example.dataobjects.City;
-import com.example.dataobjects.EventItem;
+import com.example.dataobjects.FavoriteTopic;
 import com.example.utills.HTTPUtils;
 
 import org.json.JSONArray;
@@ -49,15 +49,15 @@ public class PublicHomeSyncher extends BaseSyncher {
         return listOfCities;
     }
 
-    public List<EventItem> getEventItems() {
-        List<EventItem> listOfEventItems = new ArrayList<EventItem>();
+    public List<FavoriteTopic> getEventItems() {
+        List<FavoriteTopic> listOfEventItems = new ArrayList<FavoriteTopic>();
         try {
             String jsonResponse = HTTPUtils.getDataFromServer(BASE_URL + "services/get_services", "GET", true);
             if(jsonResponse!=null) {
                 JSONArray eventItems = new JSONArray(jsonResponse);
                 for (int i=0; i<eventItems.length(); i++) {
                     JSONObject eventItem = eventItems.getJSONObject(i);
-                    EventItem event = new EventItem();
+                    FavoriteTopic event = new FavoriteTopic();
                     if (eventItem.has("id"))
                         event.setId(eventItem.getInt("id"));
                     if (eventItem.has("name"))

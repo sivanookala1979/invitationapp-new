@@ -91,7 +91,6 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         loadEventData(view);
         getAllInvitees();
         activityCommunicator =(ActivityCommunicator) getActivity();
-
         return view;
     }
 

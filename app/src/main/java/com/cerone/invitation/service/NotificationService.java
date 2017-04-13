@@ -53,17 +53,15 @@ public class NotificationService extends BroadcastReceiver {
 
                 @Override
                 protected void onPostExecute(String result) {
-                    if (distanceFromEvent != null && distanceFromEvent.getDistance() != null) {
+                    if ((distanceFromEvent != null && distanceFromEvent.getDistance() != null) || (eventInfo.getLatitude()==0.0 && eventInfo.getLongitude()==0.0)) {
                         String distance = distanceFromEvent.getDistance();
                         double distanceInfo = Double.parseDouble(distance);
-                        if (distanceInfo < 2) {
+                        if ((distanceInfo < 2) || (eventInfo.getLatitude()==0.0 && eventInfo.getLongitude()==0.0)) {
                             if (eventInfo.isManualCheckIn()) {
                                 Intent newIntent = new Intent(context, CheckInActivity.class);
                                 newIntent.putExtra("flag",flag);
                                 newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(newIntent);
-                            } else {
-                                CancelAlarm(context,flag);
                             }
                             CancelAlarm(context,flag);
                             MyService myService = new MyService();

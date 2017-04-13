@@ -4,7 +4,7 @@ package com.example.dataobjects;
  * Created by peekay on 15/3/17.
  */
 
-public class EventItem {
+public class FavoriteTopic {
 
     int id;
     String name;

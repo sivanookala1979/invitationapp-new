@@ -44,6 +44,4 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 return ChatFragment.newInstance();
         }
     }
-
-
 }

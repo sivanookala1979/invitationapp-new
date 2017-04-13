@@ -79,7 +79,7 @@
                             android:layout_height="15dp"
                             android:duplicateParentState="true"
                             android:scaleType="centerCrop"
-                            android:tint="@color/white"
+                            android:tint="@color/happening_red"
                             android:src="@drawable/invitation_icon" />
                     </LinearLayout>
 
