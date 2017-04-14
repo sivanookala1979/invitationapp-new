@@ -68,20 +68,22 @@ public class InvitationSyncher extends BaseSyncher {
             String dataFromServer = HTTPUtils.getDataFromServer(BASE_URL + "events/get_my_invitations.json", "GET", true);
             if (StringUtils.isJSONValid(dataFromServer)) {
                 JSONObject jsonResponse = new JSONObject(dataFromServer);
-                JSONArray jsonArray = (JSONArray) jsonResponse.get("invitation");
-                if (jsonArray != null) {
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        Invitation invitation = new Invitation();
-                        if (!jsonObject.isNull("is_accepted")) {
-                            invitation.setSelected(true);
-                            invitation.setAccepted(jsonObject.getBoolean("is_accepted"));
+                if(jsonResponse.has("invitation")) {
+                    JSONArray jsonArray = (JSONArray) jsonResponse.get("invitation");
+                    if (jsonArray != null) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            Invitation invitation = new Invitation();
+                            if (!jsonObject.isNull("is_accepted")) {
+                                invitation.setSelected(true);
+                                invitation.setAccepted(jsonObject.getBoolean("is_accepted"));
+                            }
+                            if (!jsonObject.isNull("event_id")) {
+                                invitation.setEventId(jsonObject.getInt("event_id"));
+                            }
+                            invitation.setParticipintId(jsonObject.getInt("participant_id"));
+                            listOfInvitaioons.add(invitation);
                         }
-                        if (!jsonObject.isNull("event_id")) {
-                            invitation.setEventId(jsonObject.getInt("event_id"));
-                        }
-                        invitation.setParticipintId(jsonObject.getInt("participant_id"));
-                        listOfInvitaioons.add(invitation);
                     }
                 }
             }

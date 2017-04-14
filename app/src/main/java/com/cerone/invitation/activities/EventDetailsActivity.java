@@ -26,6 +26,8 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import static com.cerone.invitation.R.id.eventName;
+
 /**
  * Created by adarsht on 09/03/17.
  */
@@ -36,6 +38,7 @@ public class EventDetailsActivity extends BaseActivity implements ActivityCommun
     TabLayout mPagerSlidingTabStrip;
     Event eventDetails;
     PagerAdapter mPagerAdapter;
+    boolean showChatFragment;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -48,6 +51,7 @@ public class EventDetailsActivity extends BaseActivity implements ActivityCommun
         setContentView(R.layout.multli_tabs_template);
         addToolbarView();
         InvtAppPreferences.setScreenRefreshStatus(false);
+        showChatFragment = getIntent().getBooleanExtra("showChatFragment", false);
         TextView eventName = (TextView) findViewById(R.id.toolbar_title);
         eventDetails = InvtAppPreferences.getEventDetails();
         eventName.setText(eventDetails.getName());
@@ -117,6 +121,10 @@ public class EventDetailsActivity extends BaseActivity implements ActivityCommun
             tabViews.add(tabLayout);
             mPagerSlidingTabStrip.getTabAt(i).setTag(i);
             mPagerSlidingTabStrip.getTabAt(i).setCustomView(tabLayout);
+        }
+        if(showChatFragment){
+            viewPager.setCurrentItem(1);
+            showChatFragment = false;
         }
     }
 

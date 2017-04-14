@@ -92,7 +92,7 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                         } else {
                             if (event.isAccepted()) {
                                 intent = new Intent(getActivity(), EventDetailsActivity.class);
-                                intent.putExtra("fragmentNumber", 3);
+                                intent.putExtra("showChatFragment", true);
                                 startActivity(intent);
                             }
                         }

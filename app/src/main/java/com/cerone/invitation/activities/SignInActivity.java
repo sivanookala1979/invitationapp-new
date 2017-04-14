@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -128,8 +129,10 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
                 }
                 break;
             case R.id.button_verify:
-                        if (validateInputDetails(name,mobileNumber,otpNumber)) {
-                            new InvtAppAsyncTask(SignInActivity.this) {
+                if (validateInputDetails(name,mobileNumber,otpNumber)) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    new InvtAppAsyncTask(SignInActivity.this) {
                                 @Override
                                 public void process() {
                                     serverResponse = userSyncher.getSignInWithMobileAndOtp(buttonCountryCode.getText().toString()+mobileNumber.getText().toString(), otpNumber.getText().toString(), name.getText().toString());
@@ -158,6 +161,9 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
                                 }
                             }.execute();
                         }else{
+                            if(otpNumber.getText().toString().isEmpty()){
+                                otpNumber.requestFocus();
+                            }
                             Toast.makeText(getApplicationContext(), "Fields should't be empty", Toast.LENGTH_LONG).show();
                         }
                 break;

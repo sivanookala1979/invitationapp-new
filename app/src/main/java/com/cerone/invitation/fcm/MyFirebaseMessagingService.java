@@ -70,9 +70,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
                     }
 
-                    if (data.getString("from_user_id") != null && data.getString("from_user_id").length() > 0) {
+                    if (data.has("from_user_id")&&data.getString("from_user_id") != null && data.getString("from_user_id").length() > 0) {
                         fromuserId = Integer.parseInt(data.getString("from_user_id"));
-
                     }
                     String title = data.getString("title");
                     if (title.equalsIgnoreCase("Chat")) {
@@ -91,6 +90,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                             if (data.has("from_user_name"))
                                 pushNotification.putExtra("from_user_name", data.getString("from_user_name"));
                             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
+                        }
+                    }else if (title.equalsIgnoreCase("Notification")){
+                        if(data.has("message")) {
+                            sendNotification(data.getString("message"));
                         }
                     }
                 }
@@ -142,7 +145,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationsHelper.notifyListeners(messageCount);
     }
 
-    private void sendNotification(String messageBody, int orderId) {
+    private void sendNotification(String messageBody) {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent = new Intent(this, HomeScreenActivity.class);
@@ -157,10 +160,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
-
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
         notificationManager.notify(count, notificationBuilder.build());
         count++;
     }

@@ -27,9 +27,10 @@
     <ListView
         android:id="@+id/all_chat_rooms"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:divider="@color/grey_light"
         android:dividerHeight="1dp"
+        android:background="@color/white"
         android:layout_below="@+id/toolbar" />
 
     <LinearLayout
