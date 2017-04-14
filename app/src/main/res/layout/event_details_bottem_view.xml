@@ -106,8 +106,7 @@
                         android:layout_centerVertical="true"
                         android:duplicateParentState="true"
                         android:src="@drawable/chat_balloon"
-                        android:tint="@color/happening_orange"
-                        android:visibility="gone"/>
+                        android:tint="@color/happening_orange" />
                 </LinearLayout>
             </LinearLayout>
 

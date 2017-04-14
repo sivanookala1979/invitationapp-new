@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cerone.invitation.R;
 import com.cerone.invitation.adapter.ContactsAdapter;
@@ -36,11 +38,13 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
     ListView contactsListView;
     TextView inviteFriends;
     ImageButton refreshContacts;
+    ImageView locationAddress;
     List<User> allContacts;
     List<User> allContactsList;
     List<User> filterList = new ArrayList<User>();
     List<User> selectedList = new ArrayList<User>();
     ContactsAdapter contactsAdapter;
+    Event eventDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +57,11 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
         contactsListView = (ListView) findViewById(R.id.contactsListView);
         inviteFriends = (TextView) findViewById(R.id.share);
         refreshContacts = (ImageButton) findViewById(R.id.refresh_contacts);
+        locationAddress = (ImageView) findViewById(R.id.location_address);
         inviteFriends.setOnClickListener(this);
         contactsListView.setOnItemClickListener(this);
         refreshContacts.setOnClickListener(this);
+        locationAddress.setOnClickListener(this);
         contactsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         searchTextField.addTextChangedListener(new HappeningTextWatcher() {
             @Override
@@ -101,10 +107,12 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
 //                }, 1000);
 //            }
 //        });
+
+        eventDetails = InvtAppPreferences.getEventDetails();
+
     }
 
     private void showEventData() throws ParseException {
-        Event eventDetails = InvtAppPreferences.getEventDetails();
         TextView eventDate = (TextView) findViewById(R.id.event_date);
         TextView eventTime = (TextView) findViewById(R.id.event_time);
         TextView eventLocation = (TextView) findViewById(R.id.event_address);
@@ -138,6 +146,14 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
             case R.id.refresh_contacts:
                 allContactsList.clear();
                 loadAllMobileContacts();
+                break;
+            case R.id.location_address:
+                if(eventDetails.getAddress()!=null&&!eventDetails.getAddress().isEmpty()) {
+                    Intent intent = new Intent(getApplicationContext(), LocationDetailsActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Location details not provided", Toast.LENGTH_LONG).show();
+                }
                 break;
         }
     }

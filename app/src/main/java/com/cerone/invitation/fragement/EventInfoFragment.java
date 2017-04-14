@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cerone.invitation.R;
 import com.cerone.invitation.activities.CreateNewEventActivity;
@@ -42,8 +43,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import static com.cerone.invitation.R.id.location_address;
 
 
 public class EventInfoFragment extends BaseFragment implements View.OnClickListener{
@@ -138,6 +137,9 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         if(eventDetails.getAddress()!=null&&!eventDetails.getAddress().isEmpty()) {
             eventLocation.setText(eventDetails.getAddress());
         }
+        if(eventDetails.getOwnerId()== InvtAppPreferences.getOwnerId()){
+            chatLayout.setVisibility(View.GONE);
+        }
         if(eventDetails.isInvitation()){
             actionsLayout.setVisibility(View.GONE);
             editOrShareIdon.setBackgroundResource(R.drawable.group);
@@ -194,12 +196,16 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                 });
 
                 alertDialog.setNegativeButton("No", null);
-                alertDialog.setMessage("Do you want to delete?");
+                alertDialog.setMessage("Do you want to delete this event ?");
                 alertDialog.show();
                 break;
-            case location_address :
-                intent = new Intent(getActivity(), LocationDetailsActivity.class);
-                startActivity(intent);
+            case R.id.location_address :
+                if(eventDetails.getAddress()!=null&&!eventDetails.getAddress().isEmpty()) {
+                    intent = new Intent(getActivity(), LocationDetailsActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getActivity(), "Location details not provided", Toast.LENGTH_LONG).show();
+                }
                 break;
             case R.id.acceptInvitation :
                 showLocationPermissionDialog();

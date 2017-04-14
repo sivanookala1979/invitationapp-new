@@ -44,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:layout_gravity="right"
                 android:orientation="horizontal">
 
                 <TextView
@@ -60,7 +61,7 @@
                     android:id="@+id/date_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:gravity="right"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:text="9:10 AM"
                     android:textColor="@color/blue_shade"

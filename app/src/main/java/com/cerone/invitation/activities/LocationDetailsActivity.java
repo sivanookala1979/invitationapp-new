@@ -223,7 +223,7 @@ public class LocationDetailsActivity extends BaseActivity implements OnMapReadyC
         String zip = addresses.get(0).getPostalCode();
         String country = addresses.get(0).getCountryName();
 
-        return city+", "+state+", "+zip+".";
+        return city+", "+state+", "+country+".";
     }
 
 }

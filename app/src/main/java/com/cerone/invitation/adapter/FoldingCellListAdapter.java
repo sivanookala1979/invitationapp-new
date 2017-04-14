@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.cerone.invitation.R;
 import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.FontTypes;
+import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Invitee;
 import com.example.utills.StringUtils;
@@ -76,7 +77,6 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
             viewHolder.eventNameFooter = (TextView) cell.findViewById(R.id.eventNameFooter);
             viewHolder.eventImageFooter = (ImageView) cell.findViewById(R.id.eventImageFooter);
             viewHolder.ownerImage = (ImageView) cell.findViewById(R.id.eventOwnerImage);
-            viewHolder.chatIcon = (ImageView) cell.findViewById(R.id.chatIcon);
             viewHolder.ownerName = (TextView) cell.findViewById(R.id.ownerName);
             viewHolder.eventStartDate = (TextView) cell.findViewById(R.id.eventDate);
             viewHolder.eventTimings = (TextView) cell.findViewById(R.id.eventTimings);
@@ -188,6 +188,9 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
     }
 
     private void updateActionIcons(ViewHolder viewHolder, Event event) {
+        if(event.getOwnerId()== InvtAppPreferences.getOwnerId()){
+            viewHolder.chatLayout.setVisibility(View.GONE);
+        }
         if (!event.isInvitation()) {
             viewHolder.actionOneIcon.setImageResource(R.drawable.share_icon);
             viewHolder.actionTwoIcon.setImageResource(R.drawable.edit_icon);
@@ -195,7 +198,6 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
         } else {
             viewHolder.actionOneIcon.setImageResource(R.drawable.done_icon);
             viewHolder.actionTwoIcon.setImageResource(R.drawable.question_mark_icon);
-            viewHolder.chatIcon.setVisibility(View.VISIBLE);
 
             if(event.isAccepted()){
                 if(event.isAdmin()){
@@ -252,7 +254,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
 
     // View lookup cache
     private static class ViewHolder {
-        ImageView eventHeaderIcon, eventImageFooter, ownerImage, chatIcon;
+        ImageView eventHeaderIcon, eventImageFooter, ownerImage;
         TextView eventNameHeader, colourIndicator, eventAddressHeader, eventDateTimeInfo, eventNameFooter, ownerName, eventStartDate, eventTimings, eventAddressFooter, inviteesCount, acceptedCount, rejectedCount;
         LinearLayout participantsLayout, actionOneLayout, actionTwoLayout, actionThreeLayout, eventDetailsLayout, participantsStatisticsLayout,actionsLayout,chatLayout;
         ImageView actionOneIcon, actionTwoIcon, actionThreeIcon, showEventIcon,individualChatIcon, navAddress;

@@ -257,7 +257,7 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
                 break;
             case R.id.layout_end_time :
                 endTimePicker = new InvtAppTimePicker(startHour, startMin, startMeridiem, endHour, endMin, endMeridiem, Calendar.getInstance(), false);
-                endTimePicker.createAndUpdateTime(endHour.getText().toString()+" chac"+endMin.getText().toString()+" "+endMeridiem.getText().toString(), CreateNewEventActivity.this);
+                endTimePicker.createAndUpdateTime(endHour.getText().toString()+" "+endMin.getText().toString()+" "+endMeridiem.getText().toString(), CreateNewEventActivity.this);
                 break;
             case R.id.get_location :
                 Intent locationIntent = new Intent(getApplicationContext(), LocationActivity.class);

@@ -149,8 +149,10 @@
             android:textSize="@dimen/text_size_small" />
 
         <ImageView
+            android:id="@+id/location_address"
             android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:padding="10dp"
             android:rotation="-90"

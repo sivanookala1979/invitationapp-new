@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -54,6 +55,8 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
     LinearLayout layoutShareEvent, layoutCancelEvent;
     List<Group> myGroups = new ArrayList<Group>();
     boolean isNewEvent;
+    ImageView locationAddress;
+    Event eventDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,7 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
         layoutCancelEvent = (LinearLayout) findViewById(R.id.layout_cancelEvent);
         listView = (ListView) findViewById(R.id.attendeeslist);
         groupList = (ListView) findViewById(R.id.grouplist);
+        locationAddress = (ImageView) findViewById(R.id.location_address);
         groupsView = (Button) findViewById(R.id.groups);
         contactsView = (Button) findViewById(R.id.contacts);
         layoutShareEvent.setOnClickListener(this);
@@ -74,8 +78,12 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
         contactsView.setOnClickListener(this);
         listView.setOnItemClickListener(this);
         groupList.setOnItemClickListener(this);
+        locationAddress.setOnClickListener(this);
         showEventData();
         loadGroupsAndContacts();
+
+        eventDetails = InvtAppPreferences.getEventDetails();
+
     }
 
     private void loadGroupsAndContacts() {
@@ -145,6 +153,14 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                 Intent contactIntent = new Intent(this, MobileContactsActivity.class);
                 startActivityForResult(contactIntent, 100);
                 break;
+            case R.id.location_address :
+                if(eventDetails.getAddress()!=null&&!eventDetails.getAddress().isEmpty()) {
+                    Intent intent = new Intent(getApplicationContext(), LocationDetailsActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Location details not provided", Toast.LENGTH_LONG).show();
+                }
+                break;
             case R.id.layout_cancelEvent:
             case R.id.cancel:
                 finish();
@@ -159,7 +175,6 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
 
                         @Override
                         public void process() {
-                            Event eventDetails = InvtAppPreferences.getEventDetails();
                             if (isNewEvent) {
                                 EventSyncher eventSyncher = new EventSyncher();
                                 serverResponse = eventSyncher.createEvent(eventDetails);
