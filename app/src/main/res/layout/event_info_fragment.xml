@@ -454,29 +454,39 @@
                 android:layout_height="1dp"
                 android:background="@color/grey_light" />
 
-            <com.cerone.invitation.helpers.CeroneTextView
+            <LinearLayout
+                android:id="@+id/layout_participants"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Participents"
-                android:textColor="@color/black_shade"
-                android:textSize="@dimen/text_medium"
-                android:padding="15dp"
-                android:tag="fonts/Montserrat-Light.otf"
-                android:background="@color/cream"/>
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grey_light" />
+                <com.cerone.invitation.helpers.CeroneTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Participents"
+                    android:textColor="@color/black_shade"
+                    android:textSize="@dimen/text_medium"
+                    android:padding="15dp"
+                    android:tag="fonts/Montserrat-Light.otf"
+                    android:background="@color/cream"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/participantsLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center"
-                android:orientation="horizontal">
-            </android.support.v7.widget.RecyclerView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey_light" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/participantsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

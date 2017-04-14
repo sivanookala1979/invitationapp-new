@@ -27,6 +27,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class HTTPUtils {
@@ -226,6 +227,15 @@ public class HTTPUtils {
         } catch (Exception ex) {
             System.out.println(ex);
         }
+        String[] date = dateString.split(" ");
+        if(date[0].equals(getCurrentDate())){
+            return date[1];
+        }
         return dateString;
+    }
+
+    public static String getCurrentDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        return sdf.format(new Date());
     }
 }

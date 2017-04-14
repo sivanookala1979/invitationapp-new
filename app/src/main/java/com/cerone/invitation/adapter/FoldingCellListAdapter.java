@@ -195,6 +195,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Event> {
         } else {
             viewHolder.actionOneIcon.setImageResource(R.drawable.done_icon);
             viewHolder.actionTwoIcon.setImageResource(R.drawable.question_mark_icon);
+            viewHolder.chatIcon.setVisibility(View.VISIBLE);
 
             if(event.isAccepted()){
                 if(event.isAdmin()){

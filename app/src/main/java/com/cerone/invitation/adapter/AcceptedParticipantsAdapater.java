@@ -54,7 +54,7 @@ public class AcceptedParticipantsAdapater extends RecyclerView.Adapter<AcceptedP
 
     @Override
     public void onBindViewHolder(MyImageViewHolder holder, int position) {
-        if(allInvitees!= null) {
+        if(allInvitees!=null&&allInvitees.size()>0) {
             holder.timeToReachEvent.setText( allInvitees.get(position).getTitle());
             addParticipants(holder, allInvitees.get(position).getInviteesList().size(), position);
         }

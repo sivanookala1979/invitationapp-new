@@ -479,14 +479,20 @@
                         android:singleLine="true"
                         android:textSize="@dimen/text_medium" />
 
-
-                    <Spinner
-                        android:id="@+id/recurringInfo"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_margin="15dp"
-                        android:background="@drawable/edit_text_border"
-                        android:visibility="visible" />
+                        android:background="@drawable/edit_text_border">
+
+                        <Spinner
+                            android:id="@+id/recurringInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="5dp"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

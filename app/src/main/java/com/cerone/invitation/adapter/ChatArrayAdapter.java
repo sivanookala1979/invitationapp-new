@@ -26,8 +26,6 @@ import java.util.List;
 
 import hani.momanii.supernova_emoji_library.Helper.EmojiconTextView;
 
-import static com.cerone.invitation.R.id.cameraIcon;
-
 /**
  * Created by suzuki on 11-05-2016.
  */
@@ -99,7 +97,9 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
             me = (TextView) row.findViewById(R.id.me);
 
         }
-       // userImage = (ImageView) row.findViewById(R.id.user_image);
+        //userImage = (ImageView) row.findViewById(R.id.user_image);
+        //Log.d("date",chatMessageObj.getDate()+"");
+
 
         chatText = (EmojiconTextView) row.findViewById(R.id.msgr);
         dateTime = (TextView) row.findViewById(R.id.date_time);

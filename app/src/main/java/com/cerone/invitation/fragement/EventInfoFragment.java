@@ -38,6 +38,9 @@ import com.example.utills.StringUtils;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.cerone.invitation.R.id.location_address;
@@ -45,7 +48,7 @@ import static com.cerone.invitation.R.id.location_address;
 
 public class EventInfoFragment extends BaseFragment implements View.OnClickListener{
 
-    LinearLayout invitationSelection,inviteesLayout, accept, maybe, reject,editEvent,actionsLayout, shareEvent, deleteEvent, chatLayout;
+    LinearLayout invitationSelection,inviteesLayout, accept, maybe, reject,editEvent,actionsLayout, shareEvent, deleteEvent, chatLayout, layoutParticipants;
     TextView totalInviteesText, acceptCountText, rejectCountText;
     RecyclerView participantsLayout;
     View eventBaseView;
@@ -75,6 +78,7 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         editEvent = (LinearLayout) view.findViewById(R.id.actionTwo);
         deleteEvent = (LinearLayout) view.findViewById(R.id.actionThree);
         inviteesLayout = (LinearLayout) view.findViewById(R.id.invitees_layout);
+        layoutParticipants = (LinearLayout) view.findViewById(R.id.layout_participants);
         chatLayout = (LinearLayout) view.findViewById(R.id.chatLayout);
         editOrShareIdon = (ImageView) view.findViewById(R.id.actionTwoIcon);
         locationAddress = (ImageView) view.findViewById(R.id.location_address);
@@ -91,6 +95,13 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         loadEventData(view);
         getAllInvitees();
         activityCommunicator =(ActivityCommunicator) getActivity();
+        String[] startTime = eventDetails.getStartDateTime().split(" ");
+        long difference = getTimeDifference(startTime[1], getCurrentTime());
+        Log.d("difference", startTime[1]+" "+getCurrentTime()+" "+difference);
+
+        if(difference >= -30){
+            layoutParticipants.setVisibility(View.VISIBLE);
+        }
         return view;
     }
 
@@ -293,6 +304,32 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                 }
             }
         }.execute();
+    }
+
+    public static String getCurrentTime() {
+
+        Calendar now = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        return formatter.format(now.getTime());
+    }
+
+    public static long getTimeDifference(String time1, String time2) {
+
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        Date date1 = null;
+        try {
+            date1 = format.parse(time1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date date2 = null;
+        try {
+            date2 = format.parse(time2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long difference = date2.getTime() - date1.getTime();
+        return difference / (60 * 1000) % 60;
     }
 
     public static EventInfoFragment newInstance() {

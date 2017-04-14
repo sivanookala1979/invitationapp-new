@@ -64,7 +64,7 @@
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:text="9:10 AM"
                     android:textColor="@color/blue_shade"
-                    android:textSize="@dimen/text_size_very_small"
+                    android:textSize="@dimen/too_small_text_size"
                     android:textStyle="bold" />
             </LinearLayout>
 

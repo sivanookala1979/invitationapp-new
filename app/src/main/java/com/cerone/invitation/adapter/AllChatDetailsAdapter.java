@@ -114,7 +114,7 @@ public class AllChatDetailsAdapter extends ArrayAdapter<ChatRoom> {
 
     void getMonthDayAgo(String formattedDate, TextView textView)
             throws java.text.ParseException {
-        SimpleDateFormat readFormat = new SimpleDateFormat("dd MMM yyyy HH:mm");
+        SimpleDateFormat readFormat = new SimpleDateFormat("dd MMM yyyy");
         Date now = new Date();
         Date past = null;
         String fdate = formattedDate.substring(0, formattedDate.length() - 5);

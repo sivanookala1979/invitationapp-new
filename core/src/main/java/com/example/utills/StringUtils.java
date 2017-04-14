@@ -36,7 +36,7 @@ public class StringUtils {
 
     public static Date StringToDate(String date) {
 
-        return StringToDateByIndex(date, 0); 
+        return StringToDateByIndex(date, 0);
     }
 
     public static Date StringToDateByIndex(String date, int index) {
@@ -305,7 +305,7 @@ public class StringUtils {
 
     public static Date chatStringToDate(String date) {
         Date dateTime = null;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm");
         try {
             dateTime = simpleDateFormat.parse(date);
         } catch (Exception ex) {
@@ -351,4 +351,5 @@ public class StringUtils {
         String time2 = getTimeFormat(dateTime2);
         return time1+"-"+time2;
     }
+
 }

@@ -59,7 +59,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_user_profile);
         addToolbarView();
         setFontType(R.id.txt_name, R.id.txt_phone, R.id.txt_status, R.id.txt_email, R.id.txt_gender, R.id.profile_name, R.id.profile_phone, R.id.profile_status,
-                R.id.profile_email, R.id.register);
+                R.id.profile_email, R.id.register, R.id.radioMale, R.id.radioFemale);
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;

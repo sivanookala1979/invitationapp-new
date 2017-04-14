@@ -2,13 +2,12 @@ package com.cerone.invitation.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +35,7 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
     EditText searchTextField;
     ListView contactsListView;
     TextView inviteFriends;
+    ImageButton refreshContacts;
     List<User> allContacts;
     List<User> allContactsList;
     List<User> filterList = new ArrayList<User>();
@@ -52,8 +52,10 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
         searchTextField = (EditText) findViewById(R.id.search);
         contactsListView = (ListView) findViewById(R.id.contactsListView);
         inviteFriends = (TextView) findViewById(R.id.share);
+        refreshContacts = (ImageButton) findViewById(R.id.refresh_contacts);
         inviteFriends.setOnClickListener(this);
         contactsListView.setOnItemClickListener(this);
+        refreshContacts.setOnClickListener(this);
         contactsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         searchTextField.addTextChangedListener(new HappeningTextWatcher() {
             @Override
@@ -132,6 +134,10 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
                     } else {
                         setSnackBarValidation("Please select contacts.");
                     }
+                break;
+            case R.id.refresh_contacts:
+                allContactsList.clear();
+                loadAllMobileContacts();
                 break;
         }
     }

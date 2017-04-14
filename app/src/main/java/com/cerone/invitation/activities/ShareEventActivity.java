@@ -33,6 +33,7 @@ import com.example.syncher.GroupSyncher;
 import com.example.syncher.InvitationSyncher;
 import com.example.utills.StringUtils;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,8 +60,7 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.share_events_layout);
         addToolbarView();
-        setFontType(R.id.txt_start, R.id.txt_end, R.id.eventstartDate, R.id.eventStartTime,
-                R.id.eventEndDate, R.id.eventEndtime, R.id.eventLocation, R.id.groups, R.id.contacts);
+        setFontType(R.id.groups, R.id.contacts);
         isNewEvent = getIntent().getExtras().getBoolean("newEvent");
         layoutShareEvent = (LinearLayout) findViewById(R.id.layout_shareEvent);
         layoutCancelEvent = (LinearLayout) findViewById(R.id.layout_cancelEvent);
@@ -106,17 +106,21 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
         Event eventDetails = InvtAppPreferences.getEventDetails();
         TextView eventName = (TextView) findViewById(R.id.eventNameInfo);
         //TextView eventDescription = (TextView) findViewById(R.id.eventDescription);
-        TextView eventStartDate = (TextView) findViewById(R.id.eventstartDate);
-        TextView eventEndDate = (TextView) findViewById(R.id.eventEndDate);
-        TextView eventStartTime = (TextView) findViewById(R.id.eventStartTime);
-        TextView eventEndTime = (TextView) findViewById(R.id.eventEndtime);
-        TextView eventLocation = (TextView) findViewById(R.id.eventLocation);
+        TextView eventDate = (TextView) findViewById(R.id.event_date);
+        TextView eventTime = (TextView) findViewById(R.id.event_time);
+        TextView eventLocation = (TextView) findViewById(R.id.event_address);
         eventName.setText(eventDetails.getName().trim() + " Details");
         //eventDescription.setText(eventDetails.getDescription());
-        eventStartDate.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 1));
-        eventEndDate.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 1));
-        eventStartTime.setText(StringUtils.formatDateAndTime(eventDetails.getStartDateTime(), 2));
-        eventEndTime.setText(StringUtils.formatDateAndTime(eventDetails.getEndDateTime(), 2));
+        try {
+            eventDate.setText(StringUtils.getEventDateFormat(eventDetails.getStartDateTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            eventTime.setText(StringUtils.getEventTimeFormat(eventDetails.getStartDateTime(), eventDetails.getEndDateTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (eventDetails.getAddress() != null && !eventDetails.getAddress().isEmpty()) {
             eventLocation.setText(eventDetails.getAddress());
             if (!eventDetails.getExtraAddress().isEmpty()) {
@@ -176,14 +180,9 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                                 String serverStatus = serverResponse.getStatus();
                                 Toast.makeText(getApplicationContext(), serverStatus, Toast.LENGTH_LONG).show();
                                 if (eventId > 0 && serverStatus.equals("Success")) {
-                                    if (isNewEvent) {
                                         Intent intent = new Intent(ShareEventActivity.this, HomeScreenActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
-                                    } else {
-                                        finish();
-                                    }
-
                                 }
                             }
                         }
