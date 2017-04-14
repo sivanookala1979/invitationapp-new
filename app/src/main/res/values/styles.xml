@@ -27,5 +27,9 @@
     <style name="TextLabel" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">@dimen/text_size</item>
     </style>
+    <style name="MyCheckBox" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorControlNormal">@color/gray</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
 
 </resources>

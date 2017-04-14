@@ -35,15 +35,15 @@
             android:padding="10dp"
             android:text="SHARE"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/small_text_size"/>
+            android:textSize="@dimen/small_text_size" />
 
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="@color/white"
+        android:orientation="horizontal"
         android:padding="5dp"
         android:weightSum="10">
 
@@ -57,21 +57,21 @@
                 android:id="@+id/txt_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:tag="fonts/Montserrat-Light.otf"
                 android:text="DATE"
                 android:textColor="@color/darkgray"
-                android:textSize="@dimen/text_size_small"
-                android:tag="fonts/Montserrat-Light.otf"
-                android:padding="5dp"/>
+                android:textSize="@dimen/text_size_small" />
 
             <TextView
                 android:id="@+id/event_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                android:padding="5dp"
                 android:text="Sat, 21/03/2017"
                 android:textColor="@color/black_shade"
-                android:textSize="@dimen/text_size_small"
-                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                android:padding="5dp"/>
+                android:textSize="@dimen/text_size_small" />
 
         </LinearLayout>
 
@@ -85,21 +85,21 @@
                 android:id="@+id/txt_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:tag="fonts/Montserrat-Light.otf"
                 android:text="TIME"
                 android:textColor="@color/darkgray"
-                android:textSize="@dimen/text_size_small"
-                android:tag="fonts/Montserrat-Light.otf"
-                android:padding="5dp"/>
+                android:textSize="@dimen/text_size_small" />
 
             <TextView
                 android:id="@+id/event_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                android:padding="5dp"
                 android:text="11.00AM - 01:00AM"
                 android:textColor="@color/black_shade"
-                android:textSize="@dimen/text_size_small"
-                android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                android:padding="5dp"/>
+                android:textSize="@dimen/text_size_small" />
 
         </LinearLayout>
 
@@ -108,13 +108,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray"/>
+        android:background="@color/gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="@color/white"
+        android:orientation="horizontal"
         android:weightSum="10">
 
         <ImageView
@@ -123,20 +123,20 @@
             android:layout_weight="1"
             android:padding="10dp"
             android:src="@drawable/location_icon"
-            android:tint="@color/happening_orange"/>
+            android:tint="@color/happening_orange" />
 
         <TextView
             android:id="@+id/event_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
+            android:ellipsize="end"
+            android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+            android:lines="2"
+            android:paddingTop="10dp"
             android:text="Location details not provided"
             android:textColor="@color/black_shade"
-            android:textSize="@dimen/text_size_small"
-            android:ellipsize="end"
-            android:lines="2"
-            android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-            android:paddingTop="10dp" />
+            android:textSize="@dimen/text_size_small" />
 
         <ImageView
             android:layout_width="0dp"
@@ -145,7 +145,7 @@
             android:padding="10dp"
             android:rotation="-90"
             android:src="@drawable/near_me"
-            android:tint="@color/gray"/>
+            android:tint="@color/gray" />
 
     </LinearLayout>
 
@@ -153,31 +153,25 @@
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="45dp"
-        android:padding="5dp"
+        android:background="@drawable/bottom_margin"
         android:drawableRight="@drawable/places_ic_search"
         android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
         android:hint="Search by contact no or name"
+        android:minHeight="45dp"
+        android:padding="5dp"
         android:singleLine="true"
-        android:background="@drawable/bottom_margin"
         android:textColor="@color/black"
         android:textSize="@dimen/text_medium"
         android:textStyle="normal|italic" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipeRefresh">
 
     <ListView
         android:id="@+id/contactsListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:dividerHeight="1dp"
+        android:background="@color/white"
         android:divider="@color/gray"
-        android:background="@color/white"/>
+        android:dividerHeight="1dp" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

@@ -336,6 +336,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
 
     @Override
     public void updateTabSelectinOptions(int index) {
+
         if (index == 0) {
             screenTitle.setText("Events");
             floatingActionButton.setVisibility(View.VISIBLE);

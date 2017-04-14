@@ -34,7 +34,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_changeCity"
-            android:icon="@drawable/city_icon"
+            android:icon="@drawable/city_nav_icon"
             android:title="Change City" />
     </group>
 

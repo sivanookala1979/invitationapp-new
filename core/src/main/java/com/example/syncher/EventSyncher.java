@@ -11,6 +11,7 @@ import com.example.dataobjects.Invitee;
 import com.example.dataobjects.ServerResponse;
 import com.example.dataobjects.User;
 import com.example.utills.HTTPUtils;
+import com.example.utills.InvitationAppConstants;
 import com.example.utills.StringUtils;
 
 import org.json.JSONArray;
@@ -33,9 +34,9 @@ public class EventSyncher extends BaseSyncher {
         try {
             JSONObject object = new JSONObject();
             object.put("event_name", event.getName());
-                object.put("start_date", StringUtils.eventStringToDate(event.getStartDateTime()));
+            object.put("start_date", StringUtils.StringToDateByIndex(event.getStartDateTime(), 1));
             if (event.getEndDateTime() != null) {
-                object.put("end_date", StringUtils.eventStringToDate(event.getEndDateTime()));
+                object.put("end_date", StringUtils.StringToDateByIndex(event.getEndDateTime(), 1));
             }
             if (!event.isRecurring()) {
                 object.put("recurring_type", "");
@@ -81,6 +82,7 @@ public class EventSyncher extends BaseSyncher {
         }
         return listOfEvents;
     }
+
     public List<Event> getAllEvents() {
         List<Event> listOfEvents = new ArrayList<Event>();
         try {
@@ -135,11 +137,11 @@ public class EventSyncher extends BaseSyncher {
                         event.setAddress(jsonObject.getString("address"));
                         event.setDescription(jsonObject.getString("description"));
                         if (!jsonObject.isNull("start_date")) {
-                            event.setStartDateTime(getFormatedDateFromServerFormatedDate(jsonObject.getString("start_date")));
+                            event.setStartDateTime(StringUtils.getNewDate(getFormatedDateFromServerFormatedDate(jsonObject.getString("start_date")), InvitationAppConstants.TIME_DIFFERENCE));
                         }
                         if (!jsonObject.isNull("end_date")) {
-                            event.setEndDateTime(getFormatedDateFromServerFormatedDate(jsonObject.getString("end_date")));
-                            Log.d("end date", event.getEndDateTime()+"");
+                            event.setEndDateTime(StringUtils.getNewDate(getFormatedDateFromServerFormatedDate(jsonObject.getString("end_date")), InvitationAppConstants.TIME_DIFFERENCE));
+                            Log.d("end date", event.getEndDateTime() + "");
                         }
                         if (!jsonObject.isNull("accepted_count")) {
                             event.setAcceptedCount(jsonObject.getInt("accepted_count"));
@@ -168,36 +170,36 @@ public class EventSyncher extends BaseSyncher {
                         if (!jsonObject.isNull("hide")) {
                             event.setHide(jsonObject.getBoolean("hide"));
                         }
-                        if(jsonObject.has("is_accepted")) {
+                        if (jsonObject.has("is_accepted")) {
                             event.setAccepted(jsonObject.getBoolean("is_accepted"));
                         }
-                        if(!jsonObject.isNull("image_url")&&jsonObject.has("image_url")) {
+                        if (!jsonObject.isNull("image_url") && jsonObject.has("image_url")) {
                             event.setImageUrl(jsonObject.getString("image_url"));
                         }
-                        if(jsonObject.has("is_expire")){
+                        if (jsonObject.has("is_expire")) {
                             event.setExpired(jsonObject.getBoolean("is_expire"));
                         }
-                        if(jsonObject.has("is_my_event")) {
+                        if (jsonObject.has("is_my_event")) {
                             event.setInvitation(!jsonObject.getBoolean("is_my_event"));
                         }
-                        if(jsonObject.has("is_admin")) {
+                        if (jsonObject.has("is_admin")) {
                             event.setAdmin(jsonObject.getBoolean("is_admin"));
                         }
-                        if(jsonObject.has("owner_information")){
+                        if (jsonObject.has("owner_information")) {
                             JSONObject ownerJson = jsonObject.getJSONObject("owner_information");
                             Invitee ownerInfo = new Invitee();
                             ownerInfo.setInviteeId(ownerJson.getInt("id"));
                             ownerInfo.setInviteeName(ownerJson.getString("user_name"));
                             ownerInfo.setMobileNumber(ownerJson.getString("phone_number"));
-                            if(ownerJson.has("email")) {
+                            if (ownerJson.has("email")) {
                                 ownerInfo.setEmail(ownerJson.getString("email"));
                             }
-                            if(ownerJson.has("owner_img")) {
+                            if (ownerJson.has("owner_img")) {
                                 ownerInfo.setImage(ownerJson.getString("owner_img"));
                             }
                             event.setOwnerInfo(ownerInfo);
                         }
-                        if(jsonObject.has("invitation_information")){
+                        if (jsonObject.has("invitation_information")) {
                             JSONArray inviteesList = jsonObject.getJSONArray("invitation_information");
                             for (int j = 0; j < inviteesList.length(); j++) {
                                 JSONObject inviteeJson = inviteesList.getJSONObject(j);
@@ -207,10 +209,10 @@ public class EventSyncher extends BaseSyncher {
                                 invitee.setMobileNumber(inviteeJson.getString("mobile"));
                                 invitee.setAdmin(inviteeJson.getBoolean("is_admin"));
                                 //invitee.setAccepted(inviteeJson.getBoolean("is_accepted"));
-                                if(inviteeJson.has("email")) {
+                                if (inviteeJson.has("email")) {
                                     invitee.setEmail(inviteeJson.getString("email"));
                                 }
-                                if(inviteeJson.has("img_url")) {
+                                if (inviteeJson.has("img_url")) {
                                     invitee.setImage(inviteeJson.getString("img_url"));
                                 }
                                 event.getInviteesList().add(invitee);
@@ -288,18 +290,17 @@ public class EventSyncher extends BaseSyncher {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         User user = new User();
-                        if(jsonObject.has("name"))
+                        if (jsonObject.has("name"))
                             user.setUserName(jsonObject.getString("name"));
-                        if(jsonObject.has("mobile_number"))
+                        if (jsonObject.has("mobile_number"))
                             user.setPhoneNumber(jsonObject.getString("mobile_number"));
-                        if(jsonObject.has("is_active_user"))
+                        if (jsonObject.has("is_active_user"))
                             user.setActive(jsonObject.getBoolean("is_active_user"));
-                        if(jsonObject.has("email"))
+                        if (jsonObject.has("email"))
                             user.setEmailId(jsonObject.getString("email"));
-                        if(jsonObject.has("img_url"))
+                        if (jsonObject.has("img_url"))
                             user.setImage(jsonObject.getString("img_url"));
-                        else
-                        if(jsonObject.has("error_message"))
+                        else if (jsonObject.has("error_message"))
                             user.setErrorMessage(jsonObject.getString("error_message"));
                         contactsList.add(user);
                     }

@@ -48,7 +48,7 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
         setContentView(R.layout.contacts_activity_layout);
         addToolbarView();
         setFontType(R.id.share, R.id.event_date, R.id.event_time, R.id.event_address, R.id.search);
-        final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+       // final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         searchTextField = (EditText) findViewById(R.id.search);
         contactsListView = (ListView) findViewById(R.id.contactsListView);
         inviteFriends = (TextView) findViewById(R.id.share);
@@ -84,21 +84,21 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
             e.printStackTrace();
         }
 
-        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeView.setRefreshing(true);
-                allContactsList.clear();
-                loadAllMobileContacts();
-                Log.d("Swipe", "Refreshing Number");
-                ( new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeView.setRefreshing(false);
-                    }
-                }, 1000);
-            }
-        });
+//        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                swipeView.setRefreshing(true);
+//                allContactsList.clear();
+//                loadAllMobileContacts();
+//                Log.d("Swipe", "Refreshing Number");
+//                ( new Handler()).postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        swipeView.setRefreshing(false);
+//                    }
+//                }, 1000);
+//            }
+//        });
     }
 
     private void showEventData() throws ParseException {
