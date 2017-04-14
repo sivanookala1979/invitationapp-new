@@ -40,40 +40,46 @@ public class NotificationService extends BroadcastReceiver {
         ServiceInformation serviceDetails = InvtAppPreferences.getServiceDetails().get(flag);
         eventInfo = serviceDetails.getEventInfo();
         if (!StringUtils.isGivenDateGreaterThanOrEqualToCurrentDate(serviceDetails.getEventStartTime())) {
-            new AsyncTask<String, Void, String>() {
+            if (StringUtils.isGivenDateGreaterThanOrEqualToCurrentDate(serviceDetails.getEnventEndTime())) {
+                new AsyncTask<String, Void, String>() {
 
-                ServerResponse distanceFromEvent;
+                    ServerResponse distanceFromEvent;
 
-                @Override
-                protected String doInBackground(String... params) {
-                    UserSyncher syncher = new UserSyncher();
-                    distanceFromEvent = syncher.getDistanceFromEvent(eventInfo.getEventId());
-                    return null;
-                }
+                    @Override
+                    protected String doInBackground(String... params) {
+                        UserSyncher syncher = new UserSyncher();
+                        distanceFromEvent = syncher.getDistanceFromEvent(eventInfo.getEventId());
+                        return null;
+                    }
 
-                @Override
-                protected void onPostExecute(String result) {
-                    if ((distanceFromEvent != null && distanceFromEvent.getDistance() != null) || (eventInfo.getLatitude()==0.0 && eventInfo.getLongitude()==0.0)) {
-                        String distance = distanceFromEvent.getDistance();
-                        double distanceInfo = Double.parseDouble(distance);
-                        if ((distanceInfo < 2) || (eventInfo.getLatitude()==0.0 && eventInfo.getLongitude()==0.0)) {
-                            if (eventInfo.isManualCheckIn()) {
-                                Intent newIntent = new Intent(context, CheckInActivity.class);
-                                newIntent.putExtra("flag",flag);
-                                newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                context.startActivity(newIntent);
+                    @Override
+                    protected void onPostExecute(String result) {
+                        if ((distanceFromEvent != null && distanceFromEvent.getDistance() != null) || (eventInfo.getLatitude() == 0.0 && eventInfo.getLongitude() == 0.0)) {
+                            String distance = distanceFromEvent.getDistance();
+                            double distanceInfo = Double.parseDouble(distance);
+                            if ((distanceInfo < 2) || (eventInfo.getLatitude() == 0.0 && eventInfo.getLongitude() == 0.0)) {
+//                            if (eventInfo.isManualCheckIn()) {
+//                                Intent newIntent = new Intent(context, CheckInActivity.class);
+//                                newIntent.putExtra("flag",flag);
+//                                newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                context.startActivity(newIntent);
+//                            }
+                                CancelAlarm(context, flag);
+                                MyService myService = new MyService();
+                                myService.CancelAlarm(context, flag);
                             }
-                            CancelAlarm(context,flag);
-                            MyService myService = new MyService();
-                            myService.CancelAlarm(context,flag);
                         }
                     }
-                }
-            }.execute();
+                }.execute();
+            }else {
+                CancelAlarm(context, flag);
+                MyService myService = new MyService();
+                myService.CancelAlarm(context, flag);
+            }
         }
     }
 
-    public void CancelAlarm(Context context,int flag) {
+    public void CancelAlarm(Context context, int flag) {
         Intent intent = new Intent(context, NotificationService.class);
         intent.setAction(InvtAppPreferences.getServiceDetails().get(flag).getCheckInNotificationServiceStartTime());
         PendingIntent sender = PendingIntent.getBroadcast(context, flag, intent, PendingIntent.FLAG_CANCEL_CURRENT);
