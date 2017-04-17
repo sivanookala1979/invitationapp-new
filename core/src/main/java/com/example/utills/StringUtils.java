@@ -154,7 +154,7 @@ public class StringUtils {
         for (Event event : events) {
             String startDateTime = event.getStartDateTime().replace('T', ' ').replace('Z', ' ').trim();
             String endDateTime = event.getEndDateTime().replace('T', ' ').replace('Z', ' ').trim();
-            if (isGivenDateGreaterThanOrEqualToCurrentDate(startDateTime)) {
+            if (isGivenDateGreaterThanOrEqualToCurrentDate(StringUtils.getNewDate(startDateTime,15))) {
                 futureEvents.add(event);
             }
         }

@@ -40,7 +40,8 @@ public class NotificationService extends BroadcastReceiver {
         ServiceInformation serviceDetails = InvtAppPreferences.getServiceDetails().get(flag);
         eventInfo = serviceDetails.getEventInfo();
         if (!StringUtils.isGivenDateGreaterThanOrEqualToCurrentDate(serviceDetails.getEventStartTime())) {
-            if (StringUtils.isGivenDateGreaterThanOrEqualToCurrentDate(serviceDetails.getEnventEndTime())) {
+            Log.d("Service","End time"+serviceDetails.getServieEndTime());
+            if (StringUtils.isGivenDateGreaterThanOrEqualToCurrentDate(serviceDetails.getServieEndTime())) {
                 new AsyncTask<String, Void, String>() {
 
                     ServerResponse distanceFromEvent;
@@ -57,7 +58,7 @@ public class NotificationService extends BroadcastReceiver {
                         if ((distanceFromEvent != null && distanceFromEvent.getDistance() != null) || (eventInfo.getLatitude() == 0.0 && eventInfo.getLongitude() == 0.0)) {
                             String distance = distanceFromEvent.getDistance();
                             double distanceInfo = Double.parseDouble(distance);
-                            if ((distanceInfo < 2) || (eventInfo.getLatitude() == 0.0 && eventInfo.getLongitude() == 0.0)) {
+                            if ((distanceInfo < 1) || (eventInfo.getLatitude() == 0.0 && eventInfo.getLongitude() == 0.0)) {
 //                            if (eventInfo.isManualCheckIn()) {
 //                                Intent newIntent = new Intent(context, CheckInActivity.class);
 //                                newIntent.putExtra("flag",flag);

@@ -2,29 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="100dp"
     android:layout_height="100dp"
+    android:backgroundTint="@color/black_shade"
     android:orientation="vertical"
-    android:padding="5dp"
-    android:backgroundTint="@color/black_shade">
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/eventItem_image"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_gravity="center"
         android:src="@drawable/google"
-        android:tint="@color/black_shade"
-        android:layout_gravity="center">
+        android:tint="@color/black_shade">
 
     </ImageView>
 
-    <TextView
+    <com.cerone.invitation.helpers.CeroneTextView
         android:id="@+id/eventItem_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Event Item"
         android:gravity="center"
+        android:tag="fonts/Montserrat-Light.otf"
+        android:text="Event Item"
         android:textColor="@color/black_shade"
         android:textSize="@dimen/small_text_size">
 
-    </TextView>
+    </com.cerone.invitation.helpers.CeroneTextView>
 
 </LinearLayout>

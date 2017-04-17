@@ -14,9 +14,11 @@ import com.cerone.invitation.activities.PersonalizeActivity;
 import com.cerone.invitation.adapter.ChooseCityAdapter;
 import com.cerone.invitation.helpers.HomeScreenCommunicator;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
+import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.MobileHelper;
 import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.City;
+import com.example.dataobjects.EventFilter;
 import com.example.syncher.PublicHomeSyncher;
 
 import java.util.ArrayList;
@@ -76,6 +78,9 @@ public class PublicHomeFragment extends BaseFragment implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        EventFilter eventFilters = InvtAppPreferences.getEventFilters();
+        eventFilters.getSelectedCitysList().add(cityList.get(position));
+        InvtAppPreferences.setEventFilters(eventFilters);
         startActivity(new Intent(getActivity(), PersonalizeActivity.class));
     }
 }

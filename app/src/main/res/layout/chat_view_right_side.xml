@@ -39,7 +39,7 @@
                 android:paddingTop="5dp"
                 android:text="10:20"
                 android:textColor="@color/blue_shade"
-                android:textSize="@dimen/too_small_text_size" />
+                android:textSize="@dimen/text_size_too_small" />
 
             <TextView
                 android:id="@+id/me"

@@ -66,6 +66,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     LinearLayout eventFilter, invitationsFilter;
     LinearLayout filteringLayout;
     NavigationView navigationView;
+    boolean showPublicScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         setContentView(R.layout.navigation_menu_activity);
         InvtAppPreferences.setScreenRefreshStatus(false);
         InvtAppPreferences.setProfileUpdatedStatus(false);
+        showPublicScreen = getIntent().getBooleanExtra("showPublicScreen", false);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add);
         floatingActionButton.setVisibility(View.VISIBLE);
         screenTitle = (TextView) findViewById(R.id.toolbar_title);
@@ -200,6 +202,9 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             tabViews.add(tabLayout);
             mPagerSlidingTabStrip.getTabAt(i).setTag(i);
             mPagerSlidingTabStrip.getTabAt(i).setCustomView(tabLayout);
+        }
+        if(showPublicScreen){
+            viewPager.setCurrentItem(1);
         }
     }
 
@@ -343,7 +348,9 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             filteringLayout.setVisibility(View.VISIBLE);
             updateNavigationMenuOptions(false);
         } else {
-            screenTitle.setText("Select City");
+            if(!InvtAppPreferences.getEventFilters().isValid()) {
+                screenTitle.setText("Select City");
+            }
             floatingActionButton.setVisibility(View.GONE);
             filteringLayout.setVisibility(View.INVISIBLE);
             updateNavigationMenuOptions(true);

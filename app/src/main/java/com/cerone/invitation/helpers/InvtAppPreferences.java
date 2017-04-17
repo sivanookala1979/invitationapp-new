@@ -333,6 +333,10 @@ public class InvtAppPreferences {
     public static EventFilter getEventFilters() {
         java.lang.reflect.Type type = new TypeToken<EventFilter>() {
         }.getType();
-        return new Gson().fromJson(pref.getString(EVENT_FILTERS, ""), type);
+        EventFilter filter = new Gson().fromJson(pref.getString(EVENT_FILTERS, ""), type);
+        if(filter==null){
+            filter = new EventFilter();
+        }
+        return filter;
     }
 }

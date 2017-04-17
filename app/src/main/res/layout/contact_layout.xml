@@ -25,8 +25,7 @@
                 android:layout_height="50dp"
                 app:letter_color="@color/white"
                 app:letters_number="3"
-                app:shape_type="circle"
-                android:background="@drawable/circle_image"/>
+                app:shape_type="circle"/>
         </LinearLayout>
 
         <LinearLayout

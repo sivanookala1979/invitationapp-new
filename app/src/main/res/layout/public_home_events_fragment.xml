@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/happening_grey_color"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/trendingLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="1dp"
+            android:layout_weight="2.5"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/trendingIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/trending" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/recommendedLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="1dp"
+            android:layout_weight="2.5"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/recommendedIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/recomended" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/freeLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="1dp"
+            android:layout_weight="2.5"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/freeIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/free" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/weekendLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="1dp"
+            android:layout_weight="2.5"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/weekendIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/weekend" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/offersLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="1dp"
+            android:layout_weight="2.5"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/offersIcon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/offers" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/friendsAttendingLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="1dp"
+            android:layout_weight="2.5"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/friendsAttendingIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/friends_attending" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/favoritesLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/favoritesIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/filter_favourite" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/events_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/happening_grey_color"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="5dp"
+        android:padding="10dp"
+        android:scrollbars="none"></ListView>
+
+</LinearLayout>

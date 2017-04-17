@@ -33,6 +33,7 @@ import com.example.dataobjects.Event;
 import com.example.dataobjects.Eventstatistics;
 import com.example.dataobjects.Invitees;
 import com.example.dataobjects.ServerResponse;
+import com.example.syncher.BaseSyncher;
 import com.example.syncher.EventSyncher;
 import com.example.syncher.InvitationSyncher;
 import com.example.utills.StringUtils;
@@ -121,7 +122,11 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
             Picasso.with(getActivity()).load(eventDetails.getImageUrl()).placeholder(R.drawable.event_picture).into(eventImage);
         }
         if(eventDetails!=null&&eventDetails.getOwnerInfo()!=null&&eventDetails.getOwnerInfo().getImage()!=null) {
-            Picasso.with(getActivity()).load(eventDetails.getOwnerInfo().getImage()).placeholder(R.drawable.logo).transform(new CircleTransform()).into(eventOwnerImage);
+            if(!eventDetails.getOwnerInfo().getImage().isEmpty()) {
+                Picasso.with(getActivity()).load(eventDetails.getOwnerInfo().getImage()).placeholder(R.drawable.logo).transform(new CircleTransform()).into(eventOwnerImage);
+            }else{
+                Picasso.with(getActivity()).load(BaseSyncher.getBASE_URL()).placeholder(R.drawable.circle_image).transform(new CircleTransform()).into(eventOwnerImage);
+            }
             ownerName.setText(eventDetails.getOwnerInfo().getInviteeName());
         }
         try {

@@ -127,13 +127,13 @@ public class MobileHelper {
         cursor.close();
         Options option = new Options();
         option.inJustDecodeBounds = true;
-        int sample = 16;
+        int sample = 32;
         BitmapFactory.decodeFile(picturePath, option);
-        if (option.outHeight > 150 || option.outWidth > 150) {
+        if (option.outHeight > 960 || option.outWidth > 200) {
             if (option.outHeight > option.outWidth) {
-                sample = option.outHeight / 150;
+                sample = option.outHeight / 200;
             } else {
-                sample = option.outWidth / 150;
+                sample = option.outWidth / 200;
             }
         }
         option.inSampleSize = sample;
@@ -145,7 +145,7 @@ public class MobileHelper {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();
-        String temp = Base64.encodeToString(b, Base64.DEFAULT);
+        String temp = Base64.encodeToString(b, Base64.NO_WRAP | Base64.NO_CLOSE | Base64.NO_PADDING);
         System.out.println(" JPEG Bitmap size : " + temp.length() + " JPEG Byte array length :" + b.length);
         return temp;
     }

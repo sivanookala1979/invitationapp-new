@@ -9,9 +9,27 @@ import java.util.List;
 
 public class EventFilter {
     List<City> cityList= new ArrayList<City>();
+    List<City> selectedCitysList= new ArrayList<City>();
     List<FavoriteTopic> favoriteTopicList= new ArrayList<FavoriteTopic>();
     boolean favorites;
     boolean free;
+    boolean isValid;
+
+    public List<City> getSelectedCitysList() {
+        return selectedCitysList;
+    }
+
+    public void setSelectedCitysList(List<City> selectedCitysList) {
+        this.selectedCitysList = selectedCitysList;
+    }
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
+    }
 
     public List<City> getCityList() {
         return cityList;

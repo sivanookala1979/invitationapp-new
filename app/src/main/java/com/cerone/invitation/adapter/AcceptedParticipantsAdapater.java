@@ -16,6 +16,7 @@ import com.cerone.invitation.activities.ParticipantsActivity;
 import com.cerone.invitation.helpers.CircleTransform;
 import com.example.dataobjects.Invitee;
 import com.example.dataobjects.Invitees;
+import com.example.syncher.BaseSyncher;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -93,7 +94,11 @@ public class AcceptedParticipantsAdapater extends RecyclerView.Adapter<AcceptedP
                             context.startActivity(intent);
                         }
                     });
-                    Picasso.with(context).load(inviteesList.get(i).getImage()).placeholder(R.drawable.logo).transform(new CircleTransform()).into(image);
+                    if(inviteesList.get(i).getImage()!=null && !inviteesList.get(i).getImage().isEmpty()) {
+                        Picasso.with(context).load(inviteesList.get(i).getImage()).placeholder(R.drawable.logo).transform(new CircleTransform()).into(image);
+                    }else{
+                        Picasso.with(context).load(BaseSyncher.getBASE_URL()).placeholder(R.drawable.logo).transform(new CircleTransform()).into(image);
+                    }
                     boolean showRemaining = (i == (maxCount - 1));
                     Log.d("showRemaining", showRemaining+"");
 
