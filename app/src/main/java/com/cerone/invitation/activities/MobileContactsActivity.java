@@ -148,11 +148,11 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
                 loadAllMobileContacts();
                 break;
             case R.id.location_address:
-                if(eventDetails.getAddress()!=null&&!eventDetails.getAddress().isEmpty()) {
+                if(eventDetails!=null&&eventDetails.getLatitude()>0) {
                     Intent intent = new Intent(getApplicationContext(), LocationDetailsActivity.class);
                     startActivity(intent);
                 }else{
-                    Toast.makeText(getApplicationContext(), "Location details not provided", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Lat, Long not provided", Toast.LENGTH_LONG).show();
                 }
                 break;
         }

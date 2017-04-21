@@ -8,8 +8,7 @@
         android:id="@+id/tabIcon"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/chat"
-        />
+        android:src="@drawable/chat" />
     <com.cerone.invitation.helpers.CeroneTextView
         android:id="@+id/tabTitle"
         android:layout_width="wrap_content"
@@ -19,6 +18,6 @@
         android:textSize="15dp"
         android:textColor="@color/black"
         android:tag="fonts/Montserrat-Light.otf"
-        android:gravity="center"/>
+        android:gravity="center" />
 
 </LinearLayout>

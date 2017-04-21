@@ -1,23 +1,18 @@
 package com.cerone.invitation.adapter;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
-import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.FontTypes;
-import com.cerone.invitation.helpers.InvtAppPreferences;
-import com.example.dataobjects.Event;
-import com.example.dataobjects.Invitee;
+import com.example.dataobjects.PublicEvent;
 import com.example.utills.StringUtils;
 import com.ramotion.foldingcell.FoldingCell;
 import com.squareup.picasso.Picasso;
@@ -27,18 +22,19 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import static com.example.utills.StringUtils.getFormatedDateFromServerFormatedDate;
 
-public class PublicFoldingCellListAdapter extends ArrayAdapter<Event> {
+public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
     private RecyclerView.LayoutManager mLayoutManager;
 
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
     private View.OnClickListener defaultRequestBtnClickListener;
-    List<Event> events = new ArrayList<Event>();
+    List<PublicEvent> events = new ArrayList<PublicEvent>();
     Context context;
     FontTypes fontType;
 
 
-    public PublicFoldingCellListAdapter(Context context, List<Event> allEventsList) {
+    public PublicFoldingCellListAdapter(Context context, List<PublicEvent> allEventsList) {
         super(context, 0, allEventsList);
         this.context = context;
         this.events = allEventsList;
@@ -47,19 +43,57 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<Event> {
 
     @Override
     public int getCount() {
-        return 5;//events.size();
+        return events.size();
     }
+
+    @Override
+    public PublicEvent getItem(int position) {
+        return events.get(position);
+    }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // get item for selected view
         // if cell is exists - reuse it, if not - create the new one from resource
+
+        PublicEvent publicEvent = getItem(position);
+
         FoldingCell cell = (FoldingCell) convertView;
         ViewHolder viewHolder;
         if (cell == null) {
             viewHolder = new ViewHolder();
             LayoutInflater vi = LayoutInflater.from(getContext());
             cell = (FoldingCell) vi.inflate(R.layout.public_event_folding_cell, parent, false);
+            // binding view parts to view holder
+            viewHolder.eventIconHeader = (ImageView) cell.findViewById(R.id.eventIconHeader);
+            viewHolder.headerEventName = (TextView) cell.findViewById(R.id.headerEventName);
+            viewHolder.eventAddressHeader = (TextView) cell.findViewById(R.id.eventAddressHeader);
+            viewHolder.eventTimingsHeading = (TextView) cell.findViewById(R.id.eventTimingsHeading);
+            viewHolder.entryFeeHeader = (TextView) cell.findViewById(R.id.entryFeeHeader);
+
+            cell.setTag(viewHolder);
+
+        } else {
+            if (unfoldedIndexes.contains(position)) {
+                cell.unfold(true);
+            } else {
+                cell.fold(true);
+            }
+            viewHolder = (PublicFoldingCellListAdapter.ViewHolder) cell.getTag();
+        }
+        if(publicEvent.getImage()!= null && !publicEvent.getImage().trim().isEmpty()) {
+            Picasso.with(context).load(publicEvent.getImage()).placeholder(R.drawable.logo).into(viewHolder.eventIconHeader);
+        }else {
+            Picasso.with(context).load("java").placeholder(R.drawable.logo).into(viewHolder.eventIconHeader);
+        }
+            viewHolder.headerEventName.setText(publicEvent.getEventName());
+            viewHolder.eventAddressHeader.setText(publicEvent.getAddress());
+        viewHolder.entryFeeHeader.setText(publicEvent.getEntryFee());
+        try {
+            viewHolder.eventTimingsHeading.setText(StringUtils.getEventDateFormat(getFormatedDateFromServerFormatedDate(publicEvent.getStartRime())) +" "+ StringUtils.getEventTimeFormat(getFormatedDateFromServerFormatedDate(publicEvent.getStartRime()), getFormatedDateFromServerFormatedDate(publicEvent.getEndTime())));
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         return cell;
     }
@@ -89,7 +123,7 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<Event> {
         this.defaultRequestBtnClickListener = defaultRequestBtnClickListener;
     }
 
-    public void updateList(List<Event> allEventsList) {
+    public void updateList(List<PublicEvent> allEventsList) {
         this.events = allEventsList;
         unfoldedIndexes = new HashSet<>();
         notifyDataSetChanged();
@@ -107,6 +141,8 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<Event> {
 
     // View lookup cache
     private static class ViewHolder {
+        ImageView eventIconHeader;
+        TextView headerEventName, eventAddressHeader, eventTimingsHeading, entryFeeHeader;
 
 
     }

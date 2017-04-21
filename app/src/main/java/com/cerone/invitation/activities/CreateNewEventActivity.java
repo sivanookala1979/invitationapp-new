@@ -320,8 +320,9 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         event.setStartDateTime(startDateInfo);
         event.setEndDateTime(endDateInfo);
         event.setImageData(eventPictureInfo);
-        event.setRecurringType(recurringInfo.getSelectedItem().toString());
+        event.setAddress(eventLocation.getText().toString());
         event.setExtraAddress(extraAddress.getText().toString());
+        event.setRecurringType(recurringInfo.getSelectedItem().toString());
     }
 
     private boolean isEventDataValid() {

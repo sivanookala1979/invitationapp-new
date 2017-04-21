@@ -11,9 +11,18 @@ public class EventFilter {
     List<City> cityList= new ArrayList<City>();
     List<City> selectedCitysList= new ArrayList<City>();
     List<FavoriteTopic> favoriteTopicList= new ArrayList<FavoriteTopic>();
+    City selectedCity;
     boolean favorites;
     boolean free;
     boolean isValid;
+
+    public City getSelectedCity() {
+        return selectedCity;
+    }
+
+    public void setSelectedCity(City selectedCity) {
+        this.selectedCity = selectedCity;
+    }
 
     public List<City> getSelectedCitysList() {
         return selectedCitysList;

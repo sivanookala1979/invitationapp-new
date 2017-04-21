@@ -8,7 +8,6 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-
     <include
         layout="@layout/multli_tabs_template"
         android:layout_width="match_parent"
@@ -26,6 +25,5 @@
         app:itemTextColor="@color/black"
         app:itemIconTint="@color/deeporange"
         app:menu="@menu/activity_navigation_drawer_drawer"
-        android:actionBarItemBackground="@color/white"
-        />
+        android:actionBarItemBackground="@color/white" />
 </android.support.v4.widget.DrawerLayout>

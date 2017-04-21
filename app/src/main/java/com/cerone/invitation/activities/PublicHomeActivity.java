@@ -1,17 +1,13 @@
-package com.cerone.invitation.fragement;
+package com.cerone.invitation.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.cerone.invitation.R;
-import com.cerone.invitation.activities.PersonalizeActivity;
 import com.cerone.invitation.adapter.ChooseCityAdapter;
-import com.cerone.invitation.helpers.HomeScreenCommunicator;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.MobileHelper;
@@ -23,36 +19,26 @@ import com.example.syncher.PublicHomeSyncher;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by adarsh on 3/19/17.
- */
+public class PublicHomeActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
-public class PublicHomeFragment extends BaseFragment implements AdapterView.OnItemClickListener {
     List<City> cityList;
     ListView listViewCities;
     ChooseCityAdapter cityAdapter;
-    private HomeScreenCommunicator activityCommunicator;
-
-
-    public static PublicHomeFragment newInstance() {
-        PublicHomeFragment fragment = new PublicHomeFragment();
-        Bundle args = new Bundle();
-        return fragment;
-    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_public_home, container, false);
-        listViewCities = (ListView) view.findViewById(R.id.listView_cities);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home_public);
+        addToolbarView();
+        listViewCities = (ListView) findViewById(R.id.listView_cities);
         listViewCities.setOnItemClickListener(this);
-        activityCommunicator = (HomeScreenCommunicator) getActivity();
         getCities();
-        return view;
+
     }
 
     private void getCities() {
-        if (MobileHelper.hasNetwork(getActivity(), getActivity(), " to get cities", null)) {
-            new InvtAppAsyncTask(getActivity()) {
+        if (MobileHelper.hasNetwork(getApplicationContext(), PublicHomeActivity.this, " to get cities", null)) {
+            new InvtAppAsyncTask(this) {
 
                 @Override
                 public void process() {
@@ -64,10 +50,10 @@ public class PublicHomeFragment extends BaseFragment implements AdapterView.OnIt
                 @Override
                 public void afterPostExecute() {
                     if (cityList.size() > 0) {
-                        cityAdapter = new ChooseCityAdapter(getActivity(), R.layout.public_city_item, cityList);
+                        cityAdapter = new ChooseCityAdapter(getApplicationContext(), R.layout.public_city_item, cityList);
                         listViewCities.setAdapter(cityAdapter);
                     } else {
-                        ToastHelper.blueToast(getActivity(), "No events found.");
+                        ToastHelper.blueToast(getApplicationContext(), "No events found.");
                     }
                 }
             }.execute();
@@ -80,6 +66,6 @@ public class PublicHomeFragment extends BaseFragment implements AdapterView.OnIt
         EventFilter eventFilters = InvtAppPreferences.getEventFilters();
         eventFilters.setSelectedCity(cityList.get(position));
         InvtAppPreferences.setEventFilters(eventFilters);
-        startActivity(new Intent(getActivity(), PersonalizeActivity.class));
+        startActivity(new Intent(getApplicationContext(), PersonalizeActivity.class));
     }
 }

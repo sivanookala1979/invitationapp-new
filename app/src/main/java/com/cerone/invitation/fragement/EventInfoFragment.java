@@ -205,11 +205,11 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                 alertDialog.show();
                 break;
             case R.id.location_address :
-                if(eventDetails.getAddress()!=null&&!eventDetails.getAddress().isEmpty()) {
+                if(eventDetails!=null&&eventDetails.getLatitude()>0) {
                     intent = new Intent(getActivity(), LocationDetailsActivity.class);
                     startActivity(intent);
                 }else{
-                    Toast.makeText(getActivity(), "Location details not provided", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Lat, Long not provided", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.acceptInvitation :

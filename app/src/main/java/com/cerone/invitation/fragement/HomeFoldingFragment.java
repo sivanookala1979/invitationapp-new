@@ -140,11 +140,11 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                         startActivity(intent);
                         break;
                     case R.id.nav_address:
-                        if(event.getAddress()!=null&&!event.getAddress().isEmpty()) {
+                        if(event!=null&&event.getLatitude()>0) {
                             intent = new Intent(getActivity(), LocationDetailsActivity.class);
                             startActivity(intent);
                         }else{
-                            Toast.makeText(getActivity(), "Location details not provided", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Lat, Long not provided", Toast.LENGTH_LONG).show();
                         }
                         break;
                     default:

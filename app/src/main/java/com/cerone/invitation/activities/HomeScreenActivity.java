@@ -36,17 +36,11 @@ import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.HomeScreenCommunicator;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
-import com.cerone.invitation.service.MyService;
-import com.cerone.invitation.service.NotificationService;
 import com.example.dataobjects.ScreenTab;
-import com.example.dataobjects.ServiceInformation;
 import com.example.dataobjects.User;
 import com.example.syncher.UserSyncher;
 import com.google.android.gms.iid.InstanceID;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class HomeScreenActivity extends BaseActivity implements OnClickListener, NavigationView.OnNavigationItemSelectedListener, HomeScreenCommunicator
@@ -204,6 +198,9 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             mPagerSlidingTabStrip.getTabAt(i).setCustomView(tabLayout);
         }
         if(showPublicScreen){
+            filteringLayout.setVisibility(View.GONE);
+            floatingActionButton.setVisibility(View.GONE);
+            updateNavigationMenuOptions(true);
             viewPager.setCurrentItem(1);
         }
     }
@@ -229,7 +226,6 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
     }
 
     public void updateProfileImageAndName() {
@@ -301,6 +297,9 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                 break;
             case R.id.nav_myEvents:
                 intent = new Intent(this, MyEventsActivity.class);
+                break;
+            case R.id.nav_changeCity:
+                intent = new Intent(this, PublicHomeActivity.class);
                 break;
             case R.id.nav_myInvitations:
                 intent = new Intent(this, InvitationActivity.class);
