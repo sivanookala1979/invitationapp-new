@@ -130,9 +130,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/search"
@@ -181,20 +183,36 @@
 
     </LinearLayout>
 
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
 
+      <ListView
+          android:id="@+id/events_list"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/happening_grey_color"
+          android:clipChildren="false"
+          android:clipToPadding="false"
+          android:divider="@android:color/transparent"
+          android:dividerHeight="5dp"
+          android:padding="10dp"
+          android:scrollbars="none"/>
 
-    <ListView
-        android:id="@+id/events_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/happening_grey_color"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="5dp"
-        android:padding="10dp"
-        android:scrollbars="none">
+      <com.cerone.invitation.helpers.CeroneTextView
+          android:id="@+id/empty_list_view"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="150dp"
+          android:gravity="center"
+          android:ellipsize="end"
+          android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+          android:tag="fonts/Montserrat-Light.otf"
+          android:text="no appropriate events"
+          android:textSize="@dimen/text_medium" />
 
-    </ListView>
+  </LinearLayout>
+
 
 </LinearLayout>

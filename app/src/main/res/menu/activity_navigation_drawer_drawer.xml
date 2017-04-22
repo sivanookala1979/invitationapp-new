@@ -30,6 +30,15 @@
     </group>
 
     <group
+        android:id="@+id/eventsHistory"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_eventsHistory"
+            android:icon="@drawable/event_date"
+            android:title="Events History" />
+    </group>
+
+    <group
         android:id="@+id/changeCity"
         android:checkableBehavior="single">
         <item

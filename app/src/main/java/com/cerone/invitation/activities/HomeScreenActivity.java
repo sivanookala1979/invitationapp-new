@@ -32,6 +32,7 @@ import com.cerone.invitation.adapter.HomeEventAdapter;
 import com.cerone.invitation.adapter.PagerAdapter;
 import com.cerone.invitation.fcm.RegistrationIntentService;
 import com.cerone.invitation.fragement.HomeFoldingFragment;
+import com.cerone.invitation.fragement.PublicHomeEventsFragment;
 import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.HomeScreenCommunicator;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
@@ -52,7 +53,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     int ownerId = 0;
     User profile;
     TextView userName;
-    ImageView userImage, eventFilterIcon, invitationFilterIcon;
+    ImageView userImage, eventFilterIcon, invitationFilterIcon, searchImage;
     ViewPager viewPager;
     TabLayout mPagerSlidingTabStrip;
     PagerAdapter mPagerAdapter;
@@ -61,6 +62,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
     LinearLayout filteringLayout;
     NavigationView navigationView;
     boolean showPublicScreen;
+    boolean searchSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         floatingActionButton.setVisibility(View.VISIBLE);
         screenTitle = (TextView) findViewById(R.id.toolbar_title);
         eventFilterIcon = (ImageView) findViewById(R.id.eventFilterIcon);
+        searchImage = (ImageView) findViewById(R.id.image_search);
         invitationFilterIcon = (ImageView) findViewById(R.id.invitationFilterIcon);
         eventFilter = (LinearLayout) findViewById(R.id.radio_events);
         invitationsFilter = (LinearLayout) findViewById(R.id.radio_invitations);
@@ -128,6 +131,19 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                     }
                 }
                 applyFilters();
+            }
+        });
+
+        searchImage.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!searchSelected){
+                    searchSelected = true;
+                    showSearch(searchSelected);
+                }else{
+                    searchSelected = false;
+                    showSearch(searchSelected);
+                }
             }
         });
         mPagerSlidingTabStrip.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -200,6 +216,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         if(showPublicScreen){
             filteringLayout.setVisibility(View.GONE);
             floatingActionButton.setVisibility(View.GONE);
+            searchImage.setVisibility(View.VISIBLE);
             updateNavigationMenuOptions(true);
             viewPager.setCurrentItem(1);
         }
@@ -212,6 +229,13 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         Fragment page = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + viewPager.getCurrentItem());
         if (viewPager.getCurrentItem() == 0 && page != null) {
             ((HomeFoldingFragment) page).updateData(eventFilter.isSelected(), invitationsFilter.isSelected());
+        }
+    }
+
+    private void showSearch(boolean select){
+        Fragment page = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + viewPager.getCurrentItem());
+        if (viewPager.getCurrentItem() == 1 && page != null) {
+            ((PublicHomeEventsFragment) page).updateData(select);
         }
     }
 
@@ -345,13 +369,17 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             screenTitle.setText("Events");
             floatingActionButton.setVisibility(View.VISIBLE);
             filteringLayout.setVisibility(View.VISIBLE);
+            searchImage.setVisibility(View.GONE);
             updateNavigationMenuOptions(false);
         } else {
             if(!InvtAppPreferences.getEventFilters().isValid()) {
                 screenTitle.setText("Select City");
+                searchImage.setVisibility(View.GONE);
+            }else{
+                searchImage.setVisibility(View.VISIBLE);
             }
             floatingActionButton.setVisibility(View.GONE);
-            filteringLayout.setVisibility(View.INVISIBLE);
+            filteringLayout.setVisibility(View.GONE);
             updateNavigationMenuOptions(true);
         }
     }

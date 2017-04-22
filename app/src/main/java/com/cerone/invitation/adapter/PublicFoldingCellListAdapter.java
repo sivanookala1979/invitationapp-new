@@ -26,11 +26,10 @@ import static com.example.utills.StringUtils.getFormatedDateFromServerFormatedDa
 
 public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
     private RecyclerView.LayoutManager mLayoutManager;
-
+    Context context;
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
     private View.OnClickListener defaultRequestBtnClickListener;
     List<PublicEvent> events = new ArrayList<PublicEvent>();
-    Context context;
     FontTypes fontType;
 
 
@@ -71,6 +70,11 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
             viewHolder.eventAddressHeader = (TextView) cell.findViewById(R.id.eventAddressHeader);
             viewHolder.eventTimingsHeading = (TextView) cell.findViewById(R.id.eventTimingsHeading);
             viewHolder.entryFeeHeader = (TextView) cell.findViewById(R.id.entryFeeHeader);
+            viewHolder.headerFavourite = (ImageView) cell.findViewById(R.id.header_favourite);
+            viewHolder.headerCart = (ImageView) cell.findViewById(R.id.header_cart);
+            viewHolder.headerFacebook = (ImageView) cell.findViewById(R.id.header_facebook);
+            viewHolder.headerFriendsAttending = (ImageView) cell.findViewById(R.id.header_friendsAttending);
+            viewHolder.headerClose = (ImageView) cell.findViewById(R.id.header_close);
 
             cell.setTag(viewHolder);
 
@@ -95,6 +99,16 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        if(publicEvent.isFavourite()){
+            viewHolder.headerFavourite.setColorFilter(context.getResources().getColor(R.color.happening_orange));
+        }
+
+        viewHolder.headerFavourite.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.headerCart.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.headerFacebook.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.headerFriendsAttending.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.headerClose.setOnClickListener(createOnClickListener(position, parent));
+
         return cell;
     }
 
@@ -141,7 +155,7 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
 
     // View lookup cache
     private static class ViewHolder {
-        ImageView eventIconHeader;
+        ImageView eventIconHeader, headerFavourite, headerCart, headerFacebook, headerFriendsAttending, headerClose;
         TextView headerEventName, eventAddressHeader, eventTimingsHeading, entryFeeHeader;
 
 

@@ -16,6 +16,15 @@ public class PublicEvent {
     String service;
     String image;
     boolean weekend;
+    boolean favourite;
+
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
+    }
 
     public int getId() {
         return id;

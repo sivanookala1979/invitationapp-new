@@ -22,6 +22,22 @@ public class PublicEventsSyncherTest extends TestCase {
         assertEquals(1, listOfPublicEvents.size());
     }
 
+//        public void testaddFavouritesHAPPYFlow() throws Exception {
+//            // Setup fixture
+//            // Exercise SUT
+//            SaveResult saveResult = sut.addFavourites();
+//            // Verify outcome
+//            assertEquals(1, listOfPublicEvents.size());
+//        }
+//
+//            public void testGetMyFavouritesHAPPYFlow() throws Exception {
+//                // Setup fixture
+//                // Exercise SUT
+//                List<PublicEvent> listOfPublicEvents = sut.getPublicEvents();
+//                // Verify outcome
+//                assertEquals(1, listOfPublicEvents.size());
+//            }
+
 
     //------------------------------------------------------------------------------------------------------------------
     // Setup
