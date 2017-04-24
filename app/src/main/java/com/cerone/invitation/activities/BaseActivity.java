@@ -36,6 +36,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
@@ -64,6 +65,11 @@ import java.util.List;
 
 
 public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
+    public String locationPermission = "";
+    public Event eventDetails;
+    public static final String LOCATION = "LOCATION";
+    public static final String DISTANCE = "DISTANCE";
+    public static final String NOTHING = "NOTHING";
 
     public static final int GOOGLE_MAPS_REQUEST = 1;
     InvtAppAsyncTask invtAppAsyncTask;
@@ -429,5 +435,55 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         squaredBitmap.recycle();
 
         return bitmap;
+    }
+
+    public void showLocationPermissionDialog() {
+        final Dialog dialog = new Dialog(getApplicationContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.logout_dialog);
+        Button accept = (Button) dialog.findViewById(R.id.btn_submit);
+        Button cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+        cancel.setVisibility(View.GONE);
+        RadioGroup radioGroup = (RadioGroup) dialog.findViewById(R.id.invt_RadioGroup);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                switch (checkedId){
+                    case R.id.radio_location:
+                        locationPermission = LOCATION;
+                        Log.d("lacation", locationPermission);
+                        break;
+                    case R.id.radio_distance:
+                        locationPermission = DISTANCE;
+                        Log.d("lacation", locationPermission);
+                        break;
+                    case R.id.radio_nothing:
+                        locationPermission = NOTHING;
+                        Log.d("lacation", locationPermission);
+                        break;
+                }
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                acceptOrRejectInvitation(true, eventDetails, locationPermission);
+                dialog.cancel();
+            }
+
+
+        });
+        dialog.show();
+
+    }
+    public void acceptOrRejectInvitation(boolean b, Event eventDetails, String locationPermission) {
     }
 }

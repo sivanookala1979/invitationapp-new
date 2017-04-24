@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.cerone.invitation.R;
 import com.cerone.invitation.activities.PublicHomeActivity;
 import com.cerone.invitation.adapter.PublicFoldingCellListAdapter;
+import com.cerone.invitation.helpers.FontTypes;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.MobileHelper;
@@ -78,6 +79,8 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
         city = eventFilters.getSelectedCity();
         selectedCity = city.getName();
         selectorTags(selectedCity+" trending");
+
+        FontTypes.setEditTextRegularFont(searchText);
 
         applyOnClickListeners(R.id.trendingLayout, R.id.recommendedLayout, R.id.freeLayout, R.id.weekendLayout, R.id.offersLayout, R.id.friendsAttendingLayout, R.id.favoritesLayout);
         //loadPublicEvents();
@@ -334,10 +337,11 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
         }
     }
 
-    private void searchTags(final String searchTag) {
+    private void searchTags(String searchTag) {
         searchTags.removeAllViews();
         if(!searchText.getText().toString().isEmpty()) {
             searchTags.setVisibility(View.VISIBLE);
+            searchTag = searchTag.replaceAll("\\s{2,}"," ");
             final String[] search = searchTag.trim().split(" ");
             final List<String> stringList = new ArrayList<String>(Arrays.asList(search));
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -45,7 +45,6 @@ import com.squareup.picasso.Picasso;
 
 
 public class HomeScreenActivity extends BaseActivity implements OnClickListener, NavigationView.OnNavigationItemSelectedListener, HomeScreenCommunicator
-
 {
 
     FloatingActionButton floatingActionButton;
@@ -217,8 +216,8 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             filteringLayout.setVisibility(View.GONE);
             floatingActionButton.setVisibility(View.GONE);
             searchImage.setVisibility(View.VISIBLE);
-            updateNavigationMenuOptions(true);
             viewPager.setCurrentItem(1);
+            updateNavigationMenuOptions(true);
         }
     }
 
@@ -322,6 +321,9 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             case R.id.nav_myEvents:
                 intent = new Intent(this, MyEventsActivity.class);
                 break;
+            case R.id.nav_eventsHistory:
+                intent = new Intent(this, EventsHistoryActivity.class);
+                break;
             case R.id.nav_changeCity:
                 intent = new Intent(this, PublicHomeActivity.class);
                 break;
@@ -338,7 +340,7 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
                 intent = new Intent(this, NotificationsActivity.class);
                 break;
             case R.id.nav_settings:
-                intent = new Intent(this, SettingsActivity.class);//EventsDetailActivity
+                intent = new Intent(this, SettingsActivity.class);
                 break;
             case R.id.nav_logout:
                 try {

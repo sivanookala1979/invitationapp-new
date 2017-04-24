@@ -19,6 +19,7 @@
             android:layout_height="70dp"
             android:clipChildren="true"
             android:orientation="horizontal"
+            android:background="@color/white"
             android:weightSum="10">
 
             <LinearLayout

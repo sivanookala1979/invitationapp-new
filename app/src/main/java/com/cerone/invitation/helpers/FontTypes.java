@@ -57,7 +57,7 @@ public class FontTypes {
     }
 
 
-    public void setEditTextRegularFont(EditText... view) {
+    public static void setEditTextRegularFont(EditText... view) {
         for (EditText button : view) {
             button.setTypeface(tfRegular);
         }

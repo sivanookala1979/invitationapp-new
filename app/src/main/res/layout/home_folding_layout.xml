@@ -26,6 +26,19 @@
             android:scrollbars="none"
             tools:context=".activities.FoldingEventsActivity">
         </ListView>
+
+        <com.cerone.invitation.helpers.CeroneTextView
+            android:id="@+id/empty_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:gravity="center"
+            android:ellipsize="end"
+            android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+            android:tag="fonts/Montserrat-Light.otf"
+            android:text="no appropriate events"
+            android:textSize="@dimen/text_medium" />
+
     </LinearLayout>
 
 </RelativeLayout>

@@ -104,6 +104,9 @@
         <activity
             android:name=".activities.MobileContactsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.EventsHistoryActivity"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".service.MyService"
@@ -170,7 +173,7 @@
         <activity android:name=".fragement.EventInfoFragment" />
         <activity android:name=".activities.LocationDetailsActivity" />
         <activity android:name=".activities.SettingsActivity" />
-        <activity android:name=".activities.PublicHomeActivity"></activity>
+        <activity android:name=".activities.PublicHomeActivity" />
     </application>
 
 </manifest>

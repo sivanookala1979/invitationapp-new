@@ -44,6 +44,15 @@ public class Event {
     Invitee ownerInfo;
     boolean admin;
 
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
+    }
+
     public boolean isAdmin() {
         return admin;
     }
@@ -69,15 +78,6 @@ public class Event {
     public void setInviteesList(List<Invitee> inviteesList) {
         this.inviteesList = inviteesList;
     }
-
-    public boolean isExpired() {
-        return expired;
-    }
-
-    public void setExpired(boolean accepted) {
-        this.expired = expired;
-    }
-
 
     public boolean isInvitation() {
         return isInvitation;
