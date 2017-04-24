@@ -194,30 +194,54 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager(), screenTabs);
         viewPager.setAdapter(mPagerAdapter);
         mPagerSlidingTabStrip.setupWithViewPager(viewPager);
-        for (int i = 0; i < mPagerSlidingTabStrip.getTabCount(); i++) {
-            LinearLayout tabLayout = (LinearLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.tab_layout, null);
-            TextView title = (TextView) tabLayout.findViewById(R.id.tabTitle);
-            ImageView image = (ImageView) tabLayout.findViewById(R.id.tabIcon);
-            ScreenTab screenTab = screenTabs.get(i);
-            if (i == 0) {
-                image.setImageResource(screenTab.getImageResource());
-                title.setTextColor(Color.WHITE);
-                title.setText(screenTab.getName());
-            } else {
-                title.setText(screenTab.getName());
-                image.setImageResource(screenTab.getImageResource());
-                image.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
-            }
-            tabViews.add(tabLayout);
-            mPagerSlidingTabStrip.getTabAt(i).setTag(i);
-            mPagerSlidingTabStrip.getTabAt(i).setCustomView(tabLayout);
-        }
         if(showPublicScreen){
             filteringLayout.setVisibility(View.GONE);
             floatingActionButton.setVisibility(View.GONE);
             searchImage.setVisibility(View.VISIBLE);
             viewPager.setCurrentItem(1);
             updateNavigationMenuOptions(true);
+
+            for (int i = 0; i < mPagerSlidingTabStrip.getTabCount(); i++) {
+                LinearLayout tabLayout = (LinearLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.tab_layout, null);
+                TextView title = (TextView) tabLayout.findViewById(R.id.tabTitle);
+                ImageView image = (ImageView) tabLayout.findViewById(R.id.tabIcon);
+                ScreenTab screenTab = screenTabs.get(i);
+                if (i == 1) {
+                    title.setText(screenTab.getName());
+                    image.setImageResource(screenTab.getImageResource());
+                    title.setTextColor(Color.WHITE);
+                    image.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                } else {
+                    title.setText(screenTab.getName());
+                    image.setImageResource(screenTab.getImageResource());
+                    image.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
+                }
+                tabViews.add(tabLayout);
+                mPagerSlidingTabStrip.getTabAt(i).setTag(i);
+                mPagerSlidingTabStrip.getTabAt(i).setCustomView(tabLayout);
+            }
+
+        }else {
+
+            for (int i = 0; i < mPagerSlidingTabStrip.getTabCount(); i++) {
+                LinearLayout tabLayout = (LinearLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.tab_layout, null);
+                TextView title = (TextView) tabLayout.findViewById(R.id.tabTitle);
+                ImageView image = (ImageView) tabLayout.findViewById(R.id.tabIcon);
+                ScreenTab screenTab = screenTabs.get(i);
+                if (i == 0) {
+                    title.setText(screenTab.getName());
+                    image.setImageResource(screenTab.getImageResource());
+                    title.setTextColor(Color.WHITE);
+                    image.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                } else {
+                    title.setText(screenTab.getName());
+                    image.setImageResource(screenTab.getImageResource());
+                    image.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
+                }
+                tabViews.add(tabLayout);
+                mPagerSlidingTabStrip.getTabAt(i).setTag(i);
+                mPagerSlidingTabStrip.getTabAt(i).setCustomView(tabLayout);
+            }
         }
     }
 
