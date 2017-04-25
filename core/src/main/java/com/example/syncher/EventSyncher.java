@@ -97,10 +97,10 @@ public class EventSyncher extends BaseSyncher {
         return listOfEvents;
     }
 
-    public List<Event> getAllEventsNew() {
+    public List<Event> getAllEventsNew(boolean isExpire) {
         List<Event> listOfEvents = new ArrayList<Event>();
         try {
-            JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "events/get_all_events_information.json", "GET", true));
+            JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "events/get_all_events_information.json"+((isExpire)?"?expire="+isExpire:""), "GET", true));
             if (jsonResponse.has("event_information")) {
                 JSONArray jsonArray = jsonResponse.getJSONArray("event_information");
                 listOfEvents = geteventsByJsonArray(jsonArray);

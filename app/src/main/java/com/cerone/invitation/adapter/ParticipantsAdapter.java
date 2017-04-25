@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.cerone.invitation.R;
 import com.example.dataobjects.Invitee;
-import com.example.utills.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +71,8 @@ public class ParticipantsAdapter extends ArrayAdapter<Invitee> {
         block.setOnClickListener(createOnClickListener(position,parent));
         participantName.setText(" " + invitee.getInviteeName());
         participantMobileNumber.setText(" " + invitee.getMobileNumber());
-        participantStatus.setText("Last seen " + invitee.getStatus() + " ago.");
-        distance.setText("" + StringUtils.getTrimmeDistance(invitee.getDistance()) + " away.");
+        //participantStatus.setText("Last seen " + invitee.getStatus() + " ago.");
+        //distance.setText("" + StringUtils.getTrimmeDistance(invitee.getDistance()) + " away.");
         if (invisibleInfo) {
             distance.setVisibility(View.GONE);
             participantStatus.setVisibility(View.GONE);

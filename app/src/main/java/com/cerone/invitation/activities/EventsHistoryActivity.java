@@ -31,7 +31,6 @@ import java.util.List;
 public class EventsHistoryActivity extends BaseActivity {
     ListView eventsList;
     List<Event> allEventsList = new ArrayList<Event>();
-    List<Event> filterList = new ArrayList<Event>();
     EventSyncher eventSyncher = new EventSyncher();
     FoldingCellListAdapter adapter;
     ServerResponse serverResponse;
@@ -45,7 +44,7 @@ public class EventsHistoryActivity extends BaseActivity {
         eventsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                final Event event = filterList.get(pos);
+                final Event event = allEventsList.get(pos);
                 Intent intent;
                 InvtAppPreferences.setEventDetails(event);
                 switch (view.getId()) {
@@ -142,18 +141,13 @@ public class EventsHistoryActivity extends BaseActivity {
 
                 @Override
                 public void process() {
-                    allEventsList = eventSyncher.getAllEventsNew();
+                    allEventsList = eventSyncher.getAllEventsNew(true);
                 }
 
                 @Override
                 public void afterPostExecute() {
                     if(allEventsList!=null){
-                        for (Event event:allEventsList) {
-                            if(event.isExpired()){
-                                filterList.add(event);
-                            }
-                        }
-                        adapter = new FoldingCellListAdapter(getApplicationContext(), filterList);
+                        adapter = new FoldingCellListAdapter(getApplicationContext(), allEventsList);
                         eventsList.setAdapter(adapter);
                     }
                 }
@@ -181,11 +175,6 @@ public class EventsHistoryActivity extends BaseActivity {
             }
         }.execute();
     }
-
-//    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        startActivity(new Intent(getApplicationContext(), PersonalizeActivity.class));
-//    }
 
     private void deleteEvent(final Event event) {
         new InvtAppAsyncTask(this) {
@@ -223,7 +212,7 @@ public class EventsHistoryActivity extends BaseActivity {
             @Override
             public void afterPostExecute() {
                 if (response.isValid()) {
-                    for (Event eventInfo : filterList) {
+                    for (Event eventInfo : allEventsList) {
                         if (eventInfo.getEventId() == event.getEventId()) {
                             eventInfo.setAccepted(true);
                             break;
@@ -241,9 +230,9 @@ public class EventsHistoryActivity extends BaseActivity {
         }.execute();
     }
     public void deleteEventByEventId(int eventId) {
-        for (Event eventInfo : filterList) {
+        for (Event eventInfo : allEventsList) {
             if (eventInfo.getEventId() == eventId) {
-                filterList.remove(eventInfo);
+                allEventsList.remove(eventInfo);
                 Log.d("Delete","Removed event");
                 break;
             }

@@ -230,7 +230,9 @@ public class InvitationSyncher extends BaseSyncher {
                             }
                             invitees.setInviteesList(listOfInvitees);
                         }
-                        listOfAllInvitees.add(invitees);
+                        if(invitees.getTotalInvitees()>0) {
+                            listOfAllInvitees.add(invitees);
+                        }
                     }
                 }
             }

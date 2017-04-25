@@ -101,6 +101,8 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
         }
         if(publicEvent.isFavourite()){
             viewHolder.headerFavourite.setColorFilter(context.getResources().getColor(R.color.happening_orange));
+        }else{
+            viewHolder.headerFavourite.setColorFilter(context.getResources().getColor(R.color.happening_text_grey_color));
         }
 
         viewHolder.headerFavourite.setOnClickListener(createOnClickListener(position, parent));

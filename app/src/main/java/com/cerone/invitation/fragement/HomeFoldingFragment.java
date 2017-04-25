@@ -43,7 +43,6 @@ import java.util.List;
 public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnItemClickListener {
     ListView eventsList;
     List<Event> allEventsList = new ArrayList<Event>();
-    List<Event> futureEvents = new ArrayList<Event>();
     List<Event> filterList = new ArrayList<Event>();
     EventSyncher eventSyncher = new EventSyncher();
     FoldingCellListAdapter adapter;
@@ -62,7 +61,7 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
         View view = inflater.inflate(R.layout.home_folding_layout, container, false);
         eventsList = (ListView) view.findViewById(R.id.events_list);
         eventsList.setEmptyView(view.findViewById( R.id.empty_list_view));
-        adapter = new FoldingCellListAdapter(getActivity(), futureEvents);
+        adapter = new FoldingCellListAdapter(getActivity(), allEventsList);
         eventsList.setAdapter(adapter);
         eventsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -173,15 +172,15 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
     private void applyFilters() {
         filterList.clear();
         if (eventFilter && invitationFilter) {
-            filterList.addAll(futureEvents);
+            filterList.addAll(allEventsList);
         } else if (eventFilter) {
-            for (Event event : futureEvents) {
+            for (Event event : allEventsList) {
                 if (!event.isInvitation()) {
                     filterList.add(event);
                 }
             }
         } else {
-            for (Event event : futureEvents) {
+            for (Event event : allEventsList) {
                 if (event.isInvitation()) {
                     filterList.add(event);
                 }
@@ -197,20 +196,15 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
 
                 @Override
                 public void process() {
-                    allEventsList = eventSyncher.getAllEventsNew();
+                    allEventsList = eventSyncher.getAllEventsNew(false);
                 }
 
                 @Override
                 public void afterPostExecute() {
                     if(allEventsList!=null){
-                        for (Event event:allEventsList) {
-                            if(!event.isExpired()){
-                                futureEvents.add(event);
-                            }
-                        }
+                        adapter.updateList(allEventsList);
+                        applyFilters();
                     }
-                    adapter.updateList(futureEvents);
-                    applyFilters();
                 }
             }.execute();
         }
@@ -278,7 +272,7 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
             @Override
             public void afterPostExecute() {
                 if (response.isValid()) {
-                    for (Event eventInfo : futureEvents) {
+                    for (Event eventInfo : allEventsList) {
                         if (eventInfo.getEventId() == event.getEventId()) {
                             eventInfo.setAccepted(true);
                             break;
@@ -298,9 +292,9 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
         }.execute();
     }
     public void deleteEventByEventId(int eventId) {
-        for (Event eventInfo : futureEvents) {
+        for (Event eventInfo : allEventsList) {
             if (eventInfo.getEventId() == eventId) {
-                futureEvents.remove(eventInfo);
+                allEventsList.remove(eventInfo);
                 Log.d("Delete","Removed event");
                 break;
             }

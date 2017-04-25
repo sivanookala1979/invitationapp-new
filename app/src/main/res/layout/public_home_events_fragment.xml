@@ -134,6 +134,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@drawable/bottom_margin"
         android:visibility="gone">
 
         <EditText
@@ -141,7 +142,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="9"
-            android:background="@drawable/bottom_margin"
             android:hint="Search by Name, Location, Key Words."
             android:minHeight="45dp"
             android:paddingLeft="10dp"
@@ -149,7 +149,8 @@
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"
-            android:textStyle="normal|italic" />
+            android:textStyle="normal|italic"
+            android:background="@null"/>
 
         <ImageView
             android:id="@+id/icon_search"
@@ -157,8 +158,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="5dp"
-            android:src="@drawable/places_ic_search"
-            android:background="@drawable/bottom_margin" />
+            android:src="@drawable/places_ic_search" />
 
     </LinearLayout>
 

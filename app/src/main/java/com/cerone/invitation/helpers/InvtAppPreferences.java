@@ -14,6 +14,7 @@ import com.example.dataobjects.Event;
 import com.example.dataobjects.EventFilter;
 import com.example.dataobjects.Group;
 import com.example.dataobjects.Invitation;
+import com.example.dataobjects.Invitee;
 import com.example.dataobjects.MyMarker;
 import com.example.dataobjects.ServiceInformation;
 import com.example.dataobjects.User;
@@ -45,6 +46,7 @@ public class InvtAppPreferences {
     private static final String ALL_CONTACTS = "allContacts";
     private static final String INVITATION = "invitation";
     private static final String SELECTED_GROUPS = "groups";
+    private static final String SELECTED_INVITEES = "invitees";
     private static final String REFRESH_SERVICE = "refreshService";
     private static final String CURRENCY_COUNTRY_CODE_DETAILS = "currencyCountryCodeDetails";
     private static final String PROFILE_DETAILS = "profileDetails";
@@ -223,6 +225,21 @@ public class InvtAppPreferences {
     public static void setGroups(List<Group> groups) {
         String contactDetails = new Gson().toJson(groups);
         pref.edit().putString(SELECTED_GROUPS, contactDetails).commit();
+    }
+
+    public static List<Invitee> getInvitees() {
+        java.lang.reflect.Type type = new TypeToken<List<Invitee>>() {
+        }.getType();
+        List<Invitee> inviteesList = new Gson().fromJson(pref.getString(SELECTED_INVITEES, ""), type);
+        if (inviteesList == null) {
+            inviteesList = new ArrayList<Invitee>();
+        }
+        return inviteesList;
+    }
+
+    public static void setInvitees(List<Invitee> invitees) {
+        String inviteeDetails = new Gson().toJson(invitees);
+        pref.edit().putString(SELECTED_INVITEES, inviteeDetails).commit();
     }
 
     public static Invitation getInvitation() {

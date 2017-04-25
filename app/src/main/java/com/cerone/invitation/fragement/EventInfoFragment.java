@@ -41,6 +41,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -53,7 +54,7 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
     RecyclerView participantsLayout;
     View eventBaseView;
     ImageView editOrShareIdon, locationAddress, chatIcon;
-    List<Invitees> allInvitees;
+    List<Invitees> allInvitees = new ArrayList<>();
     AcceptedParticipantsAdapater acceptedParticipantsAdapater;
 
     //INVITATIONS

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.cerone.invitation.R;
 import com.cerone.invitation.activities.ParticipantsActivity;
 import com.cerone.invitation.helpers.CircleTransform;
+import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.example.dataobjects.Invitee;
 import com.example.dataobjects.Invitees;
 import com.example.syncher.BaseSyncher;
@@ -56,6 +57,7 @@ public class AcceptedParticipantsAdapater extends RecyclerView.Adapter<AcceptedP
     @Override
     public void onBindViewHolder(MyImageViewHolder holder, int position) {
         if(allInvitees!=null&&allInvitees.size()>0) {
+            Log.d("allInvitees", allInvitees.size()+" "+position);
             holder.timeToReachEvent.setText( allInvitees.get(position).getTitle());
             addParticipants(holder, allInvitees.get(position).getInviteesList().size(), position);
         }
@@ -80,7 +82,7 @@ public class AcceptedParticipantsAdapater extends RecyclerView.Adapter<AcceptedP
         int remainingCount = (maxCount>count)?0:(count-(maxCount-1));
         Log.d("participantsInfoView","maxCount  "+maxCount+" count "+count+" remainingCount "+remainingCount+" layoutWidth "+layoutWidth);
         if(allInvitees!= null) {
-            List<Invitee> inviteesList = allInvitees.get(position).getInviteesList();
+            final List<Invitee> inviteesList = allInvitees.get(position).getInviteesList();
             if (inviteesList!=null) {
                 for (int i = 0; i < count; i++) {
                     View view = LayoutInflater.from(context).inflate(R.layout.profile_image_layout, null, false);
@@ -88,6 +90,7 @@ public class AcceptedParticipantsAdapater extends RecyclerView.Adapter<AcceptedP
                     image.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            InvtAppPreferences.setInvitees(inviteesList);
                             Intent intent =  new Intent(context, ParticipantsActivity.class);
                             intent.putExtra("eventId", eventId);
                             intent.putExtra("title", "Invitees");
@@ -135,7 +138,7 @@ public class AcceptedParticipantsAdapater extends RecyclerView.Adapter<AcceptedP
 
     @Override
     public int getItemCount() {
-        return 4;
+        return allInvitees.size();
     }
 
 
