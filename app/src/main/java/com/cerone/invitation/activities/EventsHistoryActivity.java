@@ -11,7 +11,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.cerone.invitation.R;
-import com.cerone.invitation.activities.chat.IntraChatActivity;
 import com.cerone.invitation.adapter.FoldingCellListAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
@@ -49,31 +48,32 @@ public class EventsHistoryActivity extends BaseActivity {
                 InvtAppPreferences.setEventDetails(event);
                 switch (view.getId()) {
                     case R.id.actionOne:
-                        if (!event.isInvitation() || (event.isAccepted() && event.isAdmin())) {
-                            intent = new Intent(getApplicationContext(), ShareEventActivity.class);
-                            intent.putExtra("newEvent", false);
-                            startActivity(intent);
-                        } else {
-                            eventDetails = event;
-                            if (event.isAccepted()) {
-                                intent = new Intent(getApplicationContext(), ShowInviteePositions.class);
-                                startActivity(intent);
-                            } else {
-                                showLocationPermissionDialog();
-                            }
-                        }
+//                        if (!event.isInvitation() || (event.isAccepted() && event.isAdmin())) {
+//                            intent = new Intent(getApplicationContext(), ShareEventActivity.class);
+//                            intent.putExtra("newEvent", false);
+//                            startActivity(intent);
+//                        } else {
+//                            eventDetails = event;
+//                            if (event.isAccepted()) {
+//                                intent = new Intent(getApplicationContext(), ShowInviteePositions.class);
+//                                startActivity(intent);
+//                            } else {
+//                                showLocationPermissionDialog();
+//                            }
+//                        }
                         break;
                     case R.id.actionTwo:
                         if (!event.isInvitation() || (event.isAccepted() && event.isAdmin())) {
                             intent = new Intent(getApplicationContext(), CreateNewEventActivity.class);
                             startActivity(intent);
-                        } else {
-                            if (event.isAccepted()) {
-                                intent = new Intent(getApplicationContext(), EventDetailsActivity.class);
-                                intent.putExtra("showChatFragment", true);
-                                startActivity(intent);
-                            }
                         }
+//                        } else {
+//                            if (event.isAccepted()) {
+//                                intent = new Intent(getApplicationContext(), EventDetailsActivity.class);
+//                                intent.putExtra("showChatFragment", true);
+//                                startActivity(intent);
+//                            }
+//                        }
                         break;
                     case R.id.actionThree:
                         if ((event.isInvitation()&&event.isAccepted()) || (event.isAccepted() && event.isAdmin())) {
@@ -111,11 +111,11 @@ public class EventsHistoryActivity extends BaseActivity {
                         break;
                     case R.id.chatLayout:
                     case R.id.chatIcon:
-                        intent = new Intent(getApplicationContext(), IntraChatActivity.class);
-                        intent.putExtra("UserId", event.getOwnerId());
-                        intent.putExtra("UserImage", "");
-                        intent.putExtra("UserName", event.getOwnerName());
-                        startActivity(intent);
+//                        intent = new Intent(getApplicationContext(), IntraChatActivity.class);
+//                        intent.putExtra("UserId", event.getOwnerId());
+//                        intent.putExtra("UserImage", "");
+//                        intent.putExtra("UserName", event.getOwnerName());
+//                        startActivity(intent);
                         break;
                     case R.id.nav_address:
                         if(event!=null&&event.getLatitude()>0) {
@@ -225,7 +225,6 @@ public class EventsHistoryActivity extends BaseActivity {
                 }
                 ToastHelper.blueToast(getApplicationContext(), response.getMessage());
             }
-
 
         }.execute();
     }

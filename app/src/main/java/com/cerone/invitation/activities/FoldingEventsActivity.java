@@ -66,7 +66,7 @@ public class FoldingEventsActivity extends BaseActivity {
 
                 @Override
                 public void process() {
-                    allEventsList = eventSyncher.getAllEventsNew();
+                    allEventsList = eventSyncher.getAllEventsNew(false);
                 }
 
                 @Override

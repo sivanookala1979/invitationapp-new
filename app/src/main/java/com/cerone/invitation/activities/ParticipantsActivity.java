@@ -65,8 +65,7 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
         listView.setOnItemClickListener(this);
         groupId = getIntent().getExtras().getInt("groupId");
         eventId = getIntent().getExtras().getInt("eventId");
-        eventId = getIntent().getExtras().getInt("eventId");
-        selectedEvent= InvtAppPreferences.getEventDetails();
+        selectedEvent = InvtAppPreferences.getEventDetails();
         if(selectedEvent!=null && eventId==selectedEvent.getEventId()){
             if(selectedEvent.isAccepted()||(selectedEvent.getOwnerId()==InvtAppPreferences.getOwnerId())) {
                 isAdmin = selectedEvent.isAdmin();
@@ -84,9 +83,7 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
                     GroupSyncher groupSyncher = new GroupSyncher();
                     participantsList = groupSyncher.getGroupMembers(groupId);
                 }else {
-                    Event eventDetails = InvtAppPreferences.getEventDetails();
-                    InvitationSyncher invitationSyncher = new InvitationSyncher();
-                    participantsList = invitationSyncher.getInvitees(eventDetails.getEventId(), "");
+                    participantsList = InvtAppPreferences.getInvitees();
                 }
             }
 

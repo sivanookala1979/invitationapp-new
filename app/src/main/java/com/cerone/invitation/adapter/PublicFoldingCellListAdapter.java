@@ -32,7 +32,6 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
     List<PublicEvent> events = new ArrayList<PublicEvent>();
     FontTypes fontType;
 
-
     public PublicFoldingCellListAdapter(Context context, List<PublicEvent> allEventsList) {
         super(context, 0, allEventsList);
         this.context = context;
@@ -59,7 +58,7 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
         PublicEvent publicEvent = getItem(position);
 
         FoldingCell cell = (FoldingCell) convertView;
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         if (cell == null) {
             viewHolder = new ViewHolder();
             LayoutInflater vi = LayoutInflater.from(getContext());
@@ -101,8 +100,18 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
         }
         if(publicEvent.isFavourite()){
             viewHolder.headerFavourite.setColorFilter(context.getResources().getColor(R.color.happening_orange));
-        }else{
-            viewHolder.headerFavourite.setColorFilter(context.getResources().getColor(R.color.happening_text_grey_color));
+        }
+        if(publicEvent.isCart()){
+            viewHolder.headerCart.setColorFilter(context.getResources().getColor(R.color.happening_orange));
+        }
+        if(publicEvent.isFacebook()){
+            viewHolder.headerFacebook.setColorFilter(context.getResources().getColor(R.color.happening_orange));
+        }
+        if(publicEvent.isFriendsAttending()){
+            viewHolder.headerFriendsAttending.setColorFilter(context.getResources().getColor(R.color.happening_orange));
+        }
+        if(publicEvent.isClose()){
+            viewHolder.headerClose.setColorFilter(context.getResources().getColor(R.color.happening_orange));
         }
 
         viewHolder.headerFavourite.setOnClickListener(createOnClickListener(position, parent));
@@ -113,7 +122,6 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
 
         return cell;
     }
-
 
     // simple methods for register cell state changes
     public void registerToggle(int position) {
@@ -159,7 +167,6 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
     private static class ViewHolder {
         ImageView eventIconHeader, headerFavourite, headerCart, headerFacebook, headerFriendsAttending, headerClose;
         TextView headerEventName, eventAddressHeader, eventTimingsHeading, entryFeeHeader;
-
 
     }
 }

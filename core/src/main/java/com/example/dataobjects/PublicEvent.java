@@ -17,6 +17,43 @@ public class PublicEvent {
     String image;
     boolean weekend;
     boolean favourite;
+    boolean cart;
+    boolean facebook;
+    boolean friendsAttending;
+    boolean close;
+
+
+    public boolean isCart() {
+        return cart;
+    }
+
+    public void setCart(boolean cart) {
+        this.cart = cart;
+    }
+
+    public boolean isFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(boolean facebook) {
+        this.facebook = facebook;
+    }
+
+    public boolean isFriendsAttending() {
+        return friendsAttending;
+    }
+
+    public void setFriendsAttending(boolean friendsAttending) {
+        this.friendsAttending = friendsAttending;
+    }
+
+    public boolean isClose() {
+        return close;
+    }
+
+    public void setClose(boolean close) {
+        this.close = close;
+    }
 
     public boolean isFavourite() {
         return favourite;

@@ -26,8 +26,6 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import static com.cerone.invitation.R.id.eventName;
-
 /**
  * Created by adarsht on 09/03/17.
  */
@@ -102,12 +100,18 @@ public class EventDetailsActivity extends BaseActivity implements ActivityCommun
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager(), screenTabs);
         viewPager.setAdapter(mPagerAdapter);
         mPagerSlidingTabStrip.setupWithViewPager(viewPager);
+        int tab = 0;
+        if(showChatFragment){
+            viewPager.setCurrentItem(1);
+            showChatFragment = false;
+            tab = 1;
+        }
         for (int i = 0; i < mPagerSlidingTabStrip.getTabCount(); i++) {
             LinearLayout tabLayout = (LinearLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.tab_layout, null);
             TextView title = (TextView) tabLayout.findViewById(R.id.tabTitle);
             ImageView image = (ImageView) tabLayout.findViewById(R.id.tabIcon);
             ScreenTab screenTab = screenTabs.get(i);
-            if (i == 0) {
+            if (i == tab) {
                 image.setImageResource(screenTab.getImageResource());
                 title.setTextColor(Color.WHITE);
                 title.setText(screenTab.getName());
@@ -122,10 +126,7 @@ public class EventDetailsActivity extends BaseActivity implements ActivityCommun
             mPagerSlidingTabStrip.getTabAt(i).setTag(i);
             mPagerSlidingTabStrip.getTabAt(i).setCustomView(tabLayout);
         }
-        if(showChatFragment){
-            viewPager.setCurrentItem(1);
-            showChatFragment = false;
-        }
+
     }
 
     private void updateTabsCount() {
