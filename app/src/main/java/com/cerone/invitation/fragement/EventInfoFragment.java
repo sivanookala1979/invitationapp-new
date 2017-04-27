@@ -50,7 +50,7 @@ import java.util.List;
 public class EventInfoFragment extends BaseFragment implements View.OnClickListener{
 
     LinearLayout invitationSelection,inviteesLayout, accept, maybe, reject,editEvent,actionsLayout, shareEvent, deleteEvent, chatLayout, layoutParticipants;
-    TextView totalInviteesText, acceptCountText, rejectCountText;
+    TextView totalInviteesText, acceptCountText, rejectCountText, emptyView;
     RecyclerView participantsLayout;
     View eventBaseView;
     ImageView editOrShareIdon, locationAddress, chatIcon;
@@ -84,6 +84,7 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         editOrShareIdon = (ImageView) view.findViewById(R.id.actionTwoIcon);
         locationAddress = (ImageView) view.findViewById(R.id.location_address);
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
+        emptyView = (TextView) view.findViewById(R.id.empty_view);
         participantsLayout.setOnClickListener(this);
         actionsLayout.setOnClickListener(this);
         editEvent.setOnClickListener(this);
@@ -311,6 +312,14 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                 if (allInvitees!=null) {
                     Log.d("all invitees", allInvitees.size()+"");
                     acceptedParticipantsAdapater.updateAdapter(allInvitees);
+                    if (allInvitees.size()==0) {
+                        participantsLayout.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        participantsLayout.setVisibility(View.VISIBLE);
+                        emptyView.setVisibility(View.GONE);
+                    }
                 }else{
                     ToastHelper.blueToast(getActivity(), "no invitees");
                 }

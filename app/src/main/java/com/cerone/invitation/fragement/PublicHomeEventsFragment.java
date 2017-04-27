@@ -91,8 +91,11 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
     public void updateData(boolean select) {
         if(select){
             searchBar.setVisibility(View.VISIBLE);
+            searchText.setFocusable(true);
         }else{
             searchBar.setVisibility(View.GONE);
+            searchTags.setVisibility(View.GONE);
+            searchText.getText().clear();
         }
     }
 
@@ -328,6 +331,7 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
                             stringAfter += stringList.get(j) + " ";
                         }
                         searchText.setText(stringAfter);
+                        searchText.setSelection(searchText.getText().length());
                         searchTags(searchText.getText().toString());
                         if(!searchText.getText().toString().isEmpty()) {
                             searchTags.setVisibility(View.VISIBLE);

@@ -24,7 +24,7 @@ import com.example.dataobjects.Event;
 
 public class BaseFragment extends Fragment implements AdapterView.OnItemClickListener {
     String locationPermission = "";
-    Event eventDetails;
+    Event eventDetails = new Event();
     public static final String LOCATION = "LOCATION";
     public static final String DISTANCE = "DISTANCE";
     public static final String NOTHING = "NOTHING";

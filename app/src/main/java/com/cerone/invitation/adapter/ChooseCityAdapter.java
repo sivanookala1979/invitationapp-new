@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
@@ -44,6 +46,9 @@ public class ChooseCityAdapter extends ArrayAdapter<City>{
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.public_city_item, parent, false);
+        int screenHeight = ((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getHeight();
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, (int)((screenHeight-((screenHeight*10)/100))*0.33));
+        row.setLayoutParams(params);
         City city = getItem(position);
         TextView cityName = (TextView) row.findViewById(R.id.city_name);
         ImageView cityImage = (ImageView) row.findViewById(R.id.city_image);
