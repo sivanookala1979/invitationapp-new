@@ -1,5 +1,6 @@
 package com.cerone.invitation.activities;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,15 +8,20 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.cerone.invitation.R;
@@ -35,6 +41,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,6 +71,9 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
     Event event = new Event();
     ImageView eventImage, getLocation,imageCamera;
     int count;
+    DatePicker dp;
+    TimePicker tp;
+    Calendar calendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,23 +252,31 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         }
         switch (v.getId()) {
             case R.id.layout_start_date :
-                String endDate = endDay.getText().toString()+" "+endMonth.getText().toString()+" "+endYear.getText().toString();
-                startDatePicker = new InvtAppDatePicker(startDay, startMonth, startYear, endDay, endMonth, endYear, Calendar.getInstance(), endDate, true);
-                startDatePicker.createAndUpdateDate(startDay,startMonth,startYear, startDay.getText().toString()+" "+startMonth.getText().toString()+" "+startYear.getText().toString(), CreateNewEventActivity.this);
+            case R.id.layout_start_time :
+                startDateAndTimeDialog();
                 break;
             case R.id.layout_end_date :
-                String startDate = startDay.getText().toString()+" "+startMonth.getText().toString()+" "+startYear.getText().toString();
-                endDatePicker = new InvtAppDatePicker(startDay, startMonth, startYear, endDay, endMonth, endYear, Calendar.getInstance(), startDate, false);
-                endDatePicker.createAndUpdateDate(endDay,endMonth,endYear, endDay.getText().toString()+" "+endMonth.getText().toString()+" "+endYear.getText().toString(), CreateNewEventActivity.this);
-                break;
-            case R.id.layout_start_time :
-                startTimePicker = new InvtAppTimePicker(startHour, startMin, startMeridiem, endHour, endMin, endMeridiem, Calendar.getInstance(), true);
-                startTimePicker.createAndUpdateTime(startHour.getText().toString()+" "+startMin.getText().toString()+" "+startMeridiem.getText().toString(), CreateNewEventActivity.this);
-                break;
             case R.id.layout_end_time :
-                endTimePicker = new InvtAppTimePicker(startHour, startMin, startMeridiem, endHour, endMin, endMeridiem, Calendar.getInstance(), false);
-                endTimePicker.createAndUpdateTime(endHour.getText().toString()+" "+endMin.getText().toString()+" "+endMeridiem.getText().toString(), CreateNewEventActivity.this);
+                endDateAndTimeDialog();
                 break;
+//            case R.id.layout_start_date :
+//                String endDate = endDay.getText().toString()+" "+endMonth.getText().toString()+" "+endYear.getText().toString();
+//                startDatePicker = new InvtAppDatePicker(startDay, startMonth, startYear, endDay, endMonth, endYear, Calendar.getInstance(), endDate, true);
+//                startDatePicker.createAndUpdateDate(startDay,startMonth,startYear, startDay.getText().toString()+" "+startMonth.getText().toString()+" "+startYear.getText().toString(), CreateNewEventActivity.this);
+//                break;
+//            case R.id.layout_end_date :
+//                String startDate = startDay.getText().toString()+" "+startMonth.getText().toString()+" "+startYear.getText().toString();
+//                endDatePicker = new InvtAppDatePicker(startDay, startMonth, startYear, endDay, endMonth, endYear, Calendar.getInstance(), startDate, false);
+//                endDatePicker.createAndUpdateDate(endDay,endMonth,endYear, endDay.getText().toString()+" "+endMonth.getText().toString()+" "+endYear.getText().toString(), CreateNewEventActivity.this);
+//                break;
+//            case R.id.layout_start_time :
+//                startTimePicker = new InvtAppTimePicker(startHour, startMin, startMeridiem, endHour, endMin, endMeridiem, Calendar.getInstance(), true);
+//                startTimePicker.createAndUpdateTime(startHour.getText().toString()+" "+startMin.getText().toString()+" "+startMeridiem.getText().toString(), CreateNewEventActivity.this);
+//                break;
+//            case R.id.layout_end_time :
+//                endTimePicker = new InvtAppTimePicker(startHour, startMin, startMeridiem, endHour, endMin, endMeridiem, Calendar.getInstance(), false);
+//                endTimePicker.createAndUpdateTime(endHour.getText().toString()+" "+endMin.getText().toString()+" "+endMeridiem.getText().toString(), CreateNewEventActivity.this);
+//                break;
             case R.id.get_location :
                 Intent locationIntent = new Intent(getApplicationContext(), LocationActivity.class);
                 startActivityForResult(locationIntent, GOOGLE_MAPS_REQUEST);
@@ -356,6 +374,148 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         return (number >= 10) ? number + "" : "0" + number;
     }
 
+    private void startDateAndTimeDialog(){
+        calendar.add(Calendar.MINUTE, 30);
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_datetime);
+        TextView day = (TextView) dialog.findViewById(R.id.day);
+        Button cancel = (Button) dialog.findViewById(R.id.cancel);
+        Button accept = (Button) dialog.findViewById(R.id.ok);
+        dp = (DatePicker) dialog.findViewById(R.id.datePicker);
+        tp = (TimePicker) dialog.findViewById(R.id.timePicker);
+        SimpleDateFormat formatter = new SimpleDateFormat("EEEE");
+        Date d = new Date();
+        String dayOfTheWeek = formatter.format(d);
+        day.setText(dayOfTheWeek);
+        String startDate = startDay.getText().toString()+" "+startMonth.getText().toString()+" "+startYear.getText().toString();
+        formatter = new SimpleDateFormat("dd MM yyyy");
+        try {
+            calendar.setTime(formatter.parse(startDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        dp.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        String startTime = startHour.getText().toString()+" "+startMin.getText().toString()+" "+startMeridiem.getText().toString();
+        formatter = new SimpleDateFormat("hh mm a");
+        try {
+            calendar.setTime(formatter.parse(startTime));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        tp.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
+        tp.setCurrentMinute(calendar.get(Calendar.MINUTE));
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {dialog.cancel();}
+        });
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int dayOfMonth = dp.getDayOfMonth();
+                int month = dp.getMonth();
+                int year = dp.getYear();
+                int hourOfDay = tp.getCurrentHour();
+                int minute = tp.getCurrentMinute();
+                String AMPM = "AM";
+                if(hourOfDay>11)
+                {
+                    hourOfDay = hourOfDay-12;
+                    AMPM = "PM";
+                }
+                String selectedDate = ""+dayOfMonth+" "+(month+1)+" "+year;
+                String selectedtime = "" + hourOfDay + " " + minute + " " + AMPM;
+                if (StringUtils.isOldDate(selectedDate)) {
+                    startDay.setText(""+dayOfMonth);
+                    startMonth.setText(""+(month+1));
+                    startYear.setText(""+year);
+                    endDay.setText(""+dayOfMonth);
+                    endMonth.setText(""+(month+1));
+                    endYear.setText(""+year);
+                }else{
+                    ToastHelper.redToast(getApplicationContext(), "Start date should not be past date.");
+                }
+                startHour.setText(""+hourOfDay);
+                startMin.setText(""+minute);
+                startMeridiem.setText(""+AMPM);
+                String[] endTime = updateEndTime(selectedtime, 60).split(" ");
+                Log.d("selectedtime", selectedtime+" "+endTime[0]+endTime[1]+endTime[2]);
+                endHour.setText(""+endTime[0]);
+                endMin.setText(""+endTime[1]);
+                endMeridiem.setText(""+endTime[2]);
+                dialog.cancel();
+            }
+        });
+        dialog.show();
+    }
+
+    private void endDateAndTimeDialog(){
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_datetime);
+        TextView day = (TextView) dialog.findViewById(R.id.day);
+        Button cancel = (Button) dialog.findViewById(R.id.cancel);
+        Button accept = (Button) dialog.findViewById(R.id.ok);
+        dp = (DatePicker) dialog.findViewById(R.id.datePicker);
+        tp = (TimePicker) dialog.findViewById(R.id.timePicker);
+        SimpleDateFormat formatter = new SimpleDateFormat("EEEE");
+        Date d = new Date();
+        String dayOfTheWeek = formatter.format(d);
+        day.setText(dayOfTheWeek);
+        String endDate = endDay.getText().toString()+" "+endMonth.getText().toString()+" "+endYear.getText().toString();
+        formatter = new SimpleDateFormat("dd MM yyyy");
+        try {
+            calendar.setTime(formatter.parse(endDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        dp.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        String endTime = endHour.getText().toString()+" "+endMin.getText().toString()+" "+endMeridiem.getText().toString();
+        formatter = new SimpleDateFormat("hh mm a");
+        try {
+            calendar.setTime(formatter.parse(endTime));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        tp.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
+        tp.setCurrentMinute(calendar.get(Calendar.MINUTE));
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {dialog.cancel();}
+        });
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int dayOfMonth = dp.getDayOfMonth();
+                int month = dp.getMonth();
+                int year = dp.getYear();
+                int hourOfDay = tp.getCurrentHour();
+                int minute = tp.getCurrentMinute();
+                String AMPM = "AM";
+                if(hourOfDay>11)
+                {
+                    hourOfDay = hourOfDay-12;
+                    AMPM = "PM";
+                }
+                String startDate = startDay.getText().toString()+" "+startMonth.getText().toString()+" "+startYear.getText().toString();
+                String selectedDate = ""+dayOfMonth+" "+(month+1)+" "+year;
+                String selectedtime = "" + hourOfDay + " " + minute + " " + AMPM;
+                if (!StringUtils.validateStartAndEndDates(selectedDate, startDate)) {
+                    endDay.setText(""+dayOfMonth);
+                    endMonth.setText(""+(month+1));
+                    endYear.setText(""+year);
+                } else {
+                    ToastHelper.redToast(getApplicationContext(), "end date should not be past to start date.");
+                }
+                endHour.setText(""+hourOfDay);
+                endMin.setText(""+minute);
+                endMeridiem.setText(""+AMPM);
+                dialog.cancel();
+            }
+        });
+        dialog.show();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -395,12 +555,14 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
 
     private static String updateEndTime(String time, int upTime){
         Calendar calendar = Calendar.getInstance();
-        String timeInfo[] = time.split(":");
-        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeInfo[0]));
-        calendar.set(Calendar.MINUTE, Integer.parseInt(timeInfo[1]));
+        SimpleDateFormat formatter = new SimpleDateFormat("hh mm a");
+        try {
+            calendar.setTime(formatter.parse(time));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         calendar.add(Calendar.MINUTE, upTime);
-        Format format = new SimpleDateFormat("hh mm a");
-        return format.format(calendar.getTime());
+        return formatter.format(calendar.getTime());
     }
 
     public List<UserLocation> getDefaultAddress() {
