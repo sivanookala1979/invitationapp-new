@@ -4,6 +4,7 @@
  */
 package com.example.tests;
 
+import com.example.dataobjects.Invitee;
 import com.example.dataobjects.Invitees;
 import com.example.dataobjects.ServerResponse;
 import com.example.dataobjects.User;
@@ -56,10 +57,17 @@ public class InvitationSyncherTest extends TestCase {
 
     public void testGetAllInviteesListTestHAPPYFlow() throws Exception {
 
-        List<Invitees> listOfAllInvitees = sut.getAllInviteesList(133);
+        List<Invitees> listOfAllInvitees = sut.getAllInviteesList(173);
         assertEquals(1, listOfAllInvitees.get(0).getInviteesList().size());
 
         }
+
+    public void testGetInviteesListTestHAPPYFlow() throws Exception {
+
+        List<Invitee> listOfInvitees = sut.getInvitees(173, "");
+        assertEquals(1, listOfInvitees.size());
+
+    }
 
     private List<User> getDefaultNumbers() {
         List<User> mobileNUmbers = new ArrayList<User>();
@@ -113,7 +121,7 @@ public class InvitationSyncherTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         sut = new InvitationSyncher();
-        BaseSyncher.setAccessToken("db5d5012964d3bf01f79905379");
+        BaseSyncher.setAccessToken("dd2273ff724385b98df76d2667964");
         //9049d4b65472891215997844d Adarsh 
         //b39b545dd564d649528233f2044f Adarsh testing
     }

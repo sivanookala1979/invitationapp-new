@@ -92,7 +92,7 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
         }
             viewHolder.headerEventName.setText(publicEvent.getEventName());
             viewHolder.eventAddressHeader.setText(publicEvent.getAddress());
-        viewHolder.entryFeeHeader.setText(publicEvent.getEntryFee());
+        viewHolder.entryFeeHeader.setText(publicEvent.getEntryFee().equals("0.0")?"Free":publicEvent.getEntryFee());
         try {
             viewHolder.eventTimingsHeading.setText(StringUtils.getEventDateFormat(getFormatedDateFromServerFormatedDate(publicEvent.getStartRime())) +" "+ StringUtils.getEventTimeFormat(getFormatedDateFromServerFormatedDate(publicEvent.getStartRime()), getFormatedDateFromServerFormatedDate(publicEvent.getEndTime())));
         } catch (ParseException e) {
