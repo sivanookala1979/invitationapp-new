@@ -412,34 +412,37 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int dayOfMonth = dp.getDayOfMonth();
-                int month = dp.getMonth();
+                String dayOfMonth = String.valueOf(dp.getDayOfMonth());
+                String month = String.valueOf(dp.getMonth()+1);
                 int year = dp.getYear();
                 int hourOfDay = tp.getCurrentHour();
-                int minute = tp.getCurrentMinute();
+                String minute = String.valueOf(tp.getCurrentMinute());
                 String AMPM = "AM";
                 if(hourOfDay>11)
                 {
                     hourOfDay = hourOfDay-12;
+                    if(hourOfDay==0)
+                        hourOfDay = 12;
                     AMPM = "PM";
                 }
-                String selectedDate = ""+dayOfMonth+" "+(month+1)+" "+year;
-                String selectedtime = "" + hourOfDay + " " + minute + " " + AMPM;
+                String hour = String.valueOf(hourOfDay);
+                String selectedDate = ""+dayOfMonth+" "+month+" "+year;
+                String selectedtime = ""+hour+" "+minute+" "+AMPM;
+                Log.d("selectedDate-time1", selectedDate+"-"+selectedtime);
                 if (StringUtils.isOldDate(selectedDate)) {
-                    startDay.setText(""+dayOfMonth);
-                    startMonth.setText(""+(month+1));
+                    startDay.setText(dayOfMonth.length()==1?"0"+dayOfMonth:dayOfMonth);
+                    startMonth.setText(month.length()==1?"0"+month:month);
                     startYear.setText(""+year);
-                    endDay.setText(""+dayOfMonth);
-                    endMonth.setText(""+(month+1));
+                    endDay.setText(dayOfMonth.length()==1?"0"+dayOfMonth:dayOfMonth);
+                    endMonth.setText(month.length()==1?"0"+month:month);
                     endYear.setText(""+year);
                 }else{
                     ToastHelper.redToast(getApplicationContext(), "Start date should not be past date.");
                 }
-                startHour.setText(""+hourOfDay);
-                startMin.setText(""+minute);
-                startMeridiem.setText(""+AMPM);
+                startHour.setText(hour.length()==1?"0"+hour:hour);
+                startMin.setText(minute.length()==1?"0"+minute:minute);
+                startMeridiem.setText(AMPM);
                 String[] endTime = updateEndTime(selectedtime, 60).split(" ");
-                Log.d("selectedtime", selectedtime+" "+endTime[0]+endTime[1]+endTime[2]);
                 endHour.setText(""+endTime[0]);
                 endMin.setText(""+endTime[1]);
                 endMeridiem.setText(""+endTime[2]);
@@ -486,30 +489,34 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int dayOfMonth = dp.getDayOfMonth();
-                int month = dp.getMonth();
+                String dayOfMonth = String.valueOf(dp.getDayOfMonth());
+                String month = String.valueOf(dp.getMonth()+1);
                 int year = dp.getYear();
                 int hourOfDay = tp.getCurrentHour();
-                int minute = tp.getCurrentMinute();
+                String minute = String.valueOf(tp.getCurrentMinute());
                 String AMPM = "AM";
                 if(hourOfDay>11)
                 {
                     hourOfDay = hourOfDay-12;
+                    if(hourOfDay==0)
+                        hourOfDay = 12;
                     AMPM = "PM";
                 }
+                String hour = String.valueOf(hourOfDay);
                 String startDate = startDay.getText().toString()+" "+startMonth.getText().toString()+" "+startYear.getText().toString();
-                String selectedDate = ""+dayOfMonth+" "+(month+1)+" "+year;
-                String selectedtime = "" + hourOfDay + " " + minute + " " + AMPM;
+                String selectedDate = ""+dayOfMonth+" "+month+" "+year;
+                String selectedtime = ""+hour+" "+minute+" "+AMPM;
+                Log.d("selectedDate-time2", selectedDate+"-"+selectedtime);
                 if (!StringUtils.validateStartAndEndDates(selectedDate, startDate)) {
-                    endDay.setText(""+dayOfMonth);
-                    endMonth.setText(""+(month+1));
+                    endDay.setText(dayOfMonth.length()==1?"0"+dayOfMonth:dayOfMonth);
+                    endMonth.setText(month.length()==1?"0"+month:month);
                     endYear.setText(""+year);
                 } else {
                     ToastHelper.redToast(getApplicationContext(), "end date should not be past to start date.");
                 }
-                endHour.setText(""+hourOfDay);
-                endMin.setText(""+minute);
-                endMeridiem.setText(""+AMPM);
+                endHour.setText(hour.length()==1?"0"+hour:hour);
+                endMin.setText(minute.length()==1?"0"+minute:minute);
+                endMeridiem.setText(AMPM);
                 dialog.cancel();
             }
         });

@@ -29,6 +29,7 @@ import com.example.dataobjects.EventFilter;
 import com.example.dataobjects.PublicEvent;
 import com.example.dataobjects.SaveResult;
 import com.example.syncher.PublicEventsSyncher;
+import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -123,6 +124,11 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
             case R.id.header_close:
                 //publicEvent.setClose(true);
                 Toast.makeText(getActivity(), "to be implement", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                ((FoldingCell) view).toggle(false);
+                // register in adapter that state for selected cell is toggled
+                adapter.registerToggle(i);
                 break;
         }
         adapter.updateList(newEventsList);

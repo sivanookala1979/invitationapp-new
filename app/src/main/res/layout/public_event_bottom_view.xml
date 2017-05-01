@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_events"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/rectangle_shaped"
+        app:cardCornerRadius="7dp"
+        app:cardElevation="3dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="10">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:padding="5dp"
+                        android:text="DATE"
+                        android:textColor="@color/darkgray"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <TextView
+                        android:id="@+id/footer_event_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:padding="5dp"
+                        android:text="Sat, 21/03/2017"
+                        android:textColor="@color/black_shade"
+                        android:textSize="@dimen/text_size_small" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:padding="5dp"
+                        android:text="TIME"
+                        android:textColor="@color/darkgray"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <TextView
+                        android:id="@+id/footer_event_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                        android:padding="5dp"
+                        android:text="11.00AM - 01:00AM"
+                        android:textColor="@color/black_shade"
+                        android:textSize="@dimen/text_size_small" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:src="@drawable/location_icon"
+                    android:tint="@color/happening_orange" />
+
+                <TextView
+                    android:id="@+id/footer_event_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+                    android:padding="10dp"
+                    android:text="N Convention, Jubilee Hills, Hyderabad"
+                    android:textColor="@color/black_shade"
+                    android:textSize="@dimen/text_medium" />
+
+            </LinearLayout>
+
+            <fragment
+                android:id="@+id/map"
+                class="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="40dp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="2.5"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:id="@+id/header_favourite"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/filter_favourite" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="2.5"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:id="@+id/header_cart"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/cart_icon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="2.5"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:id="@+id/header_facebook"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/facebook_icon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="2.5"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:id="@+id/header_friendsAttending"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/eye_icon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="2.5"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:id="@+id/header_close"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/close_icon" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/silver" />
+
+            <com.cerone.invitation.helpers.CeroneTextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/cream"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:tag="fonts/Montserrat-Light.otf"
+                android:text="Friends Attending"
+                android:textColor="@color/black_shade"
+                android:textSize="@dimen/text_medium"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/silver" />
+
+            <ListView
+                android:id="@+id/events_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/happening_grey_color"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="5dp"
+                android:padding="10dp"
+                android:scrollbars="none" />
+
+            <com.cerone.invitation.helpers.CeroneTextView
+                android:id="@+id/empty_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:padding="15dp"
+                android:tag="fonts/Montserrat-Light.otf"
+                android:text="no friends attending"
+                android:textSize="@dimen/text_medium" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/silver" />
+
+            <com.cerone.invitation.helpers.CeroneTextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/cream"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:tag="fonts/Montserrat-Light.otf"
+                android:text="Similar Events List"
+                android:textColor="@color/black_shade"
+                android:textSize="@dimen/text_medium"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/silver" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

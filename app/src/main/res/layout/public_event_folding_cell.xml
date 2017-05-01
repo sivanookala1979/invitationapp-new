@@ -14,7 +14,7 @@
         <include layout="@layout/event_details_bottem_view" />
 
     </FrameLayout>
-    ​
+
 
     <FrameLayout
         android:id="@+id/cell_title_view"
