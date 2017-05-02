@@ -531,7 +531,7 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
             event.setLatitude(eventLocationDetails.getLatitude());
             event.setLongitude(eventLocationDetails.getLongitude());
             event.setAddress(eventLocationDetails.getAddress());
-            updateLocationDetails(count);
+            updateLocationDetails();
             count++;
         }
         if ((requestCode == InvitationAppConstants.IMAG_LOAD || requestCode == InvitationAppConstants.IMAGE_CAPTURE) && resultCode == RESULT_OK) {
@@ -549,9 +549,9 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         }
     }
 
-    private void updateLocationDetails(int i) {
+    private void updateLocationDetails() {
         if (event.getAddress() != null && event.getAddress().length() > 0) {
-            if(count == 0)
+            if(count == 1)
             extraAddress.setText(eventLocation.getText().toString());
             eventLocation.setText(event.getAddress());
         } else {

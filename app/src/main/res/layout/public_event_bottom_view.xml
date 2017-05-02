@@ -20,6 +20,18 @@
             android:background="@color/white"
             android:orientation="vertical">
 
+            <com.cerone.invitation.helpers.CeroneTextView
+                android:id="@+id/footer_event_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/invitation_received_color"
+                android:gravity="center"
+                android:minHeight="40dp"
+                android:tag="fonts/Montserrat-Light.otf"
+                android:text="Jhon's Birthday party"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_medium" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,7 +45,7 @@
                     android:layout_weight="5"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.cerone.invitation.helpers.CeroneTextView
                         android:id="@+id/txt_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -41,9 +53,10 @@
                         android:padding="5dp"
                         android:text="DATE"
                         android:textColor="@color/darkgray"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_too_small"
+                        android:tag="fonts/Montserrat-Light.otf" />
 
-                    <TextView
+                    <com.cerone.invitation.helpers.CeroneTextView
                         android:id="@+id/footer_event_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -51,7 +64,8 @@
                         android:padding="5dp"
                         android:text="Sat, 21/03/2017"
                         android:textColor="@color/black_shade"
-                        android:textSize="@dimen/text_size_small" />
+                        android:tag="fonts/Montserrat-Light.otf"
+                        android:textSize="@dimen/text_size_too_small" />
 
                 </LinearLayout>
 
@@ -61,7 +75,7 @@
                     android:layout_weight="5"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.cerone.invitation.helpers.CeroneTextView
                         android:id="@+id/txt_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -69,9 +83,10 @@
                         android:padding="5dp"
                         android:text="TIME"
                         android:textColor="@color/darkgray"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_too_small"
+                        android:tag="fonts/Montserrat-Light.otf"/>
 
-                    <TextView
+                    <com.cerone.invitation.helpers.CeroneTextView
                         android:id="@+id/footer_event_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -79,7 +94,8 @@
                         android:padding="5dp"
                         android:text="11.00AM - 01:00AM"
                         android:textColor="@color/black_shade"
-                        android:textSize="@dimen/text_size_small" />
+                        android:tag="fonts/Montserrat-Light.otf"
+                        android:textSize="@dimen/text_size_too_small" />
 
                 </LinearLayout>
 
@@ -88,7 +104,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/gray" />
+                android:background="@color/silver" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,34 +116,41 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:padding="5dp"
+                    android:padding="10dp"
                     android:src="@drawable/location_icon"
                     android:tint="@color/happening_orange" />
 
-                <TextView
+                <com.cerone.invitation.helpers.CeroneTextView
                     android:id="@+id/footer_event_address"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="9"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
-                    android:padding="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:text="N Convention, Jubilee Hills, Hyderabad"
                     android:textColor="@color/black_shade"
-                    android:textSize="@dimen/text_medium" />
+                    android:tag="fonts/Montserrat-Light.otf"
+                    android:textSize="@dimen/text_size_too_small" />
 
             </LinearLayout>
 
-            <fragment
-                android:id="@+id/map"
-                class="com.google.android.gms.maps.SupportMapFragment"
+            <!--<fragment-->
+                <!--android:id="@+id/map"-->
+                <!--class="com.google.android.gms.maps.SupportMapFragment"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="200dp" />-->
+
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="1dp"
+                android:background="@color/silver" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:minHeight="40dp"
+                android:minHeight="45dp"
                 android:orientation="horizontal">
 
                 <RelativeLayout
@@ -138,7 +161,7 @@
                     android:background="@color/white">
 
                     <ImageView
-                        android:id="@+id/header_favourite"
+                        android:id="@+id/footer_favourite"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_centerHorizontal="true"
@@ -155,7 +178,7 @@
                     android:background="@color/white">
 
                     <ImageView
-                        android:id="@+id/header_cart"
+                        android:id="@+id/footer_cart"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_centerHorizontal="true"
@@ -171,7 +194,7 @@
                     android:background="@color/white">
 
                     <ImageView
-                        android:id="@+id/header_facebook"
+                        android:id="@+id/footer_facebook"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_centerHorizontal="true"
@@ -187,7 +210,7 @@
                     android:background="@color/white">
 
                     <ImageView
-                        android:id="@+id/header_friendsAttending"
+                        android:id="@+id/footer_friendsAttending"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_centerHorizontal="true"
@@ -203,7 +226,7 @@
                     android:background="@color/white">
 
                     <ImageView
-                        android:id="@+id/header_close"
+                        android:id="@+id/footer_close"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_centerHorizontal="true"
@@ -227,7 +250,7 @@
                 android:tag="fonts/Montserrat-Light.otf"
                 android:text="Friends Attending"
                 android:textColor="@color/black_shade"
-                android:textSize="@dimen/text_medium"
+                android:textSize="@dimen/small_text_size"
                 android:textStyle="normal|bold" />
 
             <TextView
@@ -238,14 +261,15 @@
             <ListView
                 android:id="@+id/events_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="10dp"
                 android:background="@color/happening_grey_color"
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="5dp"
                 android:padding="10dp"
-                android:scrollbars="none" />
+                android:scrollbars="none"
+                android:visibility="gone"/>
 
             <com.cerone.invitation.helpers.CeroneTextView
                 android:id="@+id/empty_list_view"
@@ -256,29 +280,26 @@
                 android:padding="15dp"
                 android:tag="fonts/Montserrat-Light.otf"
                 android:text="no friends attending"
-                android:textSize="@dimen/text_medium" />
+                android:textSize="@dimen/text_size_too_small"
+                android:textColor="@color/red_light"
+                android:background="@color/whitetransparent" />
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/showEventDetails"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/silver" />
+                android:layout_height="25dp"
+                android:background="#ECECEC"
+                android:gravity="center">
 
-            <com.cerone.invitation.helpers.CeroneTextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/cream"
-                android:gravity="center_vertical"
-                android:padding="10dp"
-                android:tag="fonts/Montserrat-Light.otf"
-                android:text="Similar Events List"
-                android:textColor="@color/black_shade"
-                android:textSize="@dimen/text_medium"
-                android:textStyle="normal|bold" />
+                <ImageView
+                    android:id="@+id/showEventIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/quantum_ic_keyboard_arrow_down_white_36"
+                    android:tint="@color/gray" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/silver" />
+            </LinearLayout>
 
         </LinearLayout>
 

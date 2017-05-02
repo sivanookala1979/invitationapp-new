@@ -352,4 +352,13 @@ public class StringUtils {
         return time1+"-"+time2;
     }
 
+    public static boolean isCurrentDate(String date) throws ParseException {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = format.parse(date);
+        Date date2 = format.parse(format.format(new Date()));
+
+        return date1.equals(date2);
+    }
+
 }

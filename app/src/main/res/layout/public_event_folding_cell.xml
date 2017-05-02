@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone">
-        <include layout="@layout/event_details_bottem_view" />
-
+        <include layout="@layout/public_event_bottom_view" />
     </FrameLayout>
 
 

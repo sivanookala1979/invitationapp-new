@@ -29,6 +29,7 @@ import com.example.dataobjects.EventFilter;
 import com.example.dataobjects.PublicEvent;
 import com.example.dataobjects.SaveResult;
 import com.example.syncher.PublicEventsSyncher;
+import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -124,11 +125,12 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
                 //publicEvent.setClose(true);
                 Toast.makeText(getActivity(), "to be implement", Toast.LENGTH_SHORT).show();
                 break;
-//            default:
-//                ((FoldingCell) view).toggle(false);
-//                // register in adapter that state for selected cell is toggled
-//                adapter.registerToggle(i);
-//                break;
+            default:
+                ((FoldingCell) view).toggle(false);
+                // register in adapter that state for selected cell is toggled
+                adapter.registerToggle(i);
+                break;
+
         }
         adapter.updateList(newEventsList);
     }
@@ -325,7 +327,8 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
                 View child = inflater.inflate(R.layout.custom_tag, null);
                 TextView searched = (TextView) child.findViewById(R.id.txt_searched);
                 Button remove = (Button) child.findViewById(R.id.remove);
-                remove.setOnClickListener(new View.OnClickListener() {
+                LinearLayout searchTagLayout = (LinearLayout) child.findViewById(R.id.layout_searchTag);
+                searchTagLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         View removed = (View) v.getParent();

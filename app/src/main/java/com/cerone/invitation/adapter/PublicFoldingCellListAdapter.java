@@ -75,6 +75,17 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
             viewHolder.headerFriendsAttending = (ImageView) cell.findViewById(R.id.header_friendsAttending);
             viewHolder.headerClose = (ImageView) cell.findViewById(R.id.header_close);
 
+            //footer view parts to view holder
+            viewHolder.footerEventName = (TextView) cell.findViewById(R.id.footer_event_name);
+            viewHolder.footerEventDate = (TextView) cell.findViewById(R.id.footer_event_date);
+            viewHolder.footerEventTime = (TextView) cell.findViewById(R.id.footer_event_time);
+            viewHolder.footerEventAddress = (TextView) cell.findViewById(R.id.footer_event_address);
+            viewHolder.footerFavourite = (ImageView) cell.findViewById(R.id.footer_favourite);
+            viewHolder.footerCart = (ImageView) cell.findViewById(R.id.footer_cart);
+            viewHolder.footerFacebook = (ImageView) cell.findViewById(R.id.footer_facebook);
+            viewHolder.footerFriendsAttending = (ImageView) cell.findViewById(R.id.footer_friendsAttending);
+            viewHolder.footerClose = (ImageView) cell.findViewById(R.id.footer_close);
+
             cell.setTag(viewHolder);
 
         } else {
@@ -86,9 +97,9 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
             viewHolder = (PublicFoldingCellListAdapter.ViewHolder) cell.getTag();
         }
         if(publicEvent.getImage()!= null && !publicEvent.getImage().trim().isEmpty()) {
-            Picasso.with(context).load(publicEvent.getImage()).placeholder(R.drawable.logo).into(viewHolder.eventIconHeader);
+            Picasso.with(context).load(publicEvent.getImage()).placeholder(R.drawable.event_picture).into(viewHolder.eventIconHeader);
         }else {
-            Picasso.with(context).load("java").placeholder(R.drawable.logo).into(viewHolder.eventIconHeader);
+            Picasso.with(context).load("java").placeholder(R.drawable.event_picture).into(viewHolder.eventIconHeader);
         }
             viewHolder.headerEventName.setText(publicEvent.getEventName());
             viewHolder.eventAddressHeader.setText(publicEvent.getAddress());
@@ -112,6 +123,18 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
         }
         if(publicEvent.isClose()){
             viewHolder.headerClose.setColorFilter(context.getResources().getColor(R.color.happening_orange));
+        }
+
+        viewHolder.footerEventName.setText(publicEvent.getEventName());
+        viewHolder.footerEventAddress.setText(publicEvent.getAddress());
+        try {
+            viewHolder.footerEventDate.setText(StringUtils.getEventDateFormat(getFormatedDateFromServerFormatedDate(publicEvent.getStartRime())));
+            viewHolder.footerEventTime.setText(StringUtils.getEventTimeFormat(getFormatedDateFromServerFormatedDate(publicEvent.getStartRime()), getFormatedDateFromServerFormatedDate(publicEvent.getEndTime())));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(publicEvent.isFavourite()){
+            viewHolder.footerFavourite.setColorFilter(context.getResources().getColor(R.color.happening_orange));
         }
 
         viewHolder.headerFavourite.setOnClickListener(createOnClickListener(position, parent));
@@ -165,8 +188,8 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
 
     // View lookup cache
     private static class ViewHolder {
-        ImageView eventIconHeader, headerFavourite, headerCart, headerFacebook, headerFriendsAttending, headerClose;
-        TextView headerEventName, eventAddressHeader, eventTimingsHeading, entryFeeHeader;
+        ImageView eventIconHeader, headerFavourite, headerCart, headerFacebook, headerFriendsAttending, headerClose, footerFavourite, footerCart, footerFacebook, footerFriendsAttending, footerClose;
+        TextView headerEventName, eventAddressHeader, eventTimingsHeading, entryFeeHeader, footerEventName, footerEventDate, footerEventTime, footerEventAddress;
 
     }
 }

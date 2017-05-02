@@ -47,9 +47,9 @@ import java.util.Date;
 import java.util.List;
 
 
-public class EventInfoFragment extends BaseFragment implements View.OnClickListener{
+public class EventInfoFragment extends BaseFragment implements View.OnClickListener {
 
-    LinearLayout invitationSelection,inviteesLayout, accept, maybe, reject,editEvent,actionsLayout, shareEvent, deleteEvent, chatLayout, layoutParticipants;
+    LinearLayout invitationSelection, inviteesLayout, accept, maybe, reject, editEvent, actionsLayout, shareEvent, deleteEvent, chatLayout, layoutParticipants;
     TextView totalInviteesText, acceptCountText, rejectCountText, emptyView;
     RecyclerView participantsLayout;
     View eventBaseView;
@@ -66,15 +66,15 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.event_info_fragment, container, false);
         eventBaseView = view;
         eventDetails = InvtAppPreferences.getEventDetails();
-        participantsLayout = (RecyclerView)view.findViewById(R.id.participantsLayout);
-        participantsLayout.setLayoutManager( new LinearLayoutManager(getActivity()));
+        participantsLayout = (RecyclerView) view.findViewById(R.id.participantsLayout);
+        participantsLayout.setLayoutManager(new LinearLayoutManager(getActivity()));
         acceptedParticipantsAdapater = new AcceptedParticipantsAdapater(getActivity(), allInvitees, eventDetails.getEventId());
         participantsLayout.setAdapter(acceptedParticipantsAdapater);
-        ViewGroup.LayoutParams params=participantsLayout.getLayoutParams();
-        params.height=ViewGroup.LayoutParams.WRAP_CONTENT;
+        ViewGroup.LayoutParams params = participantsLayout.getLayoutParams();
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         participantsLayout.setLayoutParams(params);
         participantsLayout.setNestedScrollingEnabled(false);
-        actionsLayout = (LinearLayout)view.findViewById(R.id.actionsLayout);
+        actionsLayout = (LinearLayout) view.findViewById(R.id.actionsLayout);
         shareEvent = (LinearLayout) view.findViewById(R.id.actionOne);
         editEvent = (LinearLayout) view.findViewById(R.id.actionTwo);
         deleteEvent = (LinearLayout) view.findViewById(R.id.actionThree);
@@ -96,14 +96,17 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         chatIcon.setOnClickListener(this);
         loadEventData(view);
         getAllInvitees();
-        activityCommunicator =(ActivityCommunicator) getActivity();
+        activityCommunicator = (ActivityCommunicator) getActivity();
         String[] startTime = eventDetails.getStartDateTime().split(" ");
         long difference = getTimeDifference(startTime[1], getCurrentTime());
-        Log.d("difference", startTime[1]+" "+getCurrentTime()+" "+difference);
-
-        if(difference >= -30){
-            layoutParticipants.setVisibility(View.VISIBLE);
+        try {
+            if (StringUtils.isCurrentDate(startTime[0]) && difference >= -30) {
+                layoutParticipants.setVisibility(View.VISIBLE);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+        Log.d("difference", startTime[0] + " " + startTime[1] + " " + getCurrentTime() + " " + difference);
         return view;
     }
 
@@ -120,13 +123,13 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         acceptCountText.setText("" + eventDetails.getAcceptedCount());
         rejectCountText.setText("" + eventDetails.getRejectedCount());
         totalInviteesText.setText("" + eventDetails.getInviteesCount());
-        if(eventDetails.getImageUrl()!=null&&!eventDetails.getImageUrl().isEmpty()) {
+        if (eventDetails.getImageUrl() != null && !eventDetails.getImageUrl().isEmpty()) {
             Picasso.with(getActivity()).load(eventDetails.getImageUrl()).placeholder(R.drawable.event_picture).into(eventImage);
         }
-        if(eventDetails!=null&&eventDetails.getOwnerInfo()!=null&&eventDetails.getOwnerInfo().getImage()!=null) {
-            if(!eventDetails.getOwnerInfo().getImage().isEmpty()) {
+        if (eventDetails != null && eventDetails.getOwnerInfo() != null && eventDetails.getOwnerInfo().getImage() != null) {
+            if (!eventDetails.getOwnerInfo().getImage().isEmpty()) {
                 Picasso.with(getActivity()).load(eventDetails.getOwnerInfo().getImage()).placeholder(R.drawable.logo).transform(new CircleTransform()).into(eventOwnerImage);
-            }else{
+            } else {
                 Picasso.with(getActivity()).load(BaseSyncher.getBASE_URL()).placeholder(R.drawable.circle_image).transform(new CircleTransform()).into(eventOwnerImage);
             }
             ownerName.setText(eventDetails.getOwnerInfo().getInviteeName());
@@ -141,13 +144,13 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(eventDetails.getAddress()!=null&&!eventDetails.getAddress().isEmpty()) {
+        if (eventDetails.getAddress() != null && !eventDetails.getAddress().isEmpty()) {
             eventLocation.setText(eventDetails.getAddress());
         }
-        if(eventDetails.getOwnerId()== InvtAppPreferences.getOwnerId()){
+        if (eventDetails.getOwnerId() == InvtAppPreferences.getOwnerId()) {
             chatLayout.setVisibility(View.GONE);
         }
-        if(eventDetails.isInvitation()){
+        if (eventDetails.isInvitation()) {
             actionsLayout.setVisibility(View.GONE);
             editOrShareIdon.setBackgroundResource(R.drawable.group);
             invitationSelection = (LinearLayout) eventBaseView.findViewById(R.id.invitationSelection);
@@ -155,16 +158,16 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
             accept = (LinearLayout) eventBaseView.findViewById(R.id.acceptInvitation);
             maybe = (LinearLayout) eventBaseView.findViewById(R.id.mayBe);
             reject = (LinearLayout) eventBaseView.findViewById(R.id.rejected);
-            if(eventDetails.isAccepted()){
+            if (eventDetails.isAccepted()) {
                 invitationSelection.setVisibility(View.GONE);
-            }else {
+            } else {
                 invitationSelection.setVisibility(View.VISIBLE);
             }
             accept.setOnClickListener(this);
             maybe.setOnClickListener(this);
             reject.setOnClickListener(this);
         }
-        if(eventDetails.isExpired()){
+        if (eventDetails.isExpired()) {
             view.findViewById(R.id.expiredMessage).setVisibility(View.VISIBLE);
         }
     }
@@ -175,11 +178,11 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         switch (view.getId()) {
 
             case R.id.actionOne:
-                if(eventDetails.isInvitation()){
+                if (eventDetails.isInvitation()) {
                     intent = new Intent(getActivity(), ParticipantsActivity.class);
                     intent.putExtra("eventId", eventDetails.getEventId());
                     intent.putExtra("title", "Invitees");
-                }else {
+                } else {
                     intent = new Intent(getActivity(), ShareEventActivity.class);
                     intent.putExtra("newEvent", false);
                 }
@@ -206,32 +209,33 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                 alertDialog.setMessage("Do you want to delete this event ?");
                 alertDialog.show();
                 break;
-            case R.id.location_address :
-                if(eventDetails!=null&&eventDetails.getLatitude()>0) {
+            case R.id.location_address:
+                if (eventDetails != null && eventDetails.getLatitude() > 0) {
                     intent = new Intent(getActivity(), LocationDetailsActivity.class);
                     startActivity(intent);
-                }else{
+                } else {
                     Toast.makeText(getActivity(), "Lat, Long not provided", Toast.LENGTH_LONG).show();
                 }
                 break;
-            case R.id.acceptInvitation :
+            case R.id.acceptInvitation:
                 showLocationPermissionDialog();
                 break;
-            case R.id.mayBe :
+            case R.id.mayBe:
                 invitationSelection.setVisibility(View.GONE);
                 break;
-            case R.id.rejected :
+            case R.id.rejected:
                 acceptOrRejectInvitation(false, eventDetails, locationPermission);
                 break;
-            case R.id.actionTwoIcon :
+            case R.id.actionTwoIcon:
                 intent = new Intent(getActivity(), InvitieesTabActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.invitees_layout :
-                    intent = new Intent(getActivity(), ParticipantsActivity.class);
-                    intent.putExtra("eventId", eventDetails.getEventId());
-                    intent.putExtra("title", "Invitees");
-                    startActivity(intent);
+            case R.id.invitees_layout:
+                intent = new Intent(getActivity(), ParticipantsActivity.class);
+                intent.putExtra("eventId", eventDetails.getEventId());
+                intent.putExtra("allInvitees", true);
+                intent.putExtra("title", "Invitees");
+                startActivity(intent);
                 break;
             case R.id.chatLayout:
             case R.id.chatIcon:
@@ -243,6 +247,7 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                 break;
         }
     }
+
     @Override
     public void acceptOrRejectInvitation(final boolean status, final Event event, final String locationPermission) {
         new InvtAppAsyncTask(getActivity()) {
@@ -281,7 +286,7 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
 
             @Override
             public void process() {
-                if(eventDetails.getEventId()>0) {
+                if (eventDetails.getEventId() > 0) {
                     EventSyncher syncher = new EventSyncher();
                     response = syncher.deleteEvent(eventDetails.getEventId());
                 }
@@ -289,7 +294,7 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
 
             @Override
             public void afterPostExecute() {
-                if (response!=null) {
+                if (response != null) {
                     ToastHelper.blueToast(getActivity(), response.getStatus());
                 }
             }
@@ -301,7 +306,7 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
 
             @Override
             public void process() {
-                if(eventDetails.getEventId()>0) {
+                if (eventDetails.getEventId() > 0) {
                     InvitationSyncher syncher = new InvitationSyncher();
                     allInvitees = syncher.getAllInviteesList(eventDetails.getEventId());
                 }
@@ -309,18 +314,17 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
 
             @Override
             public void afterPostExecute() {
-                if (allInvitees!=null) {
-                    Log.d("all invitees", allInvitees.size()+"");
+                if (allInvitees != null) {
+                    Log.d("all invitees", allInvitees.size() + "");
                     acceptedParticipantsAdapater.updateAdapter(allInvitees);
-                    if (allInvitees.size()==0) {
+                    if (allInvitees.size() == 0) {
                         participantsLayout.setVisibility(View.GONE);
                         emptyView.setVisibility(View.VISIBLE);
-                    }
-                    else {
+                    } else {
                         participantsLayout.setVisibility(View.VISIBLE);
                         emptyView.setVisibility(View.GONE);
                     }
-                }else{
+                } else {
                     ToastHelper.blueToast(getActivity(), "no invitees");
                 }
             }
