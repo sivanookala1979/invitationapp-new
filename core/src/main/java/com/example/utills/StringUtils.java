@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.ParseException;
@@ -23,6 +24,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import static android.R.attr.x;
 import static com.example.syncher.BaseSyncher.exceptionHandler;
 
 
@@ -34,6 +36,13 @@ public class StringUtils {
     public static final SimpleDateFormat newEventTimeFormat = new SimpleDateFormat("hh mm a");
     public static final SimpleDateFormat eventInfoFormat = new SimpleDateFormat("E, yyyy MMM dd - hh:mm a");
 
+    public static final String YEAER_MONTH_DATE = "yyyy-MM-dd";
+    public static final String SLOT_DATE_FORMAT = "EEEE" + ", " + " dd MMMM yyyy";
+    public static final String MONTH_DATE_YEAR_TIME = "MMM dd,yyyy EEE hh:mm a";
+    public static final String YEAR_MONTH_DATE_HOURS_MIN_SEC = "yyyy-MM-dd HH:mm:ss";
+    public static final String YEAR_MONTH_DATE_TIME_AM_PM = "dd-MM-yyyy hh:mm a";
+
+
     public static Date StringToDate(String date) {
 
         return StringToDateByIndex(date, 0);
@@ -42,7 +51,7 @@ public class StringUtils {
     public static Date StringToDateByIndex(String date, int index) {
         Log.d("old date", date);
         Date dateTime = null;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat((index==0)?"yyyy-MM-dd HH:mm:ss":"dd-MM-yyyy hh:mm a");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat((index == 0) ? YEAR_MONTH_DATE_HOURS_MIN_SEC : YEAR_MONTH_DATE_TIME_AM_PM);
         try {
             dateTime = simpleDateFormat.parse(date);
         } catch (ParseException ex) {
@@ -154,7 +163,7 @@ public class StringUtils {
         for (Event event : events) {
             String startDateTime = event.getStartDateTime().replace('T', ' ').replace('Z', ' ').trim();
             String endDateTime = event.getEndDateTime().replace('T', ' ').replace('Z', ' ').trim();
-            if (isGivenDateGreaterThanOrEqualToCurrentDate(StringUtils.getNewDate(startDateTime,15))) {
+            if (isGivenDateGreaterThanOrEqualToCurrentDate(StringUtils.getNewDate(startDateTime, 15))) {
                 futureEvents.add(event);
             }
         }
@@ -332,7 +341,7 @@ public class StringUtils {
         String[] d = dateTime.split(" ");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = formatter.parse(d[0]);
-        SimpleDateFormat formatt = new SimpleDateFormat("EEE"+", "+"dd/MM/yyyy");
+        SimpleDateFormat formatt = new SimpleDateFormat("EEE" + ", " + "dd/MM/yyyy");
         String newDate = formatt.format(date);
         return newDate;
     }
@@ -349,7 +358,7 @@ public class StringUtils {
     public static String getEventTimeFormat(String dateTime1, String dateTime2) throws ParseException {
         String time1 = getTimeFormat(dateTime1);
         String time2 = getTimeFormat(dateTime2);
-        return time1+"-"+time2;
+        return time1 + "-" + time2;
     }
 
     public static boolean isCurrentDate(String date) throws ParseException {
@@ -361,4 +370,66 @@ public class StringUtils {
         return date1.equals(date2);
     }
 
+    ///
+    public static Date getDateFromString(String stringDate, int index) {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date dateinfo = null;
+        switch (index) {
+            case 0:
+                dateFormat = new SimpleDateFormat(YEAER_MONTH_DATE);
+                break;
+            case 1:
+                dateFormat = new SimpleDateFormat(SLOT_DATE_FORMAT);
+                break;
+            case 2:
+                dateFormat = new SimpleDateFormat(SLOT_DATE_FORMAT);
+                break;
+            case 3:
+                dateFormat = new SimpleDateFormat(MONTH_DATE_YEAR_TIME);
+                break;
+            case 4:
+                dateFormat = new SimpleDateFormat(YEAR_MONTH_DATE_HOURS_MIN_SEC);
+                break;
+            case 5:
+                dateFormat = new SimpleDateFormat(YEAR_MONTH_DATE_TIME_AM_PM);
+                break;
+        }
+        try {
+            dateinfo = dateFormat.parse(stringDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dateinfo;
+    }
+
+    public static String getStringDateFromDate(Date date, int index) {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        String dateinfo = "";
+        switch (index) {
+            case 0:
+                dateFormat = new SimpleDateFormat(YEAER_MONTH_DATE);
+                break;
+            case 1:
+                dateFormat = new SimpleDateFormat(SLOT_DATE_FORMAT);
+                break;
+            case 2:
+                dateFormat = new SimpleDateFormat(SLOT_DATE_FORMAT);
+                break;
+            case 3:
+                dateFormat = new SimpleDateFormat(MONTH_DATE_YEAR_TIME);
+                break;
+            case 4:
+                dateFormat = new SimpleDateFormat(YEAR_MONTH_DATE_HOURS_MIN_SEC);
+                break;
+            case 5:
+                dateFormat = new SimpleDateFormat(YEAR_MONTH_DATE_TIME_AM_PM);
+                break;
+        }
+        try {
+            dateinfo = dateFormat.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dateinfo;
+    }
 }

@@ -494,7 +494,7 @@
                     android:ellipsize="end"
                     android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:tag="fonts/Montserrat-Light.otf"
-                    android:text="no participents available"
+                    android:text="No participents available."
                     android:textColor="@color/red"
                     android:textSize="@dimen/small_text_size" />
 

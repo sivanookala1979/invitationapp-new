@@ -51,11 +51,16 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
         alreadyLoggedIn = InvtAppPreferences.isLoggedIn();
         InvtAppPreferences.setServiceRefresh(false);
         if (alreadyLoggedIn) {
-            BaseSyncher.setAccessToken(InvtAppPreferences.getAccessToken());
-            System.out.println("Existing access Token " + BaseSyncher.getAccessToken());
-            Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
-            startActivity(intent);
-            finish();
+            String token = InvtAppPreferences.getAccessToken();
+            if(token!=null && !token.isEmpty() && token.length() >10) {
+                BaseSyncher.setAccessToken(InvtAppPreferences.getAccessToken());
+                System.out.println("Existing access Token " + BaseSyncher.getAccessToken());
+                Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
+                startActivity(intent);
+                finish();
+            }else {
+                InvtAppPreferences.reset();
+            }
         }
         name = (EditText) findViewById(R.id.edit_name);
         mobileNumber = (EditText) findViewById(R.id.edit_mobileNumber);

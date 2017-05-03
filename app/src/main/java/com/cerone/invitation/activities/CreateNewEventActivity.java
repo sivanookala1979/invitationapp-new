@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -55,11 +56,9 @@ import static com.cerone.invitation.R.id.layout_start_date;
 public class CreateNewEventActivity extends BaseActivity implements OnClickListener {
 
     LinearLayout layoutStartDate, layoutStartTime, layoutEndDate, layoutEndTime, layoutCreateEvent, layoutShareEvent, layoutCancel;
-    InvtAppTimePicker startTimePicker, endTimePicker;
-    InvtAppDatePicker startDatePicker, endDatePicker;
     TextView startDay, startMonth, startYear, startHour, startMin, startMeridiem,
-            endDay, endMonth, endYear, endHour, endMin, endMeridiem, toolbarTitle;
-    EditText eventName, eventLocation, extraAddress;
+            endDay, endMonth, endYear, endHour, endMin, endMeridiem, toolbarTitle,extraAddress,startDateTime,endDateTime;
+    EditText eventName, eventLocation ;
     String eventPictureInfo = "", eventTitle;
     ServerResponse createEvent;
     Spinner recurringInfo;
@@ -81,7 +80,7 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         setContentView(R.layout.activity_create_event);
         addToolbarView();
         setFontType(R.id.event_name, R.id.event_address, R.id.start_day, R.id.start_month, R.id.start_year, R.id.start_hour, R.id.start_min, R.id.start_meridiem,
-                R.id.end_day, R.id.end_month, R.id.end_year, R.id.end_hour, R.id.end_min, R.id.end_meridiem, R.id.event_name, R.id.event_location, R.id.extra_address);
+                R.id.end_day, R.id.end_month, R.id.end_year, R.id.end_hour, R.id.end_min, R.id.end_meridiem, R.id.event_name, R.id.event_location);
         layoutStartDate = (LinearLayout) findViewById(layout_start_date);
         layoutStartTime = (LinearLayout) findViewById(R.id.layout_start_time);
         layoutEndDate = (LinearLayout) findViewById(R.id.layout_end_date);
@@ -92,7 +91,7 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         eventName = (EditText) findViewById(R.id.event_name);
         eventLocation = (EditText) findViewById(R.id.event_location);
-        extraAddress = (EditText) findViewById(R.id.extra_address);
+        extraAddress = (TextView) findViewById(R.id.extra_address);
         startDay = (TextView) findViewById(R.id.start_day);
         startMonth = (TextView) findViewById(R.id.start_month);
         startYear = (TextView) findViewById(R.id.start_year);
@@ -109,6 +108,9 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
         getLocation = (ImageView) findViewById(R.id.get_location);
         recurringInfo = (Spinner) findViewById(R.id.recurringInfo);
         imageCamera = (ImageView) findViewById(R.id.image_camera);
+        //
+        startDateTime = (TextView)findViewById(R.id.startDateTime);
+        endDateTime = (TextView)findViewById(R.id.endDateTime);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_text_view, recurringData);
         arrayAdapter.setDropDownViewResource(R.layout.spinner_text_view);
         recurringInfo.setAdapter(arrayAdapter);
@@ -188,6 +190,9 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
                 // TODO Auto-generated method stub
             }
         });
+        //UPDATE DATE AND TIMES
+        updateDateTime(endDateTime,collectEndDateTime());
+        updateDateTime(startDateTime,collectStartDateTime());
     }
     private Target loadtarget;
 
@@ -333,14 +338,24 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
 
     private void collectEventData() {
         event.setName(eventName.getText().toString());
-        String startDateInfo = startDay.getText().toString()+"-"+startMonth.getText().toString()+"-"+startYear.getText().toString() + " " + startHour.getText().toString()+":"+startMin.getText().toString() +" "+startMeridiem.getText().toString();
-        String endDateInfo = endDay.getText().toString()+"-"+endMonth.getText().toString()+"-"+endYear.getText().toString() + " " + endHour.getText().toString()+":"+endMin.getText().toString() +" "+endMeridiem.getText().toString();
+        String startDateInfo = collectStartDateTime();
+        String endDateInfo = collectEndDateTime();
         event.setStartDateTime(startDateInfo);
         event.setEndDateTime(endDateInfo);
         event.setImageData(eventPictureInfo);
         event.setAddress(eventLocation.getText().toString());
         event.setExtraAddress(extraAddress.getText().toString());
         event.setRecurringType(recurringInfo.getSelectedItem().toString());
+    }
+
+    @NonNull
+    private String collectEndDateTime() {
+        return endDay.getText().toString()+"-"+endMonth.getText().toString()+"-"+endYear.getText().toString() + " " + endHour.getText().toString()+":"+endMin.getText().toString() +" "+endMeridiem.getText().toString();
+    }
+
+    @NonNull
+    private String collectStartDateTime() {
+        return startDay.getText().toString()+"-"+startMonth.getText().toString()+"-"+startYear.getText().toString() + " " + startHour.getText().toString()+":"+startMin.getText().toString() +" "+startMeridiem.getText().toString();
     }
 
     private boolean isEventDataValid() {
@@ -446,10 +461,17 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
                 endHour.setText(""+endTime[0]);
                 endMin.setText(""+endTime[1]);
                 endMeridiem.setText(""+endTime[2]);
+                String startDateInfo = collectStartDateTime();
+                updateDateTime(startDateTime,startDateInfo);
                 dialog.cancel();
             }
+
+
         });
         dialog.show();
+    }
+    public void updateDateTime(TextView dateTimeField, String formattedDateTime) {
+        dateTimeField.setText(StringUtils.getStringDateFromDate(StringUtils.getDateFromString(formattedDateTime,5),3));
     }
 
     private void endDateAndTimeDialog(){
@@ -517,6 +539,8 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
                 endHour.setText(hour.length()==1?"0"+hour:hour);
                 endMin.setText(minute.length()==1?"0"+minute:minute);
                 endMeridiem.setText(AMPM);
+                String endDateInfo = collectEndDateTime();
+                updateDateTime(endDateTime,endDateInfo);
                 dialog.cancel();
             }
         });
@@ -531,8 +555,8 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
             event.setLatitude(eventLocationDetails.getLatitude());
             event.setLongitude(eventLocationDetails.getLongitude());
             event.setAddress(eventLocationDetails.getAddress());
-            updateLocationDetails();
             count++;
+            updateLocationDetails();
         }
         if ((requestCode == InvitationAppConstants.IMAG_LOAD || requestCode == InvitationAppConstants.IMAGE_CAPTURE) && resultCode == RESULT_OK) {
             Bitmap bitmap;
@@ -551,9 +575,13 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
 
     private void updateLocationDetails() {
         if (event.getAddress() != null && event.getAddress().length() > 0) {
-            if(count == 1)
-            extraAddress.setText(eventLocation.getText().toString());
+            Log.d("Location","Count "+count+" new address "+eventLocation.getText());
+            if(count == 1) {
+                extraAddress.setText(eventLocation.getText().toString());
+                extraAddress.setVisibility(View.VISIBLE);
+            }
             eventLocation.setText(event.getAddress());
+
         } else {
             eventLocation.setText("");
             eventLocation.setHint("Event Location");

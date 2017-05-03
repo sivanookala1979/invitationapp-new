@@ -200,6 +200,8 @@ public class LocationActivity extends BaseActivity implements OnClickListener,On
     @Override
     public void onMapReady(GoogleMap map) {
         this.googleMap = map;
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.setMyLocationEnabled(true);
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
             @Override

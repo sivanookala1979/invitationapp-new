@@ -35,7 +35,7 @@
             android:ellipsize="end"
             android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
             android:tag="fonts/Montserrat-Light.otf"
-            android:text="no appropriate events"
+            android:text="Nothing is Happening.Do you want to create an event?"
             android:textSize="@dimen/text_medium" />
 
     </LinearLayout>

@@ -36,6 +36,8 @@ import com.ramotion.foldingcell.FoldingCell;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cerone.invitation.R.id.view;
+
 /**
  * Created by adarsh on 3/19/17.
  */
@@ -47,6 +49,7 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
     EventSyncher eventSyncher = new EventSyncher();
     FoldingCellListAdapter adapter;
     ServerResponse serverResponse;
+    View fragmentView;
     private HomeScreenCommunicator activityCommunicator;
 
     boolean eventFilter = true, invitationFilter = true;
@@ -60,7 +63,6 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_folding_layout, container, false);
         eventsList = (ListView) view.findViewById(R.id.events_list);
-        eventsList.setEmptyView(view.findViewById( R.id.empty_list_view));
         adapter = new FoldingCellListAdapter(getActivity(), allEventsList);
         eventsList.setAdapter(adapter);
         eventsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -159,6 +161,7 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
 
         activityCommunicator = (HomeScreenCommunicator) getActivity();
         loadEvents();
+        fragmentView = view;
         return view;
     }
 
@@ -201,6 +204,7 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
 
                 @Override
                 public void afterPostExecute() {
+                    eventsList.setEmptyView(fragmentView.findViewById( R.id.empty_list_view));
                     if(allEventsList!=null){
                         adapter.updateList(allEventsList);
                         applyFilters();

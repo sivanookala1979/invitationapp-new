@@ -216,7 +216,7 @@
           android:ellipsize="end"
           android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
           android:tag="fonts/Montserrat-Light.otf"
-          android:text="no appropriate events"
+          android:text="Events not found."
           android:textSize="@dimen/text_medium" />
 
   </LinearLayout>
