@@ -63,6 +63,7 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
         ImageView image = (ImageView) findViewById(R.id.toolbarEvent);
         image.setVisibility(View.INVISIBLE);
         listView = (ListView) findViewById(R.id.events_list);
+        listView.setEmptyView(findViewById( R.id.empty_list_view));
         listView.setOnItemClickListener(this);
         groupId = getIntent().getExtras().getInt("groupId");
         eventId = getIntent().getExtras().getInt("eventId");

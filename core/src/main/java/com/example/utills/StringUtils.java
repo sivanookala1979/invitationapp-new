@@ -24,7 +24,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import static android.R.attr.x;
 import static com.example.syncher.BaseSyncher.exceptionHandler;
 
 
@@ -35,12 +34,14 @@ public class StringUtils {
     public static final SimpleDateFormat newEventDateFormat = new SimpleDateFormat("dd MM yyyy");
     public static final SimpleDateFormat newEventTimeFormat = new SimpleDateFormat("hh mm a");
     public static final SimpleDateFormat eventInfoFormat = new SimpleDateFormat("E, yyyy MMM dd - hh:mm a");
+    public static final SimpleDateFormat newEventDateTimeFormat = new SimpleDateFormat("MMM dd,yyyy EEE hh:mm a");
 
     public static final String YEAER_MONTH_DATE = "yyyy-MM-dd";
     public static final String SLOT_DATE_FORMAT = "EEEE" + ", " + " dd MMMM yyyy";
     public static final String MONTH_DATE_YEAR_TIME = "MMM dd,yyyy EEE hh:mm a";
     public static final String YEAR_MONTH_DATE_HOURS_MIN_SEC = "yyyy-MM-dd HH:mm:ss";
     public static final String YEAR_MONTH_DATE_TIME_AM_PM = "dd-MM-yyyy hh:mm a";
+    public static final String NEW_EVENT_DATE_TIME_FORMAT = "MMM dd,yyyy EEE hh:mm a";
 
 
     public static Date StringToDate(String date) {
@@ -51,7 +52,7 @@ public class StringUtils {
     public static Date StringToDateByIndex(String date, int index) {
         Log.d("old date", date);
         Date dateTime = null;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat((index == 0) ? YEAR_MONTH_DATE_HOURS_MIN_SEC : YEAR_MONTH_DATE_TIME_AM_PM);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat((index == 0) ? YEAR_MONTH_DATE_HOURS_MIN_SEC : NEW_EVENT_DATE_TIME_FORMAT);
         try {
             dateTime = simpleDateFormat.parse(date);
         } catch (ParseException ex) {
@@ -133,10 +134,10 @@ public class StringUtils {
     }
 
     public static boolean validateStartAndEndDates(String startDateInfo, String endDateInfo) {
-        Date startDate = null;
-        Date endDate = null;
+        Date startDate;
+        Date endDate;
         boolean status = true;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         try {
             startDate = simpleDateFormat.parse(startDateInfo);
             endDate = simpleDateFormat.parse(endDateInfo);
@@ -148,13 +149,38 @@ public class StringUtils {
                 System.out.println("Date1 is before Date2");
             }
             if (startDate.equals(endDate)) {
-                status = false;
                 System.out.println("Date1 is equal Date2");
             }
         } catch (Exception ex) {
             System.out.println("Exception " + ex);
         }
         System.out.println(startDateInfo + " : " + endDateInfo + " Status " + status);
+        return status;
+    }
+
+    public static boolean validateStartAndEndTimes(String startTimeInfo, String endTimeInfo) {
+        Date startDate;
+        Date endDate;
+        boolean status = true;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a");
+        try {
+            startDate = simpleDateFormat.parse(startTimeInfo);
+            endDate = simpleDateFormat.parse(endTimeInfo);
+            if (startDate.after(endDate)) {
+                System.out.println("Time1 is after Time2");
+                status = false;
+            }
+            if (startDate.before(endDate)) {
+                System.out.println("Time1 is before Time2");
+            }
+            if (startDate.equals(endDate)) {
+                status = false;
+                System.out.println("Time1 is equal Date2");
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception " + ex);
+        }
+        System.out.println(startTimeInfo + " : " + endTimeInfo + " Status " + status);
         return status;
     }
 
@@ -270,6 +296,10 @@ public class StringUtils {
                 case 5:
                     info = eventInfoFormat.format(dateTime);
                     break;
+                case 6:
+                    info = newEventDateTimeFormat.format(dateTime);
+                    break;
+
                 default:
                     break;
             }
@@ -293,7 +323,7 @@ public class StringUtils {
     public static boolean isOldDate(String dateTimeInfo) {
         boolean status = false;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             Date date1 = sdf.parse(dateTimeInfo);
             Date date2 = sdf.parse(sdf.format(new Date()));
             System.out.println(sdf.format(date1));

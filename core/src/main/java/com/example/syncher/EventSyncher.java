@@ -50,7 +50,6 @@ public class EventSyncher extends BaseSyncher {
             object.put("latitude", event.getLatitude());
             object.put("longitude", event.getLongitude());
             object.put("address", event.getAddress());
-            //object.put("address", event.getAddress());
             object.put("private", event.isPrivateType());
             object.put("remainder", event.isRemainder());
             object.put("status", event.getStatus());

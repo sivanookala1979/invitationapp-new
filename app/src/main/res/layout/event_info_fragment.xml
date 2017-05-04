@@ -250,7 +250,7 @@
                         android:layout_height="25dp"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/event_location"
+                        android:src="@drawable/location_icon"
                         android:tint="@color/happening_orange" />
                 </RelativeLayout>
 

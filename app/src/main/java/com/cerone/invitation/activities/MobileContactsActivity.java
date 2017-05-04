@@ -2,7 +2,6 @@ package com.cerone.invitation.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewCompat;
@@ -12,7 +11,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -159,6 +157,7 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
     }
 
     private void showEventData() throws ParseException {
+        Event eventDetails = InvtAppPreferences.getEventDetails();
         TextView eventDate = (TextView) findViewById(R.id.event_date);
         TextView eventTime = (TextView) findViewById(R.id.event_time);
         TextView eventLocation = (TextView) findViewById(R.id.event_address);

@@ -106,10 +106,6 @@
 
             </android.support.v7.widget.Toolbar>
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -126,260 +122,6 @@
                         android:padding="10dp"
                         android:singleLine="true"
                         android:textSize="@dimen/text_medium" />
-
-                    <LinearLayout
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="5"
-                            android:background="@drawable/edit_text_border"
-                            android:orientation="vertical">
-
-                            <com.cerone.invitation.helpers.CeroneTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/date_time_text_border"
-                                android:gravity="center"
-                                android:tag="fonts/Montserrat-Light.otf"
-                                android:text="Start Date/Time"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/small_text_size" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/edit_text_border"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/start_day"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="30"
-                                    android:textSize="@dimen/small_text_size" />
-
-                                <TextView
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/grey_light" />
-
-                                <TextView
-                                    android:id="@+id/start_month"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="Mar"
-                                    android:textSize="@dimen/small_text_size" />
-
-                                <TextView
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/grey_light" />
-
-
-                                <TextView
-                                    android:id="@+id/start_year"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="2017"
-                                    android:textSize="@dimen/small_text_size" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/layout_start_time"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/edit_text_border"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/start_hour"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="6hr"
-                                    android:textSize="@dimen/small_text_size" />
-
-                                <TextView
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/grey_light" />
-
-                                <TextView
-                                    android:id="@+id/start_min"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="30min"
-                                    android:textSize="@dimen/small_text_size" />
-
-                                <TextView
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/grey_light" />
-
-
-                                <TextView
-                                    android:id="@+id/start_meridiem"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="PM"
-                                    android:textSize="@dimen/small_text_size" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="5"
-                            android:background="@drawable/edit_text_border"
-                            android:orientation="vertical">
-
-                            <com.cerone.invitation.helpers.CeroneTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/date_time_text_border"
-                                android:gravity="center"
-                                android:tag="fonts/Montserrat-Light.otf"
-                                android:text="End Date/Time"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/small_text_size" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/edit_text_border"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/end_day"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="30"
-                                    android:textSize="@dimen/small_text_size" />
-
-                                <TextView
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/grey_light" />
-
-                                <TextView
-                                    android:id="@+id/end_month"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="Mar"
-                                    android:textSize="@dimen/small_text_size" />
-
-                                <TextView
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/grey_light" />
-
-
-                                <TextView
-                                    android:id="@+id/end_year"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="2017"
-                                    android:textSize="@dimen/small_text_size" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/layout_end_time"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/edit_text_border"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/end_hour"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="6hr"
-                                    android:textSize="@dimen/small_text_size" />
-
-                                <TextView
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/grey_light" />
-
-                                <TextView
-                                    android:id="@+id/end_min"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="30min"
-                                    android:textSize="@dimen/small_text_size" />
-
-                                <TextView
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/grey_light" />
-
-
-                                <TextView
-                                    android:id="@+id/end_meridiem"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="PM"
-                                    android:textSize="@dimen/small_text_size" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -448,13 +190,10 @@
                             android:textSize="@dimen/text_medium" />
                     </LinearLayout>
 
-
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_margin="15dp"
-                        android:layout_marginBottom="5dp"
                         android:background="@drawable/edit_text_border"
                         android:orientation="horizontal"
                         android:weightSum="10">
@@ -534,10 +273,6 @@
                 </LinearLayout>
 
             </ScrollView>
-
-        </LinearLayout>
-    </ScrollView>
-
 
 </RelativeLayout>
 
