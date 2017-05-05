@@ -3,9 +3,7 @@ package com.cerone.invitation.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -59,32 +57,9 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
         super.onCreate(savedInstanceState);
         //FOR COLLAPSING VIEW
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-       // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //
         setContentView(R.layout.share_events_layout_new);//contacts_activity_layout
         addToolbarView();
         setFontType(R.id.share, R.id.event_date, R.id.event_time, R.id.event_address, R.id.search);
-        //FOR COLLAPSING VIEW
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    toolbar.setBackground(getResources().getDrawable(R.drawable.my_theme));
-                    isShow = true;
-                } else if(isShow) {
-                  //  toolbar.getBackground().setAlpha(0);
-                    isShow = false;
-                }
-            }
-        });
-        // final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         searchTextField = (EditText) findViewById(R.id.search);
         contactsListView = (ListView) findViewById(R.id.contactsListView);
         ViewCompat.setNestedScrollingEnabled(contactsListView,true);
@@ -136,24 +111,7 @@ public class MobileContactsActivity extends BaseActivity implements AdapterView.
             e.printStackTrace();
         }
 
-//        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                swipeView.setRefreshing(true);
-//                allContactsList.clear();
-//                loadAllMobileContacts();
-//                Log.d("Swipe", "Refreshing Number");
-//                ( new Handler()).postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        swipeView.setRefreshing(false);
-//                    }
-//                }, 1000);
-//            }
-//        });
-
         eventDetails = InvtAppPreferences.getEventDetails();
-
     }
 
     private void showEventData() throws ParseException {
