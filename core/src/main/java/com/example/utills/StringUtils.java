@@ -380,7 +380,7 @@ public class StringUtils {
         String[] t = dateTime.split(" ");
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         Date time = formatter.parse(t[1]);
-        SimpleDateFormat formatt = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat formatt = new SimpleDateFormat("hh:mma");
         String newTime = formatt.format(time);
         return newTime;
     }

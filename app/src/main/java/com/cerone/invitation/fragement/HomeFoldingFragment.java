@@ -36,8 +36,6 @@ import com.ramotion.foldingcell.FoldingCell;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cerone.invitation.R.id.view;
-
 /**
  * Created by adarsh on 3/19/17.
  */
@@ -129,8 +127,8 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                                 acceptOrRejectInvitation(false, event, locationPermission);
                             }
                         break;
-                    case R.id.showEventIcon:
                     case R.id.showEventDetails:
+                    case R.id.showEventIcon:
                         intent = new Intent(getActivity(), EventDetailsActivity.class);
                         startActivity(intent);
                         break;
@@ -190,7 +188,6 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
             }
         }
         adapter.updateList(filterList);
-
     }
 
     private void loadEvents() {

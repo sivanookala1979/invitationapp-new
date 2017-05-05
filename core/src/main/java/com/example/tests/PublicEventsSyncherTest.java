@@ -38,6 +38,22 @@ public class PublicEventsSyncherTest extends TestCase {
 //                assertEquals(1, listOfPublicEvents.size());
 //            }
 
+    public void testGetFreePublicEventsHAPPYFlow() throws Exception {
+        // Setup fixture
+        // Exercise SUT
+        List<PublicEvent> freeEvents = sut.getFreePublicEvents(1);
+        // Verify outcome
+        assertEquals(1, freeEvents.size());
+    }
+
+    public void testGetWeekendPublicEventsHAPPYFlow() throws Exception {
+        // Setup fixture
+        // Exercise SUT
+        List<PublicEvent> weekendEvents = sut.getWeekendPublicEvents(3);
+        // Verify outcome
+        assertEquals(1, weekendEvents.size());
+    }
+
 
     //------------------------------------------------------------------------------------------------------------------
     // Setup

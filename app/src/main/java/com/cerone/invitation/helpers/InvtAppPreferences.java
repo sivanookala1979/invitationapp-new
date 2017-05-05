@@ -16,6 +16,7 @@ import com.example.dataobjects.Group;
 import com.example.dataobjects.Invitation;
 import com.example.dataobjects.Invitee;
 import com.example.dataobjects.MyMarker;
+import com.example.dataobjects.PublicEvent;
 import com.example.dataobjects.ServiceInformation;
 import com.example.dataobjects.User;
 import com.example.dataobjects.UserLocation;
@@ -24,6 +25,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.cerone.invitation.R.drawable.event;
 
 
 /**
@@ -37,6 +40,7 @@ public class InvtAppPreferences {
     private static final String LOGGEDIN = "loggedIn";
     public static SharedPreferences pref;
     private static final String EVENT_DETAILS = "Event Details";
+    private static final String PUBLIC_EVENT_DETAILS = "Event Details";
     private static final String EVENT_LOCATION = "eventLocation";
     private static final String MOST_RECENT_ADDRESS = "mostRecentAddress";
     private static final String ZOOM_POSITION = "zoom";
@@ -135,6 +139,18 @@ public class InvtAppPreferences {
     public static void setEventDetails(Event event) {
         String eventDetails = new Gson().toJson(event);
         pref.edit().putString(EVENT_DETAILS, eventDetails).commit();
+    }
+
+    public static PublicEvent getPublicEventDetails() {
+        java.lang.reflect.Type type = new TypeToken<PublicEvent>() {
+        }.getType();
+        PublicEvent publicEvent = new Gson().fromJson(pref.getString(PUBLIC_EVENT_DETAILS, ""), type);
+        return publicEvent;
+    }
+
+    public static void setPublicEventDetails(PublicEvent publicEvent) {
+        String publicEventDetails = new Gson().toJson(publicEvent);
+        pref.edit().putString(PUBLIC_EVENT_DETAILS, publicEventDetails).commit();
     }
 
     public static void setParticipantLocations(List<MyMarker> inviteesPositions) {

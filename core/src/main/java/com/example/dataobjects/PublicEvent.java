@@ -15,7 +15,7 @@ public class PublicEvent {
     String city;
     String service;
     String image;
-    boolean weekend;
+    boolean weekend = false;
     boolean favourite;
     boolean cart;
     boolean facebook;

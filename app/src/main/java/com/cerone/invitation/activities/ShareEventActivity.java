@@ -113,12 +113,10 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
     private void showEventData() {
         Event eventDetails = InvtAppPreferences.getEventDetails();
         TextView eventName = (TextView) findViewById(R.id.eventNameInfo);
-        //TextView eventDescription = (TextView) findViewById(R.id.eventDescription);
         TextView eventDate = (TextView) findViewById(R.id.event_date);
         TextView eventTime = (TextView) findViewById(R.id.event_time);
         TextView eventLocation = (TextView) findViewById(R.id.event_address);
         eventName.setText(eventDetails.getName().trim() + " Details");
-        //eventDescription.setText(eventDetails.getDescription());
         try {
             eventDate.setText(StringUtils.getEventDateFormat(eventDetails.getStartDateTime()));
         } catch (ParseException e) {

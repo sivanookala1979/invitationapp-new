@@ -202,6 +202,8 @@ public class SignInActivity extends BaseActivity implements OnClickListener {
                     } else {
                         ToastHelper.yellowToast(SignInActivity.this, otpResult);
                     }
+                }else {
+                    ToastHelper.redToast(getApplicationContext(), "oops something went wrong");
                 }
             }
         }.execute();

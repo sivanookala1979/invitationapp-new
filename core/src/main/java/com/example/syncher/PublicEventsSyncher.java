@@ -38,7 +38,7 @@ public class PublicEventsSyncher extends BaseSyncher{
                             publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
                         if(jsonObject.has("address"))
                             publicEvent.setAddress(jsonObject.getString("address"));
-                        if(jsonObject.has("is_weekend"))
+                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
                             publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
                         if(jsonObject.has("city"))
                             publicEvent.setCity(jsonObject.getString("city"));
@@ -76,6 +76,42 @@ public class PublicEventsSyncher extends BaseSyncher{
         return result;
     }
 
+    public SaveResult removeFavourites(int eventId, int cityId){
+        SaveResult result = new SaveResult();
+        try{
+            String response = HTTPUtils.getDataFromServer(BASE_URL + "public_events/remove_favourite_event.json?public_event_id="+eventId+"&city_id="+cityId, "GET", true);
+            JSONObject responseJSON = new JSONObject(response);
+            if (responseJSON.has("status")) {
+                result.setStatus(responseJSON.getString("status"));
+                result.setSuccess(true);
+            } else if(responseJSON.has("error_message")) {
+                result.setErrorMessage(responseJSON.getString("error_message"));
+            }
+        }
+        catch (Exception ex) {
+            handleException(ex);
+        }
+        return result;
+    }
+
+    public SaveResult addViews(int eventId){
+        SaveResult result = new SaveResult();
+        try{
+            String response = HTTPUtils.getDataFromServer(BASE_URL + "public_events/add_views.json?public_event_id="+eventId, "GET", true);
+            JSONObject responseJSON = new JSONObject(response);
+            if (responseJSON.has("status")) {
+                result.setStatus(responseJSON.getString("status"));
+                result.setSuccess(true);
+            } else if(responseJSON.has("error_message")) {
+                result.setErrorMessage(responseJSON.getString("error_message"));
+            }
+        }
+        catch (Exception ex) {
+            handleException(ex);
+        }
+        return result;
+    }
+
     public List<PublicEvent> getMyFavourites(int cityId) {
         List<PublicEvent> listOfPublicEvents = new ArrayList<PublicEvent>();
         try {
@@ -98,7 +134,7 @@ public class PublicEventsSyncher extends BaseSyncher{
                             publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
                         if(jsonObject.has("address"))
                             publicEvent.setAddress(jsonObject.getString("address"));
-                        if(jsonObject.has("is_weekend"))
+                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
                             publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
                         if(jsonObject.has("city"))
                             publicEvent.setCity(jsonObject.getString("city"));
@@ -140,7 +176,7 @@ public class PublicEventsSyncher extends BaseSyncher{
                             publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
                         if(jsonObject.has("address"))
                             publicEvent.setAddress(jsonObject.getString("address"));
-                        if(jsonObject.has("is_weekend"))
+                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
                             publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
                         if(jsonObject.has("city"))
                             publicEvent.setCity(jsonObject.getString("city"));
@@ -183,7 +219,7 @@ public class PublicEventsSyncher extends BaseSyncher{
                             publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
                         if(jsonObject.has("address"))
                             publicEvent.setAddress(jsonObject.getString("address"));
-                        if(jsonObject.has("is_weekend"))
+                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
                             publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
                         if(jsonObject.has("city"))
                             publicEvent.setCity(jsonObject.getString("city"));

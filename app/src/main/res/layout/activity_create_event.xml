@@ -7,6 +7,26 @@
     android:layout_height="match_parent"
     tools:context="com.cerone.invitation.activities.CreateNewEventActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/my_theme"
+        android:gravity="center"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="New Event"
+            android:textColor="@android:color/white" />
+
+    </android.support.v7.widget.Toolbar>
+
     <LinearLayout
         android:id="@+id/actionsLayout"
         android:layout_width="match_parent"
@@ -76,8 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/actionsLayout"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_below="@id/toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -85,26 +104,6 @@
             android:background="@color/white"
             android:fitsSystemWindows="true"
             android:orientation="vertical">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/my_theme"
-                android:gravity="center"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark">
-
-                <TextView
-                    android:id="@+id/toolbar_title"
-                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="New Event"
-                    android:textColor="@android:color/white" />
-
-            </android.support.v7.widget.Toolbar>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -164,7 +163,6 @@
                         android:background="@drawable/edit_text_border"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:layout_marginBottom="5dp"
                         android:layout_marginTop="10dp"
                         android:orientation="vertical">
 

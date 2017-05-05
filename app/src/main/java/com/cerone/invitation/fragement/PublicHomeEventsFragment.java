@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.activities.PublicEventDetailsActivity;
 import com.cerone.invitation.activities.PublicHomeActivity;
 import com.cerone.invitation.adapter.PublicFoldingCellListAdapter;
 import com.cerone.invitation.helpers.FontTypes;
@@ -43,7 +44,7 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
     EditText searchText;
     ImageView iconSearch;
     ListView eventsList;
-    LinearLayout selectorTags, searchTags, searchBar;
+    LinearLayout selectorTags, searchTags, searchBar, showEventDetails ;
     List<PublicEvent> dummyEvents = new ArrayList<PublicEvent>();
     List<PublicEvent> newEventsList = new ArrayList<PublicEvent>();
     List<PublicEvent> favouriteEvents = new ArrayList<PublicEvent>();
@@ -51,13 +52,13 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
     List<PublicEvent> weekendEvents = new ArrayList<PublicEvent>();
     PublicEventsSyncher publicEventSyncher = new PublicEventsSyncher();
     PublicFoldingCellListAdapter adapter;
-    EventFilter eventFilters;
+    EventFilter eventFilters = new EventFilter();
     View mainView;
-    City city;
     String selectedCity;
-    SaveResult saveResult;
-    PublicEvent publicEvent;
-
+    City city = new City();
+    SaveResult saveResult = new SaveResult();
+    PublicEvent publicEvent = new PublicEvent();
+    boolean isFavourite;
 
     public static PublicHomeEventsFragment newInstance() {
         PublicHomeEventsFragment fragment = new PublicHomeEventsFragment();
@@ -75,6 +76,7 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
         selectorTags = (LinearLayout) view.findViewById(R.id.selector_tags);
         searchTags = (LinearLayout) view.findViewById(R.id.search_tags);
         searchBar = (LinearLayout) view.findViewById(R.id.search_bar);
+        showEventDetails = (LinearLayout) view.findViewById(R.id.showEventDetails);
         iconSearch.setOnClickListener(this);
         eventsList.setOnItemClickListener(this);
 
@@ -102,37 +104,84 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        
+        Intent intent;
         publicEvent = newEventsList.get(i);
-
+        InvtAppPreferences.setPublicEventDetails(publicEvent);
+        //addViews(publicEvent.getId());
         switch (view.getId()) {
             case R.id.header_favourite:
-                addFavourites(publicEvent.getId(), city.getId());
+            case R.id.footer_favourite:
+                if(!isFavourite){
+                    addFavourites(publicEvent.getId(), city.getId());
+                    isFavourite = true;
+                }else{
+                    removeFavourites(publicEvent.getId(), city.getId());
+                    isFavourite = false;
+                }
                 break;
             case R.id.header_cart:
-                //publicEvent.setCart(true);
-                Toast.makeText(getActivity(), "to be implement", Toast.LENGTH_SHORT).show();
+            case R.id.footer_cart:
+                publicEvent.setCart(true);
+                intent = new Intent(getActivity(), PublicEventDetailsActivity.class);
+                startActivity(intent);
                 break;
             case R.id.header_facebook:
+            case R.id.footer_facebook:
                 //publicEvent.setFacebook(true);
                 Toast.makeText(getActivity(), "to be implement", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.header_friendsAttending:
+            case R.id.footer_friendsAttending:
                 //publicEvent.setFriendsAttending(true);
                 Toast.makeText(getActivity(), "to be implement", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.header_close:
+            case R.id.footer_close:
                 //publicEvent.setClose(true);
                 Toast.makeText(getActivity(), "to be implement", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.showEventDetails:
+            case R.id.showEventIcon:
+                intent = new Intent(getActivity(), PublicEventDetailsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.locationAddress:
+//                if(publicEvent!=null&&!publicEvent.getAddress().isEmpty()) {
+//                    intent = new Intent(getActivity(), LocationDetailsActivity.class);
+//                    startActivity(intent);
+//                }
+                Toast.makeText(getActivity(), "Lat, Long not provided", Toast.LENGTH_LONG).show();
                 break;
             default:
                 ((FoldingCell) view).toggle(false);
                 // register in adapter that state for selected cell is toggled
                 adapter.registerToggle(i);
                 break;
-
         }
-        adapter.updateList(newEventsList);
+        //adapter.updateList(newEventsList);
+    }
+
+    private void addViews(final int eventId) {
+        if (MobileHelper.hasNetwork(getActivity(), getActivity(), " to add views", null)) {
+            new InvtAppAsyncTask(getActivity()) {
+
+                @Override
+                public void process() {
+                    saveResult = publicEventSyncher.addViews(eventId);
+                }
+
+                @Override
+                public void afterPostExecute() {
+                    if(saveResult!=null){
+                        if(saveResult.isSuccess()){
+                            Toast.makeText(getActivity(), saveResult.getStatus(), Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getActivity(), saveResult.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }.execute();
+        }
     }
 
     private void addFavourites(final int eventId, final int cityId) {
@@ -160,8 +209,33 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
         }
     }
 
+    private void removeFavourites(final int eventId, final int cityId) {
+        if (MobileHelper.hasNetwork(getActivity(), getActivity(), " to remove favourite", null)) {
+            new InvtAppAsyncTask(getActivity()) {
+
+                @Override
+                public void process() {
+                    saveResult = publicEventSyncher.removeFavourites(eventId, cityId);
+                }
+
+                @Override
+                public void afterPostExecute() {
+                    if(saveResult!=null){
+                        if(saveResult.isSuccess()){
+                            publicEvent.setFavourite(false);
+                            adapter.updateList(newEventsList);
+                            Toast.makeText(getActivity(), saveResult.getStatus(), Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getActivity(), saveResult.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }.execute();
+        }
+    }
+
     private void getMyFavourites() {
-        if (MobileHelper.hasNetwork(getActivity(), getActivity(), " to get events", null)) {
+        if (MobileHelper.hasNetwork(getActivity(), getActivity(), " to get favourite events", null)) {
             new InvtAppAsyncTask(getActivity()) {
 
                 @Override
@@ -185,7 +259,7 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
     }
 
     private void getFreePublicEvents() {
-        if (MobileHelper.hasNetwork(getActivity(), getActivity(), " to get events", null)) {
+        if (MobileHelper.hasNetwork(getActivity(), getActivity(), " to get free events", null)) {
             new InvtAppAsyncTask(getActivity()) {
 
                 @Override

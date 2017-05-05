@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -85,6 +86,9 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
             viewHolder.footerFacebook = (ImageView) cell.findViewById(R.id.footer_facebook);
             viewHolder.footerFriendsAttending = (ImageView) cell.findViewById(R.id.footer_friendsAttending);
             viewHolder.footerClose = (ImageView) cell.findViewById(R.id.footer_close);
+            viewHolder.showEventIcon = (ImageView) cell.findViewById(R.id.showEventIcon);
+            viewHolder.locationAddress = (ImageView) cell.findViewById(R.id.locationAddress);
+            viewHolder.showEventDetails = (LinearLayout) cell.findViewById(R.id.showEventDetails);
 
             cell.setTag(viewHolder);
 
@@ -111,18 +115,23 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
         }
         if(publicEvent.isFavourite()){
             viewHolder.headerFavourite.setColorFilter(context.getResources().getColor(R.color.happening_orange));
+            viewHolder.footerFavourite.setColorFilter(context.getResources().getColor(R.color.happening_orange));
         }
         if(publicEvent.isCart()){
             viewHolder.headerCart.setColorFilter(context.getResources().getColor(R.color.happening_orange));
+            viewHolder.footerCart.setColorFilter(context.getResources().getColor(R.color.happening_orange));
         }
         if(publicEvent.isFacebook()){
             viewHolder.headerFacebook.setColorFilter(context.getResources().getColor(R.color.happening_orange));
+            viewHolder.footerFacebook.setColorFilter(context.getResources().getColor(R.color.happening_orange));
         }
         if(publicEvent.isFriendsAttending()){
             viewHolder.headerFriendsAttending.setColorFilter(context.getResources().getColor(R.color.happening_orange));
+            viewHolder.footerFriendsAttending.setColorFilter(context.getResources().getColor(R.color.happening_orange));
         }
         if(publicEvent.isClose()){
             viewHolder.headerClose.setColorFilter(context.getResources().getColor(R.color.happening_orange));
+            viewHolder.footerClose.setColorFilter(context.getResources().getColor(R.color.happening_orange));
         }
 
         viewHolder.footerEventName.setText(publicEvent.getEventName());
@@ -138,10 +147,18 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
         }
 
         viewHolder.headerFavourite.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.footerFavourite.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.headerCart.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.footerCart.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.headerFacebook.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.footerFacebook.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.headerFriendsAttending.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.footerFriendsAttending.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.headerClose.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.footerClose.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.showEventIcon.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.showEventDetails.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.locationAddress.setOnClickListener(createOnClickListener(position, parent));
 
         return cell;
     }
@@ -188,8 +205,9 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
 
     // View lookup cache
     private static class ViewHolder {
-        ImageView eventIconHeader, headerFavourite, headerCart, headerFacebook, headerFriendsAttending, headerClose, footerFavourite, footerCart, footerFacebook, footerFriendsAttending, footerClose;
+        ImageView eventIconHeader, headerFavourite, headerCart, headerFacebook, headerFriendsAttending, headerClose, footerFavourite, footerCart, footerFacebook, footerFriendsAttending, footerClose, showEventIcon, locationAddress;
         TextView headerEventName, eventAddressHeader, eventTimingsHeading, entryFeeHeader, footerEventName, footerEventDate, footerEventTime, footerEventAddress;
+        LinearLayout showEventDetails;
 
     }
 }
