@@ -33,6 +33,18 @@
         android:background="@color/white"
         android:layout_below="@+id/toolbar" />
 
+    <com.cerone.invitation.helpers.CeroneTextView
+        android:id="@+id/empty_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:gravity="center"
+        android:ellipsize="end"
+        android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
+        android:tag="fonts/Montserrat-Light.otf"
+        android:text="Chat rooms not available"
+        android:textSize="@dimen/text_medium" />
+
     <LinearLayout
         android:id="@+id/customer_suport"
         android:layout_width="match_parent"

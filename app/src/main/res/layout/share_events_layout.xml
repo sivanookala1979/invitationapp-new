@@ -243,13 +243,15 @@
                 android:visibility="gone"/>
 
             <com.cerone.invitation.helpers.CeroneTextView
+                android:id="@+id/txt_attendees"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="ATTENDEES"
                 android:textColor="@color/blue"
                 android:tag="fonts/Montserrat-Light.otf"
-                android:textSize="@dimen/text_medium" />
+                android:textSize="@dimen/text_medium"
+                android:visibility="gone"/>
 
             <ListView
                 android:id="@+id/attendeeslist"

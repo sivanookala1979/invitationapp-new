@@ -40,10 +40,7 @@ import com.example.utills.StringUtils;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 
@@ -97,16 +94,11 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
         loadEventData(view);
         getAllInvitees();
         activityCommunicator = (ActivityCommunicator) getActivity();
-        String[] startTime = eventDetails.getStartDateTime().split(" ");
-        long difference = getTimeDifference(startTime[1], getCurrentTime());
-        try {
-            if (StringUtils.isCurrentDate(startTime[0]) && difference >= -30) {
-                layoutParticipants.setVisibility(View.VISIBLE);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+        int difference = StringUtils.getTimeDifferenceInMinutes(eventDetails.getStartDateTime().trim());
+        if (difference <= 30) {
+            layoutParticipants.setVisibility(View.VISIBLE);
         }
-        Log.d("difference", startTime[0] + " " + startTime[1] + " " + getCurrentTime() + " " + difference);
+        Log.d("difference", eventDetails.getStartDateTime()+" "+difference);
         return view;
     }
 
@@ -231,11 +223,15 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.invitees_layout:
-                intent = new Intent(getActivity(), ParticipantsActivity.class);
-                intent.putExtra("eventId", eventDetails.getEventId());
-                intent.putExtra("allInvitees", true);
-                intent.putExtra("title", "Invitees");
-                startActivity(intent);
+                if(eventDetails.getInviteesCount()>0) {
+                    intent = new Intent(getActivity(), ParticipantsActivity.class);
+                    intent.putExtra("eventId", eventDetails.getEventId());
+                    intent.putExtra("allInvitees", true);
+                    intent.putExtra("title", "Invitees");
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getActivity(), "no invitees available", Toast.LENGTH_LONG).show();
+                }
                 break;
             case R.id.chatLayout:
             case R.id.chatIcon:
@@ -329,32 +325,6 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                 }
             }
         }.execute();
-    }
-
-    public static String getCurrentTime() {
-
-        Calendar now = Calendar.getInstance();
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-        return formatter.format(now.getTime());
-    }
-
-    public static long getTimeDifference(String time1, String time2) {
-
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-        Date date1 = null;
-        try {
-            date1 = format.parse(time1);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Date date2 = null;
-        try {
-            date2 = format.parse(time2);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        long difference = date2.getTime() - date1.getTime();
-        return difference / (60 * 1000) % 60;
     }
 
     public static EventInfoFragment newInstance() {

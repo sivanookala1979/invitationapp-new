@@ -24,7 +24,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="15dp"
             android:layout_gravity="left"
             android:orientation="horizontal">
 
@@ -39,7 +39,7 @@
                 android:paddingTop="5dp"
                 android:text="10:20"
                 android:textColor="@color/blue_shade"
-                android:textSize="@dimen/text_size_too_small" />
+                android:textSize="@dimen/text_size_very_small" />
 
             <TextView
                 android:id="@+id/me"
@@ -63,7 +63,7 @@
             android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
             android:gravity="left"
             android:padding="5dp"
-            android:text="Sample left"
+            android:text="Sample left chat"
             emojicon:emojiconSize="28sp"
             android:layout_marginRight="18dp"
             android:textColor="@color/black"

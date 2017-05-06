@@ -14,7 +14,6 @@ import org.json.JSONObject;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -69,8 +68,24 @@ public class StringUtils {
     public static String getCurrentTime() {
 
         Calendar now = Calendar.getInstance();
-        Format formatter = new SimpleDateFormat("hh mm a");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         return formatter.format(now.getTime());
+    }
+
+    public static int getTimeDifferenceInMinutes(String later)
+    {
+        Date earlierDate = null;
+        Date laterDate = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            earlierDate = formatter.parse(formatter.format(new Date()));
+            laterDate = formatter.parse(later);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if( earlierDate == null || laterDate == null ) return 0;
+
+        return (int)((laterDate.getTime()/60000) - (earlierDate.getTime()/60000));
     }
 
     public static boolean inOrder(String startDateString, String endDateString) {

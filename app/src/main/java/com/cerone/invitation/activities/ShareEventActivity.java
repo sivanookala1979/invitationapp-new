@@ -51,6 +51,7 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
     ListView listView, groupList;
     ContactAdapter adapter;
     GroupAdapter groupAdapter;
+    TextView txtAttendees;
     Button groupsView, contactsView;
     LinearLayout layoutShareEvent, layoutCancelEvent;
     List<Group> myGroups = new ArrayList<Group>();
@@ -65,6 +66,7 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
         addToolbarView();
         setFontType(R.id.groups, R.id.contacts);
         isNewEvent = getIntent().getExtras().getBoolean("newEvent");
+        txtAttendees = (TextView) findViewById(R.id.txt_attendees);
         layoutShareEvent = (LinearLayout) findViewById(R.id.layout_shareEvent);
         layoutCancelEvent = (LinearLayout) findViewById(R.id.layout_cancelEvent);
         listView = (ListView) findViewById(R.id.attendeeslist);
@@ -220,6 +222,12 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
             groupAdapter = new GroupAdapter(getApplicationContext(), R.layout.group_item, listOfSelectedGroups, false);
             setGroupListSize();
             groupList.setAdapter(groupAdapter);
+        }
+        if(allSelectedlist.size()>0||listOfSelectedGroups.size()>0){
+            txtAttendees.setVisibility(View.VISIBLE);
+        }
+        else{
+            txtAttendees.setVisibility(View.GONE);
         }
         updateButtons();
     }

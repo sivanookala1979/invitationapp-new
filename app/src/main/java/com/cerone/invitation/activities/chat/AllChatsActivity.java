@@ -38,6 +38,7 @@ public class AllChatsActivity extends BaseActivity implements OnItemClickListene
         addToolbarView();
 
         allChatsListView = (ListView) findViewById(R.id.all_chat_rooms);
+        allChatsListView.setEmptyView(findViewById( R.id.empty_list_view));
         allChatsListView.setOnItemClickListener(this);
         chatsAdapter = new AllChatDetailsAdapter(getApplicationContext(), R.layout.all_chat_details_row, chatRooms);
         allChatsListView.setAdapter(chatsAdapter);
@@ -60,16 +61,20 @@ public class AllChatsActivity extends BaseActivity implements OnItemClickListene
                 IntraChatSyncher intraChatSyncher = new IntraChatSyncher();
                 chatRooms = new ArrayList<ChatRoom>();
                 chatRooms = intraChatSyncher.getChats();
-                for (ChatRoom chatRoom : chatRooms) {
-                    chatRoomNames.add(chatRoom.getOtherUserName() + " - " + chatRoom.getOtherUserId());
+                if(chatRooms!=null) {
+                    for (ChatRoom chatRoom : chatRooms) {
+                        chatRoomNames.add(chatRoom.getOtherUserName() + " - " + chatRoom.getOtherUserId());
+                    }
                 }
             }
 
             @Override
             public void afterPostExecute() {
-                chatsAdapter.clear();
-                chatsAdapter.addAll(chatRooms);
-                chatsAdapter.notifyDataSetChanged();
+                if(chatRooms!=null) {
+                    chatsAdapter.clear();
+                    chatsAdapter.addAll(chatRooms);
+                    chatsAdapter.notifyDataSetChanged();
+                }
             }
         }.execute();
     }

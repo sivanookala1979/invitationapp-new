@@ -14,7 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.helpers.CircleTransform;
 import com.example.dataobjects.Invitee;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +58,7 @@ public class ParticipantsAdapter extends ArrayAdapter<Invitee> {
         TextView participantMobileNumber = (TextView) row.findViewById(R.id.participant_number);
         TextView participantStatus = (TextView) row.findViewById(R.id.status);
         TextView distance = (TextView) row.findViewById(R.id.distance);
+        ImageView eventPicture = (ImageView)row.findViewById(R.id.eventPicture);
         ImageView chat = (ImageView)row.findViewById(R.id.chat);
         ImageView call = (ImageView)row.findViewById(R.id.call);
         ImageView admin = (ImageView)row.findViewById(R.id.admin);
@@ -71,6 +74,9 @@ public class ParticipantsAdapter extends ArrayAdapter<Invitee> {
         block.setOnClickListener(createOnClickListener(position,parent));
         participantName.setText(" " + invitee.getInviteeName());
         participantMobileNumber.setText(" " + invitee.getMobileNumber());
+        if(invitee.getImage()!=null&&!invitee.getImage().isEmpty()) {
+            Picasso.with(context).load(invitee.getImage()).transform(new CircleTransform()).into(eventPicture);
+        }
         //participantStatus.setText("Last seen " + invitee.getStatus() + " ago.");
         //distance.setText("" + StringUtils.getTrimmeDistance(invitee.getDistance()) + " away.");
         if (invisibleInfo) {
