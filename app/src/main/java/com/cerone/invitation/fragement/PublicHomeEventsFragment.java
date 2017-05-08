@@ -30,11 +30,12 @@ import com.example.dataobjects.EventFilter;
 import com.example.dataobjects.PublicEvent;
 import com.example.dataobjects.SaveResult;
 import com.example.syncher.PublicEventsSyncher;
-import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by adarsht on 17/04/17.
@@ -48,8 +49,10 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
     List<PublicEvent> dummyEvents = new ArrayList<PublicEvent>();
     List<PublicEvent> newEventsList = new ArrayList<PublicEvent>();
     List<PublicEvent> favouriteEvents = new ArrayList<PublicEvent>();
+    List<PublicEvent> trendingEvents = new ArrayList<PublicEvent>();
     List<PublicEvent> freeEvents = new ArrayList<PublicEvent>();
     List<PublicEvent> weekendEvents = new ArrayList<PublicEvent>();
+    Set<Integer> setId = new HashSet<>();
     PublicEventsSyncher publicEventSyncher = new PublicEventsSyncher();
     PublicFoldingCellListAdapter adapter;
     EventFilter eventFilters = new EventFilter();
@@ -58,7 +61,6 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
     City city = new City();
     SaveResult saveResult = new SaveResult();
     PublicEvent publicEvent = new PublicEvent();
-    boolean isFavourite;
 
     public static PublicHomeEventsFragment newInstance() {
         PublicHomeEventsFragment fragment = new PublicHomeEventsFragment();
@@ -84,10 +86,9 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
         city = eventFilters.getSelectedCity();
         selectedCity = city.getName();
         selectorTags(selectedCity+" trending");
-
+        getTrendingPublicEvents();
         FontTypes.setEditTextRegularFont(searchText);
-
-        applyOnClickListeners(R.id.trendingLayout, R.id.recommendedLayout, R.id.freeLayout, R.id.weekendLayout, R.id.offersLayout, R.id.friendsAttendingLayout, R.id.favoritesLayout);
+        applyOnClickListeners(R.id.trendingLayout, R.id.recommendedLayout, R.id.freeLayout, R.id.weekendLayout, R.id.offersLayout, R.id.favoritesLayout);
         return view;
     }
 
@@ -107,43 +108,38 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
         Intent intent;
         publicEvent = newEventsList.get(i);
         InvtAppPreferences.setPublicEventDetails(publicEvent);
-        //addViews(publicEvent.getId());
+        if(!setId.contains(i)){
+            addViews(publicEvent.getId());
+        }
+        setId.add(i);
         switch (view.getId()) {
             case R.id.header_favourite:
             case R.id.footer_favourite:
-                if(!isFavourite){
+                if(!publicEvent.isFavourite()){
                     addFavourites(publicEvent.getId(), city.getId());
-                    isFavourite = true;
                 }else{
                     removeFavourites(publicEvent.getId(), city.getId());
-                    isFavourite = false;
                 }
                 break;
             case R.id.header_cart:
             case R.id.footer_cart:
-                publicEvent.setCart(true);
                 intent = new Intent(getActivity(), PublicEventDetailsActivity.class);
                 startActivity(intent);
-                break;
-            case R.id.header_facebook:
-            case R.id.footer_facebook:
-                //publicEvent.setFacebook(true);
-                Toast.makeText(getActivity(), "to be implement", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.header_friendsAttending:
             case R.id.footer_friendsAttending:
-                //publicEvent.setFriendsAttending(true);
-                Toast.makeText(getActivity(), "to be implement", Toast.LENGTH_SHORT).show();
+                publicEvent.setFriendsAttending(true);
+                adapter.updateList(newEventsList);
+                InvtAppPreferences.setPublicEventDetails(publicEvent);
+                intent = new Intent(getActivity(), PublicEventDetailsActivity.class);
+                startActivity(intent);
                 break;
             case R.id.header_close:
             case R.id.footer_close:
-                //publicEvent.setClose(true);
-                Toast.makeText(getActivity(), "to be implement", Toast.LENGTH_SHORT).show();
+                cancelPublicEvents(publicEvent.getId());
                 break;
             case R.id.showEventDetails:
             case R.id.showEventIcon:
-                intent = new Intent(getActivity(), PublicEventDetailsActivity.class);
-                startActivity(intent);
                 break;
             case R.id.locationAddress:
 //                if(publicEvent!=null&&!publicEvent.getAddress().isEmpty()) {
@@ -153,12 +149,13 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
                 Toast.makeText(getActivity(), "Lat, Long not provided", Toast.LENGTH_LONG).show();
                 break;
             default:
-                ((FoldingCell) view).toggle(false);
-                // register in adapter that state for selected cell is toggled
-                adapter.registerToggle(i);
+                publicEvent.setFriendsAttending(true);
+                adapter.updateList(newEventsList);
+                InvtAppPreferences.setPublicEventDetails(publicEvent);
+                intent = new Intent(getActivity(), PublicEventDetailsActivity.class);
+                startActivity(intent);
                 break;
         }
-        //adapter.updateList(newEventsList);
     }
 
     private void addViews(final int eventId) {
@@ -174,6 +171,8 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
                 public void afterPostExecute() {
                     if(saveResult!=null){
                         if(saveResult.isSuccess()){
+                            publicEvent.setFriendsAttending(true);
+                            adapter.updateList(newEventsList);
                             Toast.makeText(getActivity(), saveResult.getStatus(), Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(getActivity(), saveResult.getErrorMessage(), Toast.LENGTH_SHORT).show();
@@ -234,6 +233,36 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
         }
     }
 
+    private void cancelPublicEvents(final int eventId) {
+        if (MobileHelper.hasNetwork(getActivity(), getActivity(), " to cancel public event", null)) {
+            new InvtAppAsyncTask(getActivity()) {
+
+                @Override
+                public void process() {
+                    saveResult = publicEventSyncher.cancelPublicEvents(eventId);
+                }
+
+                @Override
+                public void afterPostExecute() {
+                    if(saveResult!=null){
+                        if(saveResult.isSuccess()){
+                            for (PublicEvent publicEvent:newEventsList) {
+                                if(publicEvent.getId()==eventId){
+                                    newEventsList.remove(publicEvent);
+                                    break;
+                                }
+                            }
+                            adapter.updateList(newEventsList);
+                            Toast.makeText(getActivity(), saveResult.getStatus(), Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getActivity(), saveResult.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }.execute();
+        }
+    }
+
     private void getMyFavourites() {
         if (MobileHelper.hasNetwork(getActivity(), getActivity(), " to get favourite events", null)) {
             new InvtAppAsyncTask(getActivity()) {
@@ -252,6 +281,30 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
                         eventsList.setAdapter(adapter);
                     }else{
                         Toast.makeText(getActivity(), "no favourite events", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }.execute();
+        }
+    }
+
+    private void getTrendingPublicEvents() {
+        if (MobileHelper.hasNetwork(getActivity(), getActivity(), " to get trending events", null)) {
+            new InvtAppAsyncTask(getActivity()) {
+
+                @Override
+                public void process() {
+                    trendingEvents = publicEventSyncher.getTrendingPublicEvents(city.getId());
+                }
+
+                @Override
+                public void afterPostExecute() {
+                    if(freeEvents!=null) {
+                        newEventsList.clear();
+                        newEventsList.addAll(trendingEvents);
+                        adapter = new PublicFoldingCellListAdapter(getActivity(), trendingEvents);
+                        eventsList.setAdapter(adapter);
+                    }else{
+                        Toast.makeText(getActivity(), "no trending events", Toast.LENGTH_SHORT).show();
                     }
                 }
             }.execute();
@@ -319,9 +372,7 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
             case R.id.trendingLayout:
                 changeHomeFilterIcon(R.id.trendingIcon);
                 selectorTags(selectedCity+" trending");
-                Toast.makeText(getActivity(), "to be implement", Toast.LENGTH_SHORT).show();
-                adapter = new PublicFoldingCellListAdapter(getActivity(), dummyEvents);
-                eventsList.setAdapter(adapter);
+                getTrendingPublicEvents();
                 break;
             case R.id.recommendedLayout:
                 changeHomeFilterIcon(R.id.recommendedIcon);
@@ -343,13 +394,6 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
             case R.id.offersLayout:
                 changeHomeFilterIcon(R.id.offersIcon);
                 selectorTags(selectedCity+" offers");
-                Toast.makeText(getActivity(), "to be implement", Toast.LENGTH_SHORT).show();
-                adapter = new PublicFoldingCellListAdapter(getActivity(), dummyEvents);
-                eventsList.setAdapter(adapter);
-                break;
-            case R.id.friendsAttendingLayout:
-                changeHomeFilterIcon(R.id.friendsAttendingIcon);
-                selectorTags(selectedCity+" friendsAttending");
                 Toast.makeText(getActivity(), "to be implement", Toast.LENGTH_SHORT).show();
                 adapter = new PublicFoldingCellListAdapter(getActivity(), dummyEvents);
                 eventsList.setAdapter(adapter);
@@ -431,7 +475,7 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
     }
 
     private void changeHomeFilterIcon(int id) {
-        int imageIds[] = {R.id.trendingIcon, R.id.recommendedIcon, R.id.freeIcon, R.id.weekendIcon, R.id.offersIcon, R.id.friendsAttendingIcon, R.id.favoritesIcon};
+        int imageIds[] = {R.id.trendingIcon, R.id.recommendedIcon, R.id.freeIcon, R.id.weekendIcon, R.id.offersIcon, R.id.favoritesIcon};
         for (int imageId : imageIds) {
             ImageView image = (ImageView) mainView.findViewById(imageId);
             if (imageId == id) {

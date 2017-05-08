@@ -14,7 +14,6 @@ import com.cerone.invitation.activities.NewGroupActivity;
 import com.cerone.invitation.activities.ParticipantsActivity;
 import com.cerone.invitation.adapter.GroupsAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
-import com.example.dataobjects.Event;
 import com.example.dataobjects.Group;
 import com.example.syncher.GroupSyncher;
 
@@ -37,6 +36,7 @@ public class MyGroupsActivity extends BaseActivity implements AdapterView.OnItem
         ImageView addGroup = (ImageView) findViewById(R.id.toolbarEvent);
         addGroup.setVisibility(View.VISIBLE);
         listView = (ListView) findViewById(R.id.events_list);
+        listView.setEmptyView(findViewById(R.id.empty_list_view));
         listView.setOnItemClickListener(this);
         addGroup.setOnClickListener(this);
         getgroups();

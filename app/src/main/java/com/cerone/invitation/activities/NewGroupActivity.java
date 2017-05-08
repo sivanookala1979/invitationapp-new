@@ -6,7 +6,6 @@ package com.cerone.invitation.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,7 +21,6 @@ import com.cerone.invitation.R;
 import com.cerone.invitation.adapter.ContactAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
-import com.cerone.invitation.helpers.InvtTextWatcher;
 import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.Group;
 import com.example.dataobjects.ServerResponse;
@@ -46,7 +44,6 @@ public class NewGroupActivity extends BaseActivity implements OnItemClickListene
     ContactAdapter contactAdapter;
     Button createGroup;
     List<String> selectedContacts = new ArrayList<String>();
-    TextInputLayout groupNameInput;
     ImageView newPerson;
 
     @Override
@@ -54,12 +51,10 @@ public class NewGroupActivity extends BaseActivity implements OnItemClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.group_layout);
         addToolbarView();
-        setFontType(R.id.createGroup);
-        groupNameInput = (TextInputLayout) findViewById(R.id.groupNameInput);
+        setFontType(R.id.createGroup, R.id.groupName);
         groupName = (EditText) findViewById(R.id.groupName);
         contactsListView = (ListView) findViewById(R.id.contacts);
         createGroup = (Button) findViewById(R.id.createGroup);
-        groupName.addTextChangedListener(new InvtTextWatcher(groupName, groupNameInput, "Group name should not be empty."));
         contactsListView.setOnItemClickListener(this);
         createGroup.setOnClickListener(this);
         newPerson = (ImageView) findViewById(R.id.toolbarEvent);

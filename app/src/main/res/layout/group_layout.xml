@@ -54,25 +54,28 @@
             android:id="@+id/headerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/createGroup"
+            android:layout_above="@+id/actionsLayout"
             android:layout_below="@+id/toolbar"
             android:orientation="vertical" >
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/groupNameInput"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/TextLabel" >
+                android:orientation="vertical">
 
                 <EditText
                     android:id="@+id/groupName"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/edit_text_border"
+                    android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
                     android:hint="Enter group name"
+                    android:padding="10dp"
                     android:singleLine="true"
-                    android:textSize="@dimen/text_size" />
-            </android.support.design.widget.TextInputLayout>
+                    android:textSize="@dimen/text_medium" />
 
+            </LinearLayout>
             <ListView
                 android:id="@+id/contacts"
                 android:layout_width="match_parent"
@@ -82,20 +85,26 @@
             </ListView>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/createGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:id="@+id/actionsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="2dp"
-            android:background="@drawable/gradient_button"
-            android:minWidth="150dp"
-            android:padding="5dp"
-            android:text="Done"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size"
-            android:textAllCaps="false" />
+            android:background="@drawable/happening_top_botten_style"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/createGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:text="DONE"
+                android:textColor="@color/green_light"
+                android:textSize="@dimen/text_medium"
+                android:textStyle="normal|bold" />
+
+        </LinearLayout>
     </RelativeLayout>
 
     <ListView

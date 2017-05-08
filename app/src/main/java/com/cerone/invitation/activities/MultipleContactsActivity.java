@@ -48,7 +48,7 @@ public class MultipleContactsActivity extends BaseActivity implements OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.multiple_contacts_layout);
         addToolbarView();
-        setFontType(R.id.shareEventData);
+        setFontType(R.id.shareEventData, R.id.search);
         listView = (ListView) findViewById(R.id.events_list);
         done = (Button) findViewById(R.id.shareEventData);
         search = (EditText) findViewById(R.id.search);

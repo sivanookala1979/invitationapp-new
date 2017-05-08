@@ -161,22 +161,6 @@
                         android:background="@color/white">
 
                         <ImageView
-                            android:id="@+id/header_facebook"
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/facebook_icon" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="1dp"
-                        android:layout_weight="2.5"
-                        android:background="@color/white">
-
-                        <ImageView
                             android:id="@+id/header_friendsAttending"
                             android:layout_width="20dp"
                             android:layout_height="20dp"

@@ -13,9 +13,11 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cerone.invitation.R;
+import com.cerone.invitation.helpers.FontTypes;
 import com.example.dataobjects.Event;
 
 /**
@@ -94,6 +96,14 @@ public class BaseFragment extends Fragment implements AdapterView.OnItemClickLis
 
     }
     public void acceptOrRejectInvitation(boolean b, Event eventDetails, String locationPermission) {
+    }
+
+    public void setFontType(int... viewId) {
+        FontTypes fontType = new FontTypes(getActivity());
+        for (int element : viewId) {
+            TextView textview = (TextView) getView().findViewById(element);
+            fontType.setTypeface(textview);
+        }
     }
 
 }

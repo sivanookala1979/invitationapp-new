@@ -207,7 +207,7 @@
                     android:background="@color/white">
 
                     <ImageView
-                        android:id="@+id/footer_favourite"
+                        android:id="@+id/public_favourite"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_centerHorizontal="true"
@@ -224,7 +224,7 @@
                     android:background="@color/white">
 
                     <ImageView
-                        android:id="@+id/footer_friendsAttending"
+                        android:id="@+id/public_friendsAttending"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_centerHorizontal="true"
@@ -240,7 +240,7 @@
                     android:background="@color/white">
 
                     <ImageView
-                        android:id="@+id/footer_close"
+                        android:id="@+id/public_close"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_centerHorizontal="true"

@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/shareEventData"
         android:layout_alignParentTop="true"
+        android:background="@color/cream"
         android:orientation="vertical" >
 
         <android.support.v7.widget.Toolbar
@@ -68,7 +69,6 @@
             android:layout_marginTop="200dp"
             android:gravity="center"
             android:ellipsize="end"
-            android:fontFamily="fonts/AvenirNextLTPro-Regular.otf"
             android:tag="fonts/Montserrat-Light.otf"
             android:text="No Participents Available"
             android:textSize="@dimen/text_medium" />

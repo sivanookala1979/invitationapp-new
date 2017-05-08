@@ -11,21 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.cerone.invitation.R;
-import com.cerone.invitation.activities.chat.BaseChatActivity;
-import com.cerone.invitation.activities.chat.IntraChatActivity;
-import com.cerone.invitation.adapter.AllChatDetailsAdapter;
 import com.cerone.invitation.adapter.ChatArrayAdapter;
-import com.cerone.invitation.helpers.ActivityCommunicator;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.service.MyGcmListenerService;
 import com.example.dataobjects.ChatMessage;
-import com.example.dataobjects.ChatRoom;
 import com.example.dataobjects.Event;
 import com.example.syncher.IntraChatSyncher;
 
@@ -37,8 +30,6 @@ import java.util.List;
 
 import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
 import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
-
-import static com.cerone.invitation.R.id.rootView;
 
 /**
  * Created by adarsht on 09/03/17.

@@ -323,17 +323,11 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
             case R.id.nav_profile:
                 intent = new Intent(this, UserProfile.class);
                 break;
-            case R.id.nav_myEvents:
-                intent = new Intent(this, MyEventsActivity.class);
-                break;
             case R.id.nav_eventsHistory:
                 intent = new Intent(this, EventsHistoryActivity.class);
                 break;
             case R.id.nav_changeCity:
                 intent = new Intent(this, PublicHomeActivity.class);
-                break;
-            case R.id.nav_myInvitations:
-                intent = new Intent(this, InvitationActivity.class);
                 break;
             case R.id.nav_myChat:
                 intent = new Intent(this, AllChatsActivity.class);

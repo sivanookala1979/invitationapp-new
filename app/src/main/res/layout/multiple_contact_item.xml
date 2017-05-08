@@ -8,7 +8,7 @@
     android:padding="10dp"
     android:weightSum="100" >
 
-    <TextView
+    <com.cerone.invitation.helpers.CeroneTextView
         android:id="@+id/contactPersonName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -17,11 +17,12 @@
         android:ellipsize="end"
         android:gravity="left"
         android:singleLine="true"
+        android:tag="fonts/Montserrat-Light.otf"
         android:text="Name"
         android:textColor="@color/black"
-        android:textSize="@dimen/text_size" />
+        android:textSize="@dimen/text_medium" />
 
-    <TextView
+    <com.cerone.invitation.helpers.CeroneTextView
         android:id="@+id/contactPersonMobileNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -30,17 +31,16 @@
         android:ellipsize="end"
         android:gravity="left"
         android:singleLine="true"
+        android:tag="fonts/Montserrat-Light.otf"
         android:text="Mobile Number"
         android:textColor="@color/black"
-        android:textSize="@dimen/text_size" />
+        android:textSize="@dimen/text_medium" />
 
     <CheckBox
         android:id="@+id/checkeditem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text=""
-        android:button="@drawable/check_box_style"
-        android:layout_weight="10" />
+        android:layout_weight="10"
+        android:theme="@style/MyCheckBox" />
 
 </LinearLayout>

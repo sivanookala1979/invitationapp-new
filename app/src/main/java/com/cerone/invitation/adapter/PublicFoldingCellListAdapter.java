@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import static com.cerone.invitation.R.id.locationAddress;
+import static com.cerone.invitation.R.id.showEventIcon;
 import static com.example.utills.StringUtils.getFormatedDateFromServerFormatedDate;
 
 public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
@@ -72,7 +74,6 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
             viewHolder.entryFeeHeader = (TextView) cell.findViewById(R.id.entryFeeHeader);
             viewHolder.headerFavourite = (ImageView) cell.findViewById(R.id.header_favourite);
             viewHolder.headerCart = (ImageView) cell.findViewById(R.id.header_cart);
-            viewHolder.headerFacebook = (ImageView) cell.findViewById(R.id.header_facebook);
             viewHolder.headerFriendsAttending = (ImageView) cell.findViewById(R.id.header_friendsAttending);
             viewHolder.headerClose = (ImageView) cell.findViewById(R.id.header_close);
 
@@ -83,11 +84,10 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
             viewHolder.footerEventAddress = (TextView) cell.findViewById(R.id.footer_event_address);
             viewHolder.footerFavourite = (ImageView) cell.findViewById(R.id.footer_favourite);
             viewHolder.footerCart = (ImageView) cell.findViewById(R.id.footer_cart);
-            viewHolder.footerFacebook = (ImageView) cell.findViewById(R.id.footer_facebook);
             viewHolder.footerFriendsAttending = (ImageView) cell.findViewById(R.id.footer_friendsAttending);
             viewHolder.footerClose = (ImageView) cell.findViewById(R.id.footer_close);
-            viewHolder.showEventIcon = (ImageView) cell.findViewById(R.id.showEventIcon);
-            viewHolder.locationAddress = (ImageView) cell.findViewById(R.id.locationAddress);
+            viewHolder.showEventIcon = (ImageView) cell.findViewById(showEventIcon);
+            viewHolder.locationAddress = (ImageView) cell.findViewById(locationAddress);
             viewHolder.showEventDetails = (LinearLayout) cell.findViewById(R.id.showEventDetails);
 
             cell.setTag(viewHolder);
@@ -116,24 +116,18 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
         if(publicEvent.isFavourite()){
             viewHolder.headerFavourite.setColorFilter(context.getResources().getColor(R.color.happening_orange));
             viewHolder.footerFavourite.setColorFilter(context.getResources().getColor(R.color.happening_orange));
+        }else{
+            viewHolder.headerFavourite.setColorFilter(context.getResources().getColor(R.color.darkgray));
+            viewHolder.footerFavourite.setColorFilter(context.getResources().getColor(R.color.darkgray));
         }
         if(publicEvent.isCart()){
             viewHolder.headerCart.setColorFilter(context.getResources().getColor(R.color.happening_orange));
             viewHolder.footerCart.setColorFilter(context.getResources().getColor(R.color.happening_orange));
         }
-        if(publicEvent.isFacebook()){
-            viewHolder.headerFacebook.setColorFilter(context.getResources().getColor(R.color.happening_orange));
-            viewHolder.footerFacebook.setColorFilter(context.getResources().getColor(R.color.happening_orange));
-        }
         if(publicEvent.isFriendsAttending()){
             viewHolder.headerFriendsAttending.setColorFilter(context.getResources().getColor(R.color.happening_orange));
             viewHolder.footerFriendsAttending.setColorFilter(context.getResources().getColor(R.color.happening_orange));
         }
-        if(publicEvent.isClose()){
-            viewHolder.headerClose.setColorFilter(context.getResources().getColor(R.color.happening_orange));
-            viewHolder.footerClose.setColorFilter(context.getResources().getColor(R.color.happening_orange));
-        }
-
         viewHolder.footerEventName.setText(publicEvent.getEventName());
         viewHolder.footerEventAddress.setText(publicEvent.getAddress());
         try {
@@ -150,8 +144,6 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
         viewHolder.footerFavourite.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.headerCart.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.footerCart.setOnClickListener(createOnClickListener(position, parent));
-        viewHolder.headerFacebook.setOnClickListener(createOnClickListener(position, parent));
-        viewHolder.footerFacebook.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.headerFriendsAttending.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.footerFriendsAttending.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.headerClose.setOnClickListener(createOnClickListener(position, parent));
@@ -205,7 +197,7 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
 
     // View lookup cache
     private static class ViewHolder {
-        ImageView eventIconHeader, headerFavourite, headerCart, headerFacebook, headerFriendsAttending, headerClose, footerFavourite, footerCart, footerFacebook, footerFriendsAttending, footerClose, showEventIcon, locationAddress;
+        ImageView eventIconHeader, headerFavourite, headerCart, headerFriendsAttending, headerClose, footerFavourite, footerCart, footerFriendsAttending, footerClose, showEventIcon, locationAddress;
         TextView headerEventName, eventAddressHeader, eventTimingsHeading, entryFeeHeader, footerEventName, footerEventDate, footerEventTime, footerEventAddress;
         LinearLayout showEventDetails;
 

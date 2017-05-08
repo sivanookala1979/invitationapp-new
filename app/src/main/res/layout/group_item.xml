@@ -7,7 +7,8 @@
     android:orientation="horizontal"
     android:padding="10dp"
     android:gravity="center_vertical"
-    android:weightSum="100" >
+    android:weightSum="100"
+    android:background="@color/white">
 
     <ImageView
         android:layout_width="0dp"
@@ -17,7 +18,7 @@
         android:tint="@color/happening_orange"
         android:src="@drawable/invitees" />
 
-    <TextView
+    <com.cerone.invitation.helpers.CeroneTextView
         android:id="@+id/groupName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -25,10 +26,11 @@
         android:layout_weight="80"
         android:ellipsize="end"
         android:gravity="left"
+        android:tag="fonts/Montserrat-Light.otf"
         android:singleLine="true"
         android:text="Name"
         android:textColor="@color/black"
-        android:textSize="@dimen/text_size" />
+        android:textSize="@dimen/text_medium" />
 
     <Button
         android:id="@+id/removeGroup"

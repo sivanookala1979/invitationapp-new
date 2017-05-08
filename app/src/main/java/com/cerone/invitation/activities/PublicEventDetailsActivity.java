@@ -22,6 +22,7 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
 
     TextView title, seatsCount;
     Button bookNow;
+    ImageView publicClose;
     LinearLayout layoutLocation, layoutMap, btnSub, BtnAdd;
     boolean isMap;
     int noOfSeats = 2;
@@ -35,6 +36,7 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
         title = (TextView) findViewById(R.id.toolbar_title);
         seatsCount = (TextView) findViewById(R.id.seats_count);
         bookNow = (Button) findViewById(R.id.book_now);
+        publicClose = (ImageView) findViewById(R.id.public_close);
         layoutLocation = (LinearLayout) findViewById(R.id.layoutLocation);
         layoutMap = (LinearLayout) findViewById(R.id.layoutMap);
         btnSub = (LinearLayout) findViewById(R.id.btn_sub);
@@ -42,6 +44,7 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
         bookNow.setOnClickListener(this);
         btnSub.setOnClickListener(this);
         BtnAdd.setOnClickListener(this);
+        publicClose.setOnClickListener(this);
         layoutLocation.setOnClickListener(this);
         showPublicEventData();
     }
@@ -71,6 +74,9 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
             case R.id.book_now:
                 Toast.makeText(getApplicationContext(), "to be implement", Toast.LENGTH_LONG).show();
                 break;
+            case R.id.public_close:
+                Toast.makeText(getApplicationContext(), "to be implement", Toast.LENGTH_LONG).show();
+                break;
         }
     }
 
@@ -80,6 +86,8 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
         TextView eventTime = (TextView) findViewById(R.id.event_time);
         TextView eventLocation = (TextView) findViewById(R.id.event_address);
         ImageView eventImage = (ImageView) findViewById(R.id.eventImage);
+        ImageView publicFavourite = (ImageView) findViewById(R.id.public_favourite);
+        ImageView publicFriendsAttending = (ImageView) findViewById(R.id.public_friendsAttending);
         title.setText(publicEvent.getEventName());
         if (publicEvent.getImage() != null && !publicEvent.getImage().isEmpty()) {
             Picasso.with(getApplicationContext()).load(publicEvent.getImage()).placeholder(R.drawable.event_picture).into(eventImage);
@@ -96,6 +104,16 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
         }
         if (publicEvent.getAddress() != null && !publicEvent.getAddress().isEmpty()) {
             eventLocation.setText(publicEvent.getAddress());
+        }
+        if(publicEvent.isFavourite()){
+            publicFavourite.setColorFilter(getResources().getColor(R.color.happening_orange));
+        }else{
+            publicFavourite.setColorFilter(getResources().getColor(R.color.darkgray));
+        }
+        if(publicEvent.isFriendsAttending()){
+            publicFriendsAttending.setColorFilter(getResources().getColor(R.color.happening_orange));
+        }else{
+            publicFriendsAttending.setColorFilter(getResources().getColor(R.color.darkgray));
         }
     }
 }

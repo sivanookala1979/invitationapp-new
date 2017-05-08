@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:id="@+id/app_bar_layout"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapse_toolbar"
             android:layout_width="match_parent"
@@ -95,7 +101,8 @@
                         android:padding="5dp"
                         android:text="Name"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
+                        android:textSize="@dimen/text_medium" />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -113,7 +120,7 @@
                         android:background="@null"
                         android:hint="Enter Name"
                         android:padding="5dp"
-                        android:textSize="@dimen/text_size"
+                        android:textSize="@dimen/text_medium"
                         android:singleLine="true"
                         android:selectAllOnFocus="true" />
                     <requestFocus />
@@ -141,7 +148,8 @@
                         android:padding="5dp"
                         android:text="Phone"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
+                        android:textSize="@dimen/text_medium" />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -149,7 +157,7 @@
                         android:gravity="center"
                         android:text=":"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
+                        android:textSize="@dimen/text_medium" />
 
                     <EditText
                         android:id="@+id/profile_phone"
@@ -160,7 +168,7 @@
                         android:hint="Enter Phone"
                         android:editable="false"
                         android:padding="5dp"
-                        android:textSize="@dimen/text_size"
+                        android:textSize="@dimen/text_medium"
                         android:singleLine="true"
                         android:selectAllOnFocus="true"/>
                     <requestFocus />
@@ -189,7 +197,8 @@
                         android:padding="5dp"
                         android:text="Status"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
+                        android:textSize="@dimen/text_medium" />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -197,7 +206,7 @@
                         android:gravity="center"
                         android:text=":"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
+                        android:textSize="@dimen/text_medium" />
 
                     <EditText
                         android:id="@+id/profile_status"
@@ -207,7 +216,7 @@
                         android:background="@null"
                         android:hint="Enter Status"
                         android:padding="5dp"
-                        android:textSize="@dimen/text_size"
+                        android:textSize="@dimen/text_medium"
                         android:singleLine="true"
                         android:selectAllOnFocus="true"/>
                     <requestFocus />
@@ -235,7 +244,8 @@
                         android:padding="5dp"
                         android:text="Email ID"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
+                        android:textSize="@dimen/text_medium" />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -243,7 +253,7 @@
                         android:gravity="center"
                         android:text=":"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
+                        android:textSize="@dimen/text_medium" />
 
                     <EditText
                         android:id="@+id/profile_email"
@@ -253,7 +263,7 @@
                         android:background="@null"
                         android:hint="Enter Email"
                         android:padding="5dp"
-                        android:textSize="@dimen/text_size"
+                        android:textSize="@dimen/text_medium"
                         android:singleLine="true"
                         android:selectAllOnFocus="true"/>
                     <requestFocus />
@@ -281,7 +291,7 @@
                         android:padding="5dp"
                         android:text="Gender"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
+                        android:textSize="@dimen/text_medium" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -305,7 +315,7 @@
                             android:layout_marginRight="10dp"
                             android:checked="true"
                             android:text="@string/male"
-                            android:textSize="@dimen/text_medium"/>
+                            android:textSize="@dimen/small_text_size"/>
                         <requestFocus />
 
                         <RadioButton
@@ -313,30 +323,41 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/female"
-                            android:textSize="@dimen/text_medium"/>
+                            android:textSize="@dimen/small_text_size"/>
                         <requestFocus />
 
                     </RadioGroup>
 
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/register"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/happening_button"
-                    android:padding="10dp"
-                    android:text="Update"
-                    android:layout_alignParentBottom="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size"
-                    android:textAllCaps="false" />
-
             </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:id="@+id/actionsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/happening_top_botten_style"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="UPDATE"
+            android:textColor="@color/green_light"
+            android:textSize="@dimen/text_medium"
+            android:textStyle="normal|bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+
 
 
