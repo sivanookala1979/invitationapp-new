@@ -63,6 +63,38 @@ public class PublicEventsSyncherTest extends TestCase {
         assertEquals(1, weekendEvents.size());
     }
 
+    public void testGetPublicEventsWithKeywordsHAPPYFlow() throws Exception {
+        // Setup fixture
+        // Exercise SUT
+        List<PublicEvent> keywordEvents = sut.getPublicEventsWithKeywords(1, "");
+        // Verify outcome
+        assertEquals(1, keywordEvents.size());
+    }
+
+    public void testGetSimilarEventsHAPPYFlow() throws Exception {
+        // Setup fixture
+        // Exercise SUT
+        List<PublicEvent> similarEvents = sut.getSimilarEvents(6, 1);
+        // Verify outcome
+        assertEquals(1, similarEvents.size());
+    }
+
+    public void testGetRecommendedEventsListHAPPYFlow() throws Exception {
+        // Setup fixture
+        // Exercise SUT
+        List<PublicEvent> recommendedEvents = sut.getRecommendedEventsList(1);
+        // Verify outcome
+        assertEquals(1, recommendedEvents.size());
+    }
+
+    public void testGetOfferedPublicEventsHAPPYFlow() throws Exception {
+        // Setup fixture
+        // Exercise SUT
+        List<PublicEvent> offersEvents = sut.getOfferedPublicEvents(1);
+        // Verify outcome
+        assertEquals(1, offersEvents.size());
+    }
+
     public void testRemoveFavouritesHAPPYFlow() throws Exception {
         // Setup fixture
         // Exercise SUT

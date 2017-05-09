@@ -37,6 +37,7 @@ import com.cerone.invitation.helpers.CircleTransform;
 import com.cerone.invitation.helpers.HomeScreenCommunicator;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
+import com.cerone.invitation.helpers.MobileHelper;
 import com.example.dataobjects.ScreenTab;
 import com.example.dataobjects.User;
 import com.example.syncher.UserSyncher;
@@ -174,11 +175,13 @@ public class HomeScreenActivity extends BaseActivity implements OnClickListener,
 
             }
         });
-        applyFilters();
-        updateProfileImageAndName();
-        updateNavigationMenuOptions(false);
-        activateService();
-        createTabViews();
+        if (MobileHelper.hasNetwork(getApplicationContext(), HomeScreenActivity.this, " to get Home Screen", null)) {
+            applyFilters();
+            updateProfileImageAndName();
+            updateNavigationMenuOptions(false);
+            activateService();
+            createTabViews();
+        }
     }
 
     @Override

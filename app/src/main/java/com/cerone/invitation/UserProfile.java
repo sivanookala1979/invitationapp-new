@@ -50,7 +50,6 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
     private static final int GALLERY_REQUET_CODE = 11111;
     private static final int CAMERA_REQUEST_CODE = 100;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -236,7 +235,6 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

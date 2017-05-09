@@ -59,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@color/gray"
+            android:background="@color/white"
             android:dividerHeight="1dp" >
         </ListView>
 
@@ -70,7 +71,7 @@
             android:gravity="center"
             android:ellipsize="end"
             android:tag="fonts/Montserrat-Light.otf"
-            android:text="No Participents Available"
+            android:text="No Groups Available"
             android:textSize="@dimen/text_medium" />
 
     </LinearLayout>

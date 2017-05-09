@@ -8,7 +8,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cv_events"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_margin="5dp"
         android:background="@drawable/rectangle_shaped"
         app:cardCornerRadius="7dp"
@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:clipChildren="true"
             android:orientation="horizontal"
             android:weightSum="10">
@@ -28,7 +28,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/eventIconHeader"
+                    android:id="@+id/eventIcon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
@@ -52,7 +52,6 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="5dp">
 
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -61,7 +60,7 @@
                         android:weightSum="10">
 
                         <com.cerone.invitation.helpers.CeroneTextView
-                            android:id="@+id/headerEventName"
+                            android:id="@+id/eventName"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="8"
@@ -72,7 +71,7 @@
                             android:textSize="@dimen/text_size_too_small" />
 
                         <com.cerone.invitation.helpers.CeroneTextView
-                            android:id="@+id/entryFeeHeader"
+                            android:id="@+id/entryFee"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
@@ -85,7 +84,7 @@
                     </LinearLayout>
 
                     <com.cerone.invitation.helpers.CeroneTextView
-                        android:id="@+id/eventAddressHeader"
+                        android:id="@+id/eventAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="1dp"
@@ -97,7 +96,7 @@
                         android:textSize="@dimen/text_size_very_small" />
 
                     <com.cerone.invitation.helpers.CeroneTextView
-                        android:id="@+id/eventTimingsHeading"
+                        android:id="@+id/eventTimings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="1dp"
@@ -108,88 +107,6 @@
                         android:textSize="@dimen/text_size_very_small" />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/grey_light" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:minHeight="30dp"
-                    android:orientation="horizontal">
-
-                    <RelativeLayout
-                        android:id="@+id/layout_favourite"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="1dp"
-                        android:layout_weight="2.5"
-                        android:background="@color/white">
-
-                        <ImageView
-                            android:id="@+id/header_favourite"
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/filter_favourite" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/layout_cart"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="1dp"
-                        android:layout_weight="2.5"
-                        android:background="@color/white">
-
-                        <ImageView
-                            android:id="@+id/header_cart"
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/cart_icon" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/layout_friendsAttending"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="1dp"
-                        android:layout_weight="2.5"
-                        android:background="@color/white">
-
-                        <ImageView
-                            android:id="@+id/header_friendsAttending"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/eye_icon" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/layout_close"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="1dp"
-                        android:layout_weight="2.5"
-                        android:background="@color/white">
-
-                        <ImageView
-                            android:id="@+id/header_close"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/close_icon" />
-                    </RelativeLayout>
-
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

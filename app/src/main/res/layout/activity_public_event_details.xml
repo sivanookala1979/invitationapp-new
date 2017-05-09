@@ -361,7 +361,7 @@
                     android:background="@color/grey_light" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/participantsLayout"
+                    android:id="@+id/similarEventsLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"

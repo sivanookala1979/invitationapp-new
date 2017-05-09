@@ -24,6 +24,7 @@ import com.cerone.invitation.adapter.ContactAdapter;
 import com.cerone.invitation.adapter.GroupAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
+import com.cerone.invitation.helpers.MobileHelper;
 import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Group;
@@ -89,22 +90,26 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
     }
 
     private void loadGroupsAndContacts() {
-        new InvtAppAsyncTask(this) {
+        if (MobileHelper.isNetworkAvailable(ShareEventActivity.this)) {
+            new InvtAppAsyncTask(this) {
 
-            @Override
-            public void process() {
-                GroupSyncher groupSyncher = new GroupSyncher();
-                myGroups = groupSyncher.getGroupItems();
-            }
+                @Override
+                public void process() {
+                    GroupSyncher groupSyncher = new GroupSyncher();
+                    myGroups = groupSyncher.getGroupItems();
+                }
 
-            @Override
-            public void afterPostExecute() {
-                if (myGroups.size() > 0)
-                    groupsView.setVisibility(View.VISIBLE);
-                contactsView.setVisibility(View.VISIBLE);
-                updateButtons();
-            }
-        }.execute();
+                @Override
+                public void afterPostExecute() {
+                    if (myGroups.size() > 0)
+                        groupsView.setVisibility(View.VISIBLE);
+                    contactsView.setVisibility(View.VISIBLE);
+                    updateButtons();
+                }
+            }.execute();
+        }else{
+            Toast.makeText(getApplicationContext(), "Something Went Wrong", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void updateButtons() {
@@ -199,6 +204,8 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
                                 }
+                            }else{
+                                Toast.makeText(getApplicationContext(), "Something Went Wrong", Toast.LENGTH_LONG).show();
                             }
                         }
                     }.execute();

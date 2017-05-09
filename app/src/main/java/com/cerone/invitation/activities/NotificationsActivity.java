@@ -18,6 +18,7 @@ public class NotificationsActivity extends BaseActivity {
 
     ImageButton refresh;
     TextView clear;
+    ListView listView;
     Notifications notifications = new Notifications();
 
     @Override
@@ -26,7 +27,9 @@ public class NotificationsActivity extends BaseActivity {
         setContentView(R.layout.activity_notifications);
         addToolbarView();
         clear = (TextView) findViewById(R.id.toolbar_clear);
+        listView = (ListView) findViewById(R.id.notificationsListView);
         refresh = (ImageButton) findViewById(R.id.refresh_notfication);
+        listView.setEmptyView(findViewById(R.id.empty_list_view));
         clear.setOnClickListener(this);
         refresh.setOnClickListener(this);
         showSavedNotifications();
@@ -45,7 +48,6 @@ public class NotificationsActivity extends BaseActivity {
             public void afterPostExecute() {
                 if (notifications != null) {
                     NotificationAdapter adapter = new NotificationAdapter(NotificationsActivity.this, notifications.getNotifications());
-                    final ListView listView = (ListView) findViewById(R.id.notificationsListView);
                     listView.setAdapter(adapter);
                 }else{
                     ToastHelper.yellowToast(NotificationsActivity.this, "Error Occured..");

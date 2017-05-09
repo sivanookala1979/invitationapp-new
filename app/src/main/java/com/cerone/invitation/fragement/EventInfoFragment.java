@@ -122,7 +122,7 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
             if (!eventDetails.getOwnerInfo().getImage().isEmpty()) {
                 Picasso.with(getActivity()).load(eventDetails.getOwnerInfo().getImage()).placeholder(R.drawable.logo).transform(new CircleTransform()).into(eventOwnerImage);
             } else {
-                Picasso.with(getActivity()).load(BaseSyncher.getBASE_URL()).placeholder(R.drawable.circle_image).transform(new CircleTransform()).into(eventOwnerImage);
+                Picasso.with(getActivity()).load(BaseSyncher.getBASE_URL()).placeholder(R.drawable.logo).transform(new CircleTransform()).into(eventOwnerImage);
             }
             ownerName.setText(eventDetails.getOwnerInfo().getInviteeName());
         }

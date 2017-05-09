@@ -300,5 +300,173 @@ public class PublicEventsSyncher extends BaseSyncher{
         return listOfPublicEvents;
     }
 
+    public List<PublicEvent> getPublicEventsWithKeywords(int cityId, String keyWords) {
+        List<PublicEvent> listOfPublicEvents = new ArrayList<PublicEvent>();
+        try {
+            JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "public_events/public_events_with_search_keywords.json?city_id="+cityId+"&keywords="+keyWords, "GET", true));
+            if (jsonResponse.has("searched_events")) {
+                JSONArray jsonArray = jsonResponse.getJSONArray("searched_events");
+                if (jsonArray != null) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        PublicEvent publicEvent = new PublicEvent();
+                        if(jsonObject.has("id"))
+                            publicEvent.setId(jsonObject.getInt("id"));
+                        if(jsonObject.has("event_name"))
+                            publicEvent.setEventName(jsonObject.getString("event_name"));
+                        if(jsonObject.has("start_time"))
+                            publicEvent.setStartRime(jsonObject.getString("start_time"));
+                        if(jsonObject.has("end_time"))
+                            publicEvent.setEndTime(jsonObject.getString("end_time"));
+                        if(jsonObject.has("entry_fee"))
+                            publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
+                        if(jsonObject.has("address"))
+                            publicEvent.setAddress(jsonObject.getString("address"));
+                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
+                            publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
+                        if(jsonObject.has("city"))
+                            publicEvent.setCity(jsonObject.getString("city"));
+                        if(jsonObject.has("service"))
+                            publicEvent.setService(jsonObject.getString("service"));
+                        if(jsonObject.has("img_url"))
+                            publicEvent.setImage(jsonObject.getString("img_url"));
+                        if(jsonObject.has("is_favourite"))
+                            publicEvent.setFavourite(jsonObject.getBoolean("is_favourite"));
+                        listOfPublicEvents.add(publicEvent);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return listOfPublicEvents;
+    }
+
+    public List<PublicEvent> getSimilarEvents(int eventId, int cityId) {
+        List<PublicEvent> listOfPublicEvents = new ArrayList<PublicEvent>();
+        try {
+            JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "public_events/similar_events_list.json?public_event_id="+eventId+"&city_id="+cityId, "GET", true));
+            if (jsonResponse.has("similar_events_list")) {
+                JSONArray jsonArray = jsonResponse.getJSONArray("similar_events_list");
+                if (jsonArray != null) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        PublicEvent publicEvent = new PublicEvent();
+                        if(jsonObject.has("id"))
+                            publicEvent.setId(jsonObject.getInt("id"));
+                        if(jsonObject.has("event_name"))
+                            publicEvent.setEventName(jsonObject.getString("event_name"));
+                        if(jsonObject.has("start_time"))
+                            publicEvent.setStartRime(jsonObject.getString("start_time"));
+                        if(jsonObject.has("end_time"))
+                            publicEvent.setEndTime(jsonObject.getString("end_time"));
+                        if(jsonObject.has("entry_fee"))
+                            publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
+                        if(jsonObject.has("address"))
+                            publicEvent.setAddress(jsonObject.getString("address"));
+                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
+                            publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
+                        if(jsonObject.has("city"))
+                            publicEvent.setCity(jsonObject.getString("city"));
+                        if(jsonObject.has("service"))
+                            publicEvent.setService(jsonObject.getString("service"));
+                        if(jsonObject.has("img_url"))
+                            publicEvent.setImage(jsonObject.getString("img_url"));
+                        if(jsonObject.has("is_favourite"))
+                            publicEvent.setFavourite(jsonObject.getBoolean("is_favourite"));
+                        listOfPublicEvents.add(publicEvent);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return listOfPublicEvents;
+    }
+
+    public List<PublicEvent> getRecommendedEventsList(int cityId) {
+        List<PublicEvent> listOfPublicEvents = new ArrayList<PublicEvent>();
+        try {
+            JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "public_events/recommended_events_list.json?city_id="+cityId, "GET", true));
+            if (jsonResponse.has("recommended_events_list")) {
+                JSONArray jsonArray = jsonResponse.getJSONArray("recommended_events_list");
+                if (jsonArray != null) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        PublicEvent publicEvent = new PublicEvent();
+                        if(jsonObject.has("id"))
+                            publicEvent.setId(jsonObject.getInt("id"));
+                        if(jsonObject.has("event_name"))
+                            publicEvent.setEventName(jsonObject.getString("event_name"));
+                        if(jsonObject.has("start_time"))
+                            publicEvent.setStartRime(jsonObject.getString("start_time"));
+                        if(jsonObject.has("end_time"))
+                            publicEvent.setEndTime(jsonObject.getString("end_time"));
+                        if(jsonObject.has("entry_fee"))
+                            publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
+                        if(jsonObject.has("address"))
+                            publicEvent.setAddress(jsonObject.getString("address"));
+                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
+                            publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
+                        if(jsonObject.has("city"))
+                            publicEvent.setCity(jsonObject.getString("city"));
+                        if(jsonObject.has("service"))
+                            publicEvent.setService(jsonObject.getString("service"));
+                        if(jsonObject.has("img_url"))
+                            publicEvent.setImage(jsonObject.getString("img_url"));
+                        if(jsonObject.has("is_favourite"))
+                            publicEvent.setFavourite(jsonObject.getBoolean("is_favourite"));
+                        listOfPublicEvents.add(publicEvent);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return listOfPublicEvents;
+    }
+
+    public List<PublicEvent> getOfferedPublicEvents(int cityId) {
+        List<PublicEvent> listOfPublicEvents = new ArrayList<PublicEvent>();
+        try {
+            JSONObject jsonResponse = new JSONObject(HTTPUtils.getDataFromServer(BASE_URL + "public_events/offered_public_events.json?city_id="+cityId, "GET", true));
+            if (jsonResponse.has("offered_public_events")) {
+                JSONArray jsonArray = jsonResponse.getJSONArray("offered_public_events");
+                if (jsonArray != null) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        PublicEvent publicEvent = new PublicEvent();
+                        if(jsonObject.has("id"))
+                            publicEvent.setId(jsonObject.getInt("id"));
+                        if(jsonObject.has("event_name"))
+                            publicEvent.setEventName(jsonObject.getString("event_name"));
+                        if(jsonObject.has("start_time"))
+                            publicEvent.setStartRime(jsonObject.getString("start_time"));
+                        if(jsonObject.has("end_time"))
+                            publicEvent.setEndTime(jsonObject.getString("end_time"));
+                        if(jsonObject.has("entry_fee"))
+                            publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
+                        if(jsonObject.has("address"))
+                            publicEvent.setAddress(jsonObject.getString("address"));
+                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
+                            publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
+                        if(jsonObject.has("city"))
+                            publicEvent.setCity(jsonObject.getString("city"));
+                        if(jsonObject.has("service"))
+                            publicEvent.setService(jsonObject.getString("service"));
+                        if(jsonObject.has("img_url"))
+                            publicEvent.setImage(jsonObject.getString("img_url"));
+                        if(jsonObject.has("is_favourite"))
+                            publicEvent.setFavourite(jsonObject.getBoolean("is_favourite"));
+                        listOfPublicEvents.add(publicEvent);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return listOfPublicEvents;
+    }
+
 
 }

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cerone.invitation.R;
@@ -76,6 +77,11 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
             viewHolder.headerCart = (ImageView) cell.findViewById(R.id.header_cart);
             viewHolder.headerFriendsAttending = (ImageView) cell.findViewById(R.id.header_friendsAttending);
             viewHolder.headerClose = (ImageView) cell.findViewById(R.id.header_close);
+            viewHolder.layoutFavourite = (RelativeLayout) cell.findViewById(R.id.layout_favourite);
+            viewHolder.layoutCart = (RelativeLayout) cell.findViewById(R.id.layout_cart);
+            viewHolder.layoutFriendsAttending = (RelativeLayout) cell.findViewById(R.id.layout_friendsAttending);
+            viewHolder.layoutClose = (RelativeLayout) cell.findViewById(R.id.layout_close);
+
 
             //footer view parts to view holder
             viewHolder.footerEventName = (TextView) cell.findViewById(R.id.footer_event_name);
@@ -151,6 +157,10 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
         viewHolder.showEventIcon.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.showEventDetails.setOnClickListener(createOnClickListener(position, parent));
         viewHolder.locationAddress.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.layoutFavourite.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.layoutCart.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.layoutFriendsAttending.setOnClickListener(createOnClickListener(position, parent));
+        viewHolder.layoutClose.setOnClickListener(createOnClickListener(position, parent));
 
         return cell;
     }
@@ -199,7 +209,7 @@ public class PublicFoldingCellListAdapter extends ArrayAdapter<PublicEvent> {
     private static class ViewHolder {
         ImageView eventIconHeader, headerFavourite, headerCart, headerFriendsAttending, headerClose, footerFavourite, footerCart, footerFriendsAttending, footerClose, showEventIcon, locationAddress;
         TextView headerEventName, eventAddressHeader, eventTimingsHeading, entryFeeHeader, footerEventName, footerEventDate, footerEventTime, footerEventAddress;
+        RelativeLayout layoutFavourite, layoutCart, layoutFriendsAttending, layoutClose;
         LinearLayout showEventDetails;
-
     }
 }

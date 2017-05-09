@@ -247,26 +247,31 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
 
     public void validateAndPostEvent() {
         if (isEventDataValid()) {
-            new InvtAppAsyncTask(this) {
-
-                @Override
-                public void process() {
-                    EventSyncher eventSyncher = new EventSyncher();
-                    createEvent = eventSyncher.createEvent(event);
-                }
-
-                @Override
-                public void afterPostExecute() {
-                    if ( createEvent != null && createEvent.getId() > 0) {
-                        Toast.makeText(getApplicationContext(), "Event Created.", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(CreateNewEventActivity.this, HomeScreenActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                    } else {
-                        ToastHelper.redToast(getApplicationContext(), createEvent.getStatus());
+            if (MobileHelper.hasNetwork(getApplicationContext(), CreateNewEventActivity.this, " to create Event", null)) {
+                new InvtAppAsyncTask(this) {
+                    @Override
+                    public void process() {
+                        EventSyncher eventSyncher = new EventSyncher();
+                        createEvent = eventSyncher.createEvent(event);
                     }
-                }
-            }.execute();
+
+                    @Override
+                    public void afterPostExecute() {
+                        if (createEvent != null) {
+                            if (createEvent.getId() > 0) {
+                                Toast.makeText(getApplicationContext(), "Event Created.", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(CreateNewEventActivity.this, HomeScreenActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            } else {
+                                ToastHelper.redToast(getApplicationContext(), createEvent.getStatus());
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Something Went Wrong", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }.execute();
+            }
         }
     }
 

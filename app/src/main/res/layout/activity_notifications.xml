@@ -56,4 +56,15 @@
         android:dividerHeight="0dp"
         android:background="@color/white"/>
 
+    <com.cerone.invitation.helpers.CeroneTextView
+        android:id="@+id/empty_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:gravity="center"
+        android:ellipsize="end"
+        android:tag="fonts/Montserrat-Light.otf"
+        android:text="No Notifications Available"
+        android:textSize="@dimen/text_medium" />
+
 </LinearLayout>

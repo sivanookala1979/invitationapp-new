@@ -14,7 +14,6 @@ import com.cerone.invitation.adapter.ChooseCityAdapter;
 import com.cerone.invitation.helpers.HomeScreenCommunicator;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
-import com.cerone.invitation.helpers.MobileHelper;
 import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.City;
 import com.example.dataobjects.EventFilter;
@@ -51,7 +50,6 @@ public class PublicHomeFragment extends BaseFragment implements AdapterView.OnIt
     }
 
     private void getCities() {
-        if (MobileHelper.hasNetwork(getActivity(), getActivity(), " to get cities", null)) {
             new InvtAppAsyncTask(getActivity()) {
 
                 @Override
@@ -72,8 +70,6 @@ public class PublicHomeFragment extends BaseFragment implements AdapterView.OnIt
                 }
             }.execute();
         }
-    }
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

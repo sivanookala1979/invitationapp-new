@@ -24,7 +24,6 @@ import com.cerone.invitation.adapter.FoldingCellListAdapter;
 import com.cerone.invitation.helpers.HomeScreenCommunicator;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
-import com.cerone.invitation.helpers.MobileHelper;
 import com.cerone.invitation.helpers.ToastHelper;
 import com.example.dataobjects.Event;
 import com.example.dataobjects.Eventstatistics;
@@ -191,7 +190,6 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
     }
 
     private void loadEvents() {
-        if (MobileHelper.hasNetwork(getActivity(), getActivity(), " to get events", null)) {
             new InvtAppAsyncTask(getActivity()) {
 
                 @Override
@@ -209,7 +207,7 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                 }
             }.execute();
         }
-    }
+
     private void deleteAdmin(final int eventId) {
         new InvtAppAsyncTask(getActivity()) {
 
