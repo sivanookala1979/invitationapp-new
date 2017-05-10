@@ -1,8 +1,11 @@
 package com.cerone.invitation.fragement;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,7 +129,9 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
             case R.id.layout_cart:
             case R.id.header_cart:
                 intent = new Intent(getActivity(), PublicEventDetailsActivity.class);
-                startActivity(intent);
+                intent.putExtra("eventId", publicEvent.getId());
+                intent.putExtra("cityId", city.getId());
+                startActivityForResult(intent, 1);
                 break;
             case R.id.layout_friendsAttending:
             case R.id.header_friendsAttending:
@@ -134,11 +139,23 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
                 adapter.updateList(newEventsList);
                 InvtAppPreferences.setPublicEventDetails(publicEvent);
                 intent = new Intent(getActivity(), PublicEventDetailsActivity.class);
-                startActivity(intent);
+                intent.putExtra("eventId", publicEvent.getId());
+                intent.putExtra("cityId", city.getId());
+                startActivityForResult(intent, 1);
                 break;
             case R.id.layout_close:
             case R.id.header_close:
-                cancelPublicEvents(publicEvent.getId());
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        cancelPublicEvents(publicEvent.getId());
+                    }
+                });
+                alertDialog.setNegativeButton("No", null);
+                alertDialog.setMessage("Do you want to delete?");
+                alertDialog.show();
                 break;
             case R.id.locationAddress:
 //                if(publicEvent!=null&&!publicEvent.getAddress().isEmpty()) {
@@ -152,8 +169,22 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
                 adapter.updateList(newEventsList);
                 InvtAppPreferences.setPublicEventDetails(publicEvent);
                 intent = new Intent(getActivity(), PublicEventDetailsActivity.class);
-                startActivity(intent);
+                intent.putExtra("eventId", publicEvent.getId());
+                intent.putExtra("cityId", city.getId());
+                startActivityForResult(intent, 1);
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            if(data!=null) {
+                int eventId = data.getExtras().getInt("eventId");
+                Log.d("calcel", "true"+eventId);
+                cancelPublicEvents(eventId);
+            }
         }
     }
 

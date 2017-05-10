@@ -118,7 +118,6 @@ public class HomeFoldingFragment extends BaseFragment implements AdapterView.OnI
                                     }
                                 }
                             });
-
                             alertDialog.setNegativeButton("No", null);
                             alertDialog.setMessage("Do you want to delete?");
                             alertDialog.show();

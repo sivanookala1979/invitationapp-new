@@ -33,9 +33,8 @@ public class SimilarEventsAdapter extends RecyclerView.Adapter<SimilarEventsAdap
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
+        View itemView = LayoutInflater.from(context)
                 .inflate(R.layout.public_similar_event_view, parent, false);
-
         return new MyViewHolder(itemView);
     }
 
@@ -49,12 +48,18 @@ public class SimilarEventsAdapter extends RecyclerView.Adapter<SimilarEventsAdap
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        holder.entryFee.setText(publicEvent.getEventName());
+        holder.entryFee.setText(publicEvent.getEntryFee());
         if(publicEvent.getImage()!= null && !publicEvent.getImage().trim().isEmpty()) {
             Picasso.with(context).load(publicEvent.getImage()).placeholder(R.drawable.event_picture).into(holder.eventIcon);
         }else {
             Picasso.with(context).load("java").placeholder(R.drawable.event_picture).into(holder.eventIcon);
-        }    }
+        }
+    }
+
+    public void updateAdapter(List<PublicEvent> similarEvents) {
+        this.similarEvents = similarEvents;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {
@@ -72,7 +77,6 @@ public class SimilarEventsAdapter extends RecyclerView.Adapter<SimilarEventsAdap
             eventTimings = (TextView) view.findViewById(R.id.eventTimings);
             entryFee = (TextView) view.findViewById(R.id.entryFee);
             eventIcon = (ImageView) view.findViewById(R.id.eventIcon);
-
         }
     }
 }

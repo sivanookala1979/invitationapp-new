@@ -196,7 +196,6 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
                         getActivity().finish();
                     }
                 });
-
                 alertDialog.setNegativeButton("No", null);
                 alertDialog.setMessage("Do you want to delete this event ?");
                 alertDialog.show();
@@ -311,7 +310,6 @@ public class EventInfoFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void afterPostExecute() {
                 if (allInvitees != null) {
-                    Log.d("all invitees", allInvitees.size() + "");
                     acceptedParticipantsAdapater.updateAdapter(allInvitees);
                     if (allInvitees.size() == 0) {
                         participantsLayout.setVisibility(View.GONE);

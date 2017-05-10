@@ -1,6 +1,10 @@
 package com.cerone.invitation.activities;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -28,7 +32,7 @@ import static com.example.utills.StringUtils.getFormatedDateFromServerFormatedDa
 
 public class PublicEventDetailsActivity extends BaseActivity implements View.OnClickListener {
 
-    TextView title, seatsCount;
+    TextView title, seatsCount,emptyView;
     Button bookNow;
     ImageView publicClose;
     LinearLayout layoutLocation, layoutMap, btnSub, BtnAdd;
@@ -38,21 +42,24 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
     SimilarEventsAdapter adapter;
     boolean isMap;
     int noOfSeats = 2;
+    Integer eventId, cityId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_public_event_details);
         addToolbarView();
-
+        eventId = getIntent().getIntExtra("eventId", 0);
+        cityId = getIntent().getIntExtra("cityId", 0);
         title = (TextView) findViewById(R.id.toolbar_title);
         seatsCount = (TextView) findViewById(R.id.seats_count);
+        emptyView = (TextView) findViewById(R.id.empty_view);
         bookNow = (Button) findViewById(R.id.book_now);
         publicClose = (ImageView) findViewById(R.id.public_close);
         similarEvents = (RecyclerView) findViewById(R.id.similarEventsLayout);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        similarEvents.setLayoutManager(layoutManager);
+        similarEvents.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        adapter = new SimilarEventsAdapter(this, similarEventsList);
+        similarEvents.setAdapter(adapter);
         layoutLocation = (LinearLayout) findViewById(R.id.layoutLocation);
         layoutMap = (LinearLayout) findViewById(R.id.layoutMap);
         btnSub = (LinearLayout) findViewById(R.id.btn_sub);
@@ -63,7 +70,7 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
         publicClose.setOnClickListener(this);
         layoutLocation.setOnClickListener(this);
         showPublicEventData();
-        //getSimilarEvents();
+        getSimilarEvents();
     }
 
     @Override
@@ -92,7 +99,20 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
                 Toast.makeText(getApplicationContext(), "to be implement", Toast.LENGTH_LONG).show();
                 break;
             case R.id.public_close:
-                Toast.makeText(getApplicationContext(), "to be implement", Toast.LENGTH_LONG).show();
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent();
+                        intent.putExtra("eventId", eventId);
+                        setResult(Activity.RESULT_OK,intent);
+                        finish();
+                    }
+                });
+                alertDialog.setNegativeButton("No", null);
+                alertDialog.setMessage("Do you want to delete?");
+                alertDialog.show();
                 break;
         }
     }
@@ -140,14 +160,18 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
 
                 @Override
                 public void process() {
-                    similarEventsList = publicEventSyncher.getSimilarEvents(4, 1);
+                    similarEventsList = publicEventSyncher.getSimilarEvents(eventId, cityId);
                 }
 
                 @Override
                 public void afterPostExecute() {
                     if(similarEventsList!=null) {
-                        adapter = new SimilarEventsAdapter(getApplicationContext(), similarEventsList);
-                        similarEvents.setAdapter(adapter);
+                        adapter.updateAdapter(similarEventsList);
+                        if (similarEventsList.size() == 0) {
+                            emptyView.setVisibility(View.VISIBLE);
+                        } else {
+                            emptyView.setVisibility(View.GONE);
+                        }
                     }else{
                         Toast.makeText(getApplicationContext(), "no trending events", Toast.LENGTH_SHORT).show();
                     }
