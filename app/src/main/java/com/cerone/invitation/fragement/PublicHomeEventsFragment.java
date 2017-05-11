@@ -157,13 +157,6 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
                 alertDialog.setMessage("Do you want to delete?");
                 alertDialog.show();
                 break;
-            case R.id.locationAddress:
-//                if(publicEvent!=null&&!publicEvent.getAddress().isEmpty()) {
-//                    intent = new Intent(getActivity(), LocationDetailsActivity.class);
-//                    startActivity(intent);
-//                }
-                Toast.makeText(getActivity(), "Lat, Long not provided", Toast.LENGTH_LONG).show();
-                break;
             default:
                 publicEvent.setFriendsAttending(true);
                 adapter.updateList(newEventsList);
@@ -228,9 +221,9 @@ public class PublicHomeEventsFragment extends BaseFragment implements View.OnCli
                         if(saveResult.isSuccess()){
                             publicEvent.setFavourite(true);
                             adapter.updateList(newEventsList);
-                            Toast.makeText(getActivity(), saveResult.getStatus(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), saveResult.getStatus(), Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(getActivity(), saveResult.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), saveResult.getErrorMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

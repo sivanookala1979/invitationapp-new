@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class MultipleGroupSelectionActivity extends BaseActivity implements OnCl
     ListView listView;
     GroupAdapter adapter;
     Button done;
+    LinearLayout actionsLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +41,13 @@ public class MultipleGroupSelectionActivity extends BaseActivity implements OnCl
         addToolbarView();
         setFontType(R.id.shareEventData);
         listView = (ListView) findViewById(R.id.events_list);
+        listView.setEmptyView(findViewById(R.id.empty_list_view));
         done = (Button) findViewById(R.id.shareEventData);
+        actionsLayout = (LinearLayout) findViewById(R.id.actionsLayout);
         TextView title = (TextView) findViewById(R.id.toolbar_title);
         title.setText("Groups");
         done.setText("Done");
-        visibleLayout(done);
+        actionsLayout.setVisibility(View.VISIBLE);
         done.setOnClickListener(this);
         groups = InvtAppPreferences.getGroups();
         adapter = new GroupAdapter(getApplicationContext(), R.layout.multiple_contact_item, groups, true);

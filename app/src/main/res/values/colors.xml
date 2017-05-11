@@ -8,7 +8,7 @@
     <color name="whitetransparent">#80FFFFFF</color>
     <color name="yellow">#ffeb3b</color>
     <color name="yellow_dark">#ffc107</color>
-    <color name="yellow_light">#ffeb3b</color>
+    <color name="yellow_light">#FFFFCC</color>
     <color name="fuchsia">#FF00FF</color>
     <color name="red">#d32f2f</color>
     <color name="red_light">#f44336</color>

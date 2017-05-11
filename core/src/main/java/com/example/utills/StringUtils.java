@@ -124,9 +124,14 @@ public class StringUtils {
     }
 
     public static boolean isGivenDateGreaterThanOrEqualToCurrentDate(String dateTimeInfo) {
+
+        return isDateAndTimeAfterCurrentDate(dateTimeInfo, 0);
+    }
+
+    public static boolean isDateAndTimeAfterCurrentDate(String dateTimeInfo, int index) {
         boolean status = false;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat((index == 0)?YEAR_MONTH_DATE_HOURS_MIN_SEC:YEAR_MONTH_DATE_TIME_AM_PM);
             Date date1 = sdf.parse(dateTimeInfo);
             Date date2 = sdf.parse(getCurrentDate());
             System.out.println(sdf.format(date1));
@@ -147,6 +152,8 @@ public class StringUtils {
         }
         return status;
     }
+
+
 
     public static boolean validateStartAndEndDates(String startDateInfo, String endDateInfo) {
         Date startDate;

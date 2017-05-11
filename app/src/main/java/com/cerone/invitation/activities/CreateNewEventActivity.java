@@ -361,7 +361,7 @@ public class CreateNewEventActivity extends BaseActivity implements OnClickListe
                 String selectedtime = hour+":"+minute+" "+AMPM;
                 String selectedDateTime = selectedDate+" "+selectedtime;
                 Log.d("selectedDate-time1", selectedDateTime);
-                if (StringUtils.isOldDate(selectedDate)) {
+                if (StringUtils.isDateAndTimeAfterCurrentDate(selectedDateTime, 1)) {
                     updateDateTime(startDateTime,selectedDateTime);
                     String endDT = updateEndTime(selectedtime, 60);
                     String selectedEndDT = selectedDate+" "+endDT;

@@ -32,68 +32,74 @@ public class MyService extends BroadcastReceiver {
 
     public static int totalCount = 0;
     GPSTracker gpsTracker;
+    List<ServiceInformation> serviceInformationList;
+
+
 
     @Override
     public void onReceive(final Context context, Intent intent) {
         String action = intent.getAction();
         final int flagInfo = intent.getExtras().getInt("flag");
         InvtAppPreferences.setPref(context);
-        final ServiceInformation serviceInfo = InvtAppPreferences.getServiceDetails().get(flagInfo);
-        Log.d("Data", "flag info "+flagInfo+" Service activated " + StringUtils.getCurrentDate() + " " + action + " service start time " + serviceInfo.getEventStartTime() + " end time " + serviceInfo.getEnventEndTime());
-        if (!StringUtils.isGivenDateGreaterThanOrEqualToCurrentDate(action)) {//SOMEACTION.equals(action)
-            if (serviceInfo.getServieEndTime() != null) {
-                if (StringUtils.isGivenDateGreaterThanOrEqualToCurrentDate(serviceInfo.getServieEndTime())) {
-                    gpsTracker = new GPSTracker(context);
-                    if (true || (gpsTracker.getLatitude() != 0 && gpsTracker.getLongitude() != 0)) {
-                        new AsyncTask<String, Void, String>() {
+        serviceInformationList = InvtAppPreferences.getServiceDetails();
+        if(serviceInformationList.size()>0) {
+            final ServiceInformation serviceInfo = serviceInformationList.get(flagInfo);
+            Log.d("Data", "flag info " + flagInfo + " Service activated " + StringUtils.getCurrentDate() + " " + action + " service start time " + serviceInfo.getEventStartTime() + " end time " + serviceInfo.getEnventEndTime());
+            if (!StringUtils.isGivenDateGreaterThanOrEqualToCurrentDate(action)) {//SOMEACTION.equals(action)
+                if (serviceInfo.getServieEndTime() != null) {
+                    if (StringUtils.isGivenDateGreaterThanOrEqualToCurrentDate(serviceInfo.getServieEndTime())) {
+                        gpsTracker = new GPSTracker(context);
+                        if (true || (gpsTracker.getLatitude() != 0 && gpsTracker.getLongitude() != 0)) {
+                            new AsyncTask<String, Void, String>() {
 
-                            @Override
-                            protected String doInBackground(String... params) {
-                                LocationSyncher locationSyncher = new LocationSyncher();
-                                UserLocation userLocation = new UserLocation();
-                                userLocation.setLatitude(gpsTracker.getLatitude());
-                                userLocation.setLongitude(gpsTracker.getLongitude());
-                                userLocation.setDateTime(StringUtils.getCurrentDate());
-                                BaseSyncher.setAccessToken(InvtAppPreferences.getAccessToken());
-                                Log.d("Data", "locations count " + userLocation.getLatitude() + " " + userLocation.getLongitude() + " " + userLocation.getDateTime());
-                                ServerResponse locations = locationSyncher.postUserLocation(userLocation);
-                                Log.d("Data", "locations count " + locations.getStatus());
-                                return null;
-                            }
-
-                            @Override
-                            protected void onPostExecute(String result) {
-                                Log.d("Data_notification", "Notification service before");
-                                ServiceInformation service = serviceInfo;//InvtAppPreferences.getServiceDetails();
-                                if (!service.isShowNotification() && !StringUtils.isGivenDateGreaterThanOrEqualToCurrentDate(service.getCheckInNotificationServiceStartTime())) {
-                                    Log.d("Data_notification", "Notification service after");
-                                    Intent myIntent = new Intent(context, NotificationService.class);
-                                    myIntent.putExtra("flag", flagInfo);
-                                    myIntent.setAction(service.getCheckInNotificationServiceStartTime());
-                                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-                                    AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                                    alarmManager.cancel(pendingIntent);
-                                    List<ServiceInformation> serviceDetails = InvtAppPreferences.getServiceDetails();
-                                    serviceDetails.get(flagInfo).setShowNotification(true);
-                                    InvtAppPreferences.setServiceDetails(serviceDetails);
-                                    Calendar cal = Calendar.getInstance();
-                                    cal.setTime(StringUtils.StringToDate(service.getCheckInNotificationServiceStartTime()));
-                                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 60000, pendingIntent);
+                                @Override
+                                protected String doInBackground(String... params) {
+                                    LocationSyncher locationSyncher = new LocationSyncher();
+                                    UserLocation userLocation = new UserLocation();
+                                    userLocation.setLatitude(gpsTracker.getLatitude());
+                                    userLocation.setLongitude(gpsTracker.getLongitude());
+                                    userLocation.setDateTime(StringUtils.getCurrentDate());
+                                    BaseSyncher.setAccessToken(InvtAppPreferences.getAccessToken());
+                                    Log.d("Data", "locations count " + userLocation.getLatitude() + " " + userLocation.getLongitude() + " " + userLocation.getDateTime());
+                                    ServerResponse locations = locationSyncher.postUserLocation(userLocation);
+                                    Log.d("Data", "locations count " + locations.getStatus());
+                                    return null;
                                 }
-                            }
-                        }.execute();
+
+                                @Override
+                                protected void onPostExecute(String result) {
+                                    Log.d("Data_notification", "Notification service before");
+                                    ServiceInformation service = serviceInfo;//InvtAppPreferences.getServiceDetails();
+                                    if (!service.isShowNotification() && !StringUtils.isGivenDateGreaterThanOrEqualToCurrentDate(service.getCheckInNotificationServiceStartTime())) {
+                                        Log.d("Data_notification", "Notification service after");
+                                        Intent myIntent = new Intent(context, NotificationService.class);
+                                        myIntent.putExtra("flag", flagInfo);
+                                        myIntent.setAction(service.getCheckInNotificationServiceStartTime());
+                                        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                                        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                                        alarmManager.cancel(pendingIntent);
+                                        List<ServiceInformation> serviceDetails = InvtAppPreferences.getServiceDetails();
+                                        serviceDetails.get(flagInfo).setShowNotification(true);
+                                        InvtAppPreferences.setServiceDetails(serviceDetails);
+                                        Calendar cal = Calendar.getInstance();
+                                        cal.setTime(StringUtils.StringToDate(service.getCheckInNotificationServiceStartTime()));
+                                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 60000, pendingIntent);
+                                    }
+                                }
+                            }.execute();
+                        } else {
+                            Log.d("Data", "Invalid location data :(");
+                        }
                     } else {
-                        Log.d("Data", "Invalid location data :(");
+                        Log.d("Data", "you are done :)");
+                        CancelAlarm(context, flagInfo);
                     }
                 } else {
-                    Log.d("Data", "you are done :)");
-                    CancelAlarm(context,flagInfo);
+                    Log.d("Data", "Invalid date found :(");
                 }
             } else {
-                Log.d("Data", "Invalid date found :(");
+                Log.d("Data", "Action not matched :(");
             }
-        } else {
-            Log.d("Data", "Action not matched :(");
         }
     }
 

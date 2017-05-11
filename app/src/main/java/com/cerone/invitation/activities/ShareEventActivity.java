@@ -108,13 +108,13 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                 }
             }.execute();
         }else{
-            Toast.makeText(getApplicationContext(), "Something Went Wrong", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Network problem", Toast.LENGTH_LONG).show();
         }
     }
 
     public void updateButtons() {
-        groupsView.setText("GROUPS ");
-        contactsView.setText("CONTACTS ");
+        groupsView.setText("GROUPS");
+        contactsView.setText("CONTACTS");
     }
 
     private void showEventData() {
@@ -187,7 +187,7 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
                             } else {
                                 eventId = eventDetails.getEventId();
                             }
-                            System.out.println("Event id " + eventId);
+                            Log.d("evId, contsize, grosize", eventId+" "+allSelectedlist.size()+" "+listOfGroupIds.size());
                             if (eventId > 0) {
                                 InvitationSyncher invitationSyncher = new InvitationSyncher();
                                 serverResponse = invitationSyncher.createNewInvitation(eventId, allSelectedlist, listOfGroupIds);
@@ -265,10 +265,26 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
 
     private void updateGroupsData() {
         List<Group> groupsInfo = InvtAppPreferences.getGroups();
-        for (Group group : groupsInfo) {
-            if (!listOfGroupIds.contains(group.getGroupId())) {
-                listOfSelectedGroups.add(group);
-                listOfGroupIds.add(group.getGroupId() + "");
+        Log.d("group list", groupsInfo.size() + "");
+        if (listOfSelectedGroups.size() > 0) {
+            for (int i = 0; i < groupsInfo.size(); i++) {
+                int count = 0;
+                for (int j = 0; j < listOfSelectedGroups.size(); j++) {
+                    if (listOfSelectedGroups.get(j).getGroupId()==(groupsInfo.get(i).getGroupId())) {
+                        count++;
+                        break;
+                    }
+                }
+                if (count == 0) {
+                    listOfSelectedGroups.add(groupsInfo.get(i));
+                    listOfGroupIds.add(groupsInfo.get(i).getGroupId()+"");
+                }
+            }
+
+        } else {
+            listOfSelectedGroups.addAll(groupsInfo);
+            for (Group group : groupsInfo) {
+                listOfGroupIds.add(group.getGroupId()+"");
             }
         }
     }
@@ -297,32 +313,44 @@ public class ShareEventActivity extends BaseActivity implements OnClickListener,
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (allSelectedlist.size() > 0) {
-            User user = allSelectedlist.get(position);
+
             switch (view.getId()) {
                 case R.id.removeContact:
-                    ToastHelper.blueToast(getApplicationContext(), "Contact Removed");
-                    allSelectedlist.remove(user);
-                    adapter.setUsers(allSelectedlist);
-                    setContactsListSize();
-                    break;
-                case R.id.removeGroup:
-                    Group group = listOfSelectedGroups.get(position);
-                    ToastHelper.blueToast(getApplicationContext(), "Group Removed");
-                    listOfSelectedGroups.remove(group);
-                    listOfGroupIds.remove(position);
-                    groupAdapter.setUsers(listOfSelectedGroups);
-                    setGroupListSize();
-                    break;
-                case R.id.shareEvent_check:
-                    Log.d("is admin", position + " " + !user.isAdmin() + "");
-                    user.setAdmin(!user.isAdmin());
-                    adapter.setUsers(allSelectedlist);
-                    if (user.isAdmin()) {
-                        Toast.makeText(getApplicationContext(), user.getUserName() + " made as admin", Toast.LENGTH_LONG).show();
+                    if (allSelectedlist.size()>0) {
+                        User user = allSelectedlist.get(position);
+                        ToastHelper.blueToast(getApplicationContext(), "Contact Removed");
+                        allSelectedlist.remove(user);
+                        adapter.setUsers(allSelectedlist);
+                        setContactsListSize();
+                        if (allSelectedlist.size() == 0 && listOfSelectedGroups.size() == 0) {
+                            txtAttendees.setVisibility(View.GONE);
+                        }
                     }
                     break;
-            }
+                case R.id.removeGroup:
+                    if (listOfSelectedGroups.size()>0) {
+                        Group group = listOfSelectedGroups.get(position);
+                        ToastHelper.blueToast(getApplicationContext(), "Group Removed");
+                        listOfSelectedGroups.remove(group);
+                        listOfGroupIds.remove(position);
+                        groupAdapter.setUsers(listOfSelectedGroups);
+                        setGroupListSize();
+                        if (allSelectedlist.size() == 0 && listOfSelectedGroups.size() == 0) {
+                            txtAttendees.setVisibility(View.GONE);
+                        }
+                    }
+                    break;
+                case R.id.shareEvent_check:
+                    if (allSelectedlist.size()>0) {
+                        User user = allSelectedlist.get(position);
+                        user.setAdmin(!user.isAdmin());
+                        adapter.setUsers(allSelectedlist);
+                        if (user.isAdmin()) {
+                            Toast.makeText(getApplicationContext(), user.getUserName() + " made as admin", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    break;
+
         }
 
     }

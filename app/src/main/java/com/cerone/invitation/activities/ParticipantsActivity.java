@@ -57,6 +57,7 @@ public class ParticipantsActivity extends BaseActivity implements OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events_layout);
         addToolbarView();
+        setFontType(R.id.shareEventData);
         title = getIntent().getExtras().getString("title");
         TextView title = (TextView) findViewById(R.id.toolbar_title);
         title.setText(this.title+"");

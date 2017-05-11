@@ -38,7 +38,11 @@ public class PublicEventsSyncher extends BaseSyncher{
                             publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
                         if(jsonObject.has("address"))
                             publicEvent.setAddress(jsonObject.getString("address"));
-                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
+                        if(jsonObject.has("latitude"))
+                            publicEvent.setLatitude(jsonObject.getDouble("latitude"));
+                        if(jsonObject.has("longitude"))
+                            publicEvent.setLongitude(jsonObject.getDouble("longitude"));
+                        if(jsonObject.has("is_weekend"))
                             publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
                         if(jsonObject.has("city"))
                             publicEvent.setCity(jsonObject.getString("city"));
@@ -152,7 +156,11 @@ public class PublicEventsSyncher extends BaseSyncher{
                             publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
                         if(jsonObject.has("address"))
                             publicEvent.setAddress(jsonObject.getString("address"));
-                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
+                        if(jsonObject.has("latitude"))
+                            publicEvent.setLatitude(jsonObject.getDouble("latitude"));
+                        if(jsonObject.has("longitude"))
+                            publicEvent.setLongitude(jsonObject.getDouble("longitude"));
+                        if(jsonObject.has("is_weekend"))
                             publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
                         if(jsonObject.has("city"))
                             publicEvent.setCity(jsonObject.getString("city"));
@@ -194,7 +202,11 @@ public class PublicEventsSyncher extends BaseSyncher{
                             publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
                         if(jsonObject.has("address"))
                             publicEvent.setAddress(jsonObject.getString("address"));
-                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
+                        if(jsonObject.has("latitude"))
+                            publicEvent.setLatitude(jsonObject.getDouble("latitude"));
+                        if(jsonObject.has("longitude"))
+                            publicEvent.setLongitude(jsonObject.getDouble("longitude"));
+                        if(jsonObject.has("is_weekend"))
                             publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
                         if(jsonObject.has("city"))
                             publicEvent.setCity(jsonObject.getString("city"));
@@ -237,7 +249,11 @@ public class PublicEventsSyncher extends BaseSyncher{
                             publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
                         if(jsonObject.has("address"))
                             publicEvent.setAddress(jsonObject.getString("address"));
-                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
+                        if(jsonObject.has("latitude"))
+                            publicEvent.setLatitude(jsonObject.getDouble("latitude"));
+                        if(jsonObject.has("longitude"))
+                            publicEvent.setLongitude(jsonObject.getDouble("longitude"));
+                        if(jsonObject.has("is_weekend"))
                             publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
                         if(jsonObject.has("city"))
                             publicEvent.setCity(jsonObject.getString("city"));
@@ -280,7 +296,11 @@ public class PublicEventsSyncher extends BaseSyncher{
                             publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
                         if(jsonObject.has("address"))
                             publicEvent.setAddress(jsonObject.getString("address"));
-                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
+                        if(jsonObject.has("latitude"))
+                            publicEvent.setLatitude(jsonObject.getDouble("latitude"));
+                        if(jsonObject.has("longitude"))
+                            publicEvent.setLongitude(jsonObject.getDouble("longitude"));
+                        if(jsonObject.has("is_weekend"))
                             publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
                         if(jsonObject.has("city"))
                             publicEvent.setCity(jsonObject.getString("city"));
@@ -322,7 +342,11 @@ public class PublicEventsSyncher extends BaseSyncher{
                             publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
                         if(jsonObject.has("address"))
                             publicEvent.setAddress(jsonObject.getString("address"));
-                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
+                        if(jsonObject.has("latitude"))
+                            publicEvent.setLatitude(jsonObject.getDouble("latitude"));
+                        if(jsonObject.has("longitude"))
+                            publicEvent.setLongitude(jsonObject.getDouble("longitude"));
+                        if(jsonObject.has("is_weekend"))
                             publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
                         if(jsonObject.has("city"))
                             publicEvent.setCity(jsonObject.getString("city"));
@@ -364,7 +388,11 @@ public class PublicEventsSyncher extends BaseSyncher{
                             publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
                         if(jsonObject.has("address"))
                             publicEvent.setAddress(jsonObject.getString("address"));
-                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
+                        if(jsonObject.has("latitude"))
+                            publicEvent.setLatitude(jsonObject.getDouble("latitude"));
+                        if(jsonObject.has("longitude"))
+                            publicEvent.setLongitude(jsonObject.getDouble("longitude"));
+                        if(jsonObject.has("is_weekend"))
                             publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
                         if(jsonObject.has("city"))
                             publicEvent.setCity(jsonObject.getString("city"));
@@ -406,7 +434,11 @@ public class PublicEventsSyncher extends BaseSyncher{
                             publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
                         if(jsonObject.has("address"))
                             publicEvent.setAddress(jsonObject.getString("address"));
-                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
+                        if(jsonObject.has("latitude"))
+                            publicEvent.setLatitude(jsonObject.getDouble("latitude"));
+                        if(jsonObject.has("longitude"))
+                            publicEvent.setLongitude(jsonObject.getDouble("longitude"));
+                        if(jsonObject.has("is_weekend"))
                             publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
                         if(jsonObject.has("city"))
                             publicEvent.setCity(jsonObject.getString("city"));
@@ -448,7 +480,11 @@ public class PublicEventsSyncher extends BaseSyncher{
                             publicEvent.setEntryFee(jsonObject.getString("entry_fee"));
                         if(jsonObject.has("address"))
                             publicEvent.setAddress(jsonObject.getString("address"));
-                        if(!jsonObject.isNull("is_weekend")&&jsonObject.has("is_weekend"))
+                        if(jsonObject.has("latitude"))
+                            publicEvent.setLatitude(jsonObject.getDouble("latitude"));
+                        if(jsonObject.has("longitude"))
+                            publicEvent.setLongitude(jsonObject.getDouble("longitude"));
+                        if(jsonObject.has("is_weekend"))
                             publicEvent.setWeekend(jsonObject.getBoolean("is_weekend"));
                         if(jsonObject.has("city"))
                             publicEvent.setCity(jsonObject.getString("city"));

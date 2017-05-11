@@ -93,7 +93,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
         fabEdit = (FloatingActionButton) findViewById(R.id.fab_edit);
         updateProfile.setOnClickListener(this);
         fabEdit.setOnClickListener(this);
-
+        status.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         getAllAccountInfoDetails();
         checkUserPermissions();
@@ -204,8 +204,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
                 final Dialog dialog = new Dialog(UserProfile.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.login_image_dialog);
-                ListView listView = (ListView) dialog
-                        .findViewById(R.id.dialogListView);
+                ListView listView = (ListView) dialog.findViewById(R.id.dialogListView);
                 List<String> galleryList = new ArrayList<String>();
                 galleryList.add("Take Photo");
                 galleryList.add("Choose From Gallery");
@@ -255,7 +254,6 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
             } else {
                 if (data != null) {
                     Bitmap bitmap;
-
                     if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
                         bitmap = (Bitmap) data.getExtras().get("data");
                         profileImage.setImageBitmap(bitmap);

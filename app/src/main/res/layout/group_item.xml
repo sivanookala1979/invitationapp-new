@@ -8,7 +8,7 @@
     android:padding="10dp"
     android:gravity="center_vertical"
     android:weightSum="100"
-    android:background="@color/white">
+    android:background="@color/yellow_light">
 
     <ImageView
         android:layout_width="0dp"
@@ -37,9 +37,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="10"
-        android:background="@color/happening_orange"
+        android:background="@drawable/ic_action_cancel"
         android:gravity="center_vertical|center_horizontal"
-        android:text=" X "
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size" />
+        android:textSize="@dimen/small_text_size" />
+
 </LinearLayout>

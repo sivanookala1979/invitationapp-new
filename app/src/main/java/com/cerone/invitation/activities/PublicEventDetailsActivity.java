@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,9 +20,17 @@ import com.cerone.invitation.adapter.SimilarEventsAdapter;
 import com.cerone.invitation.helpers.InvtAppAsyncTask;
 import com.cerone.invitation.helpers.InvtAppPreferences;
 import com.cerone.invitation.helpers.MobileHelper;
+import com.cerone.invitation.helpers.RecyclerTouchListener;
 import com.example.dataobjects.PublicEvent;
 import com.example.syncher.PublicEventsSyncher;
 import com.example.utills.StringUtils;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -30,7 +39,7 @@ import java.util.List;
 
 import static com.example.utills.StringUtils.getFormatedDateFromServerFormatedDate;
 
-public class PublicEventDetailsActivity extends BaseActivity implements View.OnClickListener {
+public class PublicEventDetailsActivity extends BaseActivity implements View.OnClickListener, OnMapReadyCallback {
 
     TextView title, seatsCount,emptyView;
     Button bookNow;
@@ -40,9 +49,13 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
     List<PublicEvent> similarEventsList = new ArrayList<PublicEvent>();
     PublicEventsSyncher publicEventSyncher = new PublicEventsSyncher();
     SimilarEventsAdapter adapter;
+    PublicEvent publicEvent;
     boolean isMap;
     int noOfSeats = 2;
     Integer eventId, cityId;
+    private GoogleMap map;
+    SupportMapFragment mapFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +82,30 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
         BtnAdd.setOnClickListener(this);
         publicClose.setOnClickListener(this);
         layoutLocation.setOnClickListener(this);
+        similarEvents.addOnItemTouchListener(new RecyclerTouchListener(this,
+                similarEvents, new RecyclerTouchListener.ClickListener() {
+
+            @Override
+            public void onClick(View view, final int position) {
+                PublicEvent similarEvent = similarEventsList.get(position);
+                InvtAppPreferences.setPublicEventDetails(similarEvent);
+                Intent intent = new Intent(getApplicationContext(), PublicEventDetailsActivity.class);
+                intent.putExtra("eventId", similarEvent.getId());
+                intent.putExtra("cityId", cityId);
+                Log.d("city, eventId", cityId+" "+similarEvent.getId());
+                startActivity(intent);
+                finish();
+            }
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
         showPublicEventData();
         getSimilarEvents();
+
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -78,8 +113,12 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
         switch (v.getId()){
             case R.id.layoutLocation:
                 if(!isMap){
-                    layoutMap.setVisibility(View.VISIBLE);
-                    isMap = true;
+                    if(publicEvent!=null&&publicEvent.getLatitude()!=0&&publicEvent.getLongitude()!=0) {
+                        layoutMap.setVisibility(View.VISIBLE);
+                        isMap = true;
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Lat, Long not provided", Toast.LENGTH_SHORT).show();
+                    }
                 }else{
                     layoutMap.setVisibility(View.GONE);
                     isMap = false;
@@ -118,7 +157,7 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
     }
 
     private void showPublicEventData() {
-        PublicEvent publicEvent = InvtAppPreferences.getPublicEventDetails();
+        publicEvent = InvtAppPreferences.getPublicEventDetails();
         TextView eventDate = (TextView) findViewById(R.id.event_date);
         TextView eventTime = (TextView) findViewById(R.id.event_time);
         TextView eventLocation = (TextView) findViewById(R.id.event_address);
@@ -179,6 +218,16 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
             }.execute();
         }else{
             Toast.makeText(getApplicationContext(), "Network problem", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        if(publicEvent!=null&&publicEvent.getLatitude()!=0&&publicEvent.getLongitude()!=0) {
+            map = googleMap;
+            LatLng location = new LatLng(publicEvent.getLatitude(), publicEvent.getLongitude());
+            map.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.location_marker_default)).position(location).title(publicEvent.getAddress())).setVisible(true);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 5));
         }
     }
 }
