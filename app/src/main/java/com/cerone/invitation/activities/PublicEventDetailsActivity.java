@@ -70,7 +70,7 @@ public class PublicEventDetailsActivity extends BaseActivity implements View.OnC
         bookNow = (Button) findViewById(R.id.book_now);
         publicClose = (ImageView) findViewById(R.id.public_close);
         similarEvents = (RecyclerView) findViewById(R.id.similarEventsLayout);
-        similarEvents.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        similarEvents.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         adapter = new SimilarEventsAdapter(this, similarEventsList);
         similarEvents.setAdapter(adapter);
         layoutLocation = (LinearLayout) findViewById(R.id.layoutLocation);
