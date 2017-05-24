@@ -65,6 +65,11 @@ public class StringUtils {
         return (simpleDateFormat.format(new Date()));
     }
 
+    public static String getCurrentDateTime() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(YEAR_MONTH_DATE_TIME_AM_PM);
+        return (simpleDateFormat.format(new Date()));
+    }
+
     public static String getCurrentTime() {
 
         Calendar now = Calendar.getInstance();
@@ -133,7 +138,7 @@ public class StringUtils {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat((index == 0)?YEAR_MONTH_DATE_HOURS_MIN_SEC:YEAR_MONTH_DATE_TIME_AM_PM);
             Date date1 = sdf.parse(dateTimeInfo);
-            Date date2 = sdf.parse(getCurrentDate());
+            Date date2 = sdf.parse(getCurrentDateTime());
             System.out.println(sdf.format(date1));
             System.out.println(sdf.format(date2));
             if (date1.after(date2)) {
